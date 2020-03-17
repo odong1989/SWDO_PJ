@@ -1,0 +1,16 @@
+select
+  m.member_name
+  d.document_content
+  d.document_regdate
+  d.document_finalday
+  d.document_destination
+from
+  member m, document d
+where
+  m.member_id = d.member_id
+and
+  m.member_wdraw = 0
+order by
+  d.document_regdate desc
+
+

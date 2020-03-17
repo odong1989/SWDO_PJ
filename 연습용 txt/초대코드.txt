@@ -1,0 +1,31 @@
+localhost/gns/invite&code=3ifj9
+
+requeestmap value=/invite
+
+(String code)
+
+dao.codecheck(code);
+return group_no, group_name;
+
+[실제 화면이 뜸]
+
+<c:if test="${datecheck != true}">
+${group name} 에 가입하시겠습니까?
+예(javascript:join(${group_no})/아니오)
+</c:if>
+<c:if test=false>
+유효하지 않은 초대코드입니다.
+(뒤로가기)
+</>
+
+
+join(pk)
+location.href="groupjoin?group_no="+pk;
+
+
+map(value=groupjoin)
+(int group_no)
+
+groupjoin
+group_no = #{group_no}
+member_id = #{member_id}
