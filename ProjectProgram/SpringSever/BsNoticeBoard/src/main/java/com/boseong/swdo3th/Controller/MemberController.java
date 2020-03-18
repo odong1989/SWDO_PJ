@@ -103,7 +103,7 @@ public class MemberController {
 	//2.2로그인 
 	@RequestMapping(value="memberLoginExe", method=RequestMethod.POST)
 	public String memberLoginExe(Member member, String remember,HttpSession session, HttpServletResponse response,Model model) {
-		logger.info("로그인 프로세스 시작");
+		logger.info("memberLoginExe 로그인 프로세스 시작");
 		String errMsg = "";//에러메시지 출력위한 변수.
 		
 		Member newMember = dao.memberSelectOne(member.getMember_id());
@@ -133,8 +133,8 @@ public class MemberController {
 			model.addAttribute("errMsg",errMsg);
 			return "member/memberLoginForm";
 		}
-		
-		return "redirect:/";
+		logger.info("memberLoginExe 로그인 프로세스 페이지 이동");
+		return "redirect:board/boardList";
 	}
 	
 	

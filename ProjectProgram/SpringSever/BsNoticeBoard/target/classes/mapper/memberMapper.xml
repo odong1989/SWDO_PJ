@@ -25,18 +25,19 @@
 	
 	
 	<insert id="memeberJoin" parameterType="member" >
-	insert into
-	 member(
-		member_id
-		,member_pw	
-		,member_nm	
-		,member_addr 
-    	)values
-    	(
-    #{member_id}
-    ,#{member_pw}
-    ,#{member_nm}
-    ,#{member_addr}
+	insert into	
+		member(
+			member_id
+			,member_pw
+			,member_name
+			,member_mail
+			,member_birthday
+		)values(
+			#{member_id}
+			,#{member_pw}
+			,#{member_name}
+			,#{member_mail}
+			,#{member_birthday}
     )
     </insert>
    

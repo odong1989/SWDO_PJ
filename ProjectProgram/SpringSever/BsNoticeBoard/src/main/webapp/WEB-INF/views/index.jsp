@@ -2,19 +2,12 @@
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-
 <html>
+
 <head>
 <meta charset="UTF-8">
-<!-- <title>Insert title here</title>
-	<link href="<c:url value="resources/css/style_ver3.css" />" rel="stylesheet">
-	<script src="<c:url value="/resources/js/jquery-3.4.1.js" /> "> </script>
- -->
- 
-<title>Insert title here</title>
-	<link rel="stylesheet" href="/resources/css/style_ver3.css">	
-	<script src="<c:url value='/resources/js/jquery-3.4.1.js' /> "> </script>
-
+<link rel="stylesheet" href="/css/style_ver3.css">
+<script src="/js/jquery-3.4.1.js "> </script>
 <style>
 	body{
 		background-color:#D9E5FF; 
@@ -26,15 +19,14 @@
 	}
 </style>
 </head>
-
 <body>
+
+
 <div class="bgimg">
 	<div class="header">
 			<div class="Logo">
 				<a href="/">
-				<!-- <img src="resources/img/logo.jpg" width="100" > -->
-				<img src="${pageContext.request.contextPath}/resources/images/logo.jpg"/>
-				
+				<img src="/img/logo.jpg" width="100">
 				</a>
 			</div>
 		
@@ -69,7 +61,7 @@
 	
 		<!-- 로그인폼--->
 		<div class="join">
-			<form action="memberLoginExe" method="post">
+			<form action="/member/memberLoginExe" method="post">
 			<table>
 				<tr>
 					<td>ID : </td>
