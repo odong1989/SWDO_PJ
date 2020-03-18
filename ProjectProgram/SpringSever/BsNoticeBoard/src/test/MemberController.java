@@ -35,9 +35,7 @@ public class MemberController {
 	@RequestMapping(value="memberJoinForm", method=RequestMethod.GET)
 	public String memberJoinForm(HttpServletRequest request, Model model)
 	{	
-		logger.info("memberJoinForm폼 이동 ");
 		return "/member/memberJoinForm";
-		
 	}
 	
 	//1.2[이동] ID중복체크 폼으로 이동
@@ -52,9 +50,8 @@ public class MemberController {
 	//1.3[실행] 회원가입ID중복확인 실시
 	@RequestMapping(value="/memberIdCheck", method=RequestMethod.GET)
 	public String memberIdCheck(String checkId, Model model) {
-		logger.info("memberIdCheck메소드 실행. ");
 		logger.info("checkId : {} ",checkId);
-		
+
 		Member member = dao.memberSelectOne(checkId);
 
 		boolean checkFlag = true;
@@ -69,7 +66,6 @@ public class MemberController {
 	//1.4[실행] 회원가입실시
 	@RequestMapping(value="memberJoin", method=RequestMethod.POST)
 	public String memberJoin(Member member) {
-		logger.info("memberJoin메소드입니다");
 		logger.info("회원가입 자료 전달");
 		logger.info("member : {}",member);
 		dao.memeberJoin(member);
@@ -103,7 +99,7 @@ public class MemberController {
 	//2.2로그인 
 	@RequestMapping(value="memberLoginExe", method=RequestMethod.POST)
 	public String memberLoginExe(Member member, String remember,HttpSession session, HttpServletResponse response,Model model) {
-		logger.info("memberLoginExe 로그인 프로세스 시작");
+		logger.info("로그인 프로세스 시작");
 		String errMsg = "";//에러메시지 출력위한 변수.
 		
 		Member newMember = dao.memberSelectOne(member.getMember_id());
@@ -133,8 +129,8 @@ public class MemberController {
 			model.addAttribute("errMsg",errMsg);
 			return "member/memberLoginForm";
 		}
-		logger.info("memberLoginExe 로그인 프로세스 페이지 이동");
-		return "redirect:board/boardList";
+		
+		return "redirect:/";
 	}
 	
 	
@@ -166,7 +162,6 @@ public class MemberController {
 		return "/member/memberMypage";
 	}		
 	
-	/*
 	//4.2 마이페이지-이름변경(#aJax활용할것!)
 	@RequestMapping(value="MypageChangeName", method=RequestMethod.POST, produces = "application/text; charset=utf8") 
 	@ResponseBody
@@ -177,10 +172,9 @@ public class MemberController {
 		dao.memberUpdateName(member);
 		String changedName = member.getMember_nm();
 		return changedName ;
-	}		
-	*/
+	}			
 	
-	/*
+	
 	//4.2 마이페이지-주소변경(#aJax활용할것!)
 	@RequestMapping(value="MypageChangeAddress", method=RequestMethod.POST, produces = "application/text; charset=utf8") 
 	// produces = "application/text; charset=utf8" utf-8로 인코딩하여 한글이 ???식으로 뜨는 것을 방지./ 출처: https://marobiana.tistory.com/112 [Take Action]
@@ -211,5 +205,5 @@ public class MemberController {
 
 		return "/member/memberMypage";
 	}		
-	*/
+	
 }
