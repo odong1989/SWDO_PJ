@@ -1,271 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+
 <html>
-	<head>
-		<title>Bootstrap-Material DateTimePicker</title>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+<head>
+<meta charset="UTF-8">
+<!-- <title>Insert title here</title>
+	<link href="<c:url value="resources/css/style_ver3.css" />" rel="stylesheet">
+	<script src="<c:url value="/resources/js/jquery-3.4.1.js" /> "> </script>
+ -->
+ 
+<title>Insert title here</title>
+	<link rel="stylesheet" href="/resources/css/style_ver3.css">	
+	<script src="<c:url value='/resources/js/jquery-3.4.1.js' /> "> </script>
 
-		<link rel="stylesheet"
-			  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css"/>
-		<link rel="stylesheet"
-			  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css"/>
+<style>
+	body{
+		background-color:#D9E5FF; 
+		background-image: url("../img/couple-1822585_1920.jpg");
+		background-repeat: no-repeat;
+	}
+	.join{
+		padding:400px;
+	}
+</style>
+</head>
 
-		<link rel="stylesheet" href="./css/bootstrap-material-datetimepicker.css" />
-		<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-		<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
-		<script type="text/javascript" src="https://rawgit.com/FezVrasta/bootstrap-material-design/master/dist/js/material.min.js"></script>
-		<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-		<script type="text/javascript" src="./js/bootstrap-material-datetimepicker.js"></script>
-
-		<style>
-			body 
-			{
-				padding-top: 70px;
-				font-family: 'Roboto', sans-serif;
-			}
-			h2 
-			{
-				padding: 0 20px 10px 20px;
-				font-size: 20px;
-				font-weight: 400;
-			}
-			.form-control-wrapper 
-			{
-				margin: 10px 20px;
-			}
-			code 
-			{
-				padding: 10px;
-				background: #eee!important;
-				display: block;
-				color: #000;
-			}
-			code > p 
-			{
-				font-weight: bold;
-				color: #000;
-				font-size: 1.5em;
-			}
-			@media(max-width: 300px)
-			{
-				.well { margin : 0}
-			}
-		</style>
-		<script>
-			(function(i, s, o, g, r, a, m) {
-				i['GoogleAnalyticsObject'] = r;
-				i[r] = i[r] || function() {
-					(i[r].q = i[r].q || []).push(arguments)
-				}, i[r].l = 1 * new Date();
-				a = s.createElement(o),
-					m = s.getElementsByTagName(o)[0];
-				a.async = 1;
-				a.src = g;
-				m.parentNode.insertBefore(a, m)
-			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-			ga('create', 'UA-60343429-1', 'auto');
-			ga('send', 'pageview');
-		</script>
-	</head>
-	<body>
-		<div class="container well">
-			<div class="row">
-				<div class="col-md-6">
-					<h1>Bootstrap Material DatePicker</h1>
-				</div>
+<body>
+<div class="bgimg">
+	<div class="header">
+			<div class="Logo">
+				<a href="/">
+				<!-- <img src="resources/img/logo.jpg" width="100" > -->
+				<img src="${pageContext.request.contextPath}/resources/images/logo.jpg"/>
+				
+				</a>
 			</div>
+		
+			<div class="Menubar">
+			<table>
+				<c:choose>
+					<c:when test="${sessionScope.loginId == null}">
+						<tr>
+							<td><a href="/member/memberLoginForm">로그인하기</a></td>
+							<td><a href="/member/memberJoinForm">회원가입하기</a></td>
+						</tr>
+					</c:when>
+					<c:otherwise> 
+						<tr>
+							<td>${sessionScope.loginId}님 환영합니다!</td>		
+							<td><a href= "/member/memberMypage">MyPage</a></td>		
+							<td><a href="/board/boardList">게시판 이동</a></td>
+							<td><a href="/member/memberLogout">로그아웃</a></td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
+			</table>
+			</div>
+	
+	<h1>
+	memberLoginForm
+	</h1>
+	<!-- 로그인 에러시 에러 메시지 출력--->
+	<c:if test="${errMsg != null }">
+	${errMsg}
+	</c:if>
+	
+		<!-- 로그인폼--->
+		<div class="join">
+			<form action="memberLoginExe" method="post">
+			<table>
+				<tr>
+					<td>ID : </td>
+					<td><input type="text" name="member_id" ></td>
+				</tr>
+				<tr>
+					<td>PW : </td>
+					<td><input type="password" name="member_pw"></td>
+				</tr>	
+				<tr>
+					<td><input type="checkbox" name="remember" value="1">아이디 기억하기</td>
+					<td><input type="submit" value="로그인 하기"></td>
+				</tr>
+			</table>
+			</form>
 		</div>
-		<div class="container well">
-			<div class="row">
-				<div class="col-md-6">
-					<h2>Date Picker</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-control-wrapper">
-						<input type="text" id="date" class="form-control floating-label" placeholder="Date">
-					</div>
-				</div>
-				<div class="col-md-6">
-					<code>
-						<p>Code</p>
-						$('#date').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
-					</code>
-				</div>
-			</div>
-		</div>
-		<div class="container well">
-			<div class="row">
-				<div class="col-md-6">
-					<h2>Time Picker</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-control-wrapper">
-						<input type="text" id="time" class="form-control floating-label" placeholder="Time">
-					</div>
-				</div>
-				<div class="col-md-6">
-					<code>
-						<p>Code</p>
-						$('#time').bootstrapMaterialDatePicker({ date: false });
-					</code>
-				</div>
-			</div>
-		</div>
-		<div class="container well">
-			<div class="row">
-				<div class="col-md-6">
-					<h2>Date Time Picker</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-control-wrapper">
-						<input type="text" id="date-format" class="form-control floating-label" placeholder="Begin Date Time">
-					</div>
-				</div>
-				<div class="col-md-6">
-					<code>
-						<p>Code</p>
-						$('#date-format').bootstrapMaterialDatePicker({ format : 'dddd DD MMMM YYYY - HH:mm' });
-					</code>
-				</div>
-			</div>
-		</div>
-		<div class="container well">
-			<div class="row">
-				<div class="col-md-6">
-					<h2>French Locales (Week starts at Monday)</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-control-wrapper">
-						<input type="text" id="date-fr" class="form-control floating-label" value="18/03/2015 08:00" placeholder="Date de d�but">
-					</div>
-				</div>
-				<div class="col-md-6">
-					<code>
-						<p>Code</p>
-						$('#date-fr').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY HH:mm', lang : 'fr', weekStart : 1, cancelText : 'ANNULER' });
-					</code>
-				</div>
-			</div>
-		</div>
-		<div class="container well">
-			<div class="row">
-				<div class="col-md-6">
-					<h2>Min Date set</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-control-wrapper">
-						<input type="text" id="min-date" class="form-control floating-label" placeholder="Start Date">
-					</div>
-				</div>
-				<div class="col-md-6">
-					<code>
-						<p>Code</p>
-						$('#min-date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY HH:mm', minDate : new Date() });
-					</code>
-				</div>
-			</div>
-		</div>
-		<div class="container well">
-			<div class="row">
-				<div class="col-md-6">
-					<h2>Events</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-control-wrapper">
-								<input type="text" id="date-start" class="form-control floating-label" placeholder="Start Date">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-control-wrapper">
-								<input type="text" id="date-end" class="form-control floating-label" placeholder="End Date">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="row">
-						<div class="col-md-12">
-							<code>
-								<p>Code</p>
-								$('#date-end').bootstrapMaterialDatePicker({ weekStart : 0 });<br />
-								$('#date-start').bootstrapMaterialDatePicker({ weekStart : 0 }).on('change', function(e, date)<br />
-								{<br />
-									$('#date-end').bootstrapMaterialDatePicker('setMinDate', date);<br />
-								});
-							</code>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<script type="text/javascript">
-		$(document).ready(function()
-		{
-			$('#date').bootstrapMaterialDatePicker
-			({
-				time: false,
-				clearButton: true
-			});
-
-			$('#time').bootstrapMaterialDatePicker
-			({
-				date: false,
-				shortTime: false,
-				format: 'HH:mm'
-			});
-
-			$('#date-format').bootstrapMaterialDatePicker
-			({
-				format: 'dddd DD MMMM YYYY - HH:mm'
-			});
-			$('#date-fr').bootstrapMaterialDatePicker
-			({
-				format: 'DD/MM/YYYY HH:mm',
-				lang: 'fr',
-				weekStart: 1, 
-				cancelText : 'ANNULER',
-				nowButton : true,
-				switchOnClick : true
-			});
-
-			$('#date-end').bootstrapMaterialDatePicker
-			({
-				weekStart: 0, format: 'DD/MM/YYYY HH:mm'
-			});
-			$('#date-start').bootstrapMaterialDatePicker
-			({
-				weekStart: 0, format: 'DD/MM/YYYY HH:mm', shortTime : true
-			}).on('change', function(e, date)
-			{
-				$('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
-			});
-
-			$('#min-date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY HH:mm', minDate : new Date() });
-
-			$.material.init()
-		});
-		</script>
-	</body>
+	</div>
+</div><!-- <div class="bgimg"> -->
+</body>
 </html>

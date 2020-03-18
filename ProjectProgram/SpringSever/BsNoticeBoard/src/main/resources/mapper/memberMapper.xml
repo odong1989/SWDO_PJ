@@ -5,11 +5,18 @@
 
 	<select id="memberSelectOne" parameterType="string" resultType="member">
 	select
-		member_id
-		,member_pw
-		,member_nm
-		,member_addr
-		,to_char(member_indate, 'yyyy-MM-dd') as member_indate
+		member_id	
+		,member_pw	
+		,member_name	
+		,member_mail		
+		,member_photo		
+		,member_phone		
+		,to_char(member_birthday, 'yyyy-MM-dd') as member_birthday
+		,member_married		
+		,to_char(member_weddingday, 'yyyy-MM-dd') as member_weddingday
+		,to_char(member_regdate, 'yyyy-MM-dd') as member_regdate
+		,to_char(member_lastlogin, 'yyyy-MM-dd') as member_lastlogin
+		,member_wdraw	
 	from
 		member
 	where
