@@ -1,0 +1,128 @@
+create table bnd_member(
+    member_id           varchar2(30)    primary key
+    , member_pw         varchar2(30)    not null
+    , member_name       varchar2(30)    not null
+    , member_mail       varchar2(30)    not null
+    , member_photo      varchar2(40)    
+    , member_birthday   date            not null
+    , member_married    number(1)       default 0
+    , member_weddingday date            
+    , member_regdate    date            default sysdate
+    , member_lastlogin  date
+    , member_wdraw      number(1)       default 0
+);
+
+create table bnd_memo(
+    memo_no             number          primary key
+    , member_id         varchar2(30)    not null
+    , memo_id           varchar2(30)    not null
+    , memo_content      varchar2(30)    not null
+    , constraint memo_member_id_fk foreign key (member_id)
+    references bnd_member(member_id) on delete cascade
+    , constraint memo_memo_id_fk foreign key (memo_id)
+    references bnd_member(member_id) on delete cascade
+);
+
+create table bnd_group(
+    group_no            number          primary key
+    , group_category    varchar2(30)    not null
+    , group_subcategory varchar2(50)    
+    , group_name        varchar2(100)   not null
+    , group_regdate     date            default sysdate
+    , group_code        varchar2(5)
+    , group_codedate    date            default sysdate
+);
+
+create sequence bnd_group_no_seq;
+
+create table bnd_document(
+    group_no            number          not null
+    , document_no       number          primary key
+    , member_id         varchar2(30)    not null
+    , document_content  varchar2(600)   not null
+    , document_regdate  date            default sysdate
+    , document_finalday date            default sysdate
+    , document_destination  varchar2(300)
+    , constraint document_group_no_fk foreign key (group_no)
+    references bnd_group(group_no) on delete cascade
+    , constraint document_member_id_fk foreign key (member_id)
+    references bnd_member(member_id) on delete cascade
+);
+
+create sequence bnd_document_no_seq;
+
+create table bnd_photo(
+    document_no         number          not null
+    , photo_originfile  varchar2(100)
+    , photo_savedfile   varchar2(100)
+    , photo_no          number          primary key
+    , constraint photo_photo_no_fk foreign key (photo_no)
+    references bnd_photo(photo_no) on delete cascade
+);
+
+create sequence bnd_photo_no_seq;
+
+create table bnd_reply(
+    reply_no            number          primary key
+    , document_no       number          not null
+    , reply_content     varchar2(100)   not null
+    , reply_regdate     date            default sysdate
+    , member_id         varchar2(30)    not null
+    , constraint reply_member_id_fk foreign key (member_id)
+    references bnd_member(member_id) on delete cascade
+);
+
+create sequence bnd_reply_no_seq;
+
+create table bnd_groupjoin(
+    group_no            number          not null
+    , member_id         varchar2(30)    not null
+    , member_level      number(1)       not null
+    , group_joindate    date            default sysdate
+    , constraint groupjoin_group_no_fk foreign key (group_no)
+    references bnd_group(group_no) on delete cascade
+    , constraint groupjoin_member_id_fk foreign key (member_id)
+    references bnd_member(member_id) on delete cascade
+);
+
+create table bnd_hashtag(
+    hash_no             number          primary key
+    , hash_tag          varchar2(100)   not null
+    , document_no       number          not null
+    , constraint hashtag_document_no_fk foreign key (document_no)
+    references bnd_document(document_no) on delete cascade
+);
+
+create sequence bnd_hash_no_seq;
+
+create table bnd_note(
+    note_no             number          primary key
+    , note_content      varchar2(100)   not null
+    , member_id         varchar2(30)    not null
+    , note_receiver     varchar2(30)    not null
+    , constraint note_member_id_fk foreign key (member_id)
+    references bnd_member(member_id) on delete cascade
+    , constraint note_note_receiver_fk foreign key (note_receiver)
+    references bnd_member(member_id) on delete cascade
+);
+
+create sequence bnd_note_no_seq;
+
+create table bnd_groupinvite(
+    invite_date         date            default sysdate
+    , invite_receiver   varchar2(30)    not null
+    , invite_check      number(1)       default 0
+    , constraint groupinvite_invite_receiver_fk foreign key (invite_receiver)
+    references bnd_member(member_id) on delete cascade
+);
+
+create table bnd_alert(
+    alert_date          date            default sysdate
+    , alert_receiver    varchar2(30)    not null
+    , alert_content     varchar2(500)   not null
+    , alert_check       number(1)       default 0
+    , constraint alert_alert_receiver_fk foreign key (alert_receiver)
+    references bnd_member(member_id) on delete cascade
+);
+
+commit;
