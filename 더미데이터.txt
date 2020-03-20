@@ -1,0 +1,164 @@
+insert into bnd_member(
+    member_id
+    , member_pw
+    , member_name
+    , member_mail
+    , member_photo
+    , member_birthday
+    , member_lastlogin
+) values (
+    'jsh4646'
+    , 123123
+    , '정수환'
+    , 'jsh4646@naver.com'
+    , '/dahyun.png'
+    , '91-11-22'
+    , '20-03-20'
+);
+
+
+insert into bnd_group(
+    group_no
+    , group_category
+    , group_subcategory
+    , group_name
+    , group_code
+) values (
+    bnd_group_no_seq.nextval
+    , 'personal'
+    , 'family'
+    , '정가네'
+    , 'lk3ie'
+);
+
+insert into bnd_group(
+    group_no
+    , group_category
+    , group_subcategory
+    , group_name
+    , group_code
+) values (
+    bnd_group_no_seq.nextval
+    , 'public'
+    , 'game'
+    , '단풍조기축구'
+    , 'ijih3'
+);
+    
+insert into bnd_document(
+    group_no
+    , document_no
+    , member_id
+    , document_content
+    , document_regdate
+    , document_finalday
+    , document_destination
+) values (
+    1
+    , bnd_document_no_seq.nextval
+    , 'jsh4646'
+    , '재미있었다'
+    , '20-03-07'
+    , '20-03-08'
+    , '신가네국밥'
+);
+
+insert into bnd_document(
+    group_no
+    , document_no
+    , member_id
+    , document_content
+    , document_regdate
+    , document_finalday
+    , document_destination
+) values (
+    2
+    , bnd_document_no_seq.nextval
+    , 'jsh4646'
+    , '다리가 저릴 정도로 달렸다..'
+    , '20-03-15'
+    , '20-03-15'
+    , '호남고 운동장'
+);
+
+insert into bnd_groupjoin(
+    group_no
+    , member_id
+    , member_level
+) values (
+    1
+    , 'jsh4646'
+    , 1
+);
+
+insert into bnd_groupjoin(
+    group_no
+    , member_id
+    , member_level
+) values (
+    2
+    , 'jsh4646'
+    , 2
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+) values (
+    bnd_hash_no_seq.nextval
+    , '#역시'
+    , 1
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+) values (
+    bnd_hash_no_seq.nextval
+    , '#신가네'
+    , 1
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+) values (
+    bnd_hash_no_seq.nextval
+    , '#정읍국밥'
+    , 1
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+) values (
+    bnd_hash_no_seq.nextval
+    , '#맛집'
+    , 1
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+) values (
+    bnd_hash_no_seq.nextval
+    , '#정읍'
+    , 2
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+) values (
+    bnd_hash_no_seq.nextval
+    , '#단풍조기축구'
+    , 2
+);
+
+commit;
