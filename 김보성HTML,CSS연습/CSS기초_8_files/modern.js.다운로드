@@ -1,0 +1,46 @@
+define(function() {
+	"use strict";
+	var func;
+
+	func = {
+		hasProp : function(prop) {
+			var body = document.body;
+			if ( window.getComputedStyle && window.getComputedStyle(body,null)[prop] ) {
+				return true;
+			}
+
+			if ( body.currentStyle && body.currentStyle[prop] ) {
+				return true;
+			}
+
+			return false;
+		}
+	};
+
+
+	return {
+		svg : function() {
+			return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1");
+		},
+		column : function() {
+			var na = navigator;
+			var ua = na.userAgent.toLowerCase();
+			var vendor = "";
+
+			if (typeof na.vendor !== "undefined") {
+				vendor = na.vendor.toLowerCase();
+			}
+			// console.log(vendor);
+
+			if ((ua.indexOf("android") > -1) && (vendor.indexOf("google") > -1) && (ua.indexOf("chrome") < 0)) {
+				return false;
+			}
+
+			if (func.hasProp("columnGap") || func.hasProp("MozColumnGap") || func.hasProp("webkitColumnGap")){
+				return true;
+			}
+
+			return false;
+		}
+	};
+});

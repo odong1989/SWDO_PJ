@@ -1,0 +1,231 @@
+define(
+	[
+		'jquery',
+		'../model/info',
+		'../core/data',
+		'../core/event',
+		'../core/touch',
+		'../core/cookie'
+	],
+function($, Info, Data, Evt, Touch, Cookie) {
+	"use strict";
+
+	var func, evt, control;
+	var elem = Info.elements;
+	var body = elem.body;
+
+	// Column Information
+	var info = Info.options.column = {
+		gap : 60,
+		now : 0,
+		scrollType : ('onmousewheel' in document) ? 'mousewheel' : 'DOMMouseScroll'
+	};
+
+	// Classnames
+	var classes = Info.classes.column = {
+		dotName : 'page-btn',
+		dotNow : 'page-now',
+		edge : 'nav-edge',
+		on : 'column-on',
+		off : 'column-off'
+	};
+
+	// Elements
+	var els = elem.column = {
+		frame : $('#content-frame'),
+		article : $('#main-article'),
+		areaLeft : $('#nav-prev'),
+		areaRight : $('#nav-next'),
+		btnLeft : $('#btn-left'),
+		btnRight : $('#btn-right'),
+		pageNav : $('#content-index'),
+	};
+	els.forms = els.article.find('input, textarea, select, button');
+
+	// Functions
+	func = {
+		calc : function() {
+			info.widthFrame = els.frame.width();
+			info.widthArticle = els.article[0].scrollWidth;
+			info.total = Math.ceil(info.widthArticle / (info.widthFrame + info.gap));
+			info.widthPage = info.widthFrame + info.gap;
+			info.now = (info.now > info.total) ? info.total : info.now;
+		},
+
+		makeDots : function() {
+			var dotEl = $(document.createElement('span'));
+			var wrap = els.pageNav;
+			var i = 0;
+
+			dotEl.addClass(classes.dotName);
+
+			wrap.html('');
+
+			for (; i < info.total ; i += 1) {
+				var dot = dotEl.clone();
+				dot.innerHTML = i;
+				dot.on('click', {to : i}, evt.goToBtn);
+				wrap.append(dot);
+			}
+		},
+
+		markDot : function() {
+			var dot = els.pageNav.children().eq(info.now);
+			dot.addClass(classes.dotNow).siblings().removeClass(classes.dotNow);
+		},
+
+		isEdge : function() {
+			var left = els.areaLeft;
+			var right = els.areaRight;
+			var cls = classes.edge;
+			var check; // Just for excute '?'
+
+			check = (info.now === 0) ? left.addClass(cls) : left.removeClass(cls);
+			check = (info.now === info.total - 1) ? right.addClass(cls) : right.removeClass(cls);
+		},
+
+		goTo : function(num) {
+			var reach;
+
+			num = Data.inLimit(num, 0, info.total - 1);
+			reach = info.widthPage * num;
+			els.article.css('left', -reach);
+			info.now = num;
+
+			func.markDot();
+			func.isEdge();
+		},
+
+		flip : function(num) {
+			func.goTo(info.now + num);
+		}
+	};
+
+
+	// Event Functions
+	evt = {
+		goToBtn : function(e) {
+			func.goTo(e.data.to);
+		},
+		flipBtn : function(e) {
+			func.flip(e.data.unit);
+		},
+		scrollEnd : function() {
+			info.nowScroll = false;
+		},
+
+		mouseScroll : function(e) {
+			var wheel, unit;
+			var event = e.originalEvent;
+
+			if (info.nowScroll) {
+				clearTimeout(evt.scrollTimer);
+				evt.scrollTimer = setTimeout(evt.scrollEnd, 200);
+				return false;
+			}
+			info.nowScroll = true;
+			if (typeof event.wheelDelta !== 'undefined') {
+				wheel = -event.wheelDelta;
+			}
+			else if (typeof event.detail !== 'undefined') {
+				wheel = event.detail;
+			}
+
+			unit = (wheel > 0) ? 1 : -1;
+
+			func.flip(unit);
+		},
+
+		keyScroll : function(e) {
+			if ( Evt.isKey(e.keyCode, [39, 32, 40]) ) {
+				func.flip(1);
+			}
+			else if ( Evt.isKey(e.keyCode, [37, 38]) ) {
+				func.flip(-1);
+			}
+		},
+
+		resize : function() {
+			func.calc();
+			func.makeDots();
+			func.markDot();
+			func.isEdge();
+			func.goTo(info.now);
+		},
+
+		hozStart : function(touch, data, e) {
+			touch.nowPage = parseInt(els.article.css('left'));
+		},
+		hozMove : function(touch, data, e) {
+			Evt.blockDef(e);
+			els.article.css('left', touch.nowPage + touch.moveX);
+		},
+
+		hozEnd : function(touch, data) {
+			var unit = 0;
+			if (Math.abs(touch.moveX) > 80) {
+				unit = (touch.moveX > 0) ? -1 : 1;
+				func.flip(unit);
+			}
+			else {
+				func.goTo(info.now);
+			}
+		}
+	};
+	evt.hozPack = {
+		start : evt.hozStart,
+		move : evt.hozMove,
+		end : evt.hozEnd
+	};
+
+
+	// Controller
+	control = {
+
+		bind : function() {
+			body.addClass(classes.on).removeClass(classes.off);
+
+			els.btnLeft.on('click', { unit : -1 }, evt.flipBtn);
+			els.btnRight.on('click', { unit : 1 }, evt.flipBtn);
+
+			els.frame.on(info.scrollType, evt.mouseScroll);
+
+			Touch.on(els.frame, {}, evt.hozPack);
+
+			$(window).on('resize', evt.resize);
+			$(window).on('keydown', evt.keyScroll);
+
+			els.forms.on('keydown', Evt.blockBub);
+
+			control.init();
+			Cookie.add('column', 2, 10);
+		},
+
+		unbind : function() {
+			body.addClass(classes.off).removeClass(classes.on);
+
+			els.btnLeft.off('click', evt.flipBtn);
+			els.btnRight.off('click', evt.flipBtn);
+
+			els.frame.off(info.scrollType, evt.mouseScroll);
+
+			Touch.off(els.frame, {}, evt.hozPack);
+
+			$(window).off('resize', evt.resize);
+			$(window).off('keydown', evt.keyScroll);
+
+			els.forms.off('keydown', Evt.blockBub);
+
+			Cookie.add('column', 1, 10);
+		},
+
+		init : function() {
+			info.now = 0;
+			evt.resize();
+		}
+	};
+
+	return control;
+
+
+});

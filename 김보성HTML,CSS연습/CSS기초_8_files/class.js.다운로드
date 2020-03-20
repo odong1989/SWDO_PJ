@@ -1,0 +1,34 @@
+require.config({
+	'paths' : {
+		'jquery' : '//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min',
+		'googleAd' : '//pagead2.googlesyndication.com/pagead/js/adsbygoogle'
+	}
+});
+
+require(
+	[
+		'jquery',
+		'../model/info',
+		'../core/modern',
+		'../core/cookie',
+		'../view/common',
+		'../controller/ad'
+	],
+function($, Info, Modern, Cookie, common, ad ){
+	var body = Info.elements.body;
+
+	common.load();
+	if (typeof window.webber !== "undefined" && !webber.isCover) {
+		ad.load();
+	}
+
+	if (Modern.column()) {
+		require(['../controller/column', '../controller/opt/column'], function(column, optColumn) {
+
+			optColumn.bind();
+			if (Cookie.get('column') != 1) {
+				column.bind();
+			}
+		});
+	}
+});

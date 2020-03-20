@@ -1,0 +1,22 @@
+define(
+	[
+		'jquery',
+		'../../model/info',
+		'../../core/cookie',
+		'../../controller/column'
+	],
+function($, Info, Cookie, Column) {
+	// var info = Info.options.column = {};
+	var elem = Info.elements;
+	var els = elem.opt.column = {
+		ver : $('#btn-viewer-ver'),
+		hoz : $('#btn-viewer-hoz')
+	};
+
+	return {
+		bind : function() {
+			els.ver.on('click', Column.unbind);
+			els.hoz.on('click', Column.bind);
+		}
+	};
+});

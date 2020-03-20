@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+<style>
+
+
+</style>
+</head>
+<body>
+    <em>em문구 약간 강조<em>
+    <strong>strong문구 더 강조</strong>ㅇㅇㅇㅇ
+    <p>그 치킨의 가격은<strong>20,000원</strong>이었지만, <em>매우 맛없었습니다.</em></p>
+
+    <p>다음은 소설 <cite>소나기</cite>의 한 부분입니다</p>
+    <blockquote cite="http://example.com">
+    <p>'이 바보.'</p>
+    <p>조약돌이 날아왔다. 소년은 저도 모르게 벌떡 일어섰다.</p>
+    </blockquote>
+
+    <p><q cite="http://html5.clearboth.org/text-level-semantics.html#the-q-element">
+    인용이 아닌 내용에 따옴표를 나타내기 위해 q요소를 사용하여서는 안됩니다.
+    </q></p>
+
+    <p>매일 팔굽혀 펴기는  <del>50회</del> <ins>2회</ins>실시한다. </p>
+    
+    <del>
+        <p>매일 아침 새벽에 일어나 30분 조깅을 한다.</p>
+        <p>식사는 고단백, 저열량으로 먹는다.</p>
+    </del>
+  
+    <ins>
+        <p>아침에는 충분한 숙면을 취하도록 한다.</p>
+        <p>먹을 것에 스트레스 받지 않도록 한다.</p>
+    </ins>
+
+    <!--아래의 예시는 잘못된 사례입니다.
+        Strong요소(인라인요소)안에서 del은 인라인 형태이며,
+        인라인 형태일때 블록요소를 포함할 수 없습니다.
+    -->
+    <strong><del>del요소는 언제든지</del><p>블록요소를 포함할 수 있습니다.</p></strong>
+</body>
+
+</html>

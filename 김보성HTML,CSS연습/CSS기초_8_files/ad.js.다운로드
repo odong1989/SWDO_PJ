@@ -1,0 +1,68 @@
+define(
+	[
+		'jquery',
+	],
+function($){
+	"use strict";
+
+	var wrap = $('#arti-body');
+	var code = '', func;
+	var info = {
+		className : 'content-ad ad-300x250 ad-in-txt',
+		width : 300,
+		height : 250,
+		client : 'ca-pub-7839575775830338',
+		slot : '7975472008'
+	};
+	var slotId = ['7975472008', '1253194401', '2729927604'];
+	var adsbygoogle;
+
+	var els = {
+		h2 : wrap.children('h2, h3'),
+		p : wrap.children('p')
+	};
+
+	var div = $(document.createElement('div')).addClass(info.className);
+
+	code += '<div class="ad-frame">';
+	code += '<ins class="adsbygoogle" style="display:inline-block;width:' + info.width + 'px;height:' + info.height + 'px;"';
+	code += ' data-ad-client="' + info.client + '" data-ad-slot="' + info.slot + '"></ins>';
+	code += '</div>';
+	div.html(code);
+
+	func = {
+		append : function(els) {
+			var i = 1, max = els.length + 1, j = 0, tag;
+			var unit = parseInt(max / 3);
+
+			for (; i < max && j < 3; i += unit, j += 1) {
+				tag = div.clone(true);
+				tag.find('ins.adsbygoogle').attr('data-ad-slot', slotId[j]);
+
+				els.eq(i).before(tag);
+				try {
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				} catch(err) {
+				}
+
+			}
+		},
+		loop : function() {
+			var elem;
+			if (els.h2.length > 1) {
+				elem = els.h2;
+			}
+			else {
+				elem = els.p;
+			}
+
+			func.append(elem);
+		}
+	};
+
+	return {
+		load : function() {
+			func.loop();
+		}
+	};
+});

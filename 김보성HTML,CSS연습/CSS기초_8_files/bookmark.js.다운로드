@@ -1,0 +1,60 @@
+define(
+	[
+		'jquery',
+		'../../model/info',
+		'../../core/cookie'
+	],
+function($, Info, Cookie) {
+	"use strict";
+
+	var func, els;
+	var enable = parseInt(Cookie.get('bookEnable'));
+	var webber = (typeof window.webber !== "undefined") ? window.webber : undefined;
+
+	// Elements
+	els = Info.elements.opt.bookmark = {
+		btnOn : $('#btn-bookmark-on'),
+		btnOff : $('#btn-bookmark-off')
+	};
+
+
+	// Functions
+	func = {
+		on : function() {
+			Cookie.add('bookEnable', 1);
+
+			els.btnOn.hide();
+			els.btnOff.show();
+
+			if (typeof webber === "undefined" || typeof webber.pageId === "undefined") {
+				return;
+			}
+			if (webber.pageType === "class" && !webber.isCover) {
+				Cookie.add('bookID', webber.pageId, 10);
+			}
+
+		},
+
+		off : function() {
+			Cookie.remove('bookID');
+			Cookie.add('bookEnable', 0, 10);
+
+			els.btnOff.hide();
+			els.btnOn.show();
+		},
+
+		init : function() {
+			if (enable === 1 || isNaN(enable) || typeof enable === "undefined" ) {
+				func.on();
+			}
+		}
+	};
+
+	return {
+		bind : function() {
+			func.init();
+			els.btnOn.on('click', func.on);
+			els.btnOff.on('click', func.off);
+		}
+	};
+});
