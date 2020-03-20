@@ -1,0 +1,18 @@
+define({
+	blockDef : function (e) {
+		e.preventDefault();
+	},
+	blockBub : function (e) {
+		e.stopPropagation();
+	},
+
+	isKey : function(key, codeArr) {
+		var i = 0, max = codeArr.length;
+		for (; i < max; i += 1){
+			if (key === codeArr[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+});

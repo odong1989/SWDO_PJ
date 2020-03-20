@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .float-frame{
+            background: #eee;
+            border :1px solid #ddd;
+            padding:10px;
+            overflow: hidden;
+        }
+
+        .float-unit{
+            width:50px;
+            background: #333;
+            color:#fff;
+            font-size:18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            float:left;
+        }
+
+        .big-area{
+            float:left;
+            width:100px;
+            margin: 0 10px 0 0;
+            padding: 10px;
+            background: #999;
+        }
+
+        .small-unit{
+            float:left;
+            width:48px;
+            height:48px;
+            color:#fff;
+            background: #333;
+            margin:1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="float-frame">
+        <div class="float-unit">a</div>
+        <div class="float-unit">b</div>
+        <div class="float-unit">c</div>
+        <div class="float-unit">d</div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="float-frame">
+        <div class="big-area">
+            <div class="small-unit">1</div>
+            <div class="small-unit">2</div>
+            <div class="small-unit">3</div>
+            <div class="small-unit">4</div>
+        </div>
+
+        <div class="big-area">
+            <div class="small-unit">a</div>
+            <div class="small-unit">b</div>
+            <div class="small-unit">c</div>
+            <div class="small-unit">d</div>
+        </div>
+    </div>
+
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+    <!--HEAD=문서의 메타데이터의 집합.
+        메타메이터 : 웹페이지의 그림자처럼 직접 등장않는 데이터.
+    -->
+        <!--1-->
+        <title>ㅁㅁ 사이트에 오신것을 환영합니다 ㅁㅁ</title>
+
+        <!--2 
+        <meta 속성="속성값" />
+    
+        </meta>
+
+        charset : 현재페이지의 인코딩에 대한 정보를 보유함.(#글자 인코딩 설정)
+
+        -->
+        <meta http-equiv="Content-Type" Content="text/html"; charset=UTF-8;>
+        <meta name="keywords" Content="키워드들의 나열"/>            
+        <meta name="robots" content="noindex, nofollow" /> 
+        </meta>
+
+        <link href="style.css" type="text/css" rel="sytlesheet">
+        <!--
+            link요소 : css연결외에도 사용된다.(rel=relastionship(관계)의 줄임말임.)
+            type :
+        -->
+        <!--color는 글씨의 색을 바꾸는 거다-->
+    <style type="text/css">
+        body{
+          color:#338; 
+        }
+    </style>
+
+    <script type="text/javascript" src="abc.js"></script>
+    <script type="text/javascript">
+    </script>
+
+    </HEAD>
+    
+    <BODY>
+test
+    <!--블록요소 
+    
+    블록요소 종류 : h, p, div
+    -->
+    <h1>h시리즈들은 블록요소 입니다.</h1>
+    <p>p는 블록 요소입니다.</p>
+    <div>div또한 블록요소입니다.</div>
+
+        <br><br><br>
+    <!--인라인 요소입니다
+    인라인= 해당태그가 쓰인 구간만을 차지한다  
+    인라인 요소 : <strong>, <a>, <span>
+    -->
+    <strong>strong 요소는 인라인 입니다.</strong>
+    <a>a도 인라인 요소입니다.</a>
+    <span>span도 인라인 요소!</span>
+
+    <!--블록요소와 인라인 요소의 규칙
+        1) 대부분의 요소는 같은 형태의 다른 요소를 안에 포함할 수 있다.
+           (인라인-인라인, 블록요소-블록요소)
+
+        2) 대부분의 블록 요소는 다른 인라인 요소도 안에 포함할 수 있다.
+    -->
+
+        <h1>블록요소는 자신의 안에<span>span인라인 요소를 넣을 수 있다</span></h1> 
+
+        <span>인라인은 자신내에<h1>블록요소를 안에들일수 없다.</h1></span>
+
+    </BODY>
+
+</HTML>

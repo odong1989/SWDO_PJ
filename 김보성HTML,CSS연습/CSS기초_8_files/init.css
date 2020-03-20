@@ -1,0 +1,16 @@
+/* Initialize */
+html { -webkit-text-size-adjust: none; font: 16px/1.6 'NanumGothic','Nanum Gothic','Malgun Gothic',dotum,Arial,Helvetica,sans-serif; }
+
+body { -webkit-text-size-adjust: 100%; margin: 0; padding: 0; color: #000; }
+
+ul, ol { list-style: none; }
+
+img { border: none; }
+
+button, input, select, textarea { font-family: inherit; font-size: inherit; }
+
+input[type=search] { -webkit-appearance: none; }
+
+code { font-family: monaco, consolas, 'Ubuntu Mono', freeMono, monospace; }
+
+/*# sourceMappingURL=init.css.map */

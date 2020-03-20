@@ -1,0 +1,52 @@
+define(['jquery'], function($) {
+	var touch = {
+		start : function (event) {
+			var e = event.originalEvent;
+			var data = event.data;
+			var touch = data.store;
+
+			touch.startX = e.touches[0].pageX;
+			touch.startY = e.touches[0].pageY;
+
+			touch.moveX = 0;
+			touch.moveY = 0;
+
+			if (typeof data.func !== 'undefined') {
+				data.func(touch, data, event);
+			}
+		},
+
+		move : function (event) {
+			var e = event.originalEvent;
+			var data = event.data;
+			var touch = data.store;
+			touch.moveX = - (touch.startX - e.touches[0].pageX);
+			touch.moveY = - (touch.startY - e.touches[0].pageY);
+
+			if (typeof data.func !== 'undefined') {
+				data.func(touch, data, event);
+			}
+		},
+
+		end : function (event) {
+			var data = event.data;
+			var touch = data.store;
+			if (typeof data.func !== 'undefined') {
+				data.func(touch, data, event);
+			}
+		}
+	};
+
+	touch.on = function (jObj, data, funcObj) {
+		jObj.on('touchstart', {store : data, func : funcObj.start}, touch.start);
+		jObj.on('touchmove', {store : data, func : funcObj.move}, touch.move);
+		jObj.on('touchend', {store : data, func : funcObj.end}, touch.end);
+	};
+
+	touch.off = function (jObj, data, funcObj) {
+		jObj.off('touchstart', {store : data, func : funcObj.start}, touch.start);
+		jObj.off('touchmove', {store : data, func : funcObj.move}, touch.move);
+		jObj.off('touchend', {store : data, func : funcObj.end}, touch.end);
+	};
+	return touch;
+});

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .contry span{
+            color:red;
+        }
+
+        .contry > span{
+            color:chocolate;
+        }
+    
+        p+p{
+            color:red;
+        }
+
+        p~p{
+            color:cyan
+        }
+
+        .abc:pseudo-class{
+
+        }
+
+        a:link{
+            color:yellow
+        }
+
+        p:first-child{
+            color:chartreuse;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="contry">
+        <span>Korea</span>
+        <ul class="city">
+            <li><span>Seoul</span></li>
+            <li><span>InCheon</span></li>
+        </ul>
+        <span>USA</span>
+        <ul class="city">
+            <li><span>New York</span></li>
+            <li><span>New Jersey</span></li>
+        </ul>
+    </div> 
+    
+    <div class="abc">
+        <div>SomeTing Else2</div>
+        <p>Apple</p>
+        <p>Orange</p>
+        <div>Something else</div>
+        <p>Banana</p>
+    </div>   
+
+    <a href="#test">test</a>
+    <a href="test">Hello~</a>
+</body>
+</html>

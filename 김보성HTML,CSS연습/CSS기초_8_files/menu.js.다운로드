@@ -1,0 +1,118 @@
+define(
+	[
+		'jquery',
+		'../model/info',
+		'../core/data',
+		'../core/event',
+		'../core/touch'
+	],
+	function($, Info, Data, Evt, Touch) {
+	"use strict";
+
+	var elems = Info.elements;
+	var navClass = Info.classes.nav;
+	var menuClass = Info.classes.menu;
+	var body = elems.body;
+
+	var navEl = {};
+	var headEl = {};
+	var menuClassArr = [], k;
+
+	var evt , func;
+
+	// Get Elements
+	navEl.wrap = $('#main-nav');
+	navEl.scroll = navEl.wrap.children();
+	navEl.subWrap = navEl.wrap.find('div.sub-list-wrap');
+	navEl.hasSub = navEl.subWrap.prev();
+
+	Info.elements.nav = navEl;
+
+	headEl = {
+		wrap : $('#main-header'),
+		togNav : $('#toggler-nav'),
+		togOpt : $('#toggler-opt-m, #toggler-opt'),
+		layerOpt : $('#header-opt-layer')
+	};
+
+	Info.elements.head = headEl;
+
+	for (k in menuClass) {
+		menuClassArr.push(menuClass[k]);
+	}
+
+	// Functions
+	func = {
+		offAll : function() {
+			body.removeClass(menuClassArr.join(" "));
+		}
+	};
+
+	evt = {
+		navCover : function(e) {
+			var mom = $(this).parent();
+
+			e.preventDefault();
+			mom.toggleClass(navClass.mainSelect);
+			mom.siblings().removeClass(navClass.mainSelect);
+		},
+
+		bodyToggle : function(e) {
+			var add = Data.arrToClass(e.data.add);
+			var del = Data.arrToClass(e.data.del);
+
+			e.stopPropagation();
+
+			if (body.hasClass(add)) {
+				func.offAll();
+				return;
+			}
+
+			body.removeClass(del).addClass(menuClass.block + ' ' + add);
+		},
+
+		touchScroll : {
+			start : function (touch, data, e) {
+				touch.nowScroll = touch.scroll.scrollTop();
+			},
+			move : function (touch, data, e) {
+				Evt.blockDef(e);
+				touch.scroll[0].scrollTop = (touch.nowScroll - touch.moveY) * 1.2;
+			}
+		},
+
+		touchOff : function (touch, data, e) {
+			if (touch.moveX * touch.dir > 50) {
+				func.offAll();
+			}
+		}
+	};
+
+	// Return Controller
+	return {
+		bind : function() {
+			var wraps = headEl.layerOpt.add(navEl.wrap);
+			var touchFuncs = {
+				start : evt.touchScroll.start,
+				move : evt.touchScroll.move,
+				end : evt.touchOff
+			};
+
+			// Navigation has sub menu
+			navEl.hasSub.addClass(navClass.hasSub).on('click', evt.navCover);
+
+			// Toggle buttons
+			headEl.togNav.on('click', { add : menuClass.nav, del : menuClass.opt}, evt.bodyToggle);
+			headEl.togOpt.on('click', { add : menuClass.opt, del : menuClass.nav}, evt.bodyToggle);
+
+			// layer off
+			$(window).on('click', func.offAll);
+			wraps.on('click', Evt.blockBub);
+
+			// Touch Events
+			Touch.on(headEl.layerOpt, {scroll : headEl.scroll, dir : 1}, touchFuncs);
+			Touch.on(navEl.wrap, {scroll : navEl.scroll, dir : -1}, touchFuncs);
+		}
+	};
+
+});

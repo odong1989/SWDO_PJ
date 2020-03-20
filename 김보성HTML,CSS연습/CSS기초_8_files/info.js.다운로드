@@ -1,0 +1,26 @@
+define(['jquery'], function($) {
+	// Info JSON
+	return {
+		//----- Elements
+		elements : {
+			body : $('body'),
+			opt : {}
+		},
+
+		//----- Classes
+		classes : {
+			menu : {
+				block : 'block-on',
+				opt : 'opt-on',
+				nav : 'nav-on'
+			},
+			nav : {
+				hasSub : 'has-sub',
+				mainSelect : 'main-selected'
+			}
+		},
+
+		//----- Options
+		options : {}
+	};
+});

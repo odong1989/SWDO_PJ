@@ -1,0 +1,29 @@
+define(
+	[
+		'jquery',
+		'../model/info',
+		'../core/modern',
+		'../core/cookie',
+		'../controller/menu',
+		'../controller/opt/font',
+		'../controller/opt/bookmark'
+	],
+function($, Info, Modern, Cookie, Menu, OptFont, OptBook) {
+	var body = Info.elements.body;
+	var func;
+
+	func = {
+		load : function() {
+			if (Modern.svg()) {
+				body.removeClass('no-svg');
+			}
+
+			Menu.bind();
+			OptFont.bind();
+			OptBook.bind();
+		}
+	};
+
+
+	return func;
+});

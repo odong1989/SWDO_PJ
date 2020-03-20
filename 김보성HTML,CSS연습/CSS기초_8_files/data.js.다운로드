@@ -1,0 +1,29 @@
+define(['jquery'], function($) {
+
+	return {
+		inLimit : function (num, min, max) {
+			$.map(arguments, function(v){
+				if (typeof v !== 'number') {
+					throw new Error("It must number");
+				}
+			});
+
+			if (num > max) {
+				return max;
+			}
+			if (num < min) {
+				return min;
+			}
+			return num;
+		},
+
+		arrToClass : function (arr) {
+			if ($.isArray(arr)) {
+				return arr.join(' ');
+			}
+
+			return arr;
+		}
+	};
+
+});

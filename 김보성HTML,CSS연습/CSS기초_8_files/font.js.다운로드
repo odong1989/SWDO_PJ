@@ -1,0 +1,60 @@
+define(
+	[
+		'jquery',
+		'../../model/info',
+		'../../core/data',
+		'../../core/cookie'
+	],
+
+function($, Info, Data, Cookie) {
+	"use strict";
+
+	var info = Info.options.font = {};
+	var elem = Info.elements;
+	var body = elem.body;
+	var els, func;
+
+	var levels = [0.9, 1, 1.1, 1.2, 1.3];
+	var record = Cookie.get('font');
+
+	info.now = (typeof record === "number") ? record : 1;
+
+
+	// Get Elements
+	els = {
+		btnBig : $('#btn-font-big'),
+		btnSmall : $('#btn-font-small') ,
+		rulerPoint : $('#font-size-point')
+	};
+	elem.opt.font = els;
+
+	// Functions
+	func = {
+		mod : function (lv) {
+			// Limit lv
+			lv = Data.inLimit(lv, 0, levels.length - 1);
+
+			// Apply Style
+			body.css('font-size', levels[lv] + 'em');
+			els.rulerPoint.css('left', (lv * 20) + '%');
+
+			// Save Info
+			info.now = lv;
+			Cookie.add('font', lv);
+		},
+
+		modify : function(e) {
+			func.mod(info.now + e.data.mod);
+		}
+	};
+
+	return {
+		bind : function() {
+			func.mod(info.now);
+
+			els.btnBig.on('click', {mod : 1}, func.modify);
+			els.btnSmall.on('click', {mod : -1}, func.modify);
+		}
+	};
+
+});
