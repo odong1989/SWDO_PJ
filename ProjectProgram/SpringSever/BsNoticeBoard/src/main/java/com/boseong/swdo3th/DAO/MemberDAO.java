@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 //import com.sun.media.jfxmedia.logging.Logger;
 
-import com.boseong.swdo3th.Controller.MemberController;
-import com.boseong.swdo3th.VO.Board;
 import com.boseong.swdo3th.VO.Member;
 
 @Repository
