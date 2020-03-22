@@ -21,4 +21,21 @@ public class DocumentDAO {
 	@Autowired
 	private SqlSession session;
 
-}
+	public ArrayList<Document> selectDocuments(String member_id){
+		logger.info("DocumentDAO.java - selectDocuments 메소드 시작");	
+		logger.info("DocumentDAO.java - 수신된 회원Id : {}",member_id);	
+		ArrayList<Document> documentList = null;
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+			documentList = mapper.selectDocuments(member_id);
+			logger.info("GroupDAO.java - groupJoinList의 수신값 : {}",documentList);			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		logger.info("GroupDAO.java - 최종 리턴되는 groupJoinList : {}",documentList);			
+		logger.info("DocumentDAO.java - selectDocuments 메소드종료");	
+		return documentList;
+		
+		}
+	}

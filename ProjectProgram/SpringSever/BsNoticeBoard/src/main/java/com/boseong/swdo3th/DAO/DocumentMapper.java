@@ -6,4 +6,5 @@ import com.boseong.swdo3th.VO.Document;
 
 public interface DocumentMapper {
 
+	public ArrayList<Document> selectDocuments(String member_id);
 }

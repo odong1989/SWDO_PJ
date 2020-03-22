@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,7 +101,18 @@
                     </tr>
                 </table>
             </div>
+
         </div>
-    </div>
+    <P>이제 아래의 값들을 각 위치에 출력해야 한다.</P>
+	<c:forEach var="Group" items="${groupJoinList}">
+	${Group.group_name }
+	</c:forEach><br>
+	<c:forEach var="Document" items="${documentList}">
+	${Document.document_content }
+	</c:forEach><br>
+	<c:forEach var="HashTag" items="${hashTagList}">
+	${HashTag.hash_tag }
+	</c:forEach><br>
+
 </body>
 </html>
