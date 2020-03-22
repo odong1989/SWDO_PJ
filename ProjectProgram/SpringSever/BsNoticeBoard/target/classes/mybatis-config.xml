@@ -7,10 +7,12 @@
 		<typeAlias type="com.boseong.swdo3th.VO.Member" alias="member"/>
 		<typeAlias type="com.boseong.swdo3th.VO.Group" alias="group"/>
 		<typeAlias type="com.boseong.swdo3th.VO.Document" alias="document"/>
+		<typeAlias type="com.boseong.swdo3th.VO.HashTag" alias="hashtag"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
 		<mapper resource="mapper/groupMapper.xml" />
 		<mapper resource="mapper/documentMapper.xml" />
+		<mapper resource="mapper/hashTagMapper.xml" />
 	</mappers>
 </configuration>
