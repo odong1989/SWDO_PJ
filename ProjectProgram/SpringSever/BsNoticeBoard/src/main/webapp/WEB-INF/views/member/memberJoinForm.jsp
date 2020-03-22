@@ -40,102 +40,93 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 		padding: 20px 0 20px 10px;
 		border-radius: 4%;
 	}
-	div.memberJoin{
-		width  	   : 250px; 
-		height	   : 45px;
-		text-align : right; 
-		border 	   : 1px solid black;
-		background-size: 250px, 250px;
-		background-repeat: no-repeat;
-	}
-	
-	div.memberJoin.image{
-		width:40px; 
-		height:40px; 
-		float:left;
-	}
-	input.box{
-		width:200px;
-		height:50px;
-		font-size:13px;
-	}
 </style>
 </head>
 <body>
 <div>
-	<table style="margin:50px 50px;">
+	<h1>Binder</h1>
+	<h1>memberJoinForm</h1>
+	<table style="margin:0 auto;">
 		<form action="memberJoin" method="post" onsubmit="return formCheck();">
-			<tr>
-				<td>
-					<div class="memberJoin" style=background-image:url(/img/MemberJoin/MemberJoin_login.jpg);">
-						<div class="image"></div>
-						<input class="box" type="text" id="id" name="member_id" placeholder="아이디 입력해주세요">		
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="memberJoin"	style="background-image:url(/img/MemberJoin/MemberJoin_password.jpg);">
-						<div class="image"></div>
-						<input type="password" id="pwd" name="member_pw" placeholder="비밀번호 입력해 주세요">		
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="memberJoin"	style="background-image:url(/img/MemberJoin/MemberJoin_name.jpg);">
-						<div class="image"></div>
-						<input type="text" id="name" name="member_name" placeholder="이름을 입력해 주세요 ">	
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="memberJoin"	style="background-image:url(/img/MemberJoin/MemberJoin_password.jpg);">
-						<div class="image"></div>
-						<input type="text" id="birthday" name="member_birthday" placeholder="생년월일 입력해 주세요" >	
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="memberJoin"	style="background-image:url(/img/MemberJoin/MemberJoin_email.jpg);">
-						<div class="image"></div>
-						<input type="text" id="mail" name="member_mail" placeholder="이메일 입력해주세요" >					
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="memberJoin" style="background-image:url(/img/MemberJoin/MemberJoin_phone.jpg);">
-						<div class="image"></div>
-						<input type="text" id="phone" name=member_phone placeholder="연락처를 입력해 주세요" >	
-					</div>
-				</td>
-			</tr>
-			<tr> 
-				<td>
-					<div style="width:220px; height:60px; padding:15px; border:1px solid black;">
-						<input type="radio" value="미혼" >미혼<br><br>
-						<input type="radio" value="기혼">기혼
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="memberJoin" style="background-image:url(/img/MemberJoin/MemberJoin_password.jpg);">
-						<div class="image"></div>
-						<input type="text" id="weddingday" name="member_weddingday" placeholder="결혼기념일 입력해 주세요">	
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="submit" value="회원가입"> 
-					<a href="/"><input type="button" value="취소(메인화면으로)"></a>
-				</td>
-			<tr>
-		</form>
+		<tr>
+			<td>
+				<div style="width:500px; height:100px; text-align:right; border:1px solid black;
+							background-image:url(/img/MemberJoin/MemberJoin_login.jpg);">
+					<div style="width:100px; height:100px; float:left;"></div>
+					<input type="text" id="id" name="member_id" placeholder="아이디 입력해주세요" style="width:390px;height:90px;font-size:30px;">		
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:500px; height:100px; text-align:right; border:1px solid black;
+						background-image:url(/img/MemberJoin/MemberJoin_password.jpg);">
+					<div style="width:100px; height:100px; float:left;"></div>
+					<input type="password" id="pwd" name="member_pw" placeholder="비밀번호 입력해 주세요"style="width:390px;height:90px;font-size:30px;">		
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:500px; height:100px; text-align:right; border:1px solid black;
+						background-image:url(/img/MemberJoin/MemberJoin_name.jpg);">
+					<div style="width:100px; height:100px; float:left;"></div>
+						<input type="text" id="name" name="member_name" placeholder="이름을 입력해 주세요 " style="width:390px;height:90px;font-size:30px;">	
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:500px; height:100px; text-align:right; border:1px solid black;
+						background-image:url(/img/MemberJoin/MemberJoin_password.jpg);">
+					<div style="width:100px; height:100px; float:left;"></div>
+					<input type="text" id="birthday" name="member_birthday" placeholder="생년월일 입력해 주세요" style="width:390px;height:90px;font-size:30px;">	
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:500px; height:100px; text-align:right; border:1px solid black;
+						background-image:url(/img/MemberJoin/MemberJoin_email.jpg);">
+					<div style="width:100px; height:100px; float:left;"></div>
+					<input type="text" id="mail" name="member_mail" placeholder="이메일 입력해주세요" style="width:390px;height:90px;font-size:30px;">					
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:500px; height:100px; text-align:right; border:1px solid black;
+						background-image:url(/img/MemberJoin/MemberJoin_phone.jpg);">
+					<div style="width:100px; height:100px; float:left;"></div>
+					<input type="text" id="phone" name=member_phone placeholder="생년월일 입력해 주세요" style="width:390px;height:90px;font-size:30px;">	
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:450px; height:80px; padding:25px; border:1px solid black;">
+				<input type="radio" value="미혼" ><br><br>
+				<input type="radio" value="기혼">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:500px; height:100px; text-align:right; border:1px solid black;
+						background-image:url(/img/MemberJoin/MemberJoin_password.jpg);">
+					<div style="width:100px; height:100px; float:left;"></div>
+					<input type="text" id="weddingday" name="member_weddingday" placeholder="결혼기념일 입력해 주세요" style="width:390px;height:90px;font-size:30px;">	
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="submit" value="회원가입"> <input type="button" value="취소(메인화면으로)">
+				<br>
+				<a href="">아이디/비밀번호 찾기</a>
+			</td>
+		<tr>
+	</form>
 	</table>
 </div>
 </body>
