@@ -62,7 +62,7 @@ public class BoardController {
 		model.addAttribute("navi", navi);				//페이지 정보
 		model.addAttribute("searchText", searchText);	//검색어 정보
 		model.addAttribute("totalCount", totalCount);
-		return "/board/boardList";
+		return "board/boardList";
 	}
 	
 	
@@ -268,5 +268,10 @@ public class BoardController {
 	}
 	
 	
-	
+	//M13 캘린더
+	@RequestMapping(value="/MoveToCalendar", method=RequestMethod.GET)
+	public String MoveToCalendar() {
+		logger.info("BoardController - Calendar페이지로 이동 ");		
+		return "board/boardCalendar";
+	}
 }

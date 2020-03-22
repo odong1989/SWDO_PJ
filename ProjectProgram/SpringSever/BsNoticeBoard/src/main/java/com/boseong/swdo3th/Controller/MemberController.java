@@ -134,7 +134,7 @@ public class MemberController {
 			return "member/memberLoginForm";
 		}
 		logger.info("memberLoginExe 로그인 프로세스 페이지 이동");
-		return "redirect:board/boardList";
+		return "redirect:/board/boardList";
 	}
 	
 	
