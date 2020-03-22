@@ -40,16 +40,15 @@
                         <p class="p-group">#단체그룹</p>
                     </div>
                     <div class="menu-group-button-right">
-                    <img src="/img/human.png"> 
+                    <img src="/img/human.png">
                     </div>
                     <div class="menu-group-button-clear"></div>
                 </div>
-            </div>  
+            </div>
         </div>
         <div id="WrapRight">
             <div id="MemberMenu">
                 <div id="naibu-right-left">
-                    
                 </div>
                 <!-- <div id="naibu-right-right"> -->
                     <p><img src="/img/bell.png"> <img src="/img/mail.png"> <img src="/img/human.png"></p>
@@ -61,7 +60,7 @@
                         <td width="21%"></td>
                         <td width="auto" align="center"><p id="board_title">공지사항 : ㅇㅇㅇ공지부분</p></td>
                         <td width="21%" align="right">
-                        	<img src="/img/f5.png"> 
+                        	<img src="/img/f5.png">
                         	<a href="/board/MoveToCalendar"><img src="/img/cal.png"></a>
                         </td>
                     </tr>
@@ -105,4 +104,3 @@
     </div>
 </body>
 </html>
-
