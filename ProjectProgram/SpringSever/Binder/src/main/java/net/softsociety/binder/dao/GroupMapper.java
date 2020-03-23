@@ -1,8 +1,9 @@
-package com.boseong.swdo3th.DAO;
+package net.softsociety.binder.dao;
 
 import java.util.ArrayList;
 
-import com.boseong.swdo3th.VO.Group;
+import net.softsociety.binder.vo.Group;
+
 
 public interface GroupMapper {
 

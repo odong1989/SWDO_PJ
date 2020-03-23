@@ -1,4 +1,4 @@
-package com.boseong.swdo3th.Controller;
+package net.softsociety.binder.controller;
 
 import java.util.ArrayList;
 
