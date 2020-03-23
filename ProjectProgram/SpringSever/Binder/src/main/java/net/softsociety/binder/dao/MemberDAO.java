@@ -8,9 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+<<<<<<< HEAD:ProjectProgram/SpringSever/BsNoticeBoard/src/main/java/com/boseong/swdo3th/DAO/MemberDAO.java
+//import com.sun.media.jfxmedia.logging.Logger;
+
+import com.boseong.swdo3th.VO.Member;
+=======
 import net.softsociety.binder.controller.MemberController;
 import net.softsociety.binder.vo.Board;
 import net.softsociety.binder.vo.Member;
+>>>>>>> 브랜치_지혜:ProjectProgram/SpringSever/Binder/src/main/java/net/softsociety/binder/dao/MemberDAO.java
 
 @Repository
 public class MemberDAO {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boseong.swdo3th.DAO.HashTagMapper">
+
+<!-- 
+select BND_HASHTAG.hash_tag
+from bnd_hashtag
+where bnd_hashtag.document_no = '2';
+ 
+ 
+작성된 글과 관련된 애들만 뽑을 거니까 아래처럼 한다.
+select bnd_hashtag.hash_tag
+from bnd_hashtag, bnd_document
+where bnd_hashtag.document_no = bnd_document.document_no;
+ String member_id
+ 
+ 해당 계정과 관련된 애들만 보내기 위해 조건용 파라미터를 ID로 한다.
+select bnd_hashtag.hash_tag
+from bnd_hashtag, bnd_document,bnd_member  
+where bnd_hashtag.document_no = bnd_document.document_no
+and bnd_member.member_id ='jsh4646';
+ 
+-->
+
+	<select id="selectHashTags" parameterType="string" resultType="hashtag">
+		select bnd_hashtag.hash_tag
+		from bnd_hashtag, bnd_document,bnd_member
+		where bnd_hashtag.document_no = bnd_document.document_no
+		and bnd_member.member_id =#{member_id}
+	</select>
+
+
+</mapper>
