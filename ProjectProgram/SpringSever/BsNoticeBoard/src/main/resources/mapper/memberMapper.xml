@@ -10,7 +10,6 @@
 		,member_name	
 		,member_mail		
 		,member_photo		
-		,member_phone		
 		,to_char(member_birthday, 'yyyy-MM-dd') as member_birthday
 		,member_married		
 		,to_char(member_weddingday, 'yyyy-MM-dd') as member_weddingday
@@ -31,13 +30,19 @@
 			,member_pw
 			,member_name
 			,member_mail
+			,member_photo
 			,member_birthday
+			,member_married
+			,member_weddingday     
 		)values(
 			#{member_id}
 			,#{member_pw}
 			,#{member_name}
 			,#{member_mail}
+			,#{member_photo}
 			,#{member_birthday}
+			,#{member_married}
+			,#{member_weddingday}  
     )
     </insert>
    

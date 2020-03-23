@@ -42,7 +42,7 @@ public class DocumentController {
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		modelGroupJoinList.addAttribute("groupJoinList", groupJoinList);
 		logger.info("modelGroupJoinList 에 저장&리턴될 groupJoinList값 : {} ", modelGroupJoinList);
-
+		
 		logger.info("mainDocument - 수신데이터2 : 작성한 글(Document)");
 		ArrayList<Document> documentList = documentDao.selectDocuments(member_id);
 		modelDocumentList.addAttribute("documentList", documentList);
