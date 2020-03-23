@@ -1,4 +1,4 @@
-package com.boseong.swdo3th.Controller;
+package net.softsociety.binder.controller;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.boseong.swdo3th.DAO.DocumentDAO;
-import com.boseong.swdo3th.DAO.GroupDAO;
-import com.boseong.swdo3th.DAO.HashTagDAO;
-import com.boseong.swdo3th.VO.Document;
-import com.boseong.swdo3th.VO.Group;
-import com.boseong.swdo3th.VO.HashTag;
+import net.softsociety.binder.dao.DocumentDAO;
+import net.softsociety.binder.dao.GroupDAO;
+import net.softsociety.binder.dao.HashTagDAO;
+import net.softsociety.binder.vo.Document;
+import net.softsociety.binder.vo.Group;
+import net.softsociety.binder.vo.HashTag;
+
+
 
 //@선언
 @Controller
