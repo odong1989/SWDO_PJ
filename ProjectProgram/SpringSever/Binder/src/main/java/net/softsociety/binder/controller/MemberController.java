@@ -125,13 +125,15 @@ public class MemberController {
 			}
 			else {//PW가 틀린경우 실시
 				errMsg="비밀번호가 틀렸습니다";
+				logger.info("memberLoginExe.java - 비밀번호가 틀렸습니다");
 				model.addAttribute("errMsg",errMsg);
-				return "member/memberLoginForm";
+				return "index";
 			}
 		}else {//ID가 틀린경우 실시.
 			errMsg="ID가 틀렸습니다";
+			logger.info("memberLoginExe.java - ID가 틀렸습니다");
 			model.addAttribute("errMsg",errMsg);
-			return "member/memberLoginForm";
+			return "index";
 		}
 		logger.info("memberLoginExe 로그인 프로세스 페이지 이동");
 		return "redirect:/document/mainDocument";
