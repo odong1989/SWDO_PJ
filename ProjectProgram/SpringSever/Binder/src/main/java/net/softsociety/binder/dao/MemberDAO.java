@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 //import com.sun.media.jfxmedia.logging.Logger;
 
 import net.softsociety.binder.controller.MemberController;
-import net.softsociety.binder.vo.Board;
 import net.softsociety.binder.vo.Member;
 
 @Repository
