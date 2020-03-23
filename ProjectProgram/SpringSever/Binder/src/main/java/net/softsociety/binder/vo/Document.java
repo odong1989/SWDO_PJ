@@ -1,4 +1,4 @@
-package com.boseong.swdo3th.VO;
+package net.softsociety.binder.vo;
 
 import lombok.Data;
 
