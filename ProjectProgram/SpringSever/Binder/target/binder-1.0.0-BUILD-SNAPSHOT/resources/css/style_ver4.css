@@ -1,0 +1,120 @@
+/*배경컬러코드 참조 https://m.blog.naver.com/hellonami/30189427178*/
+
+
+div{
+	float:left;
+}
+
+.Logo{
+  	width:100px;
+ 	height:50px;
+}
+
+table.Menubar{
+	text-align:left;
+	display:inline-block;
+	padding:15px;
+  	width:460px;
+  	height:20px;
+}
+
+/*boardList.jsp*/
+/*
+table {border-collapse:separate;border-spacing:0;text-align:center;line-height:1.5;border-top:1px solid #ccc;border-left:1px solid #ccc;margin:auto;}
+table th {padding: 10px;font-weight: bold;vertical-align: middle;text-align:center;border-right:1px solid #ccc;border-bottom:1px solid #ccc;border-top:1px solid #fff;border-left:1px solid #fff;background:#eee;}
+table td {padding:10px;vertical-align:middle;text-align:center;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
+
+*/
+table {border-collapse:separate;border-spacing:0;text-align:center;line-height:1.5;border-top:1px solid #ccc;border-left:1px solid #ccc;}
+table th {padding: 10px;font-weight: bold;vertical-align: middle;text-align:center;border-right:1px solid #ccc;border-bottom:1px solid #ccc;border-top:1px solid #fff;border-left:1px solid #fff;background:#eee;}
+table td {padding:10px;vertical-align:middle;text-align:center;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
+
+.trhover:hover{background-color:#EEEEEE;}
+a:link{text-decoration:none; color:black;}
+a:visited{text-decoration:none; color:black;}
+a:hover{text-decoration:none; color:blue;}
+
+
+.boardContents{
+	float:left;
+}
+.searchAndWrite{
+	float:left;
+}
+
+.boardListArea{
+	display:inline-block;
+	float:left;
+	text-align:center;
+}
+
+/* boardReadForm.jsp Div영역 분할 */
+.boardOneRead{
+	display:inline-block;
+	float:left;
+	width:auto;
+	height: auto;
+}
+.boardReplyTable{
+	width:500px;
+	height: auto;
+}
+
+.noticeTalkType{	
+	clear:both;
+	float:left;
+	position:relative;
+	width:300px;
+	height:auto;
+	background-color : 	#20B2AA; 
+}
+
+.TalkBox.byBoard {
+  width: 200px;
+  margin: 20px ;
+  background: #DA70D6;
+  padding: 20px;
+  text-align: left;
+  font-weight: 100;
+  color: #fff;
+  font-family: arial;
+  position: relative;
+}
+
+.byBoard:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #DA70D6;
+  border-top: 10px solid #DA70D6;
+  border-bottom: 10px solid transparent;
+  left: -19px;
+  top: 6px;
+}
+
+.TalkBox.byMe {
+  width: 200px;
+  margin: 20px ;
+  background: #FFA500;
+  padding: 20px;
+  text-align: left;
+  font-weight: 100;
+  color: #fff;
+  font-family: arial;
+  position: relative;
+}
+
+.byMe:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid #FFA500;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #FFA500;
+  border-bottom: 10px solid transparent;
+  right: -19px;
+  top: 6px;
+}
