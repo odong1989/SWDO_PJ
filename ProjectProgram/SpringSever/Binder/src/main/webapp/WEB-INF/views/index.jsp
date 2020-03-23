@@ -9,27 +9,42 @@
 	<link rel="stylesheet" href="<c:url value='/css/suggest_Page_Basic.css' />">
 	<script src="http://code.jquery.com/jquery-3.4.1.js "> </script>
 	<style>
-	#loginWrap {
-		display: table;
+	body, html {
 		height: 100%;
 	}
-	#loginForm {
+	#loginWrap {
+		height: 100%;
+		display: table;
+		width: 100%;
+	}
+	#loginDiv{
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+	}
+	
+	.loginForm {
 		text-align:center;
 		margin: 0 auto;
-		display: table-cell;
-		vertical-align:middle;
+		background-color: rgba(255, 255, 255, 0.5);
+		padding: 25px 25px 10px 25px;
+		display: -webkit-inline-box;
 	}
-	#loginForm tr {
+	.loginForm tr {
 		height:1.5em;
 	}
-	p {
+	.loginForm p {
 		font-size:12px;
+		margin-top: 5px;
 	}
 	input[type=button], input[type=submit] {
 		background-color:white;
 		color:black;
 		margin: 10px;
 		border:1px solid #AAA;
+	}
+	input[type=text] {
+		margin:10px 0;
 	}
 	a:link{
     color:inherit;
@@ -53,11 +68,18 @@
 		background-repeat: no-repeat;
 		height: 100%;
 	}
+	#loginForm1{
+		padding-top: 5px;
+	}
+	#loginForm2{
+		
+	}
+	#loginForm3{
+		padding: 0 5px 5px 5px;
+	}
 	</style>
 </head>
 <body>
-
-
 	<!-- 로그인 에러시 에러 메시지 출력--->
 	<c:if test="${errMsg != null }">
 	${errMsg}
@@ -67,10 +89,10 @@
 		<div id="loginDiv">
 		<!-- 로그인폼--->
 			<form action="<c:url value='/member/memberLoginExe' />" method="post">
-			<table id="loginForm">
+			<table class="loginForm">
 				<tr>
-					<td>ID</td>
-					<td><input type="text" name="member_id" ></td>
+					<td id="loginForm1">ID</td>
+					<td id="loginForm2"><input type="text" name="member_id" ></td>
 				</tr>
 				<tr>
 					<td>PW</td>
@@ -83,7 +105,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><p><a href="<c:url value='/member/memberFindMyIDorPW' />">아이디/비밀번호 찾기</a></p></td>
+					<td colspan="2"  id="loginForm3"><p><a href="<c:url value='/member/memberFindMyIDorPW' />">아이디/비밀번호 찾기</a></p></td>
 				</tr>
 			</table>
 			</form>

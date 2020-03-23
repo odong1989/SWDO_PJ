@@ -80,36 +80,22 @@
             <p><img src="http://erines.kr/cat.jpg" height="100px"></p>
             </div>
             <div id="left-menu">
-                <div class="menu-group-button">
-                    <div class="menu-group-button-left">
-                        <p>그룹1</p>
-                        <p class="p-group">#가족그룹</p>
-                    </div>
-                    <div class="menu-group-button-right">
-                        <img src="<c:url value='/img/crown_gold.png' />">
-                    </div>
-                    <div class="menu-group-button-clear"></div>
-                </div>
-                <div class="menu-group-button">
-                    <div class="menu-group-button-left">
-                        <p>그룹2</p>
-                        <p class="p-group">#가족그룹</p>
-                    </div>
-                    <div class="menu-group-button-right">
-                        <img src="crown_silver.png">
-                    </div>
-                    <div class="menu-group-button-clear"></div>
-                </div>
-                <div class="menu-group-button">
-                    <div class="menu-group-button-left">
-                        <p>그룹3</p>
-                        <p class="p-group">#단체그룹</p>
-                    </div>
-                    <div class="menu-group-button-right">
-                        <!-- <img src="human.png"> -->
-                    </div>
-                    <div class="menu-group-button-clear"></div>
-                </div>
+            <c:set var="test1" value="glist.group_name" />
+            	<c:forEach var="glist" items="${groupJoinList }">
+	                <div class="menu-group-button">
+	                    <div class="menu-group-button-left">
+	                        <p>${glist.group_name }</p>
+	                        <p class="p-group">#${glist.group_subcategory }</p>
+	                        <p>${glist.group + _name }</p>
+	                    </div>
+	                    <div class="menu-group-button-right">
+	                    	<c:if test="${loginLevel+glist.group_no == 1 }">
+                        		<img src="<c:url value='/img/crown_gold.png' />">
+                        	</c:if>
+	                    </div>
+	                    <div class="menu-group-button-clear"></div>
+	                </div>
+				</c:forEach>
             </div>
         </div>
         <div id="gaibu-right">
