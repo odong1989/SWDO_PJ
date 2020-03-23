@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.boseong.swdo3th.VO.Member" alias="member"/>
-		<typeAlias type="com.boseong.swdo3th.VO.Group" alias="group"/>
-		<typeAlias type="com.boseong.swdo3th.VO.Document" alias="document"/>
-		<typeAlias type="com.boseong.swdo3th.VO.HashTag" alias="hashtag"/>
+		<typeAlias type="net.softsociety.binder.vo.Member" alias="member"/>
+		<typeAlias type="net.softsociety.binder.vo.Group" alias="group"/>
+		<typeAlias type="net.softsociety.binder.vo.Document" alias="document"/>
+		<typeAlias type="net.softsociety.binder.vo.HashTag" alias="hashtag"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
