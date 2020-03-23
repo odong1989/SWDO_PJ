@@ -6,60 +6,81 @@
 
 <head>
 <meta charset="UTF-8">
-	<link rel="stylesheet" href="/css/style_ver3.css">
-	<script src="/js/jquery-3.4.1.js "> </script>
+	<link rel="stylesheet" href="<c:url value='/css/suggest_Page_Basic.css' />">
+	<script src="http://code.jquery.com/jquery-3.4.1.js "> </script>
 	<style>
+	#loginDiv {
+		height:100%;
+	}
+	#loginForm {
+		text-align:center;
+		margin: auto;
+	}
+	#loginForm tr {
+		height:1.5em;
+	}
+	p {
+		font-size:12px;
+	}
+	input[type=button], input[type=submit] {
+		background-color:white;
+		color:black;
+		margin: 10px;
+	}
+	a:link{
+    color:inherit;
+    text-decoration: none;
+	}
+	a:active{
+	    color:inherit;
+	    text-decoration: none;
+	}
+	a:hover{
+	    text-decoration: none;
+	}
+	a:visited{
+	    text-decoration: none;
+	    color:inherit;
+	}
 	body{
 		background-color:#D9E5FF; 
-		background-image: url("../img/couple-1822585_1920.jpg");
-		background-size: 50%;
+		background-image: url("<c:url value='/img/couple-1822585_1920.jpg' />");
+		background-size: cover;
 		background-repeat: no-repeat;
-	}
-	.join{
-		padding:20px;
 	}
 	</style>
 </head>
 <body>
 
 
-<div class="bgimg">
-	<div class="header">
-			<div class="Logo">
-				<a href="/">
-				<img src="/img/logo.jpg" width="100">
-				</a>
-			</div>
-		
 	<!-- 로그인 에러시 에러 메시지 출력--->
 	<c:if test="${errMsg != null }">
 	${errMsg}
 	</c:if>
 	
-		<!-- 로그인폼--->
-		<div class="join">
-			<form action="/member/memberLoginExe" method="post">
-			<table>
-				<tr>
-					<td>ID : </td>
-					<td><input type="text" name="member_id" ></td>
-				</tr>
-				<tr>
-					<td>PW : </td>
-					<td><input type="password" name="member_pw"></td>
-				</tr>	
-				<tr>
-					<td><input type="checkbox" name="remember" value="1">아이디 기억하기</td>
-					<td><input type="submit" value="로그인 하기"></td>
-				</tr>
-				<tr>
-					<td><a href="/member/memberJoinForm"><input type="button" value="회원가입하기"></a></td>
-					<td><a href="/member/memberFindMyIDorPW"><input type="button" value="아이디/비밀번호 찾기"></a></td>
-				</tr>
-			</table>
-			</form>
-		</div>
+	<!-- 로그인폼--->
+	<div id="loginDiv">
+		<form action="<c:url value='/member/memberLoginExe' />" method="post">
+		<table id="loginForm">
+			<tr>
+				<td>ID</td>
+				<td><input type="text" name="member_id" ></td>
+			</tr>
+			<tr>
+				<td>PW</td>
+				<td><input type="password" name="member_pw"></td>
+			</tr>	
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="로그인">
+					<a href="<c:url value='/member/memberJoinForm' />"><input type="button" value="회원가입하기"></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><p><a href="<c:url value='/member/memberFindMyIDorPW' />">아이디/비밀번호 찾기</a></p></td>
+			</tr>
+		</table>
+		</form>
 	</div>
-</div><!-- <div class="bgimg"> -->
 </body>
 </html>

@@ -35,10 +35,8 @@
 	
 	<context:component-scan base-package="net.softsociety.binder" />
 	
-	
-
-	
 	<beans:bean id="loginInterceptor" class="net.softsociety.binder.interceptor.LoginInterceptor"></beans:bean>	
+	
 	<interceptors>
 		<interceptor>
 			<mapping path="/board/boardList"/>
@@ -53,22 +51,6 @@
 			<beans:ref bean="loginInterceptor"/><!--내가 적용하고픈 인터셉터 파일의 id명  -->
 		</interceptor>
 	</interceptors>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

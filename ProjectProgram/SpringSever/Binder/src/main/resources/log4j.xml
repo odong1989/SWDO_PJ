@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.boseong.swdo3th">
+	<logger name="net.softsociety.binder">
 		<level value="info" />
 	</logger>
 	
