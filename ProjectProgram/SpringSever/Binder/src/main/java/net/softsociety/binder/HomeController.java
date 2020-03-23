@@ -15,20 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-<<<<<<< HEAD
-<<<<<<< HEAD:ProjectProgram/SpringSever/BsNoticeBoard/src/main/java/com/boseong/swdo3th/HomeController.java
-=======
-<<<<<<< HEAD:ProjectProgram/SpringSever/BsNoticeBoard/src/main/java/com/boseong/swdo3th/HomeController.java
->>>>>>> 브랜치_지혜:ProjectProgram/SpringSever/Binder/src/main/java/net/softsociety/binder/HomeController.java
-import com.boseong.swdo3th.util.PageNavigator;
-=======
 import net.softsociety.binder.dao.BoardDAO;
 import net.softsociety.binder.util.PageNavigator;
 import net.softsociety.binder.vo.Board;
->>>>>>> 브랜치_지혜:ProjectProgram/SpringSever/Binder/src/main/java/net/softsociety/binder/HomeController.java
-=======
 
->>>>>>> 브랜치_지혜
 
 /**
  * Handles requests for the application home page.

@@ -9,12 +9,15 @@
 	<link rel="stylesheet" href="<c:url value='/css/suggest_Page_Basic.css' />">
 	<script src="http://code.jquery.com/jquery-3.4.1.js "> </script>
 	<style>
-	#loginDiv {
-		height:100%;
+	#loginWrap {
+		display: table;
+		height: 100%;
 	}
 	#loginForm {
 		text-align:center;
-		margin: auto;
+		margin: 0 auto;
+		display: table-cell;
+		vertical-align:middle;
 	}
 	#loginForm tr {
 		height:1.5em;
@@ -26,6 +29,7 @@
 		background-color:white;
 		color:black;
 		margin: 10px;
+		border:1px solid #AAA;
 	}
 	a:link{
     color:inherit;
@@ -47,6 +51,7 @@
 		background-image: url("<c:url value='/img/couple-1822585_1920.jpg' />");
 		background-size: cover;
 		background-repeat: no-repeat;
+		height: 100%;
 	}
 	</style>
 </head>
@@ -58,29 +63,31 @@
 	${errMsg}
 	</c:if>
 	
-	<!-- 로그인폼--->
-	<div id="loginDiv">
-		<form action="<c:url value='/member/memberLoginExe' />" method="post">
-		<table id="loginForm">
-			<tr>
-				<td>ID</td>
-				<td><input type="text" name="member_id" ></td>
-			</tr>
-			<tr>
-				<td>PW</td>
-				<td><input type="password" name="member_pw"></td>
-			</tr>	
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="로그인">
-					<a href="<c:url value='/member/memberJoinForm' />"><input type="button" value="회원가입하기"></a>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2"><p><a href="<c:url value='/member/memberFindMyIDorPW' />">아이디/비밀번호 찾기</a></p></td>
-			</tr>
-		</table>
-		</form>
+	<div id="loginWrap">	
+		<div id="loginDiv">
+		<!-- 로그인폼--->
+			<form action="<c:url value='/member/memberLoginExe' />" method="post">
+			<table id="loginForm">
+				<tr>
+					<td>ID</td>
+					<td><input type="text" name="member_id" ></td>
+				</tr>
+				<tr>
+					<td>PW</td>
+					<td><input type="password" name="member_pw"></td>
+				</tr>	
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="로그인">
+						<a href="<c:url value='/member/memberJoinForm' />"><input type="button" value="회원가입하기"></a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><p><a href="<c:url value='/member/memberFindMyIDorPW' />">아이디/비밀번호 찾기</a></p></td>
+				</tr>
+			</table>
+			</form>
+		</div>
 	</div>
 </body>
 </html>
