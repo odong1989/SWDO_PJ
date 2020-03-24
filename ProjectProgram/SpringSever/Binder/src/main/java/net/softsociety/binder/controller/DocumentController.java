@@ -20,8 +20,6 @@ import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.HashTag;
 
-
-
 //@선언
 @Controller
 @RequestMapping(value="document")

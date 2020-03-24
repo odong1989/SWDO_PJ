@@ -85,12 +85,40 @@
 </head>
 <body>
     <!--단계5. HTML body내에 부트스트랩 선언. 여기서 선언해야 작동됩니다.-->
-			
-    <div id="datepicker" >
-    datepicker가 로드되어 실시됩니다.
-        <script>
-              $( "datepicker" ).datepicker();
-        </script>
-    </div>
+			                <table id="document-body">
+			                	<tbody>
+				                    <tr height="40px">
+				                        <td width="21%"></td>
+				                        <td width="auto" align="center"><p id="notice">공지사항 : ㅇㅇㅇ공지부분</p></td>
+				                        <td width="21%" align="right">
+				                        	<img src="<c:url value='/img/f5.png' />"> 
+				                        	<a id="btn1">
+				 								<img  src="<c:url value='/img/board.png' />">
+				                        	</a>			
+				                        </td>
+				                    </tr>
+			                    </tbody>
+							</table>
+
+								    <script type="text/javascript"> 
+								        //단계3. 부트스트랩 기본설정 
+								        $(function(){
+								            $('#datepicker').datepicker({
+								                calendarWeeks: false,
+								                todayHighlight: true,
+								                language: "kr"
+								            })
+								        //단계4. 사용자가 선택한 날짜를 alert로 출력합니다.
+								            .on("changeDate",function(e){
+								                alert(e.date);
+								            })
+								        });
+								       </script>
+									    <div id="datepicker" >
+									    datepicker가 로드되어 실시됩니다.
+									        <script>
+									              $( "datepicker" ).datepicker();
+									        </script>
+									    </div>
 </body>
 </html>
