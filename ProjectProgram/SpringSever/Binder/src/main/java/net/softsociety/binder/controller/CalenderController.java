@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 //@선언
 @Controller
-@RequestMapping(value="calender")
+@RequestMapping(value="calender/")
 public class CalenderController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CalenderController.class);
