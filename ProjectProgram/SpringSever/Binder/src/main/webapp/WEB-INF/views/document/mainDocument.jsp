@@ -47,9 +47,9 @@
 						//console.log("data : "+data);//[참고용]/calender/calenderMain.jsp의 소스코드가 로드됨을 확인할 수 있습니다.
 						
 						//innerHTMl을 통해 기존의 게시판 부분을 데이터피커관련내용으로 변경합니다.
-						document.getElementById('gaibu-right-bottom').innerHTML=data;
+						document.getElementById('document-body-changePart').innerHTML=data;
 
-						//데이터피커를 실행하도록 합니다.(외부에서 로드된 탓인지 아래의 코드를 통해 재시동 필요.)
+			      		//데이터피커를 실행하도록 합니다.(외부에서 로드된 탓인지 아래의 코드를 통해 재시동 필요.)
 						   $('#datepicker').datepicker({
 				                calendarWeeks: false,
 				                todayHighlight: true,
@@ -60,17 +60,7 @@
 				});
 			}
         });
-	      	//로드후초기화 실시
-        	/*
-            $('#datepicker').load(function(){
-                $('#datepicker').datepicker({				
-                    calendarWeeks: false,
-                    todayHighlight: true,
-                    language: "kr"
-                })
-            })*/			
-		
-	</script>
+		</script>
 	
 </head>
 <body>
@@ -86,7 +76,6 @@
 	                    <div class="menu-group-button-left">
 	                        <p>${glist.group_name }</p>
 	                        <p class="p-group">#${glist.group_subcategory }</p>
-	                        <p>${glist.group + _name }</p>
 	                    </div>
 	                    <div class="menu-group-button-right">
 	                    	<c:if test="${loginLevel+glist.group_no == 1 }">
@@ -114,7 +103,9 @@
                         <td width="auto" align="center"><p id="notice">공지사항 : ㅇㅇㅇ공지부분</p></td>
                         <td width="21%" align="right">
                         	<img src="<c:url value='/img/f5.png' />"> 
-                        	<a id="btn1"><img  src="<c:url value='/img/cal.png' />"></a>
+                        	<a id="btn1">
+ 								<img  src="<c:url value='/img/cal.png' />">
+                        	</a>			
                         </td>
                     </tr>
                     <tr>
