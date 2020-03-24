@@ -120,19 +120,12 @@ public class MemberController {
 			//비밀번호 불일치
 			else {
 				errMsg="비밀번호가 틀렸습니다";
-				logger.info("memberLoginExe.java - 비밀번호가 틀렸습니다");
 				model.addAttribute("errMsg",errMsg);
 				return "index";
 			}
-<<<<<<< HEAD
-		}else {//ID가 틀린경우 실시.
-			errMsg="ID가 틀렸습니다";
-			logger.info("memberLoginExe.java - ID가 틀렸습니다");
-=======
 		//ID가 없는 경우
 		}else {
 			errMsg="존재하지 않는 ID입니다.";
->>>>>>> 브랜치_지혜
 			model.addAttribute("errMsg",errMsg);
 			return "index";
 		}
