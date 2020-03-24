@@ -32,7 +32,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
-		logger.info("메인페이지 시작");
+		logger.info("대문 접속");
 		return "index";
 	}
 	

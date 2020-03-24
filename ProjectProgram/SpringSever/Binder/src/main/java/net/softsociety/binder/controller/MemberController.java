@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.MemberDAO;
 import net.softsociety.binder.vo.Member;
 
@@ -28,7 +29,9 @@ public class MemberController {
 	
 	//0.dao선언
 	@Autowired
-	MemberDAO dao;
+	MemberDAO memdao;
+	@Autowired
+	GroupDAO groupdao;
 	
 	//1.회원가입================================================================================
 	//1.1[이동] 회원가입폼으로 이동.
@@ -55,7 +58,7 @@ public class MemberController {
 		logger.info("memberIdCheck메소드 실행. ");
 		logger.info("checkId : {} ",checkId);
 		
-		Member member = dao.memberSelectOne(checkId);
+		Member member = memdao.memberSelectOne(checkId);
 
 		boolean checkFlag = true;
 		logger.info("member : {} ",member);
@@ -72,7 +75,7 @@ public class MemberController {
 		logger.info("memberJoin메소드입니다");
 		logger.info("회원가입 자료 전달");
 		logger.info("member : {}",member);
-		dao.memeberJoin(member);
+		memdao.memeberJoin(member);
 		
 		return "redirect:/";
 	}
@@ -102,38 +105,31 @@ public class MemberController {
 	
 	//2.2로그인 
 	@RequestMapping(value="memberLoginExe", method=RequestMethod.POST)
-	public String memberLoginExe(Member member, String remember,HttpSession session, HttpServletResponse response,Model model) {
-		logger.info("memberLoginExe 로그인 프로세스 시작");
+	public String memberLoginExe(Member member, HttpSession session, Model model) {
+		logger.info("로그인 시도 : {}", member);
 		String errMsg = "";//에러메시지 출력위한 변수.
+		Member newMember = memdao.memberSelectOne(member.getMember_id());
 		
-		Member newMember = dao.memberSelectOne(member.getMember_id());
-	
+		//ID가 있는 경우
 		if(newMember != null) {
-			logger.info("로그인 프로세스 DB의 저장계정값 newMember : {}",newMember);
-			logger.info("로그인 프로세스  사용자의 로그인 정보member : {}",member);
+			//비밀번호 일치
 			if(member.getMember_pw().equals(newMember.getMember_pw())) {
 				session.setAttribute("loginId", member.getMember_id());
-				logger.info("로그인 프로세스 - 성공함. 세션 설정 session : {}",session.getAttribute("loginId"));
-				
-				if(remember !=null && remember.equals("1")){
-					Cookie cookie = new Cookie("rId", member.getMember_id());
-					cookie.setMaxAge(60*60*24*365);
-					//expiry 파라미터 : 초단위로 저장할 시간을 설정합니다.(int형으로 파라미터 입력받음)
-					//60초*60분(1시간)*24시간(1일)*365일 = 1년동안 유지
-					response.addCookie(cookie);//response에게 저장할 값을 주어 사용자의 컴퓨터에게 저장하도록 합니다.
-				}
-			}
-			else {//PW가 틀린경우 실시
+				logger.info("-성공. 세션 설정 session : {}",session.getAttribute("loginId"));
+			} 
+			//비밀번호 불일치
+			else {
 				errMsg="비밀번호가 틀렸습니다";
 				model.addAttribute("errMsg",errMsg);
-				return "member/memberLoginForm";
+				return "index";
 			}
-		}else {//ID가 틀린경우 실시.
-			errMsg="ID가 틀렸습니다";
+		//ID가 없는 경우
+		}else {
+			errMsg="존재하지 않는 ID입니다.";
 			model.addAttribute("errMsg",errMsg);
-			return "member/memberLoginForm";
+			return "index";
 		}
-		logger.info("memberLoginExe 로그인 프로세스 페이지 이동");
+		logger.info("-메인페이지로 이동");
 		return "redirect:/document/mainDocument";
 	}
 	
@@ -161,7 +157,7 @@ public class MemberController {
 	@RequestMapping(value="memberMypage", method=RequestMethod.GET)
 	public String memberMypage(Member member, String remember,HttpSession session,Model model) {
 		logger.info("마이페이지 프로세스 시작");
-		Member MemberData = dao.memberSelectOne((String)session.getAttribute("loginId"));
+		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);
 		return "/member/memberMypage";
 	}		
@@ -174,7 +170,7 @@ public class MemberController {
 		logger.info("마이페이지-이름변경 ajax실시");
 		member.setMember_id((String)session.getAttribute("loginId"));
 		logger.info("member : {}", member);
-		dao.memberUpdateName(member);
+		memdao.memberUpdateName(member);
 		String changedName = member.getMember_nm();
 		return changedName ;
 	}		
@@ -189,7 +185,7 @@ public class MemberController {
 		logger.info("마이페이지-주소변경 ajax실시");
 		member.setMember_id((String)session.getAttribute("loginId"));
 		logger.info("member : {}", member);
-		dao.memberUpdateAddress(member);
+		memdao.memberUpdateAddress(member);
 		String changedAddress = member.getMember_addr();
 		return changedAddress ;
 	}			
@@ -207,7 +203,7 @@ public class MemberController {
 		logger.info("비밀번호 변경 시작");
 		member.setMember_id((String)session.getAttribute("loginId"));
 		logger.info("member : {}", member);
-		dao.memberUpdatePassword(member);
+		memdao.memberUpdatePassword(member);
 
 		return "/member/memberMypage";
 	}		
