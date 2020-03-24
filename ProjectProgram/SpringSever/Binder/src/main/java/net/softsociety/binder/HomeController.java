@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.softsociety.binder.dao.BoardDAO;
 import net.softsociety.binder.util.PageNavigator;
-import net.softsociety.binder.vo.Board;
 
 
 /**
