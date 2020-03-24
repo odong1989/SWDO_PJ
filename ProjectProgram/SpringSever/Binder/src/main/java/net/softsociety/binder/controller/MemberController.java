@@ -115,8 +115,10 @@ public class MemberController {
 			//비밀번호 일치
 			if(member.getMember_pw().equals(newMember.getMember_pw())) {
 				session.setAttribute("loginId", member.getMember_id());
+				session.setAttribute("loginLevel1", 1);
+				session.setAttribute("loginLevel2", 3);
 				logger.info("-성공. 세션 설정 session : {}",session.getAttribute("loginId"));
-			} 
+			}
 			//비밀번호 불일치
 			else {
 				errMsg="비밀번호가 틀렸습니다";

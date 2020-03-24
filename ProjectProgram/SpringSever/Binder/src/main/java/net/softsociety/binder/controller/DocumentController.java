@@ -32,8 +32,7 @@ public class DocumentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
 	@RequestMapping(value="mainDocument", method=RequestMethod.GET)
-	public String mainDocument(HttpSession session, //Model modelGroupJoinList, Model modelDocumentList, Model modelHashTagList)
-			Model model)
+	public String mainDocument(HttpSession session, Model model)
 	{	
 		logger.info("mainDocument 이동");
 		String member_id = (String) session.getAttribute("loginId");
