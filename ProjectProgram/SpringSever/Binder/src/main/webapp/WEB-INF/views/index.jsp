@@ -8,6 +8,14 @@
 <meta charset="UTF-8">
 	<link rel="stylesheet" href="<c:url value='/css/suggest_Page_Basic.css' />">
 	<script src="http://code.jquery.com/jquery-3.4.1.js "> </script>
+	<script type="text/javascript">
+		$(function() {
+			var err = $("#errMsg").val();
+			if (err.length != 0) {
+				alert(err);
+			}
+		})
+	</script>
 	<style>
 	body, html {
 		height: 100%;
@@ -80,11 +88,6 @@
 	</style>
 </head>
 <body>
-	<!-- 로그인 에러시 에러 메시지 출력--->
-	<c:if test="${errMsg != null }">
-	${errMsg}
-	</c:if>
-	
 	<div id="loginWrap">	
 		<div id="loginDiv">
 		<!-- 로그인폼--->
@@ -109,6 +112,7 @@
 				</tr>
 			</table>
 			</form>
+			<input type="hidden" id="errMsg" value="${errMsg }">
 		</div>
 	</div>
 </body>
