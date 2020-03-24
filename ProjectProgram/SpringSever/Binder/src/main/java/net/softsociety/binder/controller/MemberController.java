@@ -162,11 +162,38 @@ public class MemberController {
 	//4.1 마이페이지 이동&계정정보 수신
 	@RequestMapping(value="memberMypage", method=RequestMethod.GET)
 	public String memberMypage(Member member, String remember,HttpSession session,Model model) {
-		logger.info("마이페이지 프로세스 시작");
+		logger.info("Mypage 프로세스 시작");
 		Member MemberData = dao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);
 		return "/member/memberMypage";
 	}		
+
+	
+	@RequestMapping(value="mypageUpdateProfile", method=RequestMethod.GET)
+	public String mypageUpdateProfile(Member member, String remember,HttpSession session,Model model) {
+	
+		logger.info("mypageUpdateProfile( 프로세스 시작");		
+		
+		return "/member/mypageUpdateProfile";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*
 	//4.2 마이페이지-이름변경(#aJax활용할것!)

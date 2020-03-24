@@ -55,6 +55,15 @@ public class DocumentController {
 		model.addAttribute("hashTagList", hashTagList);
 		
 		return "/document/mainDocument";
-		
 	}	
+
+	@RequestMapping(value="boardTemp", method=RequestMethod.GET)
+	public String boardTemp(HttpSession session )
+	{
+		logger.info("boardTemp 메소드 실시& 이동");		
+		return "/document/boardTemp";
+	}	
+	
+	
+	
 }

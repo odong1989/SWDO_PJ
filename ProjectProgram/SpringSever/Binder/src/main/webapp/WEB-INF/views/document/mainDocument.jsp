@@ -15,52 +15,40 @@
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
     
     <script type='text/javascript'>
-        //부트스트랩 데이트 피커 달력 한글 출력 설정입니다.
-        (function($){
-            $.fn.datepicker.dates['kr'] = {
-                days: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
-                daysShort: ["일", "월", "화", "수", "목", "금", "토", "일"],
-                daysMin: ["일", "월", "화", "수", "목", "금", "토", "일"],
-                months: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-                monthsShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-            };
-        }(jQuery));
-
-        $(function(){
-            $('#datepicker').datepicker({
-                calendarWeeks: false,
-                todayHighlight: true,
-                language: "kr"
-            });
-       });
-
-        $(function(){
-			$("#btn1").on("click",calenderMain);
-			
-			function calenderMain(){
-				$.ajax({
+    	//btn1 : 게시판->캘린더로 변경
+		$(document).on("click","#btn1",function(){
+			$.ajax({
 					url:"<c:url value='/calender/calenderMain' />",
 					type:"get",
-					success:function(data){			
-						//alert("캘린더를 실시합니다.");//[참고용] 작업시작 확인가능.
-						//alert("data : "+data);//[참고용]/calender/calenderMain.jsp의 소스코드가 로드됨을 확인할 수 있습니다. 
-						//console.log("data : "+data);//[참고용]/calender/calenderMain.jsp의 소스코드가 로드됨을 확인할 수 있습니다.
-						
-						//innerHTMl을 통해 기존의 게시판 부분을 데이터피커관련내용으로 변경합니다.
-						document.getElementById('document-body-changePart').innerHTML=data;
 
-			      		//데이터피커를 실행하도록 합니다.(외부에서 로드된 탓인지 아래의 코드를 통해 재시동 필요.)
-						   $('#datepicker').datepicker({
-				                calendarWeeks: false,
-				                todayHighlight: true,
-				                language: "kr"
-				            });
+					success:function(data){			
+					alert("수정된 ajax - 캘린더로 변경 실시합니다.!");//[참고용] 작업시작 확인가능.							
+					document.getElementById('gaibu-right-bottom').innerHTML=data;
+				//부트스트랩-데이트피커 실행문
+						$('#datepicker').datepicker({
+			                calendarWeeks: false,
+			                todayHighlight: true,
+			                language: "kr"
+			            });
 					},
+					
 					error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
-				});
-			}
-        });
-		</script>
+			});
+		});
+		//btn2 : 캘린더->게시판으로 변경
+		$(document).on("click","#btn2",function(){
+			$.ajax({
+					url:"<c:url value='/document/boardTemp' />",
+					type:"get",
+					success:function(data){			
+						alert("게시판로 변경 실시합니다.");//[참고용] 작업시작 확인가능.
+						document.getElementById('gaibu-right-bottom').innerHTML=data;
+					},
+					error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
+			});
+		});
+	
+        </script>
 	
 </head>
 <body>
@@ -93,7 +81,10 @@
                     
                 </div>
                 <!-- <div id="naibu-right-right"> -->
-                    <p><img src="<c:url value='/img/bell.png' />"> <img src="<c:url value='/img/mail.png' />"> <img src="<c:url value='/img/human.png' />" id="usericon"></p>
+                    <p><img src="<c:url value='/img/bell.png' />"> 
+                       <img src="<c:url value='/img/mail.png' />"> 
+                       <img src="<c:url value='/img/human.png' />" id="usericon">
+                    </p>
                 <!-- </div> -->
             </div>
             <div id="gaibu-right-bottom">
