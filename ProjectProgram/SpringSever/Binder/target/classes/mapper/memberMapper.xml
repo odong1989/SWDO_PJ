@@ -45,7 +45,7 @@
 			,#{member_weddingday}  
     )
     </insert>
-   
+	<!--    
    	<update id="memberUpdateName" parameterType="member">
 	update
 		bnd_member
@@ -72,5 +72,5 @@
     where
 		member_id = #{member_id}	
 	</update>
-
+ -->
 </mapper>

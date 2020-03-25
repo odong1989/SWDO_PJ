@@ -116,7 +116,7 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 			<tr> 
 				<td>
 					<div style="width:220px; height:60px; padding:15px; border:1px solid black;">
-						<input type="radio" value="미혼" >미혼<br><br>
+						<input type="radio" value="미혼" >미혼
 						<input type="radio" value="기혼">기혼
 					</div>
 				</td>

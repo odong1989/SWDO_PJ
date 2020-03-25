@@ -21,7 +21,7 @@ public class MemberDAO {
 	private SqlSession session;
 
 	public Member memberSelectOne (String member_id) {
-		logger.info("BoardDAO.java - memberSelectOne 메소드 시작");
+		logger.info("MemberController-Mypage 프로세스 - memberSelectOne 메소드 시작");
 		Member member = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
@@ -29,7 +29,7 @@ public class MemberDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		logger.info("BoardDAO.java - memberSelectOne 리턴 member값 : {}", member);
+		logger.info("MemberController-Mypage 프로세스 - 리턴 member값 : {}", member);
 		return member;
 	}
 
@@ -43,33 +43,5 @@ public class MemberDAO {
 		}
 		return result;
 	}	
-	
-	public void memberUpdateName(Member member){
-	logger.info("BoardDAO.java - memberUpdateName 시작 ");
-		try {
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			mapper.memberUpdateName(member);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		logger.info("BoardDAO.java - memberUpdateName 종료");
-	}
 
-	public void memberUpdateAddress(Member member){
-		try {
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			mapper.memberUpdateAddress(member);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void memberUpdatePassword(Member member){
-		try {
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			mapper.memberUpdatePassword(member);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}		
-	}
 }

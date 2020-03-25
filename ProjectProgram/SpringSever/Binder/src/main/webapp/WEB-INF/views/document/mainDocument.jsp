@@ -139,5 +139,6 @@
             </div>
         </div>
     </div>
+    <a href="/member/memberMypage">마이페이지 실시</a>
 </body>
 </html>
