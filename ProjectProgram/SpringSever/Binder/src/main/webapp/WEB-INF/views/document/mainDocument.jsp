@@ -66,9 +66,13 @@
 	                        <p class="p-group">#${glist.group_subcategory }</p>
 	                    </div>
 	                    <div class="menu-group-button-right">
+<<<<<<< HEAD
 	                    	${sessionScope.loginLevel1 }
 	                    	${sessionScope.loginLevel + glist.group_no }
 	                    	<c:if test="${sessionScope.loginLevel + glist.group_no  == 1 }">
+=======
+	                    	<c:if test="${abc == 1 }">
+>>>>>>> 브랜치_지혜
                         		<img src="<c:url value='/img/crown_gold.png' />">
                         	</c:if>
 	                    </div>
