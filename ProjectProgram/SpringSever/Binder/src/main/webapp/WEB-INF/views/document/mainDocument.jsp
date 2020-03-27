@@ -22,10 +22,9 @@
 	                    <div class="menu-group-button-left">
 	                        <p>${glist.group_name }</p>
 	                        <p class="p-group">#${glist.group_subcategory }</p>
-	                        <p>${glist.group + _name }</p>
 	                    </div>
 	                    <div class="menu-group-button-right">
-	                    	<c:if test="${loginLevel+glist.group_no == 1 }">
+	                    	<c:if test="${abc == 1 }">
                         		<img src="<c:url value='/img/crown_gold.png' />">
                         	</c:if>
 	                    </div>
