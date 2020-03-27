@@ -171,14 +171,14 @@ public class MemberController {
 	
 	@RequestMapping(value="mypageUpdateProfile", method=RequestMethod.GET)
 	public String mypageUpdateProfile(HttpSession session,Model model) {
-		Member loginMember = null;	//현 로그인 사람의 정보.(나중에 비번도 수신받아 저장하도록 변경할 것.)
+		Member loginMember = new Member();	//현 로그인 사람의 정보.(나중에 비번도 수신받아 저장하도록 변경할 것.)
 		String errMsg = "";			//에러메시지 출력위한 변수.
 
-		logger.info("mypageUpdateProfile(회원정보 변경 프로세스 시작");
+		logger.info("mypageUpdateProfile(회원정보 변경 프로세스 시작)");
 		logger.info("현 세션계정 : {}", session.getAttribute("loginId") );		
-
+		loginMember.setMember_id((String)session.getAttribute("loginId"));
 		//스텝1. 현 로그인 계정 수신
-		logger.info("로그인 프로세스  사용자의 로그인 정보member(현 세션계정) : {}",loginMember);
+		logger.info("로그인 프로세스  사용자의 로그인 정보 loginMember(현 세션계정) : {}",loginMember);
 		
 		//스텝2. 수정할 계정의 정보를 결과로 리턴해줌(단계3에서 리턴된 값에 따라 에러출력여부등이 정해짐.
 		Member MemberData = dao.memberSelectOne(loginMember.getMember_id());
@@ -189,8 +189,9 @@ public class MemberController {
 		if(MemberData != null) {
 			//if(loginMember.getMember_pw().equals(newMember.getMember_pw())) { //비밀번호까지 구현하여 추가하도록 합시다.
 			model.addAttribute("MemberData", MemberData);
-			return "/member/memberMypage";
+			return "/member/mypageUpdateProfile";
 		}
+		//거짓일 경우 마이페이지로 돌아가도록 처리한다.
 		else {//ID가 틀린경우 실시.
 			errMsg="해당하는 계정이 없습니다.";
 			logger.info("mypageUpdateProfile.java - 해당하는 계정이 없습니다.");
@@ -208,34 +209,56 @@ public class MemberController {
 		*/
 	
 	
+	//4.2 memberUpdate(회원정보 수정 실
+	
+	@RequestMapping(value="memberUpdate", method=RequestMethod.POST)
+	public String memberUpdate(Member updateMemberData,HttpSession session, Model model) {
+		logger.info("마이페이지-memberUpdate 실시");
+		logger.info("마이페이지-memberUpdate 현 세션계정 : {}", session.getAttribute("loginId") );		
+		
+		updateMemberData.setMember_id((String)session.getAttribute("loginId"));
+		logger.info("마이페이지-memberUpdate 업데이트할 정보 : {}", updateMemberData);
+		
+		dao.memberUpdate(updateMemberData);
+		Member MemberData = dao.memberSelectOne((String)session.getAttribute("loginId"));
+		model.addAttribute("MemberData", MemberData);
+		return "/member/memberMypage";
+	}
 	
 	
 	
 	
 	
+	//5.비밀번호 아이디 찾기 및 비밀번호 재설정 페이지
+	//5.1 아이디/비밀번호 찾기 페이지로 이동
+	@RequestMapping(value="memberFindMyIDorPW", method=RequestMethod.GET)
+	public String memberFindMyIDorPW() {
+		logger.info("memberFindMyIDorPW페이지로 이동 실시");
+	return "/member/memberFindMyIDorPW";
+	}
+	
+	//5.2 아이디 찾기 메소드 실시&아이디 검색결과 출력페이지로 리턴(출력 방식은 memeberFindResultId.jsp페이지에서 리턴값에 따라 출력을 담당.)
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	/*
-	//4.2 마이페이지-이름변경(#aJax활용할것!)
-	@RequestMapping(value="MypageChangeName", method=RequestMethod.POST, produces = "application/text; charset=utf8") 
-	@ResponseBody
-	public String MypageChangeName(Member member,HttpSession session) {
-		logger.info("마이페이지-이름변경 ajax실시");
-		member.setMember_id((String)session.getAttribute("loginId"));
-		logger.info("member : {}", member);
-		dao.memberUpdateName(member);
-		String changedName = member.getMember_nm();
-		return changedName ;
-	}		
-	*/
-	
+	//5.3 비밀번호 재설정 페이지 이동 - 이동전에 회원인지 확인한다음 회원이 아닐경우 	/member/memberFindMyIDorPW 으로 리턴시킨다.
+	@RequestMapping(value="memberFindPassword", method=RequestMethod.POST)
+	public String memberFindPassword(Member forgetMemberPW) {
+		//forgetMemberPW : 비밀번호를 잊은 고객이 비번수정을 위해 자신의 이름,계정을 입력한 것.
+		logger.info("memberFindPassword 메소드 실시");
+		Member resultMemberData = new Member();
+		
+		dao.memberSelectOne2(forgetMemberPW);
+		if(resultMemberData == null)
+		{
+			return "/member/memberFindMyIDorPW";			
+		}
+		else
+		{
+			return "/member/memberResetPW";			
+		}
+
+	}
 	/*
 	//4.2 마이페이지-주소변경(#aJax활용할것!)
 	@RequestMapping(value="MypageChangeAddress", method=RequestMethod.POST, produces = "application/text; charset=utf8") 

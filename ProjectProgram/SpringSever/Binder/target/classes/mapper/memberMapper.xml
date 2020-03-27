@@ -21,9 +21,29 @@
 	where
 		member_id=#{member_id}
 	</select>
-	
-	
-	<insert id="memeberJoin" parameterType="member" >
+
+	<select id="memberSelectOne2" parameterType="member" resultType="member">
+	select
+		member_id	
+		,member_pw	
+		,member_name	
+		,member_mail		
+		,member_photo		
+		,to_char(member_birthday, 'yyyy-MM-dd') as member_birthday
+		,member_married		
+		,to_char(member_weddingday, 'yyyy-MM-dd') as member_weddingday
+		,to_char(member_regdate, 'yyyy-MM-dd') as member_regdate
+		,to_char(member_lastlogin, 'yyyy-MM-dd') as member_lastlogin
+		,member_wdraw	
+	from
+		bnd_member
+	where
+		member_name=#{member_name}
+	and
+		member_mail=#{member_mail}
+	</select>	
+
+	<insert id="memeberJoin" parameterType="member">
 	insert into	
 		bnd_member(
 			member_id
@@ -45,32 +65,14 @@
 			,#{member_weddingday}  
     )
     </insert>
-	<!--    
-   	<update id="memberUpdateName" parameterType="member">
-	update
-		bnd_member
-	set
-		member_nm = #{member_nm}
-    where
-		member_id = #{member_id}	
-	</update>
-    
-   	<update id="memberUpdateAddress" parameterType="member">
-	update
-		bnd_member
-	set
-		member_addr = #{member_addr}
-    where
-		member_id = #{member_id}	
-	</update>
 
-   	<update id="memberUpdatePassword" parameterType="member">
-	update
-		bnd_member
+   	<update id="memberUpdate" parameterType="member">
+	update bnd_member
 	set
-		member_pw = #{member_pw}
-    where
+		member_pw		 = #{member_pw}
+		,member_name	 = #{member_name}
+		,member_mail	 = #{member_mail}
+	where
 		member_id = #{member_id}	
 	</update>
- -->
 </mapper>

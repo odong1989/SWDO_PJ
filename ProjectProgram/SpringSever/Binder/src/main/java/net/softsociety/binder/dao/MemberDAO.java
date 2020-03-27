@@ -43,5 +43,57 @@ public class MemberDAO {
 		}
 		return result;
 	}	
+	
+	
+	public Member memberSelectOne2 (Member member) {
+		logger.info("MemberController-Mypage 프로세스 - memberSelectOne2 메소드 시작");
+		Member resultMember = null;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			resultMember = mapper.memberSelectOne2(member);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("MemberController-Mypage 프로세스 - 리턴 member값 : {}", resultMember);
+		return resultMember;
+		
+		
+	}
+
+/*	
+	public Member memberUpdate(Member updateMemberData){
+		//업데이트 된 정보를 리턴해주어 사용자가 마이페이지에서 바로 확인 되도록 한다.
+		logger.info("MemberDAO-memberUpdate 실시");
+		logger.info("MemberDAO-수신된 업데이트할 정보 : {}", updateMemberData);
+		Member resultMemberData=null;	
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			resultMemberData = mapper.memberUpdate(updateMemberData);
+			resultMemberData = mapper.memberUpdate(updateMemberData);
+			logger.info("MemberDAO-업데이트 결과&리턴할 값 : {}",resultMemberData);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("MemberDAO-memberUpdate 메소드 종료");
+		return resultMemberData;	
+	}
+	*/
+
+	public void memberUpdate(Member updateMemberData){
+		//업데이트 된 정보를 리턴해주어 사용자가 마이페이지에서 바로 확인 되도록 한다.
+		logger.info("MemberDAO-memberUpdate 실시");
+		logger.info("MemberDAO-수신된 업데이트할 정보 : {}", updateMemberData);
+		Member resultMemberData=null;	
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			mapper.memberUpdate(updateMemberData);
+			logger.info("MemberDAO-업데이트 결과&리턴할 값 : {}",resultMemberData);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("MemberDAO-memberUpdate 메소드 종료");
+	}
+
+
 
 }
