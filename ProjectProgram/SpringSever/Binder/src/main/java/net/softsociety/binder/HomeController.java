@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -54,7 +55,27 @@ public class HomeController {
 		logger.info("대문 접속");
 		
 		if (!to.equals("a")) {
-			MailVO vo = new MailVO("binder.send@gmail.com", "jsh4646@naver.com", "Binder 초대메시지입니다.", "ㅋㅋ 힝 속았징");
+			StringBuffer temp = new StringBuffer();
+			Random rnd = new Random();
+			for (int i = 0; i < 5; i++) {
+			    int rIndex = rnd.nextInt(3);
+			    switch (rIndex) {
+			    case 0:
+			        // a-z
+			        temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+			        break;
+			    case 1:
+			        // A-Z
+			        temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+			        break;
+			    case 2:
+			        // 0-9
+			        temp.append((rnd.nextInt(10)));
+			        break;
+			    }
+			}
+						
+			MailVO vo = new MailVO("binder.send@gmail.com", "Binder", temp + "님의 Binder 초대메시지입니다.", "ㅋㅋ 힝 속았징");
 			vo.setTo(to);
 			final MimeMessagePreparator preparator = new MimeMessagePreparator() {
 				@Override
