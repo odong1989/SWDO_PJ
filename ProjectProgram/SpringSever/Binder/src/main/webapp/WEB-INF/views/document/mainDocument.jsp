@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${group_name }</title>
     <link href="<c:url value='/css/basic.css' />", rel="stylesheet">
+<<<<<<< HEAD
 
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -50,6 +51,13 @@
 	
         </script>
 	
+=======
+    <script type="text/javascript">
+		function selectGroup(pk) {
+			location.href="group?no="+pk;
+		}
+    </script>
+>>>>>>> 브랜치_지혜
 </head>
 <body>
     <div id="gaibu">
@@ -58,14 +66,19 @@
             <p><img src="http://erines.kr/cat.jpg" height="100px"></p>
             </div>
             <div id="left-menu">
+<<<<<<< HEAD
             <c:set var="test1" value="glist.group_name" />
             	<c:forEach var="glist" items="${groupJoinList}">
+=======
+            	<c:forEach var="glist" items="${groupJoinList }">
+>>>>>>> 브랜치_지혜
 	                <div class="menu-group-button">
 	                    <div class="menu-group-button-left">
-	                        <p>${glist.group_name }</p>
-	                        <p class="p-group">#${glist.group_subcategory }</p>
+	                        <a href="javascript:selectGroup(${glist.GROUP_NO })"><p>${glist.GROUP_NAME }</p></a>
+	                        <p class="p-group">#${glist.GROUP_SUBCATEGORY }</p>
 	                    </div>
 	                    <div class="menu-group-button-right">
+<<<<<<< HEAD
 <<<<<<< HEAD
 	                    	${sessionScope.loginLevel1 }
 	                    	${sessionScope.loginLevel + glist.group_no }
@@ -73,7 +86,13 @@
 =======
 	                    	<c:if test="${abc == 1 }">
 >>>>>>> 브랜치_지혜
+=======
+	                    	<c:if test="${glist.MEMBER_LEVEL == 1 }">
+>>>>>>> 브랜치_지혜
                         		<img src="<c:url value='/img/crown_gold.png' />">
+                        	</c:if>
+                        	<c:if test="${glist.MEMBER_LEVEL == 2 }">
+                        		<img src="<c:url value='/img/crown_silver.png' />">
                         	</c:if>
 	                    </div>
 	                    <div class="menu-group-button-clear"></div>
@@ -94,6 +113,7 @@
                 <!-- </div> -->
             </div>
             <div id="gaibu-right-bottom">
+<<<<<<< HEAD
                 <table id="document-body">
                     <tr height="40px">
                         <td width="21%"></td>
@@ -140,6 +160,12 @@
                         </td>
                     </tr>
                 </table>
+=======
+                제노사이</br>
+                드커터를</br>
+                맞을 것만</br>
+                같아</br></br></br></br></br>
+>>>>>>> 브랜치_지혜
             </div>
         </div>
     </div>

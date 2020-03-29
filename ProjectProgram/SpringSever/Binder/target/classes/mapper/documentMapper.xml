@@ -8,12 +8,18 @@
 	from bnd_document
 	where bnd_document.member_id = 'jsh4646';
  -->
- 	<select id="selectDocuments" parameterType="string" resultType="document">
+ 	<select id="selectDocuments" parameterType="int" resultType="hashmap">
 	 	select 
-	 		bnd_document.document_no, bnd_document.document_content
+	 		bnd_document.document_no
+	 		, bnd_document.document_content
+	 		, to_char(bnd_document.document_regdate, 'yyyy-mm-dd') document_regdate
+	 		, document_destination
+	 		, bnd_document.document_content
 		from 
 			bnd_document
 		where 
-			bnd_document.member_id = #{member_id}
+			bnd_document.group_no = #{group_no}
+		order by
+			bnd_document.document_no desc
 	</select> 
 </mapper>
