@@ -115,15 +115,15 @@ public class loginAndJoinController {
 	
 	//2.3 비밀번호 재설정 페이지 이동
 	@RequestMapping(value="memberFindPassword", method=RequestMethod.POST)
-	public String memberFindPassword(Member forgetMemberPW, Model model) {
+	public String memberFindPassword(Member forgetMember, Model model) {
 		//forgetMemberPW : 비밀번호를 잊은 고객이 비번수정을 위해 자신의 이름,계정을 입력한 것.
 		logger.info("memberFindPassword 메소드 실시");
-		logger.info("memberFindId-사용자가 PW찾기 위해 입력한 정보 forgetMemberPW : {}",forgetMemberPW);
+		logger.info("memberFindId-사용자가 PW찾기 위해 입력한 정보 forgetMember : {}",forgetMember);
 		String errMsg = "";   //입력된 정보가 틀릴시 에러안내문구(에러메시지 출력위한 변수.)
 		String introMsg ="가입하신 이메일로 비밀번호가 전송되었습니다."; //정상실행시 리턴
 		StringBuffer temp = new StringBuffer();
 		
-		Member updateMemberData = dao.memberSelectOne2(forgetMemberPW);
+		Member updateMemberData = dao.memberSelectOne3(forgetMember);
 
 		if(updateMemberData != null)
 			{
@@ -145,18 +145,17 @@ public class loginAndJoinController {
 				        break;
 				    }
 				}
-				logger.info("코드 생성완료 {}", temp);
+				logger.info("코드 생성완료. 코드 : {}", temp);
 				String tempPW = null; //생성된 코드를 저장
 				tempPW = temp.toString();			
-				updateMemberData.setMember_pw(tempPW);
-				dao.memberUpdate(updateMemberData);
+				dao.memberUpdatePW(tempPW);
+				
 				model.addAttribute("resultMsg",errMsg);
 				return "/loginAndJoin/memberFindMyIDorPW";			
 			}
 		else
 			{
 				errMsg="존재하지 ID입니다.";
-				
 				model.addAttribute("introMsg",introMsg);
 				return "/loginAndJoin/memberFindMyIDorPW";
 			}
