@@ -109,6 +109,7 @@ public class GroupController {
 		
 		//코드가 유효
 		if (oldgroup != null) {
+			Group codeMemberChk = groupDao.codeMemberChk(code, member_id);
 			model.addAttribute("codebool", "ari");
 			model.addAttribute("code", oldgroup);
 			return "group/groupjoin";
