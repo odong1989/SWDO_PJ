@@ -16,6 +16,4 @@ public class MailVO {
 		this.subject = subject;
 		this.contents = contents;
 	}
-	
-	
 }
