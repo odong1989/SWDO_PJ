@@ -116,10 +116,10 @@
 		member_id = #{member_id}	
 	</update>
 
-	<update id="memberUpdatePW" parameterType="string">
+	<update id="memberUpdatePW" parameterType="member">
 	update bnd_member
 	set
-		member_pw = #{changePW}
+		member_pw = #{member_pw}
 	where
 		member_id = #{member_id}	
 	</update>

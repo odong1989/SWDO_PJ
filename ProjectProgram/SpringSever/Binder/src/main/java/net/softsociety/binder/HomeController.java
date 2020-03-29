@@ -108,7 +108,7 @@ public class HomeController {
 		mailSender.send(preparator);
 		return "result";
 	}
-
+	
 	//2.2로그인 
 	//0.dao선언
 	@Autowired

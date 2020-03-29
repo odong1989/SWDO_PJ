@@ -2,6 +2,7 @@ package net.softsociety.binder.controller;
 
 import java.util.Random;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,15 +11,20 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.softsociety.binder.dao.MemberDAO;
+import net.softsociety.binder.vo.MailVO;
 import net.softsociety.binder.vo.Member;
 
 //@선언
@@ -148,17 +154,19 @@ public class loginAndJoinController {
 				logger.info("코드 생성완료. 코드 : {}", temp);
 				String tempPW = null; //생성된 코드를 저장
 				tempPW = temp.toString();			
-				dao.memberUpdatePW(tempPW);
+				updateMemberData.setMember_pw(tempPW);
+				dao.memberUpdatePW(updateMemberData);
+				logger.info("DB에 수정된 비밀번호 : {}", updateMemberData.getMember_pw());							
+
 				
-				model.addAttribute("resultMsg",errMsg);
-				return "/loginAndJoin/memberFindMyIDorPW";			
+				return "/sendMail.do?to=kwunodong";			
 			}
 		else
 			{
-				errMsg="존재하지 ID입니다.";
+				errMsg="등록되지 않은 ID입니다.";
 				model.addAttribute("introMsg",introMsg);
 				return "/loginAndJoin/memberFindMyIDorPW";
 			}
-		    
 		}
+	
 	}	

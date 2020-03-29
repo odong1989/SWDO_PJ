@@ -111,11 +111,11 @@ public class MemberDAO {
 		return resultMember;
 	}
 	
-	public void memberUpdatePW(String changePW) {
+	public void memberUpdatePW(Member updateMemberData) {
 		logger.info("memberUpdatePW 메소드 시작");
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-		    mapper.memberSelectOne(changePW);
+			mapper.memberUpdatePW(updateMemberData);
 			logger.info("memberUpdatePW - 비밀번호 변경 완료");
 		}catch(Exception e) {
 			e.printStackTrace();
