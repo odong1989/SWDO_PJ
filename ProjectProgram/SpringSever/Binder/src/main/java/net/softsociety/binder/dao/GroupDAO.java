@@ -64,4 +64,21 @@ public class GroupDAO {
 		logger.info("GroupDAO.java - updateCode 메소드 종료");
 		return result;
 	}
+	
+	public Group codeMemberChk(String code, String member_id){
+		logger.info("GroupDAO.java - codeMemberChk 메소드 시작");	
+		Group result = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("group_code",code);
+		map.put("member_id", member_id);
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			result = mapper.codeMemberChk(map);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		logger.info("GroupDAO.java - codeMemberChk 메소드 종료");
+		return result;
+	}
 }
