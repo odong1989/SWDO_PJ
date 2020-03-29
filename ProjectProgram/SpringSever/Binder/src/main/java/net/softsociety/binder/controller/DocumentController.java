@@ -67,7 +67,6 @@ public class DocumentController {
 		logger.info("-해시태그");
 		model.addAttribute("hashTagList", hashTagList);
 		
-<<<<<<< HEAD
 		return "/document/mainDocument";
 	}	
 
@@ -77,12 +76,4 @@ public class DocumentController {
 		logger.info("boardTemp 메소드 실시& 이동");		
 		return "/document/boardTemp";
 	}	
-	
-	
-	
-=======
-		return "/document/readDocument";
-		
-	}
->>>>>>> 브랜치_지혜
 }
