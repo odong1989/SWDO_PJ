@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -67,8 +68,11 @@ public class HomeController {
 	public String index(@RequestParam(value = "to",defaultValue="a")String to) {
 		logger.info("대문 접속");
 		
+		//일단 박아둔 메일링 기능
 		if (!to.equals("a")) {
-			MailVO vo = new MailVO("binder.send@gmail.com", "jsh4646@naver.com", "Binder 초대메시지입니다.", "ㅋㅋ 힝 속았징");
+			
+						
+			MailVO vo = new MailVO("binder.send@gmail.com", "Binder", "님의 Binder 초대메시지입니다.", "ㅋㅋ 힝 속았징");
 			vo.setTo(to);
 			final MimeMessagePreparator preparator = new MimeMessagePreparator() {
 				@Override

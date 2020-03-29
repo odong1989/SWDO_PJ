@@ -16,6 +16,41 @@ insert into bnd_member(
     , '20-03-20'
 );
 
+insert into bnd_member(
+    member_id
+    , member_pw
+    , member_name
+    , member_mail
+    , member_photo
+    , member_birthday
+    , member_lastlogin
+) values (
+    'oso91'
+    , 123123
+    , '오성옥'
+    , 'oso@naver.com'
+    , '/dahyun.png'
+    , '91-08-02'
+    , '20-03-29'
+);
+
+insert into bnd_member(
+    member_id
+    , member_pw
+    , member_name
+    , member_mail
+    , member_photo
+    , member_birthday
+    , member_lastlogin
+) values (
+    'odong1989'
+    , 123123
+    , '바나나'
+    , 'banana@naver.com'
+    , '/dahyun.png'
+    , '89-05-05'
+    , '20-03-29'
+);
 
 insert into bnd_group(
     group_no
@@ -81,24 +116,58 @@ insert into bnd_document(
     , '호남고 운동장'
 );
 
-insert into bnd_groupjoin(
+insert into bnd_document(
     group_no
+    , document_no
     , member_id
-    , member_level
+    , document_content
+    , document_regdate
+    , document_finalday
+    , document_destination
 ) values (
     1
-    , 'jsh4646'
-    , 1
+    , bnd_document_no_seq.nextval
+    , 'oso91'
+    , '등산ㅋ'
+    , '20-03-17'
+    , '20-03-18'
+    , '내장산'
 );
 
 insert into bnd_groupjoin(
     group_no
     , member_id
     , member_level
+    , group_joindate
+) values (
+    1
+    , 'jsh4646'
+    , 1
+    , sysdate-1
+);
+
+insert into bnd_groupjoin(
+    group_no
+    , member_id
+    , member_level
+    , group_joindate
 ) values (
     2
     , 'jsh4646'
     , 2
+    , sysdate
+);
+
+insert into bnd_groupjoin(
+    group_no
+    , member_id
+    , member_level
+    , group_joindate
+) values (
+    1
+    , 'oso91'
+    , 3
+    , sysdate
 );
 
 insert into bnd_hashtag(
@@ -159,6 +228,16 @@ insert into bnd_hashtag(
     bnd_hash_no_seq.nextval
     , '#단풍조기축구'
     , 2
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+) values (
+    bnd_hash_no_seq.nextval
+    , '#모교'
+    , 3
 );
 
 commit;
