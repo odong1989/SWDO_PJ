@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${group_name }</title>
-    <link href="<c:url value='/css/basic.css' />", rel="stylesheet">
+    <link href="<c:url value='/css/basic.css?ia=1' />", rel="stylesheet">
     <script type="text/javascript">
 		function selectGroup(pk) {
 			location.href="group?no="+pk;
@@ -18,7 +18,7 @@
     <div id="gaibu">
         <div id="gaibu-left">
             <div id="gaibu-left-top">
-            <p><img src="http://erines.kr/cat.jpg" height="100px"></p>
+            <p><img src="<c:url value='/img/logo.png' />"></p>
             </div>
             <div id="left-menu">
             	            	<c:forEach var="glist" items="${groupJoinList }">
