@@ -56,7 +56,7 @@ public class GroupController {
 		} else {
 			//코드를 새로 생성
 			logger.info("코드를 새로 생성");
-			StringBuffer temp = new StringBuffer();
+			StringBuffer temp = new StringBuffer();//
 			Random rnd = new Random();
 			for (int i = 0; i < 5; i++) {
 			    int rIndex = rnd.nextInt(3);
@@ -92,7 +92,6 @@ public class GroupController {
 			}
 		}
 		return "group/groupcode";
-		
 	}
 	
 	@RequestMapping(value="/group/groupjoin", method=RequestMethod.GET)

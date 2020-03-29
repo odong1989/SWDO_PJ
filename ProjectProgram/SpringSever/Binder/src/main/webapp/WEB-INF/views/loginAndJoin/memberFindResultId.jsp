@@ -14,15 +14,13 @@
           <tr>
               <td>아이디 찾기</td>
           </tr>
-              <td>ID 확인결과
-              		 ${resultMemberData.member_id}
+              <td>ID 확인결과입니다.
               </td>
               <tr style="text-align: center;">
                   <td style="width:110px; text-align:left;">
 				<c:choose>
 					<c:when test="${not empty resultMemberData.member_id}">
 						<p>귀하의 ID는 ${resultMemberData.member_id}</p>				
-
 					</c:when>
 					<c:otherwise>
 						<p>${errMsg}</p>				
