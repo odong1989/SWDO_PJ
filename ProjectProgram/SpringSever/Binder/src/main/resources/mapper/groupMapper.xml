@@ -57,5 +57,19 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 		where
 			group_no = #{group_no}
 	</update>
+	
+	<select id="codeMemberChk" parameterType="hashmap" resultType="group">
+		select
+			group_no
+			, group_name
+		from
+			bnd_group, bnd_groupjoin
+		where
+			bnd_group.group_code = #{group_code}
+		and
+			bnd_group.group_no = bnd_groupjoin.group_no
+		and
+			
+	</select>
 
 </mapper>

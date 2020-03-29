@@ -13,4 +13,6 @@ public interface GroupMapper {
 	public HashMap<String, Object> selectCode(Group group);
 	
 	public int updateCode(Group group);
+	
+	public Group codeMemberChk(HashMap<String, Object> map);
 }
