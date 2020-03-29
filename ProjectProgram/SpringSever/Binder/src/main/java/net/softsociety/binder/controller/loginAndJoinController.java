@@ -118,10 +118,11 @@ public class loginAndJoinController {
 	public String memberFindPassword(Member forgetMemberPW, Model model) {
 		//forgetMemberPW : 비밀번호를 잊은 고객이 비번수정을 위해 자신의 이름,계정을 입력한 것.
 		logger.info("memberFindPassword 메소드 실시");
-
+		logger.info("memberFindId-사용자가 PW찾기 위해 입력한 정보 forgetMemberPW : {}",forgetMemberPW);
 		String errMsg = "";   //입력된 정보가 틀릴시 에러안내문구(에러메시지 출력위한 변수.)
 		String introMsg ="가입하신 이메일로 비밀번호가 전송되었습니다."; //정상실행시 리턴
 		StringBuffer temp = new StringBuffer();
+		
 		Member updateMemberData = dao.memberSelectOne2(forgetMemberPW);
 
 		if(updateMemberData != null)
