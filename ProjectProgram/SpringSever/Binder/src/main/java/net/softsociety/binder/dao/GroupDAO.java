@@ -1,6 +1,7 @@
 package net.softsociety.binder.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -28,14 +29,39 @@ public class GroupDAO {
 	try {
 		GroupMapper mapper = session.getMapper(GroupMapper.class);
 		groupJoinList = mapper.selectGroupJoin(member_id);
-		logger.info("GroupDAO.java - groupJoinList의 수신값 : {}",groupJoinList);			
 	}
 	catch(Exception e){
 		e.printStackTrace();
 	}
-	logger.info("GroupDAO.java - 최종 리턴되는 groupJoinList : {}",groupJoinList);			
-	logger.info("GroupDAO.java - selectGroupJoin 메소드 종료");	
+	logger.info("GroupDAO.java - selectGroupJoin 메소드 종료");
 	return groupJoinList;
+	}
 	
+	public HashMap<String, Object> selectCode(Group group) {
+		logger.info("GroupDAO.java - selectCode 메소드 시작");	
+		HashMap<String, Object> oldgroup = null;
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			oldgroup = mapper.selectCode(group);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		logger.info("GroupDAO.java - selectCode 메소드 종료");
+		return oldgroup;
+	}
+	
+	public int updateCode(Group group){
+		logger.info("GroupDAO.java - updateCode 메소드 시작");	
+		int result = 0;
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			result = mapper.updateCode(group);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		logger.info("GroupDAO.java - updateCode 메소드 종료");
+		return result;
 	}
 }

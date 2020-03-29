@@ -21,17 +21,18 @@
             <p><img src="http://erines.kr/cat.jpg" height="100px"></p>
             </div>
             <div id="left-menu">
+            <c:set var="test1" value="glist.group_name" />
             	<c:forEach var="glist" items="${groupJoinList }">
 	                <div class="menu-group-button">
 	                    <div class="menu-group-button-left">
-	                        <a href="javascript:selectGroup(${glist.GROUP_NO })"><p>${glist.GROUP_NAME }</p></a>
-	                        <p class="p-group">#${glist.GROUP_SUBCATEGORY }</p>
+	                        <a href="javascript:selectGroup(${glist.group_no })"><p>${glist.group_name }</p></a>
+	                        <p class="p-group">#${glist.group_subcategory }</p>
 	                    </div>
 	                    <div class="menu-group-button-right">
-	                    	<c:if test="${glist.MEMBER_LEVEL == 1 }">
+	                    	<c:if test="${abc == 1 }">
                         		<img src="<c:url value='/img/crown_gold.png' />">
                         	</c:if>
-                        	<c:if test="${glist.MEMBER_LEVEL == 2 }">
+                        	<c:if test="${abc == 2 }">
                         		<img src="<c:url value='/img/crown_silver.png' />">
                         	</c:if>
 	                    </div>
@@ -50,10 +51,13 @@
                 <!-- </div> -->
             </div>
             <div id="gaibu-right-bottom">
-                제노사이</br>
-                드커터를</br>
-                맞을 것만</br>
-                같아</br></br></br></br></br>
+            <br/><br/><br/><br/>
+                <c:if test="${codebool eq 'ari' }">
+	                <br/><strong>${code.GROUP_NAME }</strong> 그룹에 가입하시겠습니까? 
+                </c:if>
+                <c:if test="${codebool eq 'nashi' }">
+	                <br/><font color="red">유효하지 않은 초대코드입니다.</font> 
+                </c:if>
             </div>
         </div>
     </div>

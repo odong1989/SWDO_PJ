@@ -1,7 +1,7 @@
 package net.softsociety.binder.controller;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,7 +24,7 @@ import net.softsociety.binder.vo.HashTag;
 
 //@선언
 @Controller
-@RequestMapping(value="document")
+@RequestMapping(value="document/")
 public class DocumentController {
 
 	//0.dao선언
@@ -33,6 +33,7 @@ public class DocumentController {
 	@Autowired HashTagDAO   hashTagDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
+	
 	@RequestMapping(value="mainDocument", method=RequestMethod.GET)
 	public String mainDocument(HttpSession session, //Model modelGroupJoinList, Model modelDocumentList, Model modelHashTagList)
 			Model model)
@@ -43,20 +44,32 @@ public class DocumentController {
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		logger.info("-그룹리스트 : {}", groupJoinList);
-		//modelGroupJoinList.addAttribute("groupJoinList", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
-		
-		ArrayList<Document> documentList = documentDao.selectDocuments(member_id);
-		//modelDocumentList.addAttribute("documentList", documentList);
-		logger.info("-작성한 글 : {}",documentList);
-		model.addAttribute("documentList", documentList);
-		
-		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
-		logger.info("-작성한 해시태그");
-		//modelHashTagList.addAttribute("hashTagList", hashTagList);
-		model.addAttribute("hashTagList", hashTagList);
 		
 		return "/document/mainDocument";
 		
 	}	
+	
+	@RequestMapping(value="group", method=RequestMethod.GET)
+	public String group(HttpSession session, int no , Model model)
+	{	
+		logger.info("mainDocument 이동");
+		String member_id = (String) session.getAttribute("loginId");
+		logger.info("mainDocument - member_id :{}",member_id);
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		logger.info("-그룹리스트 : {}", groupJoinList);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
+		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
+		logger.info("-그룹 내 글 : {}",documentList);
+		model.addAttribute("documentList", documentList);
+		
+		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
+		logger.info("-해시태그");
+		model.addAttribute("hashTagList", hashTagList);
+		
+		return "/document/readDocument";
+		
+	}
 }

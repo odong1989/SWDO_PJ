@@ -11,18 +11,51 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 우선 파라미터로 받은 회원의 ID로 소속된 그룹의 번호 정보를 확인한다.
 다음으로 해당 번호와 동일한 그룸의 데이터를 받는다.
  -->
-	<select id="selectGroupJoin" parameterType="string" resultType="group">
- 	select
-   		 bnd_group.group_name, 
- 		 bnd_group.group_category,
- 		 bnd_group.group_subcategory
+	<select id="selectGroupJoin" parameterType="string" resultType="hashmap">
+ 	select distinct
+   		 bnd_group.group_no group_no
+   		 , bnd_group.group_name group_name
+ 		 , bnd_group.group_category group_category
+ 		 , bnd_group.group_subcategory group_subcategory
+         , bnd_groupjoin.group_joindate group_joindate
+         , bnd_groupjoin.member_level member_level
 	from 
 	     bnd_member, bnd_groupjoin, bnd_group
 	where 
-	     bnd_groupjoin.member_id =#{member_id}
+	     bnd_groupjoin.member_id = #{member_id}
 	and    
-		 bnd_groupjoin.group_no = bnd_group.group_no	
+		 bnd_groupjoin.group_no = bnd_group.group_no
+    order by
+        bnd_groupjoin.group_joindate
 	</select>
 
+	<select id="selectCode" parameterType="group" resultType="hashmap">
+	 	select
+	   		 group_name group_name
+	   		 , group_code group_code
+	   		 , to_char(group_codedate, 'yyyy-mm-dd') group_codedate
+	   		 , to_char(group_codedate+7, 'yyyy-mm-dd') group_codedate7
+		from 
+			bnd_group
+		where
+			<if test="group_no != null and group_no != 0"> 
+		    	group_no = #{group_no}
+		    </if>
+		    <if test="group_code != null"> 
+		    	group_code = #{group_code}
+		    </if>
+		and
+			 group_codedate between sysdate-7 and sysdate
+	</select>
+	
+	<update id="updateCode" parameterType="group">
+		update
+			bnd_group
+		set
+			group_code = #{group_code}
+			, group_codedate = sysdate
+		where
+			group_no = #{group_no}
+	</update>
 
 </mapper>
