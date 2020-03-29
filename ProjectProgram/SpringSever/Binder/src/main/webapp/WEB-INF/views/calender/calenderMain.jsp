@@ -11,6 +11,7 @@
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript"> 
     //단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
+    //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
     (function($){
     $.fn.datepicker.dates['kr'] = {
                 days: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
@@ -46,7 +47,7 @@
   														
   							document.getElementById('gaibu-right-bottom').innerHTML=data;
   							},
-  						error:function(){alert("board 중 에러가 발생되었습니다.")}
+  						error:function(){alert("boardDocumnets 로드 중 에러가 발생되었습니다.")}
   					});
   				}
   			});
@@ -56,43 +57,28 @@
             본 HTML파일을 실행후 개발자모드에서 코드를 확인하세요.
         -->
         <style>
-            table.table-condensed{    
-                width: 500px;         /*데이터피커의 가로폭을 설정할 수 있습니다.*/
-                border-style: double;
-                font-family:돋움;     /*데이터피커의 날짜들의 폰트 설정 가능.*/
-            }
-            .table-condensed. td{
-                padding-right:50px;
-                padding-top: 5px;
-            }
-            #nextSchedule{
-                width:100px;
-                height:10px;
-                font-size: 10px;
-                border-radius: 30%;
-            }
-            td.old.day{
-                text-align:left; 
-                background: <line x1:"0" y1="100%" x2="100%" y2="0" stroke="gray">;
-                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="0" x2="100%" y2="100%" stroke="gray" /><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>');
-            }
-            td.new.day{
-                color:red;    
-                text-align:left;                 
-            }
-            td.day{ /*현재 달의 일자들을 설정할 수 있습니다.*/
-                color:cyan;    
-                text-align:left;
-                font-size: larger;    
-            }
-            table.table-condensed.datepicker-title{
-                height: 200px;     
-                background-color: red;
-             }
-             div.datepicker-days{
-                font-size: 10px;            
-                width: 17em; padding: .2em .2em 0; display: none;
-            }
+    table.table-condensed{    
+        width: 650px;         /*데이터피커의 총 가로폭을 설정할 수 있습니다.*/
+	height:450px;         /*데이터피커의 총 세로폭을 설정할 수 있습니다.*/
+        border-style: double;
+        font-family:돋움;     /*데이터피커의 날짜들의 폰트 설정 가능.*/
+     }
+td.day{ /*현재 달의 일자들을 설정할 수 있습니다.*/
+      color:cyan;    
+      text-align:left;
+      font-size: larger;    
+}
+td.old.day{
+     text-align:left;  vertical-align:top;
+     /*오래전 날짜들은 X선(대각선)을 그을 수 있습니다.
+     당장은 필요없다고 답변받아 사용할 수 있도록 주석처리만 함.*/
+     /*
+     background: <line x1:"0" y1="100%" x2="100%" y2="0" stroke="gray">;
+     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="0" x2="100%" y2="100%" stroke="gray" /><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>');*/
+     }
+td.new.day{
+     text-align:left;  vertical-align:top;
+     }
             </style>
 
     <!--단계5. HTML body내에 부트스트랩 선언. 여기서 선언해야 작동됩니다.-->
@@ -102,9 +88,9 @@
                    <td width="21%"></td>
                    <td width="auto" align="center"><p id="notice">공지사항 : ㅇㅇㅇ공지부분</p></td>
                    <td width="21%" align="right">
-                   <img src="<c:url value='/img/f5.png' />"> 
+                   		<img src="/img/f5.png" /> 
                     <a id="btn2">
-						<img  src="<c:url value='/img/board.png' />">
+						<img  src="/img/board.png" />
                     </a>			
                  	</td>
                 </tr>

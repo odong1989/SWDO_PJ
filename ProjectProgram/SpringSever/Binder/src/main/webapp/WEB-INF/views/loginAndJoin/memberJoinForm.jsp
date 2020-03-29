@@ -64,7 +64,7 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 <body>
 <div>
 	<table style="margin:50px 50px;">
-		<form action="memberJoin" method="post" onsubmit="return formCheck();">
+		<form action="memberJoin" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
 			<tr>
 				<td>
 					<div class="memberJoin" style=background-image:url(/img/MemberJoin/MemberJoin_login.jpg);">
@@ -91,6 +91,15 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 			</tr>
 			<tr>
 				<td>
+					<div class="memberJoin">
+						<div class="image"></div>
+						<input type="file" id="photo" name=member_photo placeholder="프로필 사진을 넣어주세요" >	
+									 		  	 <!-- name="upload"-->
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<div class="memberJoin"	style="background-image:url(/img/MemberJoin/MemberJoin_password.jpg);">
 						<div class="image"></div>
 						<input type="text" id="birthday" name="member_birthday" placeholder="생년월일 입력해 주세요" >	
@@ -105,19 +114,12 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<div class="memberJoin" style="background-image:url(/img/MemberJoin/MemberJoin_phone.jpg);">
-						<div class="image"></div>
-						<input type="text" id="phone" name=member_phone placeholder="연락처를 입력해 주세요" >	
-					</div>
-				</td>
-			</tr>
+
 			<tr> 
 				<td>
 					<div style="width:220px; height:60px; padding:15px; border:1px solid black;">
-						<input type="radio" value="미혼" >미혼<br><br>
-						<input type="radio" value="기혼">기혼
+						<input type="radio" name="member_married" value="0" >미혼<br><br>
+						<input type="radio" name="member_married" value="1">기혼
 					</div>
 				</td>
 			</tr>

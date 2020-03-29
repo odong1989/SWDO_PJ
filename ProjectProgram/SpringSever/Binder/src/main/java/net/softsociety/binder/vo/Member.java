@@ -31,6 +31,6 @@ public class Member {
 	private String 	member_weddingday;	
 	private String 	member_regdate;
 	private String 	member_lastlogin;
-	private String 	member_wdraw;
+	private int 	member_wdraw;
 
 }

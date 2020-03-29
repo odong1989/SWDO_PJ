@@ -41,8 +41,7 @@
 		<interceptor>
 			<mapping path="/calender/**"/>
 			<mapping path="/document/**"/>			
-
-			<mapping path="/member/memberMypage"/>
+			<mapping path="/member/**"/>
 									
 			<beans:ref bean="loginInterceptor"/><!--내가 적용하고픈 인터셉터 파일의 id명  -->
 		</interceptor>

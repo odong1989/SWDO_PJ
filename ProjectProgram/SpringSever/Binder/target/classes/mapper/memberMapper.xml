@@ -69,10 +69,31 @@
    	<update id="memberUpdate" parameterType="member">
 	update bnd_member
 	set
-		member_pw		 = #{member_pw}
-		,member_name	 = #{member_name}
-		,member_mail	 = #{member_mail}
+		member_pw			 = #{member_pw}
+		,member_name		 = #{member_name}
+		,member_mail	 	 = #{member_mail}
+		,member_birthday	 = to_date(#{member_birthday},'yyyy-MM-dd')
+		,member_married 	 = #{member_married}
+		,member_weddingday   = to_date(#{member_weddingday},'yyyy-MM-dd')
 	where
 		member_id = #{member_id}	
 	</update>
+	
+	<update id="memberLastLoginTime" parameterType="string">
+	update bnd_member
+	set
+		member_lastlogin	 = to_date(sysdate,'yyyy-MM-dd')
+	where
+		member_id = #{member_id}	
+	</update>
+
+	<update id="memberWdraw" parameterType="string">
+	update bnd_member
+	set
+		member_wdraw = '1'
+	where
+		member_id = #{member_id}	
+	</update>
+
+
 </mapper>
