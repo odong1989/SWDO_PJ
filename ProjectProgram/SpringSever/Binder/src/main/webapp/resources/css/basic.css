@@ -26,7 +26,7 @@ p {
     margin: 0 20px 0 0;
 }
 #gaibu-left-top{
-    height:120px;
+    height:50px;
 }
 #gaibu-right{
     float:left;
@@ -63,7 +63,7 @@ p {
     width:70%;
 }
 #gaibu-right-top{
-    height:120px;
+    height:50px;
     width:100%;
     text-align:right;
     vertical-align: bottom;
