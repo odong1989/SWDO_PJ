@@ -13,12 +13,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
+import net.softsociety.binder.dao.GroupMemberDAO;
 import net.softsociety.binder.dao.HashTagDAO;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
+import net.softsociety.binder.vo.GroupJoin;
 import net.softsociety.binder.vo.HashTag;
 
 
@@ -31,6 +36,7 @@ public class GroupController {
 	@Autowired GroupDAO 	groupDao;
 	@Autowired DocumentDAO  documentDao;
 	@Autowired HashTagDAO   hashTagDao;
+	@Autowired GroupMemberDAO dao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
@@ -119,5 +125,35 @@ public class GroupController {
 			model.addAttribute("codebool", "nashi");
 		}
 		return "group/groupjoin";
+	}
+	
+	@RequestMapping(value="/groupMemberMgr", method=RequestMethod.GET)
+	public String vuelist(GroupJoin vo, HttpSession session, Model model) {
+		int groupno = 1;
+		vo.setGroup_no(groupno);
+		logger.info("그룹화면{}",vo);
+		GroupJoin join = dao.selectGroupJoinMember(vo);
+		logger.info("그룹화면{}",join);
+		model.addAttribute("gjoin",join);
+		return "group/groupMemberMgr";
+	}
+	
+	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
+	@ResponseBody
+	public String vuelist2(GroupJoin vo, String memberCheck) {
+		logger.info("그룹화면{}",vo);
+		String memberCheck2 = dao.selectGroupJoinMemberOne(memberCheck);
+		String chk = null;
+		if (memberCheck2 != null) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	
+	@RequestMapping(value="/groupModal", method=RequestMethod.GET)
+	public String vueModal() {
+		return "group/groupModal";
 	}
 }

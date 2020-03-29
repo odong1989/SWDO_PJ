@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.binder.dao.GroupJoinMapper">
+
+<!-- 
+select BND_GROUP.group_name
+from BND_MEMBER, BND_GROUPJOIN,BND_GROUP 
+where BND_MEMBER.MEMBER_ID = BND_GROUPJOIN.MEMBER_ID
+and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
+우선 파라미터로 받은 회원의 ID로 소속된 그룹의 번호 정보를 확인한다.
+다음으로 해당 번호와 동일한 그룸의 데이터를 받는다.
+ -->
+	<select id="selectGroupJoinMember" parameterType="groupjoin" resultType="groupjoin">
+ 	select
+   		 bnd_groupjoin.member_id, 
+ 		 bnd_groupjoin.member_level,
+ 		 bnd_groupjoin.group_joindate
+	from 
+	     bnd_member, bnd_groupjoin
+	where 
+	     bnd_member.member_id = bnd_groupjoin.member_id
+	     and
+	     bnd_groupjoin.group_no = #{group_no}
+	</select>
+
+	<select id="selectGroupJoinMemberOne" parameterType="string" resultType="string">
+ 	select
+   		 bnd_member.member_id
+	from 
+	     bnd_member
+	where 
+	     bnd_member.member_id = #{member_id}
+	</select>
+
+</mapper>
