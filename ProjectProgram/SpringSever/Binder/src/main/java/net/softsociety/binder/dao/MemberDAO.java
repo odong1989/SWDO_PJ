@@ -56,29 +56,31 @@ public class MemberDAO {
 		}
 		logger.info("MemberController-Mypage 프로세스 - 리턴 member값 : {}", resultMember);
 		return resultMember;
-		
-		
 	}
 
-/*	
-	public Member memberUpdate(Member updateMemberData){
-		//업데이트 된 정보를 리턴해주어 사용자가 마이페이지에서 바로 확인 되도록 한다.
-		logger.info("MemberDAO-memberUpdate 실시");
-		logger.info("MemberDAO-수신된 업데이트할 정보 : {}", updateMemberData);
-		Member resultMemberData=null;	
+	public void memberLastLoginTime(String member_id) {
+		logger.info("memberLastLoginTime메소드 시작");
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			resultMemberData = mapper.memberUpdate(updateMemberData);
-			resultMemberData = mapper.memberUpdate(updateMemberData);
-			logger.info("MemberDAO-업데이트 결과&리턴할 값 : {}",resultMemberData);
+			mapper.memberLastLoginTime(member_id);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		logger.info("MemberDAO-memberUpdate 메소드 종료");
-		return resultMemberData;	
+		logger.info("memberLastLoginTime메소드 종료");
 	}
-	*/
 
+	public void memberWdraw(String member_id){
+		logger.info("memberWdraw 메소드 시작");
+		logger.info("memberWdraw 메소드 member_id :{}",member_id);
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			mapper.memberWdraw(member_id);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("memberWdraw 메소드 종료");
+	}
+	
 	public void memberUpdate(Member updateMemberData){
 		//업데이트 된 정보를 리턴해주어 사용자가 마이페이지에서 바로 확인 되도록 한다.
 		logger.info("MemberDAO-memberUpdate 실시");

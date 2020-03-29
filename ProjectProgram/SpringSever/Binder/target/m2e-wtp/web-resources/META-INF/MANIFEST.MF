@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: odong
 Build-Jdk: 1.8.0_231
-=======
-Built-By: jsh46
-Build-Jdk: 1.8.0_181
->>>>>>> 브랜치_지혜
 Created-By: Maven Integration for Eclipse
 

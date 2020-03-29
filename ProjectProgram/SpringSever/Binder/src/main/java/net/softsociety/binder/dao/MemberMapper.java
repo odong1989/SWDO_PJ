@@ -11,4 +11,9 @@ public interface MemberMapper {
 	
 	public int	  memeberJoin(Member member);
 	public void   memberUpdate(Member member);
+
+	public void   memberWdraw(String member_id);
+	
+	//마지막 로그인 시간 업데이트
+	public void memberLastLoginTime(String member_id);
 }

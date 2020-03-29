@@ -12,9 +12,19 @@
 
     <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
-    
-    <script type='text/javascript'>
+	<script type="text/javascript">
+    (function($){
+    $.fn.datepicker.dates['kr'] = {
+                days: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+                daysShort: ["일", "월", "화", "수", "목", "금", "토", "일"],
+                daysMin: ["일", "월", "화", "수", "목", "금", "토", "일"],
+                months: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                monthsShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+            };
+        }(jQuery));
+
     	//btn1 : 게시판->캘린더로 변경
 		$(document).on("click","#btn1",function(){
 			$.ajax({
@@ -66,15 +76,13 @@
 	                        <p class="p-group">#${glist.group_subcategory }</p>
 	                    </div>
 	                    <div class="menu-group-button-right">
-<<<<<<< HEAD
 	                    	${sessionScope.loginLevel1 }
 	                    	${sessionScope.loginLevel + glist.group_no }
 	                    	<c:if test="${sessionScope.loginLevel + glist.group_no  == 1 }">
-=======
 	                    	<c:if test="${abc == 1 }">
->>>>>>> 브랜치_지혜
                         		<img src="<c:url value='/img/crown_gold.png' />">
                         	</c:if>
+							</c:if>
 	                    </div>
 	                    <div class="menu-group-button-clear"></div>
 	                </div>
@@ -89,7 +97,11 @@
                 <!-- <div id="naibu-right-right"> -->
                     <p><img src="<c:url value='/img/bell.png' />"> 
                        <img src="<c:url value='/img/mail.png' />"> 
-                       <img src="<c:url value='/img/human.png' />" id="usericon">
+					   <a href="/member/memberMypage">
+					   <img src="<c:url value='/img/human.png' />" id="usericon">
+						 마이페이지 실시
+						 </a>
+                   	   <a href="/member/memberLogout">로그아웃</a>
                     </p>
                 <!-- </div> -->
             </div>
@@ -143,6 +155,6 @@
             </div>
         </div>
     </div>
-    <a href="/member/memberMypage">마이페이지 실시</a>
+ 
 </body>
 </html>

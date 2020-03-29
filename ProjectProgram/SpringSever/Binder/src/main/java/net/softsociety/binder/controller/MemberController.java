@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.softsociety.binder.dao.MemberDAO;
+import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.Member;
 
 //@선언
@@ -25,7 +27,8 @@ import net.softsociety.binder.vo.Member;
 public class MemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+    private final String uploadPath = "/SWDO_PJ/ProjectProgram/SpringSever/Binder/src/main/webapp/resources/img/MemberProfile";
+    
 	//0.dao선언
 	@Autowired
 	MemberDAO dao;
@@ -68,8 +71,16 @@ public class MemberController {
 
 	//1.4[실행] 회원가입실시
 	@RequestMapping(value="memberJoin", method=RequestMethod.POST)
-	public String memberJoin(Member member) {
+	public String memberJoin(Member member, MultipartFile upload) {
 		logger.info("memberJoin메소드입니다");
+		
+        if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
+            //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)
+            String savedProfile = FileService.saveFile(upload, uploadPath);//original : savedfile
+           // member.setMember_photo(savedProfile); //DB가 사용한 파일의 별명
+           // member.ser
+          //  .setNotice_originfile(upload.getOriginalFilename()); //원본 파일명
+     }
 		logger.info("회원가입 자료 전달");
 		logger.info("member : {}",member);
 		dao.memeberJoin(member);
@@ -100,7 +111,8 @@ public class MemberController {
 		return "member/memberLoginForm";
 	}
 	
-	//2.2로그인 
+	//2.2로그인  //20.03.28 메인 화면으로 이동처리
+	/*
 	@RequestMapping(value="memberLoginExe", method=RequestMethod.POST)
 	public String memberLoginExe(Member member, String remember,HttpSession session, HttpServletResponse response,Model model) {
 		logger.info("memberLoginExe 로그인 프로세스 시작");
@@ -138,7 +150,7 @@ public class MemberController {
 		logger.info("memberLoginExe 로그인 프로세스 페이지 이동");
 		return "redirect:/document/mainDocument";
 	}
-	
+	*/
 	
 	//2.3 인터셉션(로그인X상태서 로그인창으로 자동이동)
 	@RequestMapping(value="memberLoginAlertPopup", method=RequestMethod.GET)
@@ -147,16 +159,24 @@ public class MemberController {
 		return "member/interceptPopup";
 	}
 	
+
 	//3.로그아웃===========================================================================================================
 	@RequestMapping(value="/memberLogout", method=RequestMethod.GET)
 	public String memberLogout(HttpSession session) {
 	//세션에 로그읺 할 때 저장했던 값을 지우는 일.	
 		logger.info("로그아웃 프로세스 시작");
-		session.removeAttribute("loginId");
 		logger.info("로그아웃 프로세스 - session의 loginId : {}",session.getAttribute("loginId"));
+		
+
+		logger.info("로그아웃 프로세스 - 로그인 계정의 최종로그인 날짜 업데이트 실시");
+		dao.memberLastLoginTime((String)session.getAttribute("loginId"));	
+
+		//logger.info("로그아웃 프로세스 - 업데이트된 최종로그인 날짜 : {}",member.getMember_lastlogin());
+		
+		session.removeAttribute("loginId");
+		logger.info("로그아웃 프로세스 완료. index페이지로 리턴합니다.");
 		return "redirect:/";
 	}	
-	
 	
 	//4.MyPage============================================================================================================
 	//4.1 마이페이지 이동&계정정보 수신
@@ -226,39 +246,21 @@ public class MemberController {
 	}
 	
 	
-	
-	
-	
-	//5.비밀번호 아이디 찾기 및 비밀번호 재설정 페이지
-	//5.1 아이디/비밀번호 찾기 페이지로 이동
-	@RequestMapping(value="memberFindMyIDorPW", method=RequestMethod.GET)
-	public String memberFindMyIDorPW() {
-		logger.info("memberFindMyIDorPW페이지로 이동 실시");
-	return "/member/memberFindMyIDorPW";
-	}
-	
-	//5.2 아이디 찾기 메소드 실시&아이디 검색결과 출력페이지로 리턴(출력 방식은 memeberFindResultId.jsp페이지에서 리턴값에 따라 출력을 담당.)
-	
-	
-	
-	//5.3 비밀번호 재설정 페이지 이동 - 이동전에 회원인지 확인한다음 회원이 아닐경우 	/member/memberFindMyIDorPW 으로 리턴시킨다.
-	@RequestMapping(value="memberFindPassword", method=RequestMethod.POST)
-	public String memberFindPassword(Member forgetMemberPW) {
-		//forgetMemberPW : 비밀번호를 잊은 고객이 비번수정을 위해 자신의 이름,계정을 입력한 것.
-		logger.info("memberFindPassword 메소드 실시");
-		Member resultMemberData = new Member();
-		
-		dao.memberSelectOne2(forgetMemberPW);
-		if(resultMemberData == null)
-		{
-			return "/member/memberFindMyIDorPW";			
-		}
-		else
-		{
-			return "/member/memberResetPW";			
-		}
+	//4.3 회원탈퇴
+	@RequestMapping(value="memberWdraw", method=RequestMethod.GET)
+	public String memberWdraw(HttpSession session) {
+		logger.info("마이페이지-memberWdraw(회원탈퇴) 실시");
+		logger.info("마이페이지-memberWdraw(회원탈퇴) 실시 세션계정 : {}", session.getAttribute("loginId") );		
 
+		dao.memberWdraw((String)session.getAttribute("loginId"));
+
+		Member member=null;
+		member = dao.memberSelectOne((String)session.getAttribute("loginId"));
+		logger.info("마이페이지-memberWdraw(회원탈퇴) 결과 : {}", member.getMember_wdraw() );			
+		logger.info("마이페이지-memberWdraw(회원탈퇴) 종료");
+		return "redirect:/";
 	}
+
 	/*
 	//4.2 마이페이지-주소변경(#aJax활용할것!)
 	@RequestMapping(value="MypageChangeAddress", method=RequestMethod.POST, produces = "application/text; charset=utf8") 
