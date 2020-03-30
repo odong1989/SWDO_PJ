@@ -2,6 +2,7 @@ package net.softsociety.binder.controller;
 
 import java.util.Random;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,15 +11,20 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.softsociety.binder.dao.MemberDAO;
+import net.softsociety.binder.vo.MailVO;
 import net.softsociety.binder.vo.Member;
 
 //@선언
@@ -115,15 +121,15 @@ public class loginAndJoinController {
 	
 	//2.3 비밀번호 재설정 페이지 이동
 	@RequestMapping(value="memberFindPassword", method=RequestMethod.POST)
-	public String memberFindPassword(Member forgetMemberPW, Model model) {
+	public String memberFindPassword(Member forgetMember, Model model) {
 		//forgetMemberPW : 비밀번호를 잊은 고객이 비번수정을 위해 자신의 이름,계정을 입력한 것.
 		logger.info("memberFindPassword 메소드 실시");
-		logger.info("memberFindId-사용자가 PW찾기 위해 입력한 정보 forgetMemberPW : {}",forgetMemberPW);
+		logger.info("memberFindId-사용자가 PW찾기 위해 입력한 정보 forgetMember : {}",forgetMember);
 		String errMsg = "";   //입력된 정보가 틀릴시 에러안내문구(에러메시지 출력위한 변수.)
 		String introMsg ="가입하신 이메일로 비밀번호가 전송되었습니다."; //정상실행시 리턴
 		StringBuffer temp = new StringBuffer();
 		
-		Member updateMemberData = dao.memberSelectOne2(forgetMemberPW);
+		Member updateMemberData = dao.memberSelectOne3(forgetMember);
 
 		if(updateMemberData != null)
 			{
@@ -145,21 +151,22 @@ public class loginAndJoinController {
 				        break;
 				    }
 				}
-				logger.info("코드 생성완료 {}", temp);
+				logger.info("코드 생성완료. 코드 : {}", temp);
 				String tempPW = null; //생성된 코드를 저장
 				tempPW = temp.toString();			
 				updateMemberData.setMember_pw(tempPW);
-				dao.memberUpdate(updateMemberData);
-				model.addAttribute("resultMsg",errMsg);
-				return "/loginAndJoin/memberFindMyIDorPW";			
+				dao.memberUpdatePW(updateMemberData);
+				logger.info("DB에 수정된 비밀번호 : {}", updateMemberData.getMember_pw());							
+
+				
+				return "/sendMail.do?to=kwunodong";			
 			}
 		else
 			{
-				errMsg="존재하지 ID입니다.";
-				
+				errMsg="등록되지 않은 ID입니다.";
 				model.addAttribute("introMsg",introMsg);
 				return "/loginAndJoin/memberFindMyIDorPW";
 			}
-		    
 		}
+	
 	}	

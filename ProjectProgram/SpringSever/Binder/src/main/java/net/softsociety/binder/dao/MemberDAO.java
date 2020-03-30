@@ -96,6 +96,31 @@ public class MemberDAO {
 		logger.info("MemberDAO-memberUpdate 메소드 종료");
 	}
 
-
+	
+	public Member memberSelectOne3 (Member member) {
+		logger.info("memberSelectOne3 메소드 시작");
+		Member resultMember = null;
+		logger.info("memberSelectOne3 메소드 - 검색위해 받은 정보 : {}",member);
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			resultMember = mapper.memberSelectOne3(member);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("memberSelectOne3 메소드-리턴 member값 : {}", resultMember);
+		return resultMember;
+	}
+	
+	public void memberUpdatePW(Member updateMemberData) {
+		logger.info("memberUpdatePW 메소드 시작");
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			mapper.memberUpdatePW(updateMemberData);
+			logger.info("memberUpdatePW - 비밀번호 변경 완료");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("memberUpdatePW 메소드 완료");
+	}
 
 }
