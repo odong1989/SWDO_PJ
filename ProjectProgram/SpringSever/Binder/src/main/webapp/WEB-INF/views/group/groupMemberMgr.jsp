@@ -59,6 +59,7 @@
 		<table>
 			<tr>
 			<td class='center'>${gjoin.member_id }</td>
+			<td class='center'>${gjoin.group_no }</td>
 			<td class='center'>
 				<c:if test="${gjoin.member_level == 1 }">
 					관리자
@@ -71,8 +72,10 @@
 				</c:if>
 			</td>
 			<td class='center'>${gjoin.group_joindate }</td>
+			<c:if test="${gjoin.member_level < 3 }">	
 			<td><input type='button' id='remove' value ='삭제'></td>
 			<td><button @click='openModal'>수정</button></td>
+			</c:if>
 			</tr>
 		</table>
 		
@@ -82,8 +85,13 @@
 			 	<template slot="body">
 			 	<div>변경할 값을 선택해주세요</div>
 			 	<child memberidm='${gjoin.member_id }'></child>
+				<c:if test="${gjoin.member_level == 1 }">	 	
 				<button id="sub" @click="subManager">부관리자</button>
 				<button id="not" @click="notManager">일반회원</button>
+				</c:if>
+				<c:if test="${gjoin.member_level == 2 }">
+				<button id="not" @click="notManager">일반회원</button>
+				</c:if>
 			 	<div id="testitem"></div>
 				</template>
 			 	<template slot="footer">
@@ -93,12 +101,14 @@
 			</div>
 	</div>
 </div>
-<input type="hidden" id="testtest" value="${gjoin.member_id}">
+<input type="hidden" id="memberidh" value="${gjoin.member_id}">
+<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
             </div>
         </div>
     </div>
  <script>
-var testtest = document.getElementById("testtest").value;
+var memberidh = document.getElementById("memberidh").value;
+var groupnoh = document.getElementById("groupnoh").value;
 var msg; // 데이터 받아올 var
 Vue.component('modal', {
 	  template: `
@@ -171,7 +181,8 @@ Vue.component('modal', {
 				$.ajax({
 					url:"updateGJMS",
 					type:"get",
-					data:{"memberCheck" : testtest},
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
 					success:
 						function(result){
 						if(result == "true"){
@@ -183,7 +194,20 @@ Vue.component('modal', {
 				})
 			},
 			notManager(){
-				
+				$.ajax({
+					url:"updateGJMC",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+						}else {
+							alert("실패")
+						}
+					}
+				})
 			}
 			
 	  }

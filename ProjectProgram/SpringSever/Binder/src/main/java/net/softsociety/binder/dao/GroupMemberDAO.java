@@ -28,4 +28,29 @@ public class GroupMemberDAO {
 		return mapper.selectGroupJoinMember(vo);
 	}
 
+	public int updateGroupMember(GroupJoin vo) {
+		// TODO Auto-generated method stub
+		int chk= 0;
+		try {
+		GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
+		chk=mapper.updateGroupMember(vo);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return chk;
+	}
+	public int updateGroupMember2(GroupJoin vo) {
+		// TODO Auto-generated method stub
+		int chk= 0;
+		try {
+			GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
+			chk=mapper.updateGroupMember2(vo);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return chk;
+	}
+
 }

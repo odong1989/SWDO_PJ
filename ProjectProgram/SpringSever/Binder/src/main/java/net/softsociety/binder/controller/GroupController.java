@@ -140,7 +140,7 @@ public class GroupController {
 	
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
-	public String vuelist2(GroupJoin vo, String memberCheck) {
+	public String selectGJM(GroupJoin vo, String memberCheck) {
 		logger.info("그룹화면{}",vo);
 		String memberCheck2 = dao.selectGroupJoinMemberOne(memberCheck);
 		String chk = null;
@@ -152,8 +152,41 @@ public class GroupController {
 		return chk;
 	}
 	
+	@RequestMapping(value="updateGJMS", method=RequestMethod.GET)
+	@ResponseBody
+	public String memberUpdate(GroupJoin vo, String memberid, int groupno) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		logger.info("그룹화면{}",vo);
+		int memberUpdate = dao.updateGroupMember(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	@RequestMapping(value="updateGJMC", method=RequestMethod.GET)
+	@ResponseBody
+	public String memberUpdate2(GroupJoin vo, String memberid, int groupno) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		logger.info("그룹화면{}",vo);
+		int memberUpdate = dao.updateGroupMember2(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	
 	@RequestMapping(value="/groupModal", method=RequestMethod.GET)
 	public String vueModal() {
 		return "group/groupModal";
 	}
+	
+	
 }
