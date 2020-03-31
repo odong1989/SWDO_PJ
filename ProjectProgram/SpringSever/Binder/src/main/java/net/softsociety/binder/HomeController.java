@@ -66,29 +66,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(@RequestParam(value = "to",defaultValue="a")String to) {
-		logger.info("대문 접속");
-		
-		//일단 박아둔 메일링 기능
-		if (!to.equals("a")) {
-			
-						
-			MailVO vo = new MailVO("binder.send@gmail.com", "Binder", "님의 Binder 초대메시지입니다.", "ㅋㅋ 힝 속았징");
-			vo.setTo(to);
-			final MimeMessagePreparator preparator = new MimeMessagePreparator() {
-				@Override
-				public void prepare(MimeMessage mimeMessage) throws Exception {
-					final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-					helper.setFrom(vo.getFrom());
-					helper.setTo(vo.getTo());
-					helper.setSubject(vo.getSubject());
-					helper.setText(vo.getContents(), true);
-				}
-			};
-			mailSender.send(preparator);
-			logger.info("메일전송완료");
-		}
-		
-		
+	
 		return "index";
 	}
 

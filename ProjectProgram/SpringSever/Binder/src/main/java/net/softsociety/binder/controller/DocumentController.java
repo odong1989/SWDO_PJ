@@ -62,7 +62,12 @@ public class DocumentController {
 		return "/document/boardTemp";
 	}	
 	
-	
+	@RequestMapping(value="writeDocument", method=RequestMethod.GET)
+	public String writeDocument(HttpSession session )
+	{
+		logger.info("writeDocument 메소드 실시& 이동");		
+		return "/document/writeDocument";
+	}	
 }
 
 

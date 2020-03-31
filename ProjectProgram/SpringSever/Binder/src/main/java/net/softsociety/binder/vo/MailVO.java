@@ -9,11 +9,6 @@ public class MailVO {
 	private String to;
 	private String subject;
 	private String contents;
-	public MailVO(String from, String to, String subject, String contents) {
-		super();
-		this.from = from;
-		this.to = to;
-		this.subject = subject;
-		this.contents = contents;
-	}
+	
+	
 }

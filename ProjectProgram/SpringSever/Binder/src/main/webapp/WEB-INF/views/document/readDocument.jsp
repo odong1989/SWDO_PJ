@@ -11,7 +11,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	
-​    <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
+​    <!-- <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 
@@ -67,7 +67,6 @@
 			                language: "kr"
 			            });
 					},
-					
 					error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
 			});
 		});
@@ -83,9 +82,7 @@
 					error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
 			});
 		});
-	
     </script>
-    	
 </head>
 <body>
     <div id="gaibu">

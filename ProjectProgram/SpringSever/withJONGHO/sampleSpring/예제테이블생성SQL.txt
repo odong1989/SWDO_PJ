@@ -1,0 +1,40 @@
+[ sampleSpringMybatis 예제에서 사용할 테이블 ]
+
+drop table member;
+drop table board;
+drop table reply;
+
+create table member (
+	member_id			varchar2(50)		primary key
+	, member_pw			varchar2(50)		not null
+	, member_nm			varchar2(50)		not null
+	, member_addr		varchar2(1000)		
+	, member_indate		date				default sysdate
+);
+
+
+create table board (
+	board_no			number				primary key
+	, member_id			varchar2(50)		not null
+	, board_title		varchar2(200)		not null
+	, board_content		varchar2(2000)		not null
+	, board_hits		number				default 0
+	, board_savedfile	varchar2(200)
+	, board_originfile	varchar2(200)
+	, board_indate		date				default sysdate
+	, constraint board_fk foreign key(member_id)
+	references member(member_id) on delete cascade
+);
+
+create table reply(
+	reply_no			number			primary key
+	, board_no			number			not null
+	, reply_content		varchar2(200)	not null
+	, member_id			varchar2(50)	not null
+	, reply_indate		date			default sysdate
+	, constraint reply_fk	foreign key(board_no)
+	references board(board_no) on delete cascade
+);
+
+drop sequence reply_seq;
+create sequence reply_seq;

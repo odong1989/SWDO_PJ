@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.softsociety.binder.dao.MemberDAO;
+import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.MailVO;
 import net.softsociety.binder.vo.Member;
+import net.softsociety.binder.vo.Photo;
 
 //@선언
 @Controller
@@ -33,10 +36,14 @@ import net.softsociety.binder.vo.Member;
 public class loginAndJoinController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(loginAndJoinController.class);
-	
+    private final String uploadPath = "/uploadFile";
+    
 	//0.dao선언
 	@Autowired
 	MemberDAO dao;
+	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
 	
 	//1.회원가입================================================================================
 	//1.1[이동] 회원가입폼으로 이동.
@@ -76,12 +83,24 @@ public class loginAndJoinController {
 
 	//1.4[실행] 회원가입실시
 	@RequestMapping(value="memberJoin", method=RequestMethod.POST)
-	public String memberJoin(Member member) {
+	public String memberJoin(Member member, MultipartFile upload) {
 		logger.info("memberJoin메소드입니다");
-		logger.info("회원가입 자료 전달");
-		logger.info("member : {}",member);
-		dao.memeberJoin(member);
+		logger.info("전달된 회원가입 member 자료: {}",member);
+		Photo photo = null;
 		
+		if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
+               //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)
+               String photo_savedfile = FileService.saveFile(upload, uploadPath);
+               photo.setPhoto_savedfile(photo_savedfile);						  //DB가 사용한 파일의 별명
+               photo.setPhoto_originfile(upload.getOriginalFilename());			  //원본 파일명
+        }
+		
+        // 3.VO를 DB에 INSERT
+        int count = dao.memeberJoin(member);
+        logger.info("3.VO를 DB에 INSERT count : {}",count);
+        if(count ==0) {
+               logger.info("등록실패");
+        }
 		return "redirect:/";
 	}
 	
@@ -152,14 +171,37 @@ public class loginAndJoinController {
 				    }
 				}
 				logger.info("코드 생성완료. 코드 : {}", temp);
-				String tempPW = null; //생성된 코드를 저장
-				tempPW = temp.toString();			
-				updateMemberData.setMember_pw(tempPW);
-				dao.memberUpdatePW(updateMemberData);
-				logger.info("DB에 수정된 비밀번호 : {}", updateMemberData.getMember_pw());							
-
 				
-				return "/sendMail.do?to=kwunodong";			
+				String tempPW = null; //생성된 코드를 저장
+				tempPW = temp.toString();
+				
+				updateMemberData.setMember_pw(tempPW);
+				
+				dao.memberUpdatePW(updateMemberData);
+				logger.info("DB에 수정된 비밀번호 : {}", updateMemberData.getMember_pw());	
+				
+								
+					MailVO vo = new MailVO();
+//					vo.setTo("사용자의 이메일");
+					vo.setTo(updateMemberData.getMember_mail());
+					logger.info("vo의 수신자(to) : {}",vo.getTo());
+					vo.setContents(tempPW + "로 변경되었습니다.");
+					vo.setSubject("비밀번호가 변경되었습니다. - Binder");
+					vo.setFrom("Binder");
+					final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+						@Override
+						public void prepare(MimeMessage mimeMessage) throws Exception {
+							final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+							helper.setFrom(vo.getFrom());
+							helper.setTo(vo.getTo());
+							helper.setSubject(vo.getSubject());
+							helper.setText(vo.getContents(), true);
+						}
+					};
+					mailSender.send(preparator);
+					logger.info("메일전송완료");
+					
+				return "redirect:/";			
 			}
 		else
 			{

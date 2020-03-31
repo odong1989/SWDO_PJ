@@ -10,6 +10,7 @@ function idCheck(){//id중복확인 버튼클릭시 생성되는 ID중복 확인
 	 window.open("memberidCheckForm","newWin","left=300, top=300, width=500, height=300, resizeable=no");
 	 }
 function formCheck(){//id및 입력사항 유효성 검사체크
+	/*
 	var member_id = document.getElementById("member_id");
     var member_pw = document.getElementById("member_pw");
     var member_nm = document.getElementById("member_nm");
@@ -30,6 +31,7 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 		alert("주소를 입력해주세요!");
 		return false;
 	}
+	*/
     return true;
 }
 </script>
@@ -90,13 +92,12 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 				</td>
 			</tr>
 			<tr>
-				<td>
+			 	<td>
 					<div class="memberJoin">
 						<div class="image"></div>
 						<input type="file" id="photo" name=member_photo placeholder="프로필 사진을 넣어주세요" >	
-									 		  	 <!-- name="upload"-->
 					</div>
-				</td>
+				</td> 
 			</tr>
 			<tr>
 				<td>

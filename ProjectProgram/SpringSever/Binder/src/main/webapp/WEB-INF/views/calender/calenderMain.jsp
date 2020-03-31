@@ -6,7 +6,7 @@
     -->
     <!--단계1 : 제이쿼리 등 해당 필요 소스들 로드. -->
     
-    <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
+​    <!-- <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript"> 
@@ -79,7 +79,20 @@ td.old.day{
 td.new.day{
      text-align:left;  vertical-align:top;
      }
-            </style>
+
+
+
+    .triangle {display:inline-block; width:0; height:0; border-style:solid; border-width:30px;}
+	.triangle.num_1 {border-color:red transparent transparent transparent;}
+	.triangle.num_2 {border-color:transparent transparent red transparent;}
+	.triangle.num_3 {border-color:transparent red transparent transparent;}
+	.triangle.num_4 {border-color:transparent transparent transparent red;}
+
+
+
+
+
+     </style>
 
     <!--단계5. HTML body내에 부트스트랩 선언. 여기서 선언해야 작동됩니다.-->
     <table id="document-body">
