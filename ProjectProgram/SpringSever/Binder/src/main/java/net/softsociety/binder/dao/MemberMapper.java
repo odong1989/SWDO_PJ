@@ -16,7 +16,7 @@ public interface MemberMapper {
 	
 	//3.업데이트
 	//3.1 회원정보 수정
-	public void   memberUpdate(Member member);
+	public void memberUpdate(Member member);
 	public void memberUpdatePW(Member member);//사용자가 비번잊었을 경우 랜덤변경.(이후 코드 통해 메일로 전송)
 	
 	//3.2 마지막 로그인 시간 업데이트

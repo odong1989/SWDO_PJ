@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="net.softsociety.binder.vo.Member" alias="member"/>
+		<typeAlias type="net.softsociety.binder.vo.Group" alias="group"/>
+		<typeAlias type="net.softsociety.binder.vo.Document" alias="document"/>
+		<typeAlias type="net.softsociety.binder.vo.HashTag" alias="hashtag"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/groupMapper.xml" />
+		<mapper resource="mapper/documentMapper.xml" />
+		<mapper resource="mapper/hashTagMapper.xml" />
+	</mappers>
+</configuration>

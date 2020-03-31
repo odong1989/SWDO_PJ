@@ -1,3 +1,61 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+
+/* CSS 초기화 시작 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+html {
+	height:100%;
+}
+body {
+    line-height: 1;
+    height:inherit;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* CSS 초기화 끝 */
+
 a:link{
     color:inherit;
     text-decoration: none;
@@ -16,27 +74,54 @@ a:visited{
 p {
     margin: 0;
 }
+body {
+    background-color:#EEE;
+    padding-top: 50px;
+}
 #gaibu {
-    width: 80%;
+    display:flex;
+    padding:0 400px;
     margin: 0 auto;
+    height:inherit;
 }
-#gaibu-left{
-    float:left;
-    width:250px;
-    margin: 0 20px 0 0;
+
+#gaibu-top {
+    position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  height: 50px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-#gaibu-left-top{
+#gaibu-top-left{
+    margin-top:10px;
+    margin-left:400px;
     height:50px;
 }
-#gaibu-right{
+#gaibu-top-middle{
+    color:black;
+}
+#gaibu-top-right{
+    text-align:right;
+    margin-top:15px;
+    margin-right:400px;
+    height:50px;
+    width:100%;
+}
+
+#menu{
+    margin: 20px 20px 0 0;
+    border-radius:10px;
     float:left;
-}
-#left-menu{
-    background-color: #EEE;
+    width:250px;
+    background-color: lightblue;
     height: 500px;
-    padding-top: 10px;
 }
-.p-group{
+.p-hash{
     font-size: 12px;
     color: #999;
 }
@@ -62,39 +147,41 @@ p {
 #gaibu-right{
     width:70%;
 }
-#gaibu-right-top{
-    height:50px;
-    width:100%;
-    text-align:right;
-    vertical-align: bottom;
-}
+
 #naibu-right-left{
     margin-top:30px;
-    float:left;
+    /* float:left; */
 }
 /* #naibu-right-right{
     float:right;
     vertical-align: bottom;
 } */
 #document-body {
-    width:90%;
+    width:97%;
+    height:inherit;
+    margin: 0 10px 20px 10px
 }
-#gaibu-right-bottom {
-    background-color: #EEE;
+#right-body {
+    margin-top:5px;
+    float:left;
+    background-color: white;
     width:100%;
 }
-#document-body{
-    margin:0 30px;
+#body-clear{
+    clear:both;
 }
 #notice {
     background-color:red;
     color:white;
     border-radius: 10px;
-    font-size: 12px;
+    font-size: 14px;
+    padding:4px;
+    margin-top:10px;
 }
 .document-image{
     background-image: url('http://erines.kr/cat.jpg');
     background-size: cover;
+    margin-left:15px;
     width: 150px;
     height: 100px;
     display:table;
@@ -111,10 +198,21 @@ p {
     background-color: rgba( 55, 55, 55, 0.5 );
 }
 .document-one{
+    background-color: white;
     border-top: 1px dashed black;
     padding: 10px 0;
+    vertical-align: middle;
 }
 #usericon {
     border: 1px solid white;
     border-radius:50%;
 }
+#document-body img {
+	vertical-align:middle;
+}
+#btn1:hover {
+	cursor: pointer;
+}
+#btn2:hover {
+	cursor: pointer;	
+} 

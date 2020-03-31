@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.binder.dao.MemberMapper">
+
+	<select id="memberSelectOne" parameterType="string" resultType="member">
+	select
+		member_id	
+		,member_pw	
+		,member_name	
+		,member_mail		
+		,member_photo		
+		,to_char(member_birthday, 'yyyy-MM-dd') as member_birthday
+		,member_married		
+		,to_char(member_weddingday, 'yyyy-MM-dd') as member_weddingday
+		,to_char(member_regdate, 'yyyy-MM-dd') as member_regdate
+		,to_char(member_lastlogin, 'yyyy-MM-dd') as member_lastlogin
+		,member_wdraw	
+	from
+		bnd_member
+	where
+		member_id=#{member_id}
+	</select>
+
+	<select id="memberSelectOne2" parameterType="member" resultType="member">
+	select
+		member_id	
+		,member_pw	
+		,member_name	
+		,member_mail		
+		,member_photo		
+		,to_char(member_birthday, 'yyyy-MM-dd') as member_birthday
+		,member_married		
+		,to_char(member_weddingday, 'yyyy-MM-dd') as member_weddingday
+		,to_char(member_regdate, 'yyyy-MM-dd') as member_regdate
+		,to_char(member_lastlogin, 'yyyy-MM-dd') as member_lastlogin
+		,member_wdraw	
+	from
+		bnd_member
+	where
+		member_name=#{member_name}
+	and
+		member_mail=#{member_mail}
+	</select>	
+
+	<select id="memberSelectOne3" parameterType="member" resultType="member">
+	select
+		member_id	
+		,member_pw	
+		,member_name	
+		,member_mail		
+		,member_photo		
+		,to_char(member_birthday, 'yyyy-MM-dd') as member_birthday
+		,member_married		
+		,to_char(member_weddingday, 'yyyy-MM-dd') as member_weddingday
+		,to_char(member_regdate, 'yyyy-MM-dd') as member_regdate
+		,to_char(member_lastlogin, 'yyyy-MM-dd') as member_lastlogin
+		,member_wdraw	
+	from
+		bnd_member
+	where
+		member_id =#{member_id}
+	and
+		member_name	=#{member_name}	
+	</select>	
+
+	<insert id="memeberJoin" parameterType="member">
+	insert into	
+		bnd_member(
+			member_id
+			,member_pw
+			,member_name
+			,member_mail
+			,member_photo
+			,member_birthday
+			,member_married
+			,member_weddingday     
+		)values(
+			#{member_id}
+			,#{member_pw}
+			,#{member_name}
+			,#{member_mail}
+			,#{member_photo}
+			,#{member_birthday}
+			,#{member_married}
+			,#{member_weddingday}  
+    )
+    </insert>
+
+   	<update id="memberUpdate" parameterType="member">
+	update bnd_member
+	set
+		member_pw			 = #{member_pw}
+		,member_name		 = #{member_name}
+		,member_mail	 	 = #{member_mail}
+		,member_birthday	 = to_date(#{member_birthday},'yyyy-MM-dd')
+		,member_married 	 = #{member_married}
+		,member_weddingday   = to_date(#{member_weddingday},'yyyy-MM-dd')
+	where
+		member_id = #{member_id}	
+	</update>
+	
+	<update id="memberLastLoginTime" parameterType="string">
+	update bnd_member
+	set
+		member_lastlogin	 = to_date(sysdate,'yyyy-MM-dd')
+	where
+		member_id = #{member_id}	
+	</update>
+
+	<update id="memberWdraw" parameterType="string">
+	update bnd_member
+	set
+		member_wdraw = '1'
+	where
+		member_id = #{member_id}	
+	</update>
+
+	<update id="memberUpdatePW" parameterType="member">
+	update bnd_member
+	set
+		member_pw = #{member_pw}
+	where
+		member_id = #{member_id}	
+	</update>
+
+</mapper>

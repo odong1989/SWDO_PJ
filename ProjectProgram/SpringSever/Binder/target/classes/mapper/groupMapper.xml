@@ -63,13 +63,9 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 			group_no
 			, group_name
 		from
-			bnd_group, bnd_groupjoin
+			bnd_group
 		where
-			bnd_group.group_code = #{group_code}
-		and
-			bnd_group.group_no = bnd_groupjoin.group_no
-		and
-			
+			group_code=#{group_code}
 	</select>
 
 </mapper>

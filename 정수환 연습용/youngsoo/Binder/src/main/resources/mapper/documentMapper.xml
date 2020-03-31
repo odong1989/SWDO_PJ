@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.binder.dao.DocumentMapper">
+
+<!--
+	select bnd_document.document_no,bnd_document.document_content
+	from bnd_document
+	where bnd_document.member_id = 'jsh4646';
+ -->
+ 	<select id="selectDocuments" parameterType="int" resultType="hashmap">
+	 	select 
+	 		bnd_document.document_no
+	 		, bnd_document.document_content
+	 		, to_char(bnd_document.document_regdate, 'yyyy-mm-dd') document_regdate
+	 		, document_destination
+	 		, bnd_document.document_content
+		from 
+			bnd_document
+		where 
+			bnd_document.group_no = #{group_no}
+		order by
+			bnd_document.document_no desc
+	</select> 
+</mapper>

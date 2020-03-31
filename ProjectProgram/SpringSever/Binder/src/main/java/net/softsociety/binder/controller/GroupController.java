@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.GroupMemberDAO;
@@ -62,7 +60,7 @@ public class GroupController {
 		} else {
 			//코드를 새로 생성
 			logger.info("코드를 새로 생성");
-			StringBuffer temp = new StringBuffer();//
+			StringBuffer temp = new StringBuffer();
 			Random rnd = new Random();
 			for (int i = 0; i < 5; i++) {
 			    int rIndex = rnd.nextInt(3);
@@ -98,6 +96,7 @@ public class GroupController {
 			}
 		}
 		return "group/groupcode";
+		
 	}
 	
 	@RequestMapping(value="/group/groupjoin", method=RequestMethod.GET)
@@ -129,11 +128,16 @@ public class GroupController {
 	
 	@RequestMapping(value="/groupMemberMgr", method=RequestMethod.GET)
 	public String vuelist(GroupJoin vo, HttpSession session, Model model) {
+		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		logger.info("-그룹리스트 : {}", groupJoinList);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
 		int groupno = 1;
 		vo.setGroup_no(groupno);
-		logger.info("그룹화면{}",vo);
-		GroupJoin join = dao.selectGroupJoinMember(vo);
-		logger.info("그룹화면{}",join);
+		logger.info("groupMemberMgr {}",vo);
+		ArrayList<GroupJoin> join = dao.selectGroupJoinMember(vo);
+		logger.info("groupMemberMgr {}",join);
 		model.addAttribute("gjoin",join);
 		return "group/groupMemberMgr";
 	}
@@ -141,7 +145,7 @@ public class GroupController {
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
 	public String selectGJM(GroupJoin vo, String memberCheck) {
-		logger.info("그룹화면{}",vo);
+		logger.info("selectGJM {}",vo);
 		String memberCheck2 = dao.selectGroupJoinMemberOne(memberCheck);
 		String chk = null;
 		if (memberCheck2 != null) {
@@ -157,7 +161,7 @@ public class GroupController {
 	public String memberUpdate(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
-		logger.info("그룹화면{}",vo);
+		logger.info("updateGJMS {}",vo);
 		int memberUpdate = dao.updateGroupMember(vo);
 		String chk = null;
 		if (memberUpdate == 1) {
@@ -172,8 +176,23 @@ public class GroupController {
 	public String memberUpdate2(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
-		logger.info("그룹화면{}",vo);
+		logger.info("updateGJMC {}",vo);
 		int memberUpdate = dao.updateGroupMember2(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	@RequestMapping(value="deleteGMember", method=RequestMethod.GET)
+	@ResponseBody
+	public String gmemberDelete(GroupJoin vo, String memberid, int groupno) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		logger.info("deleteGMember {}",vo);
+		int memberUpdate = dao.deleteGMember(vo);
 		String chk = null;
 		if (memberUpdate == 1) {
 			chk = "true";
@@ -187,6 +206,4 @@ public class GroupController {
 	public String vueModal() {
 		return "group/groupModal";
 	}
-	
-	
 }

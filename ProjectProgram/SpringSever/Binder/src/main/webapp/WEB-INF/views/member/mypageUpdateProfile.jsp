@@ -33,20 +33,7 @@ function memberThrow(){//id및 입력사항 유효성 검사체크
 	*/
     return true;
 }
-function memberThrawal(){//id및 입력사항 유효성 검사체크
-	if(confirm("이동하시려면 예를 누르시고 이동을 하지 않으시려면 아니오를 눌러주세요"))
-	 {
-		 alert('회원탈퇴가 진행됩니다.');
-		return true;
-//	  location.href="http://cdmanii.tistory.com";
-	 }
-	 else
-	 {
-		 alert('아니오를 누르셨습니다');
-		return false;
-		 }
-	}
-}
+
 </script>
 <style>
 	input[type=text], input[type=password] {
@@ -81,7 +68,7 @@ function memberThrawal(){//id및 입력사항 유효성 검사체크
 <!-- memberJoin -->
 <div>
 	<table style="margin:50px 50px;">
-		<form action="memberUpdate" method="post" onsubmit="return formCheck();">
+		<form action="memberUpdateExe" method="post" onsubmit="return formCheck();">
 			<tr>
 				<td>
 					<div class="memberUpdate" style=background-image:url(/img/MemberJoin/MemberJoin_login.jpg);">

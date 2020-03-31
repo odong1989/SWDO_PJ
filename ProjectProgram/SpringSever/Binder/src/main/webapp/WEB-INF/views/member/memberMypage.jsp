@@ -70,7 +70,7 @@ member_birthday=1991-11-22, member_married=0, member_weddingday=null, member_reg
 			<td>${MemberData.member_wdraw}</td>
 		</tr>
 	</table>	
-		<a href="/member/mypageUpdateProfile">회원정보 수정</a><br>
+	<a href="<c:url value='/member/mypageUpdateProfile' />">회원정보 수정</a><br>
 		<input type="button" value="회원탈퇴" onclick="Withdrawal()"> 
 		<a href="/document/mainDocument"><input type="button" value="메인페이지로 리턴"> 		
 	</body>

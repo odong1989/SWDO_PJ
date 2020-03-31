@@ -14,6 +14,10 @@
 			if (err.length != 0) {
 				alert(err);
 			}
+
+			if ($("#loginCheckHidden").val().length != 0) {
+				$(location).attr("href","<c:url value='/document/mainDocument' />");
+			}
 		})
 	</script>
 	<style>
@@ -91,8 +95,8 @@
 	<div id="loginWrap">	
 		<div id="loginDiv">
 		<!-- 로그인폼--->
-<!-- 			<form action="<c:url value='/member/memberLoginExe' />" method="post"> -->
- 			<form action="<c:url value='memberLoginExe' />" method="post">
+			<c:if test="${sessionScope.loginId == null }">
+			<form action="<c:url value='/member/memberLoginExe' />" method="post">
 			<table class="loginForm">
 				<tr>
 					<td id="loginForm1">ID</td>
@@ -109,10 +113,14 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"  id="loginForm3"><p><a href="<c:url value='/loginAndJoin/memberFindMyIDorPW' />">아이디/비밀번호 찾기</a></p></td>
+					<td colspan="2"  id="loginForm3"><p><a href="<c:url value='/loginAndJoin/memberFind' />">아이디/비밀번호 찾기</a></p></td>
 				</tr>
 			</table>
 			</form>
+			</c:if>
+			<c:if test="${sessionScope.loginId != null }">
+				<input type="hidden" id="loginCheckHidden" value="${sessionScope.loginId }">
+			</c:if>
 			<input type="hidden" id="errMsg" value="${errMsg }">
 		</div>
 	</div>

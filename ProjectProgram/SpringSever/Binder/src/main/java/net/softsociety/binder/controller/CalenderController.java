@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 //@선언
 @Controller
-@RequestMapping(value="calender/")
+@RequestMapping(value="calender")
 public class CalenderController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CalenderController.class);
@@ -27,7 +27,7 @@ public class CalenderController {
 		logger.info("calender - member_id :{}",member_id);
 		
 		logger.info("각 일자에 따라 일정을 표기해줄 수 있어야 한다.");
+		return "/calender/calenderMain";
 		
-		return "/calender/calenderMain";		
 	}	
 }

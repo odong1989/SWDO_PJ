@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${group_name }</title>
+    <link href="basic.css", rel="stylesheet">
+    <script type="text/javascript">
+		function selectGroup(pk) {
+			location.href="group?no="+pk;
+		}
+    </script>
+</head>
+<body>
+    <div id="gaibu-top">
+        <span id="gaibu-top-left">
+            <img src="img/logo.png">
+        </span>
+        <span id="gaibu-top-middle">
+            
+        </span>
+        <span id="gaibu-top-right">
+            
+            <img src="img/bell.png"> <img src="img/mail.png"> <img src="/img/human.png" id="usericon">
+        </span>
+    </div>
+    <div id="gaibu">
+        <div id="menu">
+            <div class="menu-group-button">
+                <div class="menu-group-button-left">
+                    <a href="javascript:selectGroup(${glist.GROUP_NO })"><p>${glis</p></a>
+                    <p class="p-hash">#${glist.GR</p>
+                </div>
+                <div class="menu-group-button-right">
+                    <img src="img/crown_gold.png">
+                </div>
+                <div class="menu-group-button-clear"></div>
+            </div>
+        </div>
+        <div id="right-body">
+            <table id="document-body">
+                <tr height="40px">
+                    <td width="21%"></td>
+                    <td width="auto" align="center"><p id="notice">공지사항 : ㅇㅇㅇ공지부분</p></td>
+                    <td width="21%" align="right"><img src="img/f5.png"> <img src="img/cal.png"></td>
+                </tr>
+                <tr>
+                    <td class="document-one">
+                        <a href="">
+                            <div class="document-image">
+                                <div class="document-image-bottom">
+                                    <p>${dlist. }</p>
+                                </div>
+                            </div>
+                        </a>
+                    </td>
+                    <td colspan="2" class="document-one">
+                        <div class="document-content">
+                            <p>${dlist.DOCUMENT_REGDATE }</p>
+                            <p class="p-hash">#내생일 #니생일 #생일빵</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</body>
+</html>

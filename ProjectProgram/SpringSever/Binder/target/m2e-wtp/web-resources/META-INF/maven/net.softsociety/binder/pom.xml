@@ -15,54 +15,7 @@
 		<org.slf4j-version>1.7.22</org.slf4j-version>
 	</properties>
 	<dependencies>
-	<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-             <dependency>
-                 <groupId>org.projectlombok</groupId>
-                 <artifactId>lombok</artifactId>
-                 <version>1.18.10</version>
-                 <scope>provided</scope>
-             </dependency>
 
-             <!-- 잘못10-마이바티스를 임포트 않으니 DAO에서 sql세션 임포트가 안되 -->     
-             <dependency>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis</artifactId>
-                    <version>3.4.6</version>
-                    <!-- 버전들을 염두에 두지 않으면 실행이 안되네 호환이 안맞아서 -->
-             </dependency>    
-
-             <!-- 잘못 16? 마이바티스-스프링 도 추가해요 ㅠㅠ-->
-             <dependency>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis-spring</artifactId>
-                    <version>1.3.0</version>
-                    <!-- 버전들을 염두에 두지 않으면 실행이 안되네 호환이 안맞아서 -->
-             </dependency> 
-
-        <!-- 잘못15? jdbc도 추가하세요 ㅠㅠ -->
-             <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-             <dependency>
-                 <groupId>org.springframework</groupId>
-                 <artifactId>spring-jdbc</artifactId>
-                 <version>4.3.6.RELEASE</version>
-                 <!-- 선생님경우 ${java-version}처럼 자동갱신형 -->
-             </dependency>
-	
-	             <!-- 파일 업/다운을 위한 dependency 추가 -->
-             <!-- commons-io -->
-              <dependency>
-                    <groupId>commons-io</groupId>
-                    <artifactId>commons-io</artifactId>
-                    <version>2.5</version>
-             </dependency>
-             
-              <!-- commons-fileupload -->
-              <dependency>
-                    <groupId>commons-fileupload</groupId>
-                    <artifactId>commons-fileupload</artifactId>
-                    <version>1.3.3</version>
-             </dependency>
-	
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

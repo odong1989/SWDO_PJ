@@ -38,13 +38,16 @@ public class loginAndJoinController {
 	@Autowired
 	MemberDAO dao;
 	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
+	
 	//1.회원가입================================================================================
 	//1.1[이동] 회원가입폼으로 이동.
 	@RequestMapping(value="memberJoinForm", method=RequestMethod.GET)
 	public String memberJoinForm(HttpServletRequest request, Model model)
 	{	
 		logger.info("memberJoinForm폼 이동 ");
-		return "/loginAndJoin/memberJoinForm";
+		return "loginAndJoin/memberJoinForm";
 		
 	}
 	
@@ -87,10 +90,10 @@ public class loginAndJoinController {
 	
 	//2.비밀번호 아이디 찾기 및 비밀번호 재설정 페이지
 	//2.1 아이디/비밀번호 찾기 페이지로 이동
-	@RequestMapping(value="memberFindMyIDorPW", method=RequestMethod.GET)
-	public String memberFindMyIDorPW() {
-		logger.info("memberFindMyIDorPW페이지로 이동 실시");
-	return "/loginAndJoin/memberFindMyIDorPW";
+	@RequestMapping(value="memberFind", method=RequestMethod.GET)
+	public String memberFind() {
+		logger.info("memberFind페이지로 이동 실시");
+	return "loginAndJoin/memberFind";
 	}
 	
 	//2.2 아이디 찾기 메소드 실시&아이디 검색결과 출력페이지로 리턴(출력 방식은 memeberFindResultId.jsp페이지에서 리턴값에 따라 출력을 담당.)
@@ -108,14 +111,14 @@ public class loginAndJoinController {
 		{
 			logger.info("memberFindId-존재확인&리턴될 resultMemberData정보 : {}",resultMemberData);
 			model.addAttribute("resultMemberData", resultMemberData);
-			return "/loginAndJoin/memberFindResultId";			
+			return "loginAndJoin/memberFindResultId";			
 		}
 		else
 		{
 			logger.info("memberFindId-없는 것으로 확인됨. forgetMemberID정보 : {}",forgetMemberID);
 			errMsg="등록되지 않은 ID입니다.";
 			model.addAttribute("errMsg", errMsg);
-			return "/loginAndJoin/memberFindResultId";			
+			return "loginAndJoin/memberFindResultId";			
 		}	
 	}
 	
@@ -152,20 +155,43 @@ public class loginAndJoinController {
 				    }
 				}
 				logger.info("코드 생성완료. 코드 : {}", temp);
-				String tempPW = null; //생성된 코드를 저장
-				tempPW = temp.toString();			
-				updateMemberData.setMember_pw(tempPW);
-				dao.memberUpdatePW(updateMemberData);
-				logger.info("DB에 수정된 비밀번호 : {}", updateMemberData.getMember_pw());							
-
 				
-				return "/sendMail.do?to=kwunodong";			
+				String tempPW = null; //생성된 코드를 저장
+				tempPW = temp.toString();
+				
+				updateMemberData.setMember_pw(tempPW);
+				
+				dao.memberUpdatePW(updateMemberData);
+				logger.info("DB에 수정된 비밀번호 : {}", updateMemberData.getMember_pw());	
+				
+								
+					MailVO vo = new MailVO();
+//					vo.setTo("사용자의 이메일");
+					vo.setTo(updateMemberData.getMember_mail());
+					logger.info("vo의 수신자(to) : {}",vo.getTo());
+					vo.setContents(tempPW + "로 변경되었습니다.");
+					vo.setSubject("비밀번호가 변경되었습니다. - Binder");
+					vo.setFrom("Binder");
+					final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+						@Override
+						public void prepare(MimeMessage mimeMessage) throws Exception {
+							final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+							helper.setFrom(vo.getFrom());
+							helper.setTo(vo.getTo());
+							helper.setSubject(vo.getSubject());
+							helper.setText(vo.getContents(), true);
+						}
+					};
+					mailSender.send(preparator);
+					logger.info("메일전송완료");
+					
+				return "redirect:/";			
 			}
 		else
 			{
 				errMsg="등록되지 않은 ID입니다.";
 				model.addAttribute("introMsg",introMsg);
-				return "/loginAndJoin/memberFindMyIDorPW";
+				return "loginAndJoin/memberFindMyIDorPW";
 			}
 		}
 	

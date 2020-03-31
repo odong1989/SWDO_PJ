@@ -21,7 +21,7 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 	     bnd_member, bnd_groupjoin
 	where 
 	     bnd_member.member_id = bnd_groupjoin.member_id
-	     and
+     and
 	     bnd_groupjoin.group_no = #{group_no}
 	</select>
 
@@ -58,5 +58,12 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 	
 	
 	</update>
-
+	<delete id="deleteGMember" parameterType="groupjoin">
+		delete from
+		bnd_groupjoin
+		where 
+		bnd_groupjoin.member_id = #{member_id}
+		and
+		bnd_groupjoin.group_no = #{group_no}
+	</delete>
 </mapper>

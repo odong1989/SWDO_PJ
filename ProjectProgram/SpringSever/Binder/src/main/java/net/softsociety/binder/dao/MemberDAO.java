@@ -81,26 +81,10 @@ public class MemberDAO {
 		logger.info("memberWdraw 메소드 종료");
 	}
 	
-	public void memberUpdate(Member updateMemberData){
-		//업데이트 된 정보를 리턴해주어 사용자가 마이페이지에서 바로 확인 되도록 한다.
-		logger.info("MemberDAO-memberUpdate 실시");
-		logger.info("MemberDAO-수신된 업데이트할 정보 : {}", updateMemberData);
-		Member resultMemberData=null;	
-		try {
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			mapper.memberUpdate(updateMemberData);
-			logger.info("MemberDAO-업데이트 결과&리턴할 값 : {}",resultMemberData);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		logger.info("MemberDAO-memberUpdate 메소드 종료");
-	}
-
-	
 	public Member memberSelectOne3 (Member member) {
 		logger.info("memberSelectOne3 메소드 시작");
 		Member resultMember = null;
-		logger.info("memberSelectOne3 메소드 - 검색위해 받은 정보 : {}",member);
+		logger.info("memberSelectOne3 메소드 - 검색위 : {}",member);
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			resultMember = mapper.memberSelectOne3(member);
@@ -110,13 +94,32 @@ public class MemberDAO {
 		logger.info("memberSelectOne3 메소드-리턴 member값 : {}", resultMember);
 		return resultMember;
 	}
+
 	
+	//
+	public void memberUpdate(Member updateMemberData){
+		//업데이트 된 정보를 리턴해주어 사용자가 마이페이지에서 바로 확인 되도록 한다.
+		logger.info("MemberDAO-memberUpdate 실시");
+		logger.info("MemberDAO-수신된 업데이트할 정보 : {}", updateMemberData);
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			mapper.memberUpdate(updateMemberData);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("MemberDAO-memberUpdate 메소드 종료");
+	}
+	
+	
+	
+	//비밀번호만 랜덤으로 변경+이메일로 고객에게안내
 	public void memberUpdatePW(Member updateMemberData) {
 		logger.info("memberUpdatePW 메소드 시작");
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			mapper.memberUpdatePW(updateMemberData);
+            mapper.memberUpdatePW(updateMemberData);
 			logger.info("memberUpdatePW - 비밀번호 변경 완료");
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
