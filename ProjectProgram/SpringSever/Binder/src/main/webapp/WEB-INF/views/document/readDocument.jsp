@@ -22,10 +22,10 @@
 <script type="text/javascript">
 var temp = '';
 function selectGroup(pk) {
-	location.href="group?no="+pk;
+	location.href="<c:url value='/document/group' />?no="+pk;
 }
 function invite(pk) {
-	location.href="../group/groupcode?no="+pk;
+	location.href="<c:url value='/group/groupcode' />?no="+pk;
 }
 //20.03.29 병합 되지 않아서 직접 추가1 - 부트스트랩 한글 표기설정//단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
 //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..

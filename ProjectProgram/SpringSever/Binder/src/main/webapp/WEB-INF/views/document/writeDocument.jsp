@@ -18,9 +18,12 @@
 
     <script type="text/javascript">
     	var temp = '';
-		function selectGroup(pk) {
-			location.href="group?no="+pk;
-		}
+    	function selectGroup(pk) {
+    		location.href="<c:url value='/document/group' />?no="+pk;
+    	}
+    	function invite(pk) {
+    		location.href="<c:url value='/group/groupcode' />?no="+pk;
+    	}
     </script>
     	
 </head>
