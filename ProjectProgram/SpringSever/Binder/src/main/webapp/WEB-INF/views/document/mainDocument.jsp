@@ -66,6 +66,7 @@
             #AAA<br/>
             #BBB<br/>
             #CCC
+            <img src="<c:url value='/profile/2-2-01.jpg' />">
             </center>
         </div>
         
