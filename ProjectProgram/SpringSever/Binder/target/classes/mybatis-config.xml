@@ -12,6 +12,7 @@
 		<typeAlias type="net.softsociety.binder.vo.Document" alias="document"/>
 		<typeAlias type="net.softsociety.binder.vo.HashTag" alias="hashtag"/>
 		<typeAlias type="net.softsociety.binder.vo.GroupJoin" alias="groupjoin"/>
+		<typeAlias type="net.softsociety.binder.vo.Note" alias="note"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
@@ -19,6 +20,7 @@
 		<mapper resource="mapper/documentMapper.xml" />
 		<mapper resource="mapper/hashTagMapper.xml" />
 		<mapper resource="mapper/groupJoinMapper.xml" />
+		<mapper resource="mapper/noteMapper.xml" />
 	</mappers>
 </configuration>
 

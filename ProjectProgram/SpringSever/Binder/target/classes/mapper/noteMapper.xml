@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.binder.dao.NoteMapper">
+
+	<select id="newNoteCheck" parameterType="note" resultType="note">
+	select
+		note_content
+		, member_id
+		, note_receiver
+	from
+		bnd_note
+	where
+		note_receiver = #{member_id}
+	and
+		note_read = 0
+	</select>
+	
+	<select id="selectNote" parameterType="string" resultType="note">
+	select
+		note_no
+		, note_content
+		, member_id
+		, note_receiver
+		, note_read
+	from
+		bnd_note
+	where
+		note_receiver = #{member_id}
+	</select>
+
+	<insert id="insertNote" parameterType="note">
+		insert into	bnd_note(
+			note_no
+			, note_content
+			, member_id
+			, note_receiver 
+		) values (
+			bnd_note_no_seq.nextval
+			, #{note_content}
+			, #{member_id}
+			, #{note_receiver}
+		)
+	</insert>
+</mapper>
