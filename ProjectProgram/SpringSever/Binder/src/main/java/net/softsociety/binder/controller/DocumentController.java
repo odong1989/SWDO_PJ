@@ -48,8 +48,8 @@ public class DocumentController {
 		logger.info("mainDocument 이동");
 		String member_id = (String) session.getAttribute("loginId");
 		logger.info("mainDocument - member_id :{}",member_id);
-		ArrayList<Note> list = noteDao.newNoteCheck(member_id);
-		if (list == null){
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck == null){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
@@ -70,8 +70,8 @@ public class DocumentController {
 		String member_id = (String) session.getAttribute("loginId");
 		logger.info("mainDocument - member_id :{}",member_id);
 		
-		ArrayList<Note> list = noteDao.newNoteCheck(member_id);
-		if (list == null){
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck == null){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");

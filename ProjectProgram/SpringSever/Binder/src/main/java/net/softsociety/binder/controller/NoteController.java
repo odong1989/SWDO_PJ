@@ -51,8 +51,9 @@ public class NoteController {
 	public String newNoteCheck(HttpSession session, Model model)
 	{	
 		String member_id = (String) session.getAttribute("loginId");
-		ArrayList<Note> list = noteDao.newNoteCheck(member_id);
-		if (list == null){
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		
+		if (memoCheck == null){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");

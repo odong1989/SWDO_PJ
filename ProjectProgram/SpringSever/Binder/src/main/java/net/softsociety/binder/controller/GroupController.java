@@ -19,10 +19,12 @@ import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.GroupMemberDAO;
 import net.softsociety.binder.dao.HashTagDAO;
+import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.GroupJoin;
 import net.softsociety.binder.vo.HashTag;
+import net.softsociety.binder.vo.Note;
 
 
 
@@ -35,6 +37,7 @@ public class GroupController {
 	@Autowired DocumentDAO  documentDao;
 	@Autowired HashTagDAO   hashTagDao;
 	@Autowired GroupMemberDAO groupMemberDao;
+	@Autowired NoteDAO  noteDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
@@ -45,6 +48,13 @@ public class GroupController {
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
+		
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck == null){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
 		
 		logger.info("코드 생성 시도");
 		Group group = new Group();
@@ -106,6 +116,13 @@ public class GroupController {
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
+		
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck == null){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
 		
 		logger.info("코드 접근 시도 ({})", code);
 		Group group = new Group();
