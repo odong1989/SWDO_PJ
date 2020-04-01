@@ -66,6 +66,7 @@
             #AAA<br/>
             #BBB<br/>
             #CCC
+            <img alt="로컬이미지 불러오기 확인용 이미지 (c:\uploadFile\2-2-01.jpg)" src="<c:url value='/profile/2-2-01.jpg' />" height="400px">
             </center>
         </div>
         
