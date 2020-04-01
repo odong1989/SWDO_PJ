@@ -87,17 +87,15 @@
 			private String document_destination;	//ㅇ id='place'  (장소정보이다. 미입력시 널값으로 처리됨)
 
 
-			첨부하는 사진은 Photo.java VO를 준수한다.
-			private int 	documnet_no;			//X(본 문서의 번호에서 자동퍼오도록 한다	.)
-			private String 	photo_originfile;		//O(사용자가 업로드시 사용한 파일의 원래이름
-			private String 	photo_savefile;			//X
-			private int 	photo_no;				//X
-
-
-			
-			id를 설정한 이유는 유효성검사를 위함이다.
+			-첨부하는 사진은 컨트롤러에서
+			 Photo.java VO를 준수한다. 
+			 			
+			-id를 설정한 이유는 유효성검사를 할 수 있도록 하고자 미리 정의한 것임.
 		 -->
-		<form action="documentInsert" method="POST" enctype="multipart/form-data">
+
+		<!-- 이미지 업로딩은 DB sql작성에 시간이 걸릴거 같아 우선 도큐먼트업로드를 우선으로 진행합니다.ㄴ -->
+		<!-- <form action="documentInsert" method="POST" enctype="multipart/form-data">  -->
+			 <form action="documentInsert" method="POST"> 
                 <table id="document-body" border="1px;">
                 	<tr height="40px">
 	         			<td width="5%"> < </td>

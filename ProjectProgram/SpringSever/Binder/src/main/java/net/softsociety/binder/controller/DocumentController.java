@@ -17,9 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.HashTagDAO;
+import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.HashTag;
+import net.softsociety.binder.vo.Photo;
 
 
 
@@ -109,10 +111,26 @@ public class DocumentController {
 	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload)
 	{	
 		logger.info("documentInsert메소드 시작.");
-		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
 		logger.info("documentInsert메소드 세션계정 : {}",session.getAttribute("loginId"));
+
+		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
+		Photo photo = new Photo();
 		writeDocument.setMember_id((String)session.getAttribute("loginId"));
 		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
+		
+		
+        if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
+            //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)
+            String savedfile = FileService.saveFile(upload, uploadPath);
+            photo.setPhoto_savefile(savedfile); //DB가 사용한 파일의 별명
+            photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
+	     }
+	     // 3.VO를 DB에 INSERT
+	     int count = documentDao.insertCaution(writeDocument);
+	     logger.info("3.VO를 DB에 INSERT count : {}",count);
+	     if(count ==0) {
+	            logger.info("등록실패");
+	     }
 		
 		logger.info("documentInsert메소드 종료.");
 		return "/document/mainDocument";
