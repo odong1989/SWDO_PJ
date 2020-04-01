@@ -157,7 +157,7 @@ td.new.day {
 						<a href="javascript:invite(${group_no })">
 							<img src="<c:url value='/img/invite.png' />">
 						</a>
-						<a href=""> <!-- 글 작성버튼 -->
+						<a href="<c:url value='/document/writeDocument' />">
 							<img src="<c:url value='/img/pencil.png' />">
 						</a>
 					</td>
