@@ -28,42 +28,40 @@
     	
 </head>
 <body>
-    <div id="gaibu">
-        <div id="gaibu-left">
-            <div id="gaibu-left-top">
-            <p><img src="http://erines.kr/cat.jpg" height="100px"></p>
-            </div>
-            <div id="left-menu">
-            	   	<c:forEach var="glist" items="${groupJoinList }">
-	                <div class="menu-group-button">
-	                    <div class="menu-group-button-left">
-	                        <a href="javascript:selectGroup(${glist.GROUP_NO })"><p>${glist.GROUP_NAME }</p></a>
-	                        <p class="p-group">#${glist.GROUP_SUBCATEGORY }</p>
-	                    </div>
-	                    <div class="menu-group-button-right">
-	                    	<c:if test="${glist.MEMBER_LEVEL == 1 }">
-                        		<img src="<c:url value='/img/crown_gold.png' />">
-                        	</c:if>
-                        	<c:if test="${glist.MEMBER_LEVEL == 2 }">
-                        		<img src="<c:url value='/img/crown_silver.png' />">
-                        	</c:if>
-	                    </div>
-	                    <div class="menu-group-button-clear"></div>
-	                </div>
-				</c:forEach>
-            </div>
-        </div>
-        <div id="gaibu-right">
-            <div id="gaibu-right-top">
-                <div id="naibu-right-left">
-                    
-                </div>
-                <!-- <div id="naibu-right-right"> -->
-                    <p><img src="<c:url value='/img/bell.png' />"> <img src="<c:url value='/img/mail.png' />"> <img src="<c:url value='/img/human.png' />" id="usericon"></p>
-                <!-- </div> -->
-            </div>
-            <div id="gaibu-right-bottom">
-                <table id="document-body" border="1px;">
+	<div id="gaibu-top">
+		<span id="gaibu-top-left"> 
+			<a href="<c:url value='/document/mainDocument' />">
+			<img src="<c:url value='/img/logo.png' />"></a>
+		</span> <span id="gaibu-top-middle"> </span> <span id="gaibu-top-right">
+
+            <img src="<c:url value='/img/bell.png' />">
+			<img src="<c:url value='/img/mail.png' />">
+			<a href="<c:url value='/member/memberMypage' />"><img src="<c:url value='/img/human.png' />" id="usericon">
+			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>
+		</span>
+	</div>
+	<div id="gaibu">
+		<div id="menu">
+			<c:forEach var="glist" items="${groupJoinList }">
+				<div class="menu-group-button">
+					<div class="menu-group-button-left">
+						<a href="javascript:selectGroup(${glist.GROUP_NO })"><p>${glist.GROUP_NAME }</p></a>
+						<p class="p-hash">#${glist.GROUP_SUBCATEGORY }</p>
+					</div>
+					<div class="menu-group-button-right">
+						<c:if test="${glist.MEMBER_LEVEL == 1 }">
+							<img src="<c:url value='/img/crown_gold.png' />">
+						</c:if>
+						<c:if test="${glist.MEMBER_LEVEL == 2 }">
+							<img src="<c:url value='/img/crown_silver.png' />">
+						</c:if>
+					</div>
+					<div class="menu-group-button-clear"></div>
+				</div>
+			</c:forEach>
+		</div>
+		<div id="right-body">
+  <table id="document-body" border="1px;">
                 	<tr height="40px">
 	         			<td width="5%"> < </td>
 				        <td width="45%">	
@@ -94,9 +92,8 @@
 			  	        document.getElementById('currentDate').innerHTML = new Date().toISOString().substring(0, 10);
 			            document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);
 			            document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
-			    </script>                
-            </div>
-        </div>
-    </div>
+			    </script>            
+		</div>
+	</div>
 </body>
 </html>
