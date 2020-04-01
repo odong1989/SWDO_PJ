@@ -165,10 +165,10 @@ td.new.day {
 									일반회원
 								</c:if>
 								</td>
-								<c:if test="${gjoin.member_level < 3 }">
-									<td><button @click="deleteMember">삭제</button></td>
+								
+									<td><button @click="deleteMember('${gjoin.member_id }')">삭제</button></td>
 									<td><button @click='openModal'>수정</button></td>
-								</c:if>
+								
 								</tr>
 								<input type="hidden" id="memberidh" value="${gjoin.member_id}">
 								<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
@@ -239,8 +239,7 @@ td.new.day {
         </div>
     </div>
  <script>
-var memberidh = document.getElementById("memberidh").value;
-var groupnoh = document.getElementById("groupnoh").value;
+var groupnoh='';
 var msg; // 데이터 받아올 var
 
 Vue.component('modal', {
@@ -420,7 +419,8 @@ Vue.component('modal', {
 				})
 				this.closeModal();
 			},
-			deleteMember(){
+			deleteMember(memberidh){
+				groupnoh = document.getElementById("groupnoh").value;
 				$.ajax({
 					url:"deleteGMember",
 					type:"get",
@@ -430,6 +430,7 @@ Vue.component('modal', {
 						function(result){
 						if(result == "true"){
 							alert("성공")
+							history.go(0);
 						}else {
 							alert("실패")
 						}

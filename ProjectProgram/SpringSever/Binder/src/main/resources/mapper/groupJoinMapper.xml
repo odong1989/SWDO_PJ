@@ -23,6 +23,7 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 	     bnd_member.member_id = bnd_groupjoin.member_id
      and
 	     bnd_groupjoin.group_no = #{group_no}
+	 order by bnd_groupjoin.member_level
 	</select>
 
 	<select id="selectGroupJoinMemberOne" parameterType="string" resultType="string">
