@@ -17,10 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.HashTagDAO;
+import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.HashTag;
+import net.softsociety.binder.vo.Note;
 import net.softsociety.binder.vo.Photo;
 
 
@@ -34,6 +36,7 @@ public class DocumentController {
 	@Autowired GroupDAO 	groupDao;
 	@Autowired DocumentDAO  documentDao;
 	@Autowired HashTagDAO   hashTagDao;
+	@Autowired NoteDAO   noteDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
@@ -45,6 +48,12 @@ public class DocumentController {
 		logger.info("mainDocument 이동");
 		String member_id = (String) session.getAttribute("loginId");
 		logger.info("mainDocument - member_id :{}",member_id);
+		ArrayList<Note> list = noteDao.newNoteCheck(member_id);
+		if (list == null){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		logger.info("-그룹리스트 : {}", groupJoinList);
@@ -60,6 +69,13 @@ public class DocumentController {
 		logger.info("mainDocument 이동");
 		String member_id = (String) session.getAttribute("loginId");
 		logger.info("mainDocument - member_id :{}",member_id);
+		
+		ArrayList<Note> list = noteDao.newNoteCheck(member_id);
+		if (list == null){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		logger.info("-그룹리스트 : {}", groupJoinList);
