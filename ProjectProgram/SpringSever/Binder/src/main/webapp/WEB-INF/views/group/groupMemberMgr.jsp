@@ -195,7 +195,7 @@ td.new.day {
 <!-- management start -->
 	<div class="Management">
 		<div id="app2">
-				<button id="show-modal2" @click="openModal">모달화면입니다</button>
+				<button id="show-modal2" @click="openModal">초대코드보내기</button>
 			  
 			  <modal v-if="showModal2" @close="closeModal">
 			<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
@@ -299,7 +299,7 @@ Vue.component('modal', {
 				success:
 					function(result){
 					if(result == "true"){
-						alert(mid)
+						alert("성공")
 					}else {
 						alert("존재안함")
 					}
@@ -318,7 +318,19 @@ Vue.component('modal', {
 			doSend(){
 				if (this.message.length > 0) {
 		// 		여기에 이벤트를 주면됩니다
-				alert(this.message)
+				$.ajax({
+				url:"sendEmail",
+				type:"get",
+				data:{"email" : this.message},
+				success:
+					function(result){
+					if(result == "true"){
+						alert("성공")
+					}else {
+						alert("실패")
+					}
+				}
+			})
 				this.message =''
 				this.closeModal()
 				}
@@ -348,19 +360,19 @@ Vue.component('modal', {
 				if (this.message.length > 0) {
 // 					여기에 이벤트를 주면됩니다
 					var msg = this.message
-// 					$.ajax({
-// 						url:"insertCaution",
-// 						type:"get",
-// 						data:{"caution" : msg},
-// 						success:
-// 						function(result){
-// 							if(result == "true"){
-// 								alert("성공")
-// 							}else {
-// 								alert("실패")
-// 							}
-// 						}
-// 					})
+					$.ajax({
+						url:"insertCaution",
+						type:"get",
+						data:{"caution" : msg},
+						success:
+						function(result){
+							if(result == "true"){
+								alert("성공")
+							}else {
+								alert("실패")
+							}
+						}
+					})
 					this.message =''
 					this.closeModal()
 				}else {
