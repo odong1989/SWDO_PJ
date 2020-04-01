@@ -148,17 +148,30 @@ td.new.day {
 			</c:forEach>
 		</div>
 		<div id="right-body">
-			<br/><br/><br/><br/>
-                <c:if test="${codebool eq 'ari' }">
-	                <br/>이미 생성된 코드가 존재합니다.
-	                <br/>http://localhost:8888/binder/group/groupjoin?code=${code.GROUP_CODE }
-	                <br/><font color="red">유효기간 : ~${code.GROUP_CODEDATE7 }</font> 
-                </c:if>
-                <c:if test="${codebool eq 'nashi' }">
-	                <br/>코드가 생성되었습니다.
-	                <br/>Code : ${code.GROUP_CODE }
-	                <br/><font color="red">유효기간 : ~${code.GROUP_CODEDATE7 }</font> 
-                </c:if>
+			<center><div style="background-color:#EEE; width:30em; padding:1em; margin-top:150px; border:1px solid">
+			<table>
+				<c:if test="${codebool eq 'ari' }">
+				<tr>
+				<td>
+					<br/>이미 생성된 코드가 존재합니다.
+					<br/><a href="http://localhost:8888/binder/group/groupjoin?code=${code.GROUP_CODE }">
+					http://localhost:8888/binder/group/groupjoin?code=${code.GROUP_CODE }</a>
+					<br/><font color="red">유효기간 : ~${code.GROUP_CODEDATE7 }</font>
+				</td>
+				</tr> 
+				</c:if>
+				<c:if test="${codebool eq 'nashi' }">
+				<tr>
+				<td>
+					<br/>코드가 생성되었습니다.
+					<br/><a href="http://localhost:8888/binder/group/groupjoin?code=${code.GROUP_CODE }">
+					http://localhost:8888/binder/group/groupjoin?code=${code.GROUP_CODE }</a>
+					<br/><font color="red">유효기간 : ~${code.GROUP_CODEDATE7 }</font>
+				</td>
+				</tr> 
+				</c:if>
+			</table>
+			</div></center>
 		</div>
 	</div>
 </body>

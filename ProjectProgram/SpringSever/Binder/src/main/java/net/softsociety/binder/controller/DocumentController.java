@@ -70,7 +70,6 @@ public class DocumentController {
 		model.addAttribute("hashTagList", hashTagList);
 		model.addAttribute("group_no", no);
 		return "/document/readDocument";
-		
 	}
 	
 	@RequestMapping(value="boardTemp", method=RequestMethod.GET)
@@ -85,5 +84,22 @@ public class DocumentController {
 	{
 		logger.info("writeDocument 메소드 실시& 이동");		
 		return "/document/writeDocument";
-	}	
+	}
+	
+	@RequestMapping(value="editDocument", method=RequestMethod.GET)
+	public String editDocument(HttpSession session, Model model, int no)
+	{	
+		String member_id = (String) session.getAttribute("loginId");
+		logger.info("editDocument 이동, {}",member_id);
+				
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
+		ArrayList<HashMap<String, Object>> map = documentDao.selectDocuments(no);
+		model.addAttribute("doc", map);
+		
+		return "/document/editDocument";
+		
+	}
+	
 }
