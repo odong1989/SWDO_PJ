@@ -22,4 +22,21 @@
 		and
 		    bnd_document.document_no = bnd_photo.document_no
 	</select> 
+	<insert id="insertCaution" parameterType="document">
+	insert into
+		bnd_document(
+		group_no
+		,document_no
+		,member_id
+		,document_content
+		,document_notice
+		) values
+		(
+		#{group_no}
+		,bnd_document_no_seq.nextval
+		,#{member_id}
+		,#{document_content}
+		,1
+		)
+	</insert>
 </mapper>

@@ -37,4 +37,18 @@ public class DocumentDAO {
 		return documentList;
 		
 		}
+	
+	public int insertCaution(Document caution) {
+		logger.info("DocumentDAO.java - insertCaution({})", caution);
+		int cau = 0;
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+			cau = mapper.insertCaution(caution);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		logger.info("DocumentDAO.java - insertCaution 메소드 종료");
+		return cau;
+		}
 	}

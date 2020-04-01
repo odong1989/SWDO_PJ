@@ -34,7 +34,7 @@ public class GroupController {
 	@Autowired GroupDAO 	groupDao;
 	@Autowired DocumentDAO  documentDao;
 	@Autowired HashTagDAO   hashTagDao;
-	@Autowired GroupMemberDAO dao;
+	@Autowired GroupMemberDAO groupMemberDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
@@ -136,7 +136,7 @@ public class GroupController {
 		int groupno = 1;
 		vo.setGroup_no(groupno);
 		logger.info("groupMemberMgr {}",vo);
-		ArrayList<GroupJoin> join = dao.selectGroupJoinMember(vo);
+		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
 		logger.info("groupMemberMgr {}",join);
 		model.addAttribute("gjoin",join);
 		return "group/groupMemberMgr";
@@ -146,7 +146,7 @@ public class GroupController {
 	@ResponseBody
 	public String selectGJM(String memberCheck) {
 		
-		String memberCheck2 = dao.selectGroupJoinMemberOne(memberCheck);
+		String memberCheck2 = groupMemberDao.selectGroupJoinMemberOne(memberCheck);
 		logger.info("selectGJM {}",memberCheck2);
 		String chk = null;
 		if (memberCheck2 != null) {
@@ -163,7 +163,7 @@ public class GroupController {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
 		logger.info("updateGJMS {}",vo);
-		int memberUpdate = dao.updateGroupMember(vo);
+		int memberUpdate = groupMemberDao.updateGroupMember(vo);
 		String chk = null;
 		if (memberUpdate == 1) {
 			chk = "true";
@@ -178,7 +178,7 @@ public class GroupController {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
 		logger.info("updateGJMC {}",vo);
-		int memberUpdate = dao.updateGroupMember2(vo);
+		int memberUpdate = groupMemberDao.updateGroupMember2(vo);
 		String chk = null;
 		if (memberUpdate == 1) {
 			chk = "true";
@@ -193,7 +193,7 @@ public class GroupController {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
 		logger.info("deleteGMember {}",vo);
-		int memberUpdate = dao.deleteGMember(vo);
+		int memberUpdate = groupMemberDao.deleteGMember(vo);
 		String chk = null;
 		if (memberUpdate == 1) {
 			chk = "true";
@@ -205,12 +205,17 @@ public class GroupController {
 	
 	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
 	@ResponseBody
-	public String insertCaution(String caution) {
+	public String insertCaution(Document vo, String caution, HttpSession session) {
+		
 		logger.info("insertCaution {}",caution);
-		
-		
+		String member_id = (String) session.getAttribute("loginId");
+		vo.setMember_id(member_id);
+		vo.setGroup_no(1);
+		vo.setDocument_content(caution);
+		int chknum = documentDao.insertCaution(vo);
+
 		String chk = null;
-		if (caution != null) {
+		if (chknum != 0) {
 			chk = "true";
 		} else {
 			chk = "false";
