@@ -36,7 +36,7 @@ import net.softsociety.binder.vo.Photo;
 public class loginAndJoinController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(loginAndJoinController.class);
-    private final String uploadPath = "/uploadFile";
+	  private final String uploadPath = "/uploadFile";
 	//0.dao선언
 	@Autowired
 	MemberDAO dao;
