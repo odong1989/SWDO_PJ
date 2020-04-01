@@ -8,9 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${group_name }</title>
 <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
+<link href="<c:url value='/css/modal.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type='text/javascript'
 	src='http://code.jquery.com/jquery-1.8.3.js'></script>
 <link rel="stylesheet"
@@ -22,10 +23,10 @@
 <script type="text/javascript">
 var temp = '';
 function selectGroup(pk) {
-	location.href="<c:url value='/document/group' />?no="+pk;
+	location.href="group?no="+pk;
 }
 function invite(pk) {
-	location.href="<c:url value='/group/groupcode' />?no="+pk;
+	location.href="../group/groupcode?no="+pk;
 }
 //20.03.29 병합 되지 않아서 직접 추가1 - 부트스트랩 한글 표기설정//단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
 //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
@@ -121,10 +122,11 @@ td.new.day {
 				src="<c:url value='/img/logo.png' />"></a>
 		</span> <span id="gaibu-top-middle"> </span> <span id="gaibu-top-right">
 
-            <img src="<c:url value='/img/bell.png' />">
-			<img src="<c:url value='/img/mail.png' />">
-			<a href="<c:url value='/member/memberMypage' />"><img src="<c:url value='/img/human.png' />" id="usericon">
-			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>
+			<img src="<c:url value='/img/bell.png' />"> <img
+			src="<c:url value='/img/mail.png' />"> <img
+			src="<c:url value='/img/human.png' />" id="usericon"> <a
+			href="<c:url value='/member/memberLogout' />"><img
+				src="<c:url value='/img/logout.png' />"></a>
 		</span>
 	</div>
 	<div id="gaibu">
@@ -155,48 +157,91 @@ td.new.day {
 							<c:forEach var="gjoin" items="${gjoin }">
 							<tr>
 								<td class='center'>${gjoin.member_id }</td>
-								<td class='center'>${gjoin.group_no }</td>
 								<td class='center'><c:if test="${gjoin.member_level == 1 }">
-					관리자
-				</c:if> <c:if test="${gjoin.member_level == 2 }">
-					부관리자
-				</c:if> <c:if test="${gjoin.member_level == 3 }">
-					일반회원
-				</c:if></td>
-								<td class='center'>${gjoin.group_joindate }</td>
-								<c:if test="${gjoin.member_level < 3 }">
-									<td><button @click='deleteMember'>삭제</button></td>
-									<td><button @click='openModal'>수정</button></td>
+									관리자
+								</c:if> <c:if test="${gjoin.member_level == 2 }">
+									부관리자
+								</c:if> <c:if test="${gjoin.member_level == 3 }">
+									일반회원
 								</c:if>
-							</tr>
+								</td>
+								
+									<td><button @click="deleteMember('${gjoin.member_id }')">삭제</button></td>
+									<td><button @click='openModal'>수정</button></td>
+								
+								</tr>
+								<input type="hidden" id="memberidh" value="${gjoin.member_id}">
+								<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
 							</c:forEach>
 						</table>
 
-						<modal v-if="showModal" @close="closeModal"> <!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
-						<h3 slot="header">회원 타입 변경</h3>
+						<modal v-if="showModal" @close="closeModal">
+						 <!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
+						<template slot="header">
+						<h3>회원멤버등급조정</h3>
+						</template>
 						<template slot="body">
 						<div>변경할 값을 선택해주세요</div>
-						<child memberidm='${gjoin.member_id }'></child> </template> <template
-							slot="footer"> <c:if
-							test="${gjoin.member_level == 1 }">
-							<button id="sub" @click="subManager">부관리자</button>
-							<button id="not" @click="notManager">일반회원</button>
-						</c:if> <c:if test="${gjoin.member_level == 2 }">
-							<button id="not" @click="notManager">일반회원</button>
-						</c:if>
-						<div id="testitem"></div>
-						</template> </modal>
+						</template>
+						<template slot="footer"> 
+							<button @click="subManager">부관리자</button>
+							<button @click="notManager">일반회원</button>
+						</template>
+						 </modal>
 					</div>
 				</div>
 			</div>
-			<input type="hidden" id="memberidh" value="${gjoin.member_id}">
-			<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
+	</div>
+<!-- management start -->
+	<div class="Management">
+		<div id="app2">
+				<button id="show-modal2" @click="openModal">모달화면입니다</button>
+			  
+			  <modal v-if="showModal2" @close="closeModal">
+			<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
+			 	<template slot="header"><h3>초대코드 보내기</h3></template>
+			 	<template slot="body">
+			 	<div>초대코드를 보낼 아이디를 입력해주세요</div>
+			 	<div><input v-model="memberid"></div>
+			 	<button  @click="showMember">멤버확인</button>
+			 	</template>
+			 	<template slot="footer">
+			 		<div>초대코드를 보낼 이메일을 입력해주세요</div>
+			 		<div><input v-model="message"></div>
+			 		<button @click="doSend">제출</button>
+			 	</template>
+			  </modal>
+		</div>
+	<div>	
+<!--  manangement end-->
+<!-- groupcaution -->
+	<div class="Caution">
+		<div id="app3">
+				<button id="show-modal3" @click="openModal">공지사항등록</button>
+			  
+			  <modal v-if="showModal3" @close="closeModal">
+			<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
+			 	<template slot="header"><h3>공지사항등록</h3></template>
+			 	<template slot="body">
+			 	<div>내용을 입력해주세요</div>
+			 	</template>
+			 	<template slot="footer">
+			 		<div><input v-model="message"><button @click="doSend">제출</button></div>
+			 		
+			 	</template>
+			  </modal>
 		</div>
 	</div>
-	<script>
-var memberidh = document.getElementById("memberidh").value;
-var groupnoh = document.getElementById("groupnoh").value;
+<!-- groupcautionend -->
+</div>
+
+            </div>
+        </div>
+    </div>
+ <script>
+var groupnoh='';
 var msg; // 데이터 받아올 var
+
 Vue.component('modal', {
 	  template: `
 		  <transition name="modal">
@@ -230,21 +275,107 @@ Vue.component('modal', {
 		  </transition>
 		  `
 	})
-	Vue.component('child',{
-		props: ['memberidm'],
+	//앱시작2
+	new Vue({
+		el: '#app2',
 		data: function(){
-			return {memberidm2: this.memberidm}
-		},
-		template: '<span>{{memberidm}}</span>'
-		})
-	
-	// 앱시작
+		return {
+		  	showModal2: false,
+		   	message: '',
+		   	memberid: ''
+			 }
+		 },
+		methods: {
+			openModal(){
+				this.showModal2 = true
+			},
+		showMember(){
+			if(this.memberid.length > 0) {
+			var mid = this.memberid;
+			$.ajax({
+				url:"selectGJM",
+				type:"get",
+				data:{"memberCheck" : mid},
+				success:
+					function(result){
+					if(result == "true"){
+						alert(mid)
+					}else {
+						alert("존재안함")
+					}
+				}
+			})
+			this.memberid = ''
+			this.closeModal()
+			}
+			else {
+					alert("아이디입력필요")
+				}
+			},
+			closeModal(){
+				this.showModal2 = false
+			},
+			doSend(){
+				if (this.message.length > 0) {
+		// 		여기에 이벤트를 주면됩니다
+				alert(this.message)
+				this.message =''
+				this.closeModal()
+				}
+				else {
+					alert('메세지 입력필요')
+				}
+			}
+		}
+	})
+	new Vue({
+	  el: '#app3',
+	  data: function(){
+	    return {
+	    	showModal3: false,
+	    	message: '',
+		 }
+	  },
+	  methods: {
+			openModal(){
+				this.showModal3 = true
+				
+			},
+			closeModal(){
+				this.showModal3 = false
+			},
+			doSend(){
+				if (this.message.length > 0) {
+// 					여기에 이벤트를 주면됩니다
+					var msg = this.message
+// 					$.ajax({
+// 						url:"insertCaution",
+// 						type:"get",
+// 						data:{"caution" : msg},
+// 						success:
+// 						function(result){
+// 							if(result == "true"){
+// 								alert("성공")
+// 							}else {
+// 								alert("실패")
+// 							}
+// 						}
+// 					})
+					this.message =''
+					this.closeModal()
+				}else {
+					alert('텍스트 입력필요')
+				}
+			}
+	  }
+	})
+	// 앱시작1
+
 	new Vue({
 	  el: '#app',
 	  data: 
 		{
 	    showModal: false,
-	    message: '',
 	    member123: ''    
 		},
 	  methods: {
@@ -253,16 +384,6 @@ Vue.component('modal', {
 			},
 			closeModal(){
 				this.showModal = false
-			},
-			doSend(){
-				if (this.message.length > 0) {
-// 					여기에 이벤트를 주면됩니다
-					msg = this.message
-					this.message =''
-					this.closeModal()
-				}else {
-					alert('메세지 입력필요')
-				}
 			},
 			subManager(){
 				$.ajax({
@@ -298,7 +419,8 @@ Vue.component('modal', {
 				})
 				this.closeModal();
 			},
-			deleteMember(){
+			deleteMember(memberidh){
+				groupnoh = document.getElementById("groupnoh").value;
 				$.ajax({
 					url:"deleteGMember",
 					type:"get",
@@ -308,14 +430,15 @@ Vue.component('modal', {
 						function(result){
 						if(result == "true"){
 							alert("성공")
+							history.go(0);
 						}else {
 							alert("실패")
 						}
 					}
 				})
 				this.closeModal();
-	  }
-	  }
+	  			}
+	 	}
 	})
 </script>
 </body>
