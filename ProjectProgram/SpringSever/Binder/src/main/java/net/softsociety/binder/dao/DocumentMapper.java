@@ -9,4 +9,5 @@ import net.softsociety.binder.vo.Document;
 public interface DocumentMapper {
 
 	public ArrayList<HashMap<String, Object>> selectDocuments(int group_no);
+	public int insertCaution(Document caution);
 }
