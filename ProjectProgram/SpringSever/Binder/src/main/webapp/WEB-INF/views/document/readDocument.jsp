@@ -142,6 +142,7 @@ td.new.day {
 						<c:if test="${glist.MEMBER_LEVEL == 2 }">
 							<img src="<c:url value='/img/crown_silver.png' />">
 						</c:if>
+						<img src="<c:url value='/img/bell.png' />">
 					</div>
 					<div class="menu-group-button-clear"></div>
 				</div>

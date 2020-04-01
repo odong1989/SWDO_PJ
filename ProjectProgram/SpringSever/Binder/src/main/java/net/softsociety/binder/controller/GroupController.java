@@ -144,9 +144,10 @@ public class GroupController {
 	
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
-	public String selectGJM(GroupJoin vo, String memberCheck) {
-		logger.info("selectGJM {}",vo);
+	public String selectGJM(String memberCheck) {
+		
 		String memberCheck2 = dao.selectGroupJoinMemberOne(memberCheck);
+		logger.info("selectGJM {}",memberCheck2);
 		String chk = null;
 		if (memberCheck2 != null) {
 			chk = "true";
@@ -202,8 +203,35 @@ public class GroupController {
 		return chk;
 	}
 	
-	@RequestMapping(value="/groupModal", method=RequestMethod.GET)
-	public String vueModal() {
-		return "group/groupModal";
+	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
+	@ResponseBody
+	public String insertCaution(String caution) {
+		logger.info("insertCaution {}",caution);
+		
+		
+		String chk = null;
+		if (caution != null) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
 	}
+	
+	@RequestMapping(value="sendEmail", method=RequestMethod.GET)
+	@ResponseBody
+	public String sendEmail(String email) {
+		logger.info("email {}",email);
+		
+		
+		String chk = null;
+		if (email != null) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	
+	
 }
