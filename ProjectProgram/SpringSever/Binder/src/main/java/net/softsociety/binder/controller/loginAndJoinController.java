@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.softsociety.binder.dao.MemberDAO;
+import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.MailVO;
 import net.softsociety.binder.vo.Member;
+import net.softsociety.binder.vo.Photo;
 
 //@선언
 @Controller
@@ -33,7 +36,7 @@ import net.softsociety.binder.vo.Member;
 public class loginAndJoinController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(loginAndJoinController.class);
-	
+    private final String uploadPath = "/uploadFile";
 	//0.dao선언
 	@Autowired
 	MemberDAO dao;
@@ -79,12 +82,29 @@ public class loginAndJoinController {
 
 	//1.4[실행] 회원가입실시
 	@RequestMapping(value="memberJoin", method=RequestMethod.POST)
-	public String memberJoin(Member member) {
+	public String memberJoin(Member member, MultipartFile upload) {
+		Photo photo = new Photo();
 		logger.info("memberJoin메소드입니다");
 		logger.info("회원가입 자료 전달");
-		logger.info("member : {}",member);
-		dao.memeberJoin(member);
-		
+		logger.info("form을 통해 기입된 member 정보 : {}",member);
+  		logger.info("member의 사진 정보(최초) : {}",member.getMember_photo());
+  		
+  		
+		logger.info("memberJoin메소드-프로필 사진 업로드 시작");		
+        if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
+            //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)
+            String savedfile = FileService.saveFile(upload, uploadPath);            
+            photo.setPhoto_savefile(savedfile); //DB가 사용한 파일의 별명
+            photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
+            member.setMember_photo(photo.getPhoto_savefile());
+    		logger.info("member의 사진 정보(최종) : {}",member.getMember_photo());
+        }
+        // 3.VO를 DB에 INSERT
+        int count = dao.memeberJoin(member);
+        logger.info("3.VO를 DB에 INSERT count : {}",count);
+        if(count ==0) {
+            logger.info("회원등록이 실패되었습니다.");
+        	}
 		return "redirect:/";
 	}
 	

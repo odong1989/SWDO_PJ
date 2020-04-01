@@ -28,8 +28,6 @@ function checkEmail(str) {
 
 
 
-출처: https://sesok808.tistory.com/553 [살아가는 그 이유]
-
 function formCheck(){//id및 입력사항 유효성 검사체크
 	var member_id = document.getElementById("member_id");
     var member_pw = document.getElementById("member_pw");
@@ -107,8 +105,8 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 <body>
 	<div>
 		<table style="margin:50px 50px;">
-	<!-- 	<form action="memberJoin" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" > -->
-			<form action="memberJoin" method="post" onsubmit="return formCheck();" >
+	<form action="memberJoin" method="post" enctype="multipart/form-data" onsubmit="return formCheck();" >
+	<!-- 			<form action="memberJoin" method="post" onsubmit="return formCheck();" > -->
 				<tr>
 					<td>
 						<div class="memberJoin" style="background-image:url(/img/MemberJoin/MemberJoin_login.jpg);height:80px;">
@@ -138,8 +136,7 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 					<td>
 						<div class="memberJoin">
 							<div class="image"></div>
-							<input type="file" name=member_photo placeholder="프로필 사진을 넣어주세요" >	
-										 		  	 <!-- name="upload"-->
+							<input type="file" name="upload" placeholder="프로필 사진을 넣어주세요" >	
 						</div>
 					</td>
 				</tr>
