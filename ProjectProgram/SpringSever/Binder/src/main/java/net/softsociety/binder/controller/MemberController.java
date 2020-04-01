@@ -1,5 +1,7 @@
 package net.softsociety.binder.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.MemberDAO;
+import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.Member;
 
 //@선언
@@ -157,6 +160,12 @@ public class MemberController {
 	@RequestMapping(value="memberMypage", method=RequestMethod.GET)
 	public String memberMypage(Member member, String remember,HttpSession session,Model model) {
 		logger.info("마이페이지 프로세스 시작");
+		
+		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Group> groupJoinList = groupdao.selectGroupJoin(member_id);
+		logger.info("-그룹리스트 : {}", groupJoinList);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
 		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);
 		return "member/memberMypage";
