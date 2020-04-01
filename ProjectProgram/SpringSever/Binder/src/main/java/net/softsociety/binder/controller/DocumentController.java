@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
@@ -33,6 +34,7 @@ public class DocumentController {
 	@Autowired HashTagDAO   hashTagDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
+    private final String uploadPath = "/uploadFile";
 	
 	@RequestMapping(value="mainDocument", method=RequestMethod.GET)
 	public String mainDocument(HttpSession session, //Model modelGroupJoinList, Model modelDocumentList, Model modelHashTagList)
@@ -101,5 +103,40 @@ public class DocumentController {
 		return "/document/editDocument";
 		
 	}
+	
+	
+	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
+	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload)
+	{	
+		logger.info("documentInsert메소드 시작.");
+		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
+		logger.info("documentInsert메소드 세션계정 : {}",session.getAttribute("loginId"));
+		writeDocument.setMember_id((String)session.getAttribute("loginId"));
+		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
+		
+		logger.info("documentInsert메소드 종료.");
+		return "/document/mainDocument";
+		//return "/document/readDocument";//readDocument이동시 가입한 그룹들이 출력되지 않음.
+		
+		/* 신경써야할 자료 목록. 체크 완료시 삭제할 것!
+			VO인 document.java의 구조를 준수한다.  			//본 폼에서 담당하는 정보 여부
+			private int group_no;					//X(본 문서의 번호에서 자동퍼오도록 한다	.)	
+			private int document_no;				//X이건 SQL에서 알아서 nextval로 체크.
+			private String member_id;				//X세션의 정보를 준다.
+			private String document_content;		//ㅇ id='content'
+			private String document_regdate;		//ㅇ id='startDate'
+			private String document_finalday;		//ㅇ id='endDate'
+			private String document_destination;	//ㅇ id='place'  (장소정보이다. 미입력시 널값으로 처리됨)
+
+
+			첨부하는 사진은 Photo.java VO를 준수한다.
+			private int 	documnet_no;			//X(본 문서의 번호에서 자동퍼오도록 한다	.)
+			private String 	photo_originfile;		//O(사용자가 업로드시 사용한 파일의 원래이름
+			private String 	photo_savefile;			//X
+			private int 	photo_no;				//X 
+		 */
+		
+	}
+	
 	
 }

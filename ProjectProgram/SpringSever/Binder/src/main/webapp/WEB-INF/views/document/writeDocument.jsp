@@ -19,6 +19,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 
  <script type="text/javascript">
+ 		//이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트입니다.
         $(function() {
             $("#imgInp").on('change', function(){
                 readURL(this);
@@ -30,18 +31,15 @@
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                    $('#blah').attr('src', e.target.result);
+                    $('#previewImg').attr('src', e.target.result);
                 }
 
               reader.readAsDataURL(input.files[0]);
             }
         }
-
+ 		//이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트 종료.
 
     </script>
-
-
-출처: https://touchsoul.tistory.com/84 [Knowledge Box]
 
 </head>
 <body>
@@ -78,30 +76,51 @@
 			</c:forEach>
 		</div>
 		<div id="right-body">
-		<form action="/notice/noticeInsert" method="POST" enctype="multipart/form-data">
+		<!--
+			VO인 document.java의 구조를 준수한다.  			//본 폼에서 담당하는 정보 여부
+			private int group_no;					//X(본 문서의 번호에서 자동퍼오도록 한다	.)	
+			private int document_no;				//X이건 SQL에서 알아서 nextval로 체크.
+			private String member_id;				//X세션의 정보를 준다.
+			private String document_content;		//ㅇ id='content'
+			private String document_regdate;		//ㅇ id='startDate'
+			private String document_finalday;		//ㅇ id='endDate'
+			private String document_destination;	//ㅇ id='place'  (장소정보이다. 미입력시 널값으로 처리됨)
+
+
+			첨부하는 사진은 Photo.java VO를 준수한다.
+			private int 	documnet_no;			//X(본 문서의 번호에서 자동퍼오도록 한다	.)
+			private String 	photo_originfile;		//O(사용자가 업로드시 사용한 파일의 원래이름
+			private String 	photo_savefile;			//X
+			private int 	photo_no;				//X
+
+
+			
+			id를 설정한 이유는 유효성검사를 위함이다.
+		 -->
+		<form action="documentInsert" method="POST" enctype="multipart/form-data">
                 <table id="document-body" border="1px;">
                 	<tr height="40px">
 	         			<td width="5%"> < </td>
 				        <td width="45%">	
 				            	<p id='currentDate' style="display:inline;"></p>
-				   		        <input type="text" placeholder="장소" >
+				   		        <input type="text" placeholder="장소" id='place' >
 				        </td>
 				        <td width="45%">
-				        	<input type='date' id='startDate'/> 부터 
-				            <input type='date' id='endDate'/>   까지
+				        	<input type='date' id='startDate' name='document_regdate'/> 부터 
+				            <input type='date' id='endDate' name='document_finalday' />   
 				        </td>
 				        <td width="5%"> > </td>
 					</tr>        
 				    <tr>
 				        <td style="width:50%;" colspan="2">
-				    		    <form id="form1" runat="server">
+				    		    <!-- <form id="form1" runat="server"> -->  
  						        <input type='file' id="imgInp" name="upload" />
-       						    <img id="blah" src="#" alt="your image" />
-                                </form>
+       						    <img id="previewImg" src="#" alt="첨부한 사진을 미리 볼 수 있습니다." />
+                                <!-- </form> -->
 				        </td>
 
 				    	<td style="width:50%;" colspan="2">
-				    		<textarea rows="15" width="300" style="resize: none;"></textarea> 
+				    		<textarea rows="15" width="300" style="resize: none;" id='content' name="document_content"></textarea> 
 				    	</td> 
 				   	</tr>                
 				   	<tr>
@@ -109,7 +128,7 @@
 				   	</tr>
 				   	<tr ">
 				   		<td colspan="4" style="text-align:center;">
-					   		<input type="button" value="확인">
+					   	    <input type="submit" value="등록">
 					   		<input type="button" value="취소">
 				   		</td>
 				   	</tr>
