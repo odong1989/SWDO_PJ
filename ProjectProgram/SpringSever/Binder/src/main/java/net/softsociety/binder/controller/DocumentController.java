@@ -18,6 +18,7 @@ import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.HashTagDAO;
 import net.softsociety.binder.dao.NoteDAO;
+import net.softsociety.binder.dao.PhotoDAO;
 import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
@@ -36,7 +37,8 @@ public class DocumentController {
 	@Autowired GroupDAO 	groupDao;
 	@Autowired DocumentDAO  documentDao;
 	@Autowired HashTagDAO   hashTagDao;
-	@Autowired NoteDAO   noteDao;
+	@Autowired NoteDAO 	    noteDao;
+	@Autowired PhotoDAO 	photoDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
@@ -116,7 +118,8 @@ public class DocumentController {
 	}
 	
 	
-	//신규 게시판글(documents) 작성
+	//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
+	//uploadPath는 "/uploadFile"으로 설정되어있다.;
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
 	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload)
 	{	
@@ -127,20 +130,35 @@ public class DocumentController {
 		Photo photo = new Photo();
 		writeDocument.setMember_id((String)session.getAttribute("loginId"));
 		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
-		
-		
-        if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
-            //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)
-            String savedfile = FileService.saveFile(upload, uploadPath);
-            photo.setPhoto_savefile(savedfile); //DB가 사용한 파일의 별명
-            photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
-	     }
-	     // 3.VO를 DB에 INSERT
+
+        //
 	     int count = documentDao.insertCaution(writeDocument);
 	     logger.info("3.VO를 DB에 INSERT count : {}",count);
 	     if(count ==0) {
 	            logger.info("등록실패");
 	     }
+		//게시글(Document) insert 코드 종료.---------------------------------------------------
+	     
+	    // 
+        if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
+            //2.업로드된 파일의 경로(파일명)을 photoVO에게 설정(set)
+        	//이외에도 도큐먼트번호, 그룹번호도 같이 부여한다.
+        	photo.setDocument_no(writeDocument.getDocument_no());
+        	photo.setGroup_no(writeDocument.getGroup_no());
+            String savedfile = FileService.saveFile(upload, uploadPath);
+            photo.setPhoto_savedfile(savedfile); //DB가 사용한 파일의 별명
+            photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
+            logger.info("photoVO의 정보 : {}",photo);
+            
+            // 3.photoVO를 DB에 INSERT            
+            int count2 = photoDao.photoInsert(photo);
+            logger.info("3.VO를 DB에 INSERT count : {}",count);
+            if(count2 ==0) {
+                   logger.info("등록실패");
+            }
+        }
+
+	     
 		
 		logger.info("documentInsert메소드 종료.");
 		return "/document/mainDocument";

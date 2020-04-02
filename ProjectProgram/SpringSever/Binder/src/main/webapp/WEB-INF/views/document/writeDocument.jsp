@@ -93,9 +93,6 @@
 			private String document_destination;	//ㅇ id='place'  (장소정보이다. 미입력시 널값으로 처리됨)
 
 
-			-첨부하는 사진은 컨트롤러에서
-			 Photo.java VO를 준수한다. 
-			 			
 			-id를 설정한 이유는 유효성검사를 할 수 있도록 하고자 미리 정의한 것임.
 		 -->
 
