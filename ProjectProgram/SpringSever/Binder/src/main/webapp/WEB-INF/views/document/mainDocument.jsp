@@ -21,6 +21,9 @@
     function invite(pk) {
     	location.href="<c:url value='/group/groupcode' />?no="+pk;
     }
+	function noteList() {
+		window.open("<c:url value='/note/noteList' />", "쪽지 새창", "width=600, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=no" );  
+	}
     </script>
 </head>
 <body>
@@ -35,10 +38,10 @@
             
             <img src="<c:url value='/img/bell.png' />">
 			<c:if test="${newNoteCheck eq 'nashi' }">
-				<a href="<c:url value='note/noteList' />"><img src="<c:url value='/img/mail.png' />"></a>
+				<a href="javascript:noteList()"><img src="<c:url value='/img/mail.png' />"></a>
 			</c:if>
 			<c:if test="${newNoteCheck eq 'ari' }">
-				<a href="<c:url value='note/noteList' />"><img src="<c:url value='/img/newmail.png' />"></a>
+				<a href="javascript:noteList()"><img src="<c:url value='/img/newmail.png' />"></a>
 			</c:if>
 			<a href="<c:url value='/member/memberMypage' />"><img src="<c:url value='/img/human.png' />" id="usericon">
 			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>

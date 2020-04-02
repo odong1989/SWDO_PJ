@@ -49,7 +49,7 @@ public class DocumentController {
 		String member_id = (String) session.getAttribute("loginId");
 		logger.info("mainDocument - member_id :{}",member_id);
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
-		if (memoCheck == null){
+		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
@@ -71,7 +71,7 @@ public class DocumentController {
 		logger.info("mainDocument - member_id :{}",member_id);
 		
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
-		if (memoCheck == null){
+		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");

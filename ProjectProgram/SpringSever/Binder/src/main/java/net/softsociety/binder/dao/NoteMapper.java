@@ -14,4 +14,8 @@ public interface NoteMapper {
 	public int insertNote(Note note);
 
 	public ArrayList<Note> newNoteCheck(String member_id);
+	
+	public Note selectNoteOne(int note_no);
+	
+	public int noteReadDone(int note_no);
 }

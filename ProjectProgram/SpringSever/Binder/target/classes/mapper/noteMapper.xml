@@ -19,6 +19,7 @@
 	<select id="selectNote" parameterType="string" resultType="note">
 	select
 		note_no
+		, note_title
 		, note_content
 		, member_id
 		, note_receiver
@@ -42,4 +43,25 @@
 			, #{note_receiver}
 		)
 	</insert>
+	
+	<select id="selectNoteOne" parameterType="int" resultType="note">
+		select
+			note_no
+			, note_title
+			, note_content
+			, member_id
+			, note_receiver
+			, note_read
+		from
+			bnd_note
+		where
+			note_no = #{note_no}
+	</select>
+	
+	<update id="noteReadDone" parameterType="int">
+		update bnd_note set
+			note_read = 1
+		where
+			note_no = #{note_no}
+	</update>
 </mapper>
