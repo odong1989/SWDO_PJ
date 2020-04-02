@@ -111,7 +111,7 @@
 	         			<td width="5%"> < </td>
 				        <td width="45%">	
 				            	<p id='currentDate' style="display:inline;"></p>
-				   		        <input type="text" placeholder="장소" id='place' >
+				   		        <input type="text" placeholder="장소" id='place' name="document_destination" >
 				        </td>
 				        <td width="45%">
 				        	<input type='date' id='startDate' name='document_regdate'/> 부터 

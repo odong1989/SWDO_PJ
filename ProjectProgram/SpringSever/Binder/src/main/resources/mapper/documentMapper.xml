@@ -30,6 +30,7 @@
 		,member_id
 		,document_content
 		,document_notice
+		,document_destination
 		) values
 		(
 		#{group_no}
@@ -37,6 +38,7 @@
 		,#{member_id}
 		,#{document_content}
 		,1
+		,#{document_destination}
 		)
 	</insert>
 </mapper>
