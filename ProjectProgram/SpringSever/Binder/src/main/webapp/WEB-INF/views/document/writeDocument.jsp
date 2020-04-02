@@ -19,7 +19,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 
  <script type="text/javascript">
- 		//이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트입니다.
+ //이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트입니다.------------------------------
         $(function() {
             $("#imgInp").on('change', function(){
                 readURL(this);
@@ -37,8 +37,14 @@
               reader.readAsDataURL(input.files[0]);
             }
         }
- 		//이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트 종료.
+ //이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트 종료.----------------------------
 
+ 
+ 		function write(pk) {
+			location.href="<c:url value='/document/writeDocument' />?no="+pk;
+		}
+ 		
+ 		
     </script>
 
 </head>
@@ -93,10 +99,14 @@
 			-id를 설정한 이유는 유효성검사를 할 수 있도록 하고자 미리 정의한 것임.
 		 -->
 
-		<!-- 이미지 업로딩은 DB sql작성에 시간이 걸릴거 같아 우선 도큐먼트업로드를 우선으로 진행합니다.ㄴ -->
-		<!-- <form action="documentInsert" method="POST" enctype="multipart/form-data">  -->
-			 <form action="documentInsert" method="POST"> 
-                <table id="document-body" border="1px;">
+		 <form action="documentInsert" method="POST" enctype="multipart/form-data"> 
+		<!-- <form action="documentInsert" method="POST"> -->
+				<p그룹번호> </p>
+			        <tr>
+				        <td>
+				        	<input type="hidden" name='group_no' value="${writeDocumentGroup_no}"> 				        
+				        </td>
+			        </tr>
                 	<tr height="40px">
 	         			<td width="5%"> < </td>
 				        <td width="45%">	

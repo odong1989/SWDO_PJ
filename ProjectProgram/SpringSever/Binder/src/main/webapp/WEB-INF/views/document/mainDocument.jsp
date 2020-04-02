@@ -23,7 +23,7 @@
     }
 	function noteList() {
 		window.open("<c:url value='/note/noteList' />", "쪽지 새창", "width=600, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=no" );  
-	}
+	}    
     </script>
 </head>
 <body>

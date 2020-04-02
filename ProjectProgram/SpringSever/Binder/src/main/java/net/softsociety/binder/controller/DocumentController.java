@@ -99,30 +99,24 @@ public class DocumentController {
 		return "/document/boardTemp";
 	}	
 	
+	
+	//신규 게시판글(documents) 작성하는 jsp페이지로 이동
+	//[*글 및 사진을 DB에 추가하는  "documentInsert"에서 실시합니다.]
 	@RequestMapping(value="writeDocument", method=RequestMethod.GET)
-	public String writeDocument(HttpSession session )
-	{
-		logger.info("writeDocument 메소드 실시& 이동");		
+	public String writeDocument(HttpSession session, int no ,Model model)
+	{	//선택한 그룹의 번호값을 갖고와야한다. //int no :선택한 모임(그룹)의 PK번호
+		logger.info("writeDocument 메소드 실시& 이동");	
+		String member_id = null;
+		member_id = (String) session.getAttribute("loginId");
+		logger.info("mainDocument - member_id :{}",member_id);
+		logger.info("mainDocument - 그룹의 번호(PK) :{}",no);		
+		model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
+		
 		return "/document/writeDocument";
 	}
 	
-	@RequestMapping(value="editDocument", method=RequestMethod.GET)
-	public String editDocument(HttpSession session, Model model, int no)
-	{	
-		String member_id = (String) session.getAttribute("loginId");
-		logger.info("editDocument 이동, {}",member_id);
-				
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		model.addAttribute("groupJoinList", groupJoinList);
-		
-		ArrayList<HashMap<String, Object>> map = documentDao.selectDocuments(no);
-		model.addAttribute("doc", map);
-		
-		return "/document/editDocument";
-		
-	}
 	
-	
+	//신규 게시판글(documents) 작성
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
 	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload)
 	{	
@@ -154,7 +148,7 @@ public class DocumentController {
 		
 		/* 신경써야할 자료 목록. 체크 완료시 삭제할 것!
 			VO인 document.java의 구조를 준수한다.  			//본 폼에서 담당하는 정보 여부
-			private int group_no;					//X(본 문서의 번호에서 자동퍼오도록 한다	.)	
+			private int group_no;					//ㅇ 	
 			private int document_no;				//X이건 SQL에서 알아서 nextval로 체크.
 			private String member_id;				//X세션의 정보를 준다.
 			private String document_content;		//ㅇ id='content'
@@ -169,6 +163,23 @@ public class DocumentController {
 			private String 	photo_savefile;			//X
 			private int 	photo_no;				//X 
 		 */
+		
+	}
+	
+	
+	@RequestMapping(value="editDocument", method=RequestMethod.GET)
+	public String editDocument(HttpSession session, Model model, int no)
+	{	
+		String member_id = (String) session.getAttribute("loginId");
+		logger.info("editDocument 이동, {}",member_id);
+				
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
+		ArrayList<HashMap<String, Object>> map = documentDao.selectDocuments(no);
+		model.addAttribute("doc", map);
+		
+		return "/document/editDocument";
 		
 	}
 	

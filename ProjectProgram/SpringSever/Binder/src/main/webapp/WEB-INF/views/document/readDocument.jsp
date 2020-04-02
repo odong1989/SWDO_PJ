@@ -30,6 +30,9 @@ function invite(pk) {
 function edit(pk) {
 	location.href="<c:url value='/document/editDocument' />?no="+pk;
 }
+function write(pk) {
+	location.href="<c:url value='/document/writeDocument' />?no="+pk;
+}
 //20.03.29 병합 되지 않아서 직접 추가1 - 부트스트랩 한글 표기설정//단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
 //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
 (function($){
@@ -157,7 +160,7 @@ td.new.day {
 						<a href="javascript:invite(${group_no })">
 							<img src="<c:url value='/img/invite.png' />">
 						</a>
-						<a href="<c:url value='/document/writeDocument' />">
+						<a href="javascript:write(${group_no })">
 							<img src="<c:url value='/img/pencil.png' />">
 						</a>
 					</td>
