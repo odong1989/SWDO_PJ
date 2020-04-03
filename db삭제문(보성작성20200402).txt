@@ -1,0 +1,21 @@
+
+drop table bnd_alert CASCADE CONSTRAINTS;
+drop table bnd_groupinvite CASCADE CONSTRAINTS; 
+drop sequence bnd_note_no_seq;
+drop table bnd_note CASCADE CONSTRAINTS;
+drop sequence bnd_hash_no_seq;
+drop table bnd_hashtag CASCADE CONSTRAINTS;
+drop table bnd_groupjoin CASCADE CONSTRAINTS; 
+drop sequence bnd_reply_no_seq;
+drop table bnd_reply CASCADE CONSTRAINTS;
+drop sequence bnd_photo_no_seq;
+drop table bnd_photo CASCADE CONSTRAINTS;
+drop sequence bnd_document_no_seq; 
+drop table bnd_document CASCADE CONSTRAINTS; 
+drop sequence bnd_group_no_seq;
+drop table bnd_group;
+drop table bnd_memo CASCADE CONSTRAINTS;
+drop table bnd_member;
+
+
+commit;
