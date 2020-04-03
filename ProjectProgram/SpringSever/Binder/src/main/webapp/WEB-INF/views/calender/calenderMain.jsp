@@ -91,6 +91,29 @@ td.new.day {
 	padding-left: 1em;
 }
 </style>
+
+
+<!-- DB로부터 일정 출력위documents 확인. -->
+<p>개발자 데이터 입력 확인용 테이블.</p>
+<c:out value="${DBdocumentList}"/>
+<table border="1">
+    <tr>
+        <td>도큐먼트 번호</td>
+        <td>도큐먼트 컨텐츠 </td>
+        <td>시작일 </td>
+        <td>종료일 </td>
+    </tr>
+    <c:forEach var="DBdocumentList" items="${DBdocumentList}">
+        <tr>
+            <td>${DBdocumentList.document_no }</td>
+            <td>${DBdocumentList.document_content }</td>
+            <td>${DBdocumentList.document_regdate }</td>
+            <td>${DBdocumentList.document_finalday }</td>    
+        </tr>
+    </c:forEach>
+</table>
+
+
 <!--단계5. HTML body내에 부트스트랩 선언. 여기서 선언해야 작동됩니다.-->
 <table id="document-body">
 	<tr height="40px">
