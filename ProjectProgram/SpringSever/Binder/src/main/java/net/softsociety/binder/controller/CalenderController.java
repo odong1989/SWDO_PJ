@@ -68,7 +68,7 @@ public class CalenderController {
 		documentList = documentDao.selectDocumentsForCalendar(groupCal);
 		logger.info("calenderMain - 리턴해줄 일정(document)들 : {}",documentList);
 
-		model.addAttribute("DBdocumentList",documentList);
+		model.addAttribute("documentList",documentList);
 		
 		return "/calender/calenderMain";
 		
