@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,10 +59,12 @@ $.fn.datepicker.dates['kr'] = {
     });
 //20.03.29 병합 되지 않아서 직접 추가2 - 게시판<->캘린더 스위칭.
 //btn1 : 게시판->캘린더로 변경
+
 $(document).on("click","#btn1",function(){
 	$.ajax({
 			url:"<c:url value='/calender/calenderMain' />",
 			type:"get",
+			data:{"group_no":${group_no }},
 			success:function(data){
 				temp = document.getElementById('right-body').innerHTML;
 				document.getElementById('right-body').innerHTML=data;
@@ -169,7 +171,7 @@ td.new.day {
 					<td width="21%" align="right">
 						<img src="<c:url value='/img/f5.png' />">
 						<img src="<c:url value='/img/cal.png' />" id="btn1">
-					</a></td>
+					</td>
 				</tr>
 				<c:forEach var="dlist" items="${documentList }">
 					<tr>

@@ -22,9 +22,28 @@
 		and
 		    bnd_document.document_no = bnd_photo.document_no
 	</select> 
+	
+	<select id="selectDocumentsForCalendar" parameterType="int" resultType="hashmap">
+	 	select
+		    bnd_document.document_no 								document_no
+			, bnd_document.member_id								member_id
+		    , bnd_document.document_content 						document_content
+		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd')  document_regdate
+		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd') document_finalday
+		    , bnd_document.document_destination						document_destination
+			, bnd_document.document_notice							document_notice
+		    , bnd_photo.photo_savedfile 							photo_savedfile
+		from
+		    bnd_document, bnd_photo
+		where
+		    bnd_document.group_no = #{group_no}
+		and
+		    bnd_document.document_no = bnd_photo.document_no
+	</select> 
+	
 	<insert id="insertCaution" parameterType="document">
 	insert into
-		bnd_document(
+	bnd_document(
 		group_no
 		,document_no
 		,member_id
