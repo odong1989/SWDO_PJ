@@ -56,7 +56,16 @@
   					});
   				}
   			});
+
+
+        //c:foreach들을 실행하면서 
+        $(document).ready(function(){ 
+            $("#img").attr("src", "kkk.png"); 
+        });
+        
         </script>
+
+
 <!--[옵션] 스타일(CSS) 설정입니다. 
             부트스트랩은 실제 실행하면서 로드되므로 본 코드내에서는 확인하실 수 없습니다.
             본 HTML파일을 실행후 개발자모드에서 코드를 확인하세요.
@@ -113,6 +122,7 @@ td.new.day {
 <p>--------------------------------------------------</p>
 <table border="1">
     <tr>
+		<td>JS test</td>
 		<td>DOCUMENT_NO</td>
         <td>DOCUMENT_REGDATE</td> 
         <td>DOCUMENT_FINALDAY</td>
@@ -123,6 +133,7 @@ td.new.day {
     </tr>
    		 <c:forEach var="i" begin="0" end="${fn:length(documentList)}">
         <tr>  
+        	<td></td>
         	<td>${documentList[i].DOCUMENT_NO}</td>
             <td>${documentList[i].DOCUMENT_REGDATE}</td>
 	        <td>${documentList[i].DOCUMENT_FINALDAY}</td>
@@ -130,9 +141,12 @@ td.new.day {
 			<td>${documentList[i].DOCUMENT_DESTINATION}</td>
 			<td>${documentList[i].DOCUMENT_NOTICE}</td>
 			<td>${documentList[i].MEMBER_ID}</td>
+			
+
         </tr>
 	    </c:forEach>
 </table>
+
 
 
 <!--단계5. HTML body내에 부트스트랩 선언. 여기서 선언해야 작동됩니다.-->
