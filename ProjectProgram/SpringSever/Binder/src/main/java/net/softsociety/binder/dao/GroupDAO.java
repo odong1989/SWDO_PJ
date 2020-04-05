@@ -81,4 +81,32 @@ public class GroupDAO {
 		logger.info("GroupDAO.java - codeMemberChk 메소드 종료");
 		return result;
 	}
+	
+	public int insertGroup(Group group){
+		logger.info("insertGroup 시작");	
+		int result = 0;
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			result = mapper.insertGroup(group);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		logger.info("insertGroup 종료");
+		return result;
+	}
+	
+	public int selectGroupNo(String group_name){
+		logger.info("insertGroup 시작");	
+		int result = 0;
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			result = mapper.selectGroupNo(group_name);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		logger.info("insertGroup 종료");
+		return result;
+	}
 }

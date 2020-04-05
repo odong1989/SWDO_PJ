@@ -56,21 +56,42 @@ public class MemberController {
 	}
 	
 	//1.3[실행] 회원가입ID중복확인 실시
+//	@RequestMapping(value="/memberIdCheck", method=RequestMethod.GET)
+//	public String memberIdCheck(String checkId, Model model) {
+//		logger.info("memberIdCheck메소드 실행. ");
+//		logger.info("checkId : {} ",checkId);
+//		
+//		Member member = memdao.memberSelectOne(checkId);
+//		
+//		boolean checkFlag = true;
+//		logger.info("member : {} ",member);
+//		model.addAttribute("member", member);
+//		model.addAttribute("checkId", checkId); 
+//		model.addAttribute("checkFlag", checkFlag);
+//		
+//		return "member/memberIdCheckForm";
+//	}	
+	
 	@RequestMapping(value="/memberIdCheck", method=RequestMethod.GET)
-	public String memberIdCheck(String checkId, Model model) {
-		logger.info("memberIdCheck메소드 실행. ");
-		logger.info("checkId : {} ",checkId);
-		
-		Member member = memdao.memberSelectOne(checkId);
-
-		boolean checkFlag = true;
-		logger.info("member : {} ",member);
-		model.addAttribute("member", member);
-		model.addAttribute("checkId", checkId); 
-		model.addAttribute("checkFlag", checkFlag);
-		
-		return "member/memberIdCheckForm";
+	@ResponseBody
+	public boolean memberIdCheck(Member member, Model model) {
+		logger.info("중복체크 : {}",member);
+		boolean str = true;
+		Member result = memdao.memberSelectOne(member.getMember_id());
+		logger.info("{}",result);
+		if (result != null) {
+			//이미 사용중인 값이 있다.
+			str = false;
+			logger.info("false 돌려줌");
+			return str;
+		} else {
+			//사용중이지 않다.
+			str = true;
+			logger.info("true 돌려줌");
+			return str;
+		}
 	}	
+	
 
 	//1.4[실행] 회원가입실시
 	@RequestMapping(value="memberJoin", method=RequestMethod.POST)
@@ -78,6 +99,7 @@ public class MemberController {
 		logger.info("memberJoin메소드입니다");
 		logger.info("회원가입 자료 전달");
 		logger.info("member : {}",member);
+		member.setMember_birthday("20-04-03");
 		memdao.memeberJoin(member);
 		
 		return "redirect:/";

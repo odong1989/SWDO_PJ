@@ -255,5 +255,25 @@ public class GroupController {
 		return chk;
 	}
 	
+	@RequestMapping(value="/group/groupCreate", method=RequestMethod.GET)
+	public String groupCreate(HttpSession session, Group group, Model model)
+	{	
+		String member_id = (String) session.getAttribute("loginId");
+		logger.info("그룹생성 : {}", group);
+		groupDao.insertGroup(group);
+		int group_no = groupDao.selectGroupNo(group.getGroup_name());
+		GroupJoin gjoin = new GroupJoin();
+		gjoin.setGroup_no(group_no);
+		gjoin.setMember_id(member_id);
+		gjoin.setMember_level(1);
+		groupMemberDao.insertGroupJoinMaster(gjoin);
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		logger.info("-그룹리스트 : {}", groupJoinList);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
+		
+		return "redirect:/document/mainDocument";
+	}
 	
 }

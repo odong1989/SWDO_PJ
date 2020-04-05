@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.softsociety.binder.vo.Group;
+import net.softsociety.binder.vo.GroupJoin;
 
 
 public interface GroupMapper {
@@ -15,4 +16,8 @@ public interface GroupMapper {
 	public int updateCode(Group group);
 	
 	public Group codeMemberChk(HashMap<String, Object> map);
+	
+	public int insertGroup(Group group);
+	
+	public int selectGroupNo(String group_name);
 }

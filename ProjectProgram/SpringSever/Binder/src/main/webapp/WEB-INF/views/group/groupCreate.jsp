@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${group_name }</title>
-    <link href="<c:url value='/css/basic.css?id=2' />" rel="stylesheet">
+    <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -34,13 +34,24 @@
         <span id="gaibu-top-right">
             
             <img src="<c:url value='/img/bell.png' />">
-			<img src="<c:url value='/img/mail.png' />">
+			<c:if test="${newNoteCheck eq 'nashi' }">
+				<a href="<c:url value='note/noteList' />"><img src="<c:url value='/img/mail.png' />"></a>
+			</c:if>
+			<c:if test="${newNoteCheck eq 'ari' }">
+				<a href="<c:url value='note/noteList' />"><img src="<c:url value='/img/newmail.png' />"></a>
+			</c:if>
 			<a href="<c:url value='/member/memberMypage' />"><img src="<c:url value='/img/human.png' />" id="usericon">
 			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>
         </span>
     </div>
     <div id="gaibu">
         <div id="menu">
+        	<c:if test="${groupJoinList.size() == 0 }">
+        		<div class="menu-group-button">
+	                    <font size="0.9em">가입된 그룹이 없습니다.</font>
+	                    <br/><font align="center"><a href=""><b>그룹 생성</b></a></font>
+                </div>
+        	</c:if>
             <c:forEach var="glist" items="${groupJoinList }">
 	                <div class="menu-group-button">
 	                    <div class="menu-group-button-left">
