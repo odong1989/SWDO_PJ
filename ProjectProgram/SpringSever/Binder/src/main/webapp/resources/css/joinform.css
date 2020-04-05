@@ -1,0 +1,50 @@
+h2 {
+    margin: 1em auto;
+}
+
+#joinformtable input[type='text'], #joinformtable input[type='password'], #joinformtable input[type='email']{
+    width: 16em;
+}
+
+#joinformtable {
+    width: 600px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 50px 100px;
+    margin: 0 auto;
+}
+
+#joinformtable tr {
+    height: 1.5em;
+}
+
+#joinformtable td {
+    text-align: left;
+}
+
+.lefttd {
+    width: 120px;
+}
+
+.righttd {
+    width: 250px;
+}
+
+.chktd {
+    font-size: 12px;
+}
+
+#btntd {
+    margin: 15px;
+}
+
+#btntd input[type="button"] {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+#btntd input[type="submit"] {
+    margin-left: 5em;
+    border: 1px solid black;
+}

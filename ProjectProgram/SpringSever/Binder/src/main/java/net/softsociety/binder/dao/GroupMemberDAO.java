@@ -75,5 +75,16 @@ public class GroupMemberDAO {
 		}
 		return chk;
 	}
-
+	
+	public int insertGroupJoinMaster(GroupJoin vo) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		try {
+			GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
+			result=mapper.insertGroupJoinMaster(vo);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

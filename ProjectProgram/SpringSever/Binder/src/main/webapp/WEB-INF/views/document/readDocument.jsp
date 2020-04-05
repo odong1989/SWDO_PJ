@@ -24,12 +24,15 @@ function selectGroup(pk) {
 function invite(pk) {
 	location.href="<c:url value='/group/groupcode' />?no="+pk;
 }
+<<<<<<< HEAD
 function edit(pk) {
 	location.href="<c:url value='/document/editDocument' />?no="+pk;
 }
 function write(pk) {
 	location.href="<c:url value='/document/writeDocument' />?no="+pk;
 }
+=======
+>>>>>>> 브랜디쉬_수환
 //20.03.29 병합 되지 않아서 직접 추가1 - 부트스트랩 한글 표기설정//단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
 //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
 (function($){
@@ -159,9 +162,12 @@ td.new.day {
 						<a href="javascript:invite(${group_no })">
 							<img src="<c:url value='/img/invite.png' />">
 						</a>
+<<<<<<< HEAD
 						<a href="javascript:write(${group_no })">
 							<img src="<c:url value='/img/pencil.png' />">
 						</a>
+=======
+>>>>>>> 브랜디쉬_수환
 					</td>
 					<td width="auto" align="center"><p id="notice">공지사항 :
 							ㅇㅇㅇ공지부분</p></td>
@@ -173,8 +179,13 @@ td.new.day {
 				<c:forEach var="dlist" items="${documentList }">
 					<tr>
 						<td class="document-one">
+<<<<<<< HEAD
 								<a href="javascript:edit(${dlist.DOCUMENT_NO })">
 									<div class="document-image" style="background-image:url(<c:url value='/profile/${dlist.PHOTO_SAVEDFILE }'/>);">
+=======
+								<a href="">
+									<div class="document-image" style="background-image:url(<c:url value='/img/document/${dlist.PHOTO_SAVEDFILE }'/>);">
+>>>>>>> 브랜디쉬_수환
 										<div class="document-image-bottom">
 											<p>${dlist.DOCUMENT_DESTINATION }</p>
 										</div>
