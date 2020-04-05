@@ -18,7 +18,6 @@
 <script type='text/javascript'
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
 
-<<<<<<< HEAD
  <script type="text/javascript">
  //이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트입니다.------------------------------
         $(function() {
@@ -26,8 +25,6 @@
                 readURL(this);
             });
         });
-=======
->>>>>>> 브랜디쉬_수환
 
 <script type="text/javascript">
 var temp = '';
@@ -102,7 +99,6 @@ table.table-condensed {
 	font-family: 돋움; /*데이터피커의 날짜들의 폰트 설정 가능.*/
 }
 
-<<<<<<< HEAD
               reader.readAsDataURL(input.files[0]);
             }
         }
@@ -115,7 +111,6 @@ table.table-condensed {
  		
  		
     </script>
-=======
 td.day { /*현재 달의 일자들을 설정할 수 있습니다.*/
 	color: cyan;
 	text-align: left;
@@ -136,7 +131,6 @@ td.new.day {
 	text-align: left;
 	vertical-align: top;
 }
->>>>>>> 브랜디쉬_수환
 
 
 
@@ -176,7 +170,6 @@ td.new.day {
 			</c:forEach>
 		</div>
 		<div id="right-body">
-<<<<<<< HEAD
 		<!--
 			VO인 document.java의 구조를 준수한다.  			//본 폼에서 담당하는 정보 여부
 			private int group_no;					//X(본 문서의 번호에서 자동퍼오도록 한다	.)	
@@ -199,18 +192,13 @@ td.new.day {
 				        	<input type="hidden" name='group_no' value="${writeDocumentGroup_no}"> 				        
 				        </td>
 			        </tr>
-=======
                 <table id="document-body" border="1px;">
->>>>>>> 브랜디쉬_수환
                 	<tr height="40px">
 	         			<td width="5%"> < </td>
 				        <td width="45%">	
 				            	<p id='currentDate' style="display:inline;"></p>
-<<<<<<< HEAD
 				   		        <input type="text" placeholder="장소" id='place' name="document_destination" >
-=======
 				   		        <input type="text" placeholder="장소" >
->>>>>>> 브랜디쉬_수환
 				        </td>
 				        <td width="45%">
 				        	<input type='date' id='startDate'/> 부터 
