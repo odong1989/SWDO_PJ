@@ -18,11 +18,9 @@
  	<resources mapping="/profile/*" location="file:///c:/uploadFile/" />
  	<resources mapping="/**" location="/resources/" />
 	<resources mapping="/resources/**" location="/resources/" />
+
 	
-	
-	<!-- <resources location="/js/" mapping="/js/**"/>
-	<resources location="/css/" mapping="/css/**"/>
-	<resources location="/img/" mapping="/img/**"/>
+	<!--
 	출처: https://blockcahin.tistory.com/62 [RyangGyouKim's Blog]
 	-->
 

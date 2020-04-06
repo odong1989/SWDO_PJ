@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!-- 부트스트랩 데이터 피커 샘플입니다.
         실행사항1)이전 달은 'X'자로 그려넣어 처리하도록 설정.(#배경그림방식으로 처리)
         실행사항2)
@@ -10,6 +12,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 <script type='text/javascript'
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+
 <script type="text/javascript"> 
     //단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
     //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
@@ -26,6 +29,7 @@
         //단계3. 부트스트랩 기본설정 
         $(function(){
             $('#datepicker').datepicker({
+                format:"yyyy-mm-dd",
                 calendarWeeks: false,
                 todayHighlight: true,
                 language: "kr"
@@ -52,7 +56,16 @@
   					});
   				}
   			});
+
+
+        //c:foreach들을 실행하면서 
+        $(document).ready(function(){ 
+            $("#img").attr("src", "kkk.png"); 
+        });
+        
         </script>
+
+
 <!--[옵션] 스타일(CSS) 설정입니다. 
             부트스트랩은 실제 실행하면서 로드되므로 본 코드내에서는 확인하실 수 없습니다.
             본 HTML파일을 실행후 개발자모드에서 코드를 확인하세요.
@@ -95,23 +108,45 @@ td.new.day {
 
 <!-- DB로부터 일정 출력위documents 확인. -->
 <p>개발자 데이터 입력 확인용 테이블.</p>
-<c:out value="${DBdocumentList}"/>
+
+<!-- 아래의  예제들은 본 코드를 이해하는데 도움이 되니 가능하면 삭제 않아주시길 바랍니다. -->
+<!-- 예제1. 전체출력 확인가능하다. 자세히보면 [{....}, {...} ]식으로 2중 해시맵이다.
+<c:out value="${documentList}"/>
+<p>--------------------------------------------------</p>
+ -->
+<!-- 예제2. 2중 해시맵의 첫번째 인자에서  DOCUMENT_REGDATE만 뽑아내는 예제.
+<c:out value="${documentList[0].DOCUMENT_REGDATE}" />
+<p>--------------------------------------------------</p>
+ -->			  
+<!--<c:set var="size" value="${documentList}" />-->
+<p>--------------------------------------------------</p>
 <table border="1">
     <tr>
-        <td>도큐먼트 번호</td>
-        <td>도큐먼트 컨텐츠 </td>
-        <td>시작일 </td>
-        <td>종료일 </td>
+		<td>JS test</td>
+		<td>DOCUMENT_NO</td>
+        <td>DOCUMENT_REGDATE</td> 
+        <td>DOCUMENT_FINALDAY</td>
+		<td>PHOTO_SAVEDFILE</td>
+		<td>DOCUMENT_DESTINATION</td>
+		<td>DOCUMENT_NOTICE</td>
+		<td>MEMBER_ID</td>
     </tr>
-    <c:forEach var="DBdocumentList" items="${DBdocumentList}">
-        <tr>
-            <td>${DBdocumentList.document_no }</td>
-            <td>${DBdocumentList.document_content }</td>
-            <td>${DBdocumentList.document_regdate }</td>
-            <td>${DBdocumentList.document_finalday }</td>    
+   		 <c:forEach var="i" begin="0" end="${fn:length(documentList)}">
+        <tr>  
+        	<td></td>
+        	<td>${documentList[i].DOCUMENT_NO}</td>
+            <td>${documentList[i].DOCUMENT_REGDATE}</td>
+	        <td>${documentList[i].DOCUMENT_FINALDAY}</td>
+			<td>${documentList[i].PHOTO_SAVEDFILE}</td>
+			<td>${documentList[i].DOCUMENT_DESTINATION}</td>
+			<td>${documentList[i].DOCUMENT_NOTICE}</td>
+			<td>${documentList[i].MEMBER_ID}</td>
+			
+
         </tr>
-    </c:forEach>
+	    </c:forEach>
 </table>
+
 
 
 <!--단계5. HTML body내에 부트스트랩 선언. 여기서 선언해야 작동됩니다.-->

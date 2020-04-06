@@ -3,165 +3,164 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<!-- 부트스트랩 데이터 피커 샘플입니다.
-        실행사항1)이전 달은 'X'자로 그려넣어 처리하도록 설정.(#배경그림방식으로 처리)
-        실행사항2)
-    -->
-<!--단계1 : 제이쿼리 등 해당 필요 소스들 로드. -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
-<script type='text/javascript'
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+    <title>FullCalendar Example</title>
+    <link rel=" shortcut icon" href="image/favicon.ico">
 
-<script type="text/javascript"> 
-    //단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
-    //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
-    (function($){
-    $.fn.datepicker.dates['kr'] = {
-                days: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
-                daysShort: ["일", "월", "화", "수", "목", "금", "토", "일"],
-                daysMin: ["일", "월", "화", "수", "목", "금", "토", "일"],
-                months: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-                monthsShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-            };
-        }(jQuery));
-        
-        //단계3. 부트스트랩 기본설정 
-        $(function(){
-            $('#datepicker').datepicker({
-                format:"yyyy-mm-dd",
-                calendarWeeks: false,
-                todayHighlight: true,
-                language: "kr"
-            })
-        //단계4. 사용자가 선택한 날짜를 alert로 출력합니다.
-            .on("changeDate",function(e){
-                alert(e.date);
-            })
-        });
-        
-        $(function(){
-  			$("#btn2").on("click",boardTemp);			
-  				function boardTemp(){
-  					$.ajax({
-  						url:"<c:url value='/document/boardTemp' />",
-  						type:"get",
-  						success:function(data){			
-  							alert("게시판로 변경 실시합니다.");//[참고용] 작업시작 확인가능.
-​
-  														
-  							document.getElementById('gaibu-right-bottom').innerHTML=data;
-  							},
-  						error:function(){alert("boardDocumnets 로드 중 에러가 발생되었습니다.")}
-  					});
-  				}
-  			});
+    <link rel="stylesheet" href="vendor/css/fullcalendar.min.css" />
+    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href='vendor/css/select2.min.css' />
+    <link rel="stylesheet" href='vendor/css/bootstrap-datetimepicker.min.css' />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="css/main.css">
 
 
-        //c:foreach들을 실행하면서 
-        $(document).ready(function(){ 
-            $("#img").attr("src", "kkk.png"); 
-        });
-        
-        </script>
+    <div class="container">
+
+        <!-- 일자 클릭시 메뉴오픈 -->
+        <div id="contextMenu" class="dropdown clearfix">
+            <ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"
+                style="display:block;position:static;margin-bottom:5px;">
+                <li><a tabindex="-1" href="#">카테고리1</a></li>
+                <li><a tabindex="-1" href="#">카테고리2</a></li>
+                <li><a tabindex="-1" href="#">카테고리3</a></li>
+                <li><a tabindex="-1" href="#">카테고리4</a></li>
+                <li class="divider"></li>
+                <li><a tabindex="-1" href="#" data-role="close">Close</a></li>
+            </ul>
+        </div>
+
+        <div id="wrapper">
+            <div id="loading"></div>
+            <div id="calendar"></div>
+        </div>
 
 
-<!--[옵션] 스타일(CSS) 설정입니다. 
-            부트스트랩은 실제 실행하면서 로드되므로 본 코드내에서는 확인하실 수 없습니다.
-            본 HTML파일을 실행후 개발자모드에서 코드를 확인하세요.
-        -->
-<style>
-table.table-condensed {
-	width: 850px; /*데이터피커의 총 가로폭을 설정할 수 있습니다.*/
-	height: 450px; /*데이터피커의 총 세로폭을 설정할 수 있습니다.*/
-	border-style: double;
-	font-family: 돋움; /*데이터피커의 날짜들의 폰트 설정 가능.*/
-	background-color:white;
-	border: 1px solid black;
-	margin-left: 20px;
-}
+        <!-- 일정 추가 MODAL -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
 
-td.day { /*현재 달의 일자들을 설정할 수 있습니다.*/
-	color: blue;
-	text-align: left;
-	font-size: larger;
-}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-allDay">하루종일</label>
+                                <input class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
+                            </div>
+                        </div>
 
-td.old.day {
-	text-align: left;
-	vertical-align: top;
-	padding-left: 1em;
-	/*오래전 날짜들은 X선(대각선)을 그을 수 있습니다.
-     당장은 필요없다고 답변받아 사용할 수 있도록 주석처리만 함.*/
-	/*
-     background: <line x1:"0" y1="100%" x2="100%" y2="0" stroke="gray">;
-     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="0" x2="100%" y2="100%" stroke="gray" /><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>');*/
-}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-title">일정명</label>
+                                <input class="inputModal" type="text" name="edit-title" id="edit-title"
+                                    required="required" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-start">시작</label>
+                                <input class="inputModal" type="text" name="edit-start" id="edit-start" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-end">끝</label>
+                                <input class="inputModal" type="text" name="edit-end" id="edit-end" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-type">구분</label>
+                                <select class="inputModal" type="text" name="edit-type" id="edit-type">
+                                    <option value="카테고리1">카테고리1</option>
+                                    <option value="카테고리2">카테고리2</option>
+                                    <option value="카테고리3">카테고리3</option>
+                                    <option value="카테고리4">카테고리4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-color">색상</label>
+                                <select class="inputModal" name="color" id="edit-color">
+                                    <option value="#D25565" style="color:#D25565;">빨간색</option>
+                                    <option value="#9775fa" style="color:#9775fa;">보라색</option>
+                                    <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
+                                    <option value="#74c0fc" style="color:#74c0fc;">파란색</option>
+                                    <option value="#f06595" style="color:#f06595;">핑크색</option>
+                                    <option value="#63e6be" style="color:#63e6be;">연두색</option>
+                                    <option value="#a9e34b" style="color:#a9e34b;">초록색</option>
+                                    <option value="#4d638c" style="color:#4d638c;">남색</option>
+                                    <option value="#495057" style="color:#495057;">검정색</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-desc">설명</label>
+                                <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
+                                    id="edit-desc"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer modalBtnContainer-addEvent">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="save-event">저장</button>
+                    </div>
+                    <div class="modal-footer modalBtnContainer-modifyEvent">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-danger" id="deleteEvent">삭제</button>
+                        <button type="button" class="btn btn-primary" id="updateEvent">저장</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
-td.new.day {
-	text-align: left;
-	vertical-align: top;
-	padding-left: 1em;
-}
-</style>
+        <div class="panel panel-default">
 
+            <div class="panel-heading">
+                <h3 class="panel-title">필터</h3>
+            </div>
 
-<!-- DB로부터 일정 출력위documents 확인. -->
-<p>개발자 데이터 입력 확인용 테이블.</p>
+            <div class="panel-body">
 
-<!-- 아래의  예제들은 본 코드를 이해하는데 도움이 되니 가능하면 삭제 않아주시길 바랍니다. -->
-<!-- 예제1. 전체출력 확인가능하다. 자세히보면 [{....}, {...} ]식으로 2중 해시맵이다.
-<c:out value="${documentList}"/>
-<p>--------------------------------------------------</p>
- -->
-<!-- 예제2. 2중 해시맵의 첫번째 인자에서  DOCUMENT_REGDATE만 뽑아내는 예제.
-<c:out value="${documentList[0].DOCUMENT_REGDATE}" />
-<p>--------------------------------------------------</p>
- -->			  
-<!--<c:set var="size" value="${documentList}" />-->
-<p>--------------------------------------------------</p>
-<table border="1">
-    <tr>
-		<td>JS test</td>
-		<td>DOCUMENT_NO</td>
-        <td>DOCUMENT_REGDATE</td> 
-        <td>DOCUMENT_FINALDAY</td>
-		<td>PHOTO_SAVEDFILE</td>
-		<td>DOCUMENT_DESTINATION</td>
-		<td>DOCUMENT_NOTICE</td>
-		<td>MEMBER_ID</td>
-    </tr>
-   		 <c:forEach var="i" begin="0" end="${fn:length(documentList)}">
-        <tr>  
-        	<td></td>
-        	<td>${documentList[i].DOCUMENT_NO}</td>
-            <td>${documentList[i].DOCUMENT_REGDATE}</td>
-	        <td>${documentList[i].DOCUMENT_FINALDAY}</td>
-			<td>${documentList[i].PHOTO_SAVEDFILE}</td>
-			<td>${documentList[i].DOCUMENT_DESTINATION}</td>
-			<td>${documentList[i].DOCUMENT_NOTICE}</td>
-			<td>${documentList[i].MEMBER_ID}</td>
-			
+                <div class="col-lg-6">
+                    <label for="calendar_view">구분별</label>
+                    <div class="input-group">
+                        <select class="filter" id="type_filter" multiple="multiple">
+                            <option value="카테고리1">카테고리1</option>
+                            <option value="카테고리2">카테고리2</option>
+                            <option value="카테고리3">카테고리3</option>
+                            <option value="카테고리4">카테고리4</option>
+                        </select>
+                    </div>
+                </div>
 
-        </tr>
-	    </c:forEach>
-</table>
+                <div class="col-lg-6">
+                    <label for="calendar_view">등록자별</label>
+                    <div class="input-group">
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="정연"
+                                checked>정연</label>
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="다현"
+                                checked>다현</label>
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나"
+                                checked>사나</label>
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="나연"
+                                checked>나연</label>
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="지효"
+                                checked>지효</label>
+                    </div>
+                </div>
 
-
-
-<!--단계5. HTML body내에 부트스트랩 선언. 여기서 선언해야 작동됩니다.-->
-<table id="document-body">
-	<tr height="40px">
-		<td width="21%"></td>
-		<td width="auto" align="center"><p id="notice">공지사항 : ㅇㅇㅇ공지부분</p></td>
-		<td width="21%" align="right"><img
-			src="<c:url value='/img/f5.png' />" /> 
-			<img src="<c:url value='/img/board.png'/>"  id="btn2"/></a>
-		</td>
-	</tr>
-</table>
-<div id="datepicker">
-	<script>
-		$( "datepicker" ).datepicker();
-	</script>
-</div>
+            </div>
+        </div>
+        <!-- /.filter panel -->
+    </div>
+    <!-- /.container -->

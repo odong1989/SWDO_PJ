@@ -67,4 +67,16 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 		and
 		bnd_groupjoin.group_no = #{group_no}
 	</delete>
+	
+	<insert id="insertGroupJoinMaster" parameterType="groupjoin">
+		insert into bnd_groupjoin(
+			group_no
+			, member_id
+			, member_level
+		) values (
+			#{group_no}
+			, #{member_id}
+			, 1		
+		)
+	</insert>
 </mapper>

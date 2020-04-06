@@ -5,9 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" contents="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${group_name }</title>
-<link href="<c:url value='/css/main.css' />" > 
 <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -43,7 +42,18 @@ $.fn.datepicker.dates['kr'] = {
         };
     }(jQuery));
     
-
+    //단계3. 부트스트랩 기본설정 
+    $(function(){
+        $('#datepicker').datepicker({
+            calendarWeeks: false,
+            todayHighlight: true,
+            language: "kr"
+        })
+    //단계4. 사용자가 선택한 날짜를 alert로 출력합니다.
+        .on("changeDate",function(e){
+            alert(e.date);
+        })
+    });
 //20.03.29 병합 되지 않아서 직접 추가2 - 게시판<->캘린더 스위칭.
 //btn1 : 게시판->캘린더로 변경
 
@@ -77,26 +87,8 @@ $(document).on("click","#btn2",function(){
 			error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
 	});
 });
-</script>
-    <script src="<c:url value='/vendor/js/jquery.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/bootstrap.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/moment.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/fullcalendar.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/ko.js' />"></script>
-    <script src="<c:url value='/vendor/js/select2.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/bootstrap-datetimepicker.min.js' />"></script>
-    <script src="<c:url value='/js/main.js' />"></script>
-    <script src="<c:url value='/js/addEvent.js' />"></script>
-    <script src="<c:url value='/js/editEvent.js' />"></script>
-    <script src="<c:url value='/js/etcSetting.js' />"></script>
-<!-- <link href="<c:url value='/css/basic.css' />" rel="stylesheet"> -->
-    <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
-    <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap.min.css'/>" >
-    <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
-    <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</script>
 <style>
 table.table-condensed {
 	width: 650px; /*데이터피커의 총 가로폭을 설정할 수 있습니다.*/
@@ -183,6 +175,8 @@ td.new.day {
 						<td class="document-one">
 								<a href="javascript:edit(${dlist.DOCUMENT_NO })">
 									<div class="document-image" style="background-image:url(<c:url value='/profile/${dlist.PHOTO_SAVEDFILE }'/>);">
+								<a href="">
+									<div class="document-image" style="background-image:url(<c:url value='/img/document/${dlist.PHOTO_SAVEDFILE }'/>);">
 										<div class="document-image-bottom">
 											<p>${dlist.DOCUMENT_DESTINATION }</p>
 										</div>
@@ -200,6 +194,5 @@ td.new.day {
 			</table>
 		</div>
 	</div>
-
 </body>
 </html>

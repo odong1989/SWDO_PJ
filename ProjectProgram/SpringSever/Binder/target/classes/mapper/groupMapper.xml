@@ -67,5 +67,25 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 		where
 			group_code=#{group_code}
 	</select>
-
+	
+	<insert id="insertGroup" parameterType="group">
+		insert into bnd_group(
+			group_name
+			, group_category
+			, group_subcategory	
+		) values(
+			#{group_name}
+			, group_category
+			, group_subcategory		
+		)
+	</insert>
+	
+	<select id="selectGroupNo" parameterType="String" resultType="int">
+		select
+			group_no
+		from
+			bnd_group
+		where
+			group_name = #{group_name}			
+	</select>
 </mapper>
