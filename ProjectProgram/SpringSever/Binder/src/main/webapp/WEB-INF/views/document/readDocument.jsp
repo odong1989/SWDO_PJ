@@ -138,7 +138,12 @@ td.new.day {
 		</span> <span id="gaibu-top-middle"> </span> <span id="gaibu-top-right">
 
             <img src="<c:url value='/img/bell.png' />">
-			<img src="<c:url value='/img/mail.png' />">
+			<c:if test="${newNoteCheck eq 'nashi' }">
+				<a href="javascript:noteList()"><img src="<c:url value='/img/mail.png' />"></a>
+			</c:if>
+			<c:if test="${newNoteCheck eq 'ari' }">
+				<a href="javascript:noteList()"><img src="<c:url value='/img/newmail.png' />"></a>
+			</c:if>
 			<a href="<c:url value='/member/memberMypage' />"><img src="<c:url value='/img/human.png' />" id="usericon">
 			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>
 		</span>
