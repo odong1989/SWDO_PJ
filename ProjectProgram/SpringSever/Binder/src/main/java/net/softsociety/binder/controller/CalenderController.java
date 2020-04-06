@@ -29,14 +29,15 @@ public class CalenderController {
 	private static final Logger logger = LoggerFactory.getLogger(CalenderController.class);
 
 	@RequestMapping(value="calenderMain", method=RequestMethod.GET)
-	public String calenderMain(String group_no ,HttpSession session, Model model)
+//	public String calenderMain(String group_no ,HttpSession session, Model model)
+	public String calenderMain(HttpSession session, Model model)
 	{	
 		logger.info("calenderMain 캘린더 jsp페이지로 이동  실시.");
 		//목표 : 사용자의 소속된 그룹된 관련된 스케쥴(Document들)을 모두 로드 해야 한다.
 
 		//스텝1 : 정상적으로 값 수신되었는지 확인.
 		logger.info("calenderMain -로그인 세션 확인    :{}", (String) session.getAttribute("loginId"));
-		logger.info("calenderMain -그룹번호확인 - group_no : {}", Integer.parseInt(group_no));
+//		logger.info("calenderMain -그룹번호확인 - group_no : {}", Integer.parseInt(group_no));
 
 		//[SKIP]스텝2 : groupJoinDao.selectGroupJoinMember()를 통하여 소속한 그룹의 정보를 받는다.
 		/*당장은 불필요하다고 판단되어 일단 넘김.(#Not Null때문에 열심히 만드는데 생각해보니 그건 SQL생성시의 중요사항이었다...-_-;
@@ -61,7 +62,7 @@ public class CalenderController {
 		// public ArrayList<HashMap<String, Object>> selectDocumentsForCalendar(GroupJoin groupCal);
 		GroupJoin groupCal = new GroupJoin();
 		groupCal.setMember_id((String) session.getAttribute("loginId"));
-		groupCal.setGroup_no(Integer.parseInt(group_no));
+//		groupCal.setGroup_no(Integer.parseInt(group_no));
 		logger.info("calenderMain -GroupJoin groupCal : {}",groupCal);
 		
 		ArrayList<HashMap<String, Object>> documentList = null;

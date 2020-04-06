@@ -3,19 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-    <title>FullCalendar Example</title>
-    <link rel=" shortcut icon" href="image/favicon.ico">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
+    <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
+    <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >s
 
-    <link rel="stylesheet" href="vendor/css/fullcalendar.min.css" />
-    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
-    <link rel="stylesheet" href='vendor/css/select2.min.css' />
-    <link rel="stylesheet" href='vendor/css/bootstrap-datetimepicker.min.css' />
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <link rel="stylesheet" href="css/main.css">
-
+    <script src="<c:url value='/js/main.js' />"></script>
+    <link rel="stylesheet" href="<c:url value='/css/main.css'/>" >
+    <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 
     <div class="container">
 
@@ -164,3 +159,15 @@
         <!-- /.filter panel -->
     </div>
     <!-- /.container -->
+
+    <script src="<c:url value='/vendor/js/jquery.min.js' />"></script>
+    <script src="<c:url value='/vendor/js/bootstrap.min.js' />"></script>
+    <script src="<c:url value='/vendor/js/moment.min.js' />"></script>
+    <script src="<c:url value='/vendor/js/fullcalendar.min.js' />"></script>
+ 	<script src="<c:url value='/vendor/js/ko.js' />"></script>
+    <script src="<c:url value='/vendor/js/select2.min.js' />"></script>
+    <script src="<c:url value='/vendor/js/bootstrap-datetimepicker.min.js' />"></script>
+    <script src="<c:url value='/js/main.js' />"></script>
+    <script src="<c:url value='/js/addEvent.js' />"></script>
+    <script src="<c:url value='/js/editEvent.js' />"></script>
+    <script src="<c:url value='/js/etcSetting.js' />"></script>
