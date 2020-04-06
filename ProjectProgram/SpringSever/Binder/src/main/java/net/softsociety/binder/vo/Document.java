@@ -28,4 +28,5 @@ create sequence bnd_document_no_seq;
 	private String document_regdate;
 	private String document_finalday;
 	private String document_destination;
+	private int document_notice;
 }

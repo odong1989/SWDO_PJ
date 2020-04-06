@@ -73,11 +73,25 @@ public class DocumentDAO {
 		int cau = 0;
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+			cau = mapper.deleteCaution(group_no);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return cau;
+	}
+	
+	public Document selectCaution(int group_no) {
+		logger.info("DocumentDAO.java - selectCaution({})", group_no);
+		Document vo = null;
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+			vo = mapper.selectCaution(group_no);
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return vo;
 	}
 
 }
