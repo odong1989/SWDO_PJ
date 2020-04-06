@@ -31,6 +31,9 @@ function edit(pk) {
 function write(pk) {
 	location.href="<c:url value='/document/writeDocument' />?no="+pk;
 }
+function groupMgr(pk) {
+	location.href="<c:url value='/group/groupMemberMgr' />?no="+pk;
+}
 //20.03.29 병합 되지 않아서 직접 추가1 - 부트스트랩 한글 표기설정//단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
 //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
 (function($){
@@ -150,9 +153,11 @@ td.new.day {
 					</div>
 					<div class="menu-group-button-right">
 						<c:if test="${glist.MEMBER_LEVEL == 1 }">
+							<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
 							<img src="<c:url value='/img/crown_gold.png' />">
 						</c:if>
 						<c:if test="${glist.MEMBER_LEVEL == 2 }">
+							<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
 							<img src="<c:url value='/img/crown_silver.png' />">
 						</c:if>
 					</div>

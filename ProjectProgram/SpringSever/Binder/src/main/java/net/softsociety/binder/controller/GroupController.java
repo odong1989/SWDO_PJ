@@ -143,8 +143,8 @@ public class GroupController {
 		return "group/groupjoin";
 	}
 	
-	@RequestMapping(value="/groupMemberMgr", method=RequestMethod.GET)
-	public String vuelist(GroupJoin vo, HttpSession session, Model model) {
+	@RequestMapping(value="/group/groupMemberMgr", method=RequestMethod.GET)
+	public String vuelist(GroupJoin vo, HttpSession session, Model model, int no) {
 		String member_id = (String) session.getAttribute("loginId");
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		logger.info("-그룹리스트 : {}", groupJoinList);

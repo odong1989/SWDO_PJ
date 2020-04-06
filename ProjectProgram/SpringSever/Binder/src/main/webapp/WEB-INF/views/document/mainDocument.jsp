@@ -24,6 +24,9 @@
 	function noteList() {
 		window.open("<c:url value='/note/noteList' />", "쪽지 새창", "width=600, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=no" );  
 	}    
+	function groupMgr(pk) {
+		location.href="<c:url value='/group/groupMemberMgr' />?no="+pk;
+	}
     </script>
 </head>
 <body>
@@ -58,9 +61,11 @@
 	                    </div>
 	                    <div class="menu-group-button-right">
 	                    	<c:if test="${glist.MEMBER_LEVEL == 1 }">
+                        		<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
                         		<img src="<c:url value='/img/crown_gold.png' />">
                         	</c:if>
                         	<c:if test="${glist.MEMBER_LEVEL == 2 }">
+                        		<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
                         		<img src="<c:url value='/img/crown_silver.png' />">
                         	</c:if>
 	                    </div>
