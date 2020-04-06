@@ -12,8 +12,8 @@
 		bnd_note
 	where
 		note_receiver = #{member_id}
-<!--	and
-		note_read = 0 -->
+	and
+ 		note_read = 0
 	</select>
 	
 	<select id="selectNote" parameterType="string" resultType="note">
@@ -23,7 +23,7 @@
 		, note_content
 		, member_id
 		, note_receiver
-<!-- 		, note_read -->
+ 		, note_read
 	from
 		bnd_note
 	where
@@ -51,7 +51,7 @@
 			, note_content
 			, member_id
 			, note_receiver
-<!-- 			, note_read -->
+ 			, note_read
 		from
 			bnd_note
 		where
@@ -59,9 +59,9 @@
 	</select>
 	
 	<update id="noteReadDone" parameterType="int">
-<!-- 		update bnd_note set
+		update bnd_note set
 			note_read = 1
 		where
-			note_no = #{note_no} -->
+			note_no = #{note_no}
 	</update>
 </mapper>

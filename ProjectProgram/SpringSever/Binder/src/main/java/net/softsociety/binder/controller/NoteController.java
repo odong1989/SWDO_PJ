@@ -72,7 +72,7 @@ public class NoteController {
 		return "note/noteRead";
 	}
 	
-	//이 메서드를 불러서 사용할 일은 없지만 쪽지 수신확인을 위한 코드는 여기서 가져갈 것
+	//이 메서드를 호출하여 사용할 일은 없지만 쪽지 수신확인을 위한 코드는 여기서 가져갈 것
 	@RequestMapping(value="newNoteCheck", method=RequestMethod.GET)
 	public String newNoteCheck(HttpSession session, Model model)
 	{
