@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${group_name }</title>
-    <link href="<c:url value='/css/basic.css?id=2' />" rel="stylesheet">
+    <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

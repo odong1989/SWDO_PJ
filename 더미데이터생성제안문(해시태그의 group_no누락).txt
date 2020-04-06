@@ -254,4 +254,75 @@ insert into bnd_hashtag(
     ,2
 );
 
+insert into bnd_note(
+    note_no
+    , note_title
+    , note_content
+    , member_id
+    , note_receiver
+) values (
+    bnd_note_no_seq.nextval
+    , '잘 지내냐?'
+    , '개 시발럼아 인사좀 하고 살아'
+    , 'jsh4646'
+    , 'oso91'
+);
+
+insert into bnd_note(
+    note_no
+    , note_title
+    , note_content
+    , member_id
+    , note_receiver
+) values (
+    bnd_note_no_seq.nextval
+    , '좀 읽어 씨발'
+    , 'ㅇㅇ'
+    , 'jsh4646'
+    , 'oso91'
+);
+
+
+insert into bnd_photo(
+    group_no
+    , document_no
+    , photo_originfile
+    , photo_savedfile
+    , photo_no
+) values (
+   1
+    ,1
+    ,'a'
+    ,'doc-1-1-01.jpg'
+    ,bnd_photo_no_seq.nextval 
+);
+
+insert into bnd_photo(
+    group_no
+    , document_no
+    , photo_originfile
+    , photo_savedfile
+    , photo_no
+) values (
+   2
+    ,2
+    ,'a'
+    ,'doc-2-2-01.jpg'
+    ,bnd_photo_no_seq.nextval 
+);
+
+insert into bnd_photo(
+    group_no
+    , document_no
+    , photo_originfile
+    , photo_savedfile
+    , photo_no
+) values (
+   1
+    ,3
+    ,'a'
+    ,'doc-1-3-01.jpg'
+    ,bnd_photo_no_seq.nextval 
+);
 commit;
+

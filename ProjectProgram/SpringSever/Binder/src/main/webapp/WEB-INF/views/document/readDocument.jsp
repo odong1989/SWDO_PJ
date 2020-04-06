@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" contents="width=device-width, initial-scale=1.0">
 <title>${group_name }</title>
-<link href="<c:url value='/css/main.css' />" > 
 <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -24,7 +23,7 @@ function selectGroup(pk) {
 }
 function invite(pk) {
 	location.href="<c:url value='/group/groupcode' />?no="+pk;
-}
+}z`
 function edit(pk) {
 	location.href="<c:url value='/document/editDocument' />?no="+pk;
 }
@@ -92,7 +91,6 @@ $(document).on("click","#btn2",function(){
     <script src="<c:url value='/js/addEvent.js' />"></script>
     <script src="<c:url value='/js/editEvent.js' />"></script>
     <script src="<c:url value='/js/etcSetting.js' />"></script>
-<!-- <link href="<c:url value='/css/basic.css' />" rel="stylesheet"> -->
     <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
@@ -100,6 +98,7 @@ $(document).on("click","#btn2",function(){
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 <style>
 table.table-condensed {
 	width: 650px; /*데이터피커의 총 가로폭을 설정할 수 있습니다.*/
