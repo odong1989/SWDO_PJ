@@ -46,7 +46,6 @@
 			<c:if test="${newNoteCheck eq 'ari' }">
 				<a href="javascript:noteList()"><img src="<c:url value='/img/newmail.png' />"></a>
 			</c:if>
-			<img src="<c:url value='/img/mail.png' />">
 			<a href="<c:url value='/member/memberMypage' />"><img src="<c:url value='/img/human.png' />" id="usericon">
 			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>
         </span>
