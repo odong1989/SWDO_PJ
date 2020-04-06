@@ -181,7 +181,10 @@ td.new.day {
 						</a>
 					</td>
 					<td width="auto" align="center"><p id="notice">공지사항 :
-							ㅇㅇㅇ공지부분</p></td>
+					<c:if test="${caution.document_content != '' }">
+							${caution.document_content }
+					</c:if>
+							</p></td>
 					<td width="21%" align="right">
 						<img src="<c:url value='/img/f5.png' />">
 						<img src="<c:url value='/img/cal.png' />" id="btn1">

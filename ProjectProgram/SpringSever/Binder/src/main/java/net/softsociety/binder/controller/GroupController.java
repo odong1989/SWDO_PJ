@@ -150,8 +150,7 @@ public class GroupController {
 		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		
-		int groupno = 1;
-		vo.setGroup_no(groupno);
+		vo.setGroup_no(no);
 		logger.info("groupMemberMgr {}",vo);
 		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
 		logger.info("groupMemberMgr {}",join);
@@ -230,8 +229,11 @@ public class GroupController {
 		vo.setMember_id(member_id);
 		vo.setGroup_no(gno);
 		vo.setDocument_content(caution);
+		int chkdel = documentDao.deleteCaution(gno);
+		logger.info("insertCaution - deleteCaution {}",chkdel);
+		
 		int chknum = documentDao.insertCaution(vo);
-
+		
 		String chk = null;
 		if (chknum != 0) {
 			chk = "true";
