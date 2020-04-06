@@ -23,7 +23,7 @@ function selectGroup(pk) {
 }
 function invite(pk) {
 	location.href="<c:url value='/group/groupcode' />?no="+pk;
-}z`
+}
 function edit(pk) {
 	location.href="<c:url value='/document/editDocument' />?no="+pk;
 }
