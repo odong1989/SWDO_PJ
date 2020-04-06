@@ -284,8 +284,8 @@ insert into bnd_note(
 
 
 insert into bnd_photo(
-    document_no
-    , group_no
+    group_no
+    , document_no
     , photo_originfile
     , photo_savedfile
     , photo_no
@@ -293,13 +293,13 @@ insert into bnd_photo(
    1
     ,1
     ,'a'
-    ,'doc-1-1.jpg'
+    ,'doc-1-1-01.jpg'
     ,bnd_photo_no_seq.nextval 
 );
 
 insert into bnd_photo(
-    document_no
-    , group_no
+    group_no
+    , document_no
     , photo_originfile
     , photo_savedfile
     , photo_no
@@ -312,8 +312,8 @@ insert into bnd_photo(
 );
 
 insert into bnd_photo(
-    document_no
-    , group_no
+    group_no
+    , document_no
     , photo_originfile
     , photo_savedfile
     , photo_no
