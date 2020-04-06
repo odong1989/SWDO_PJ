@@ -9,7 +9,7 @@ insert into bnd_member(
 ) values (
     'jsh4646'
     , 123123
-    , 'Á¤¼öÈ¯'
+    , 'ì •ìˆ˜í™˜'
     , 'jsh4646@naver.com'
     , '/dahyun.png'
     , '91-11-22'
@@ -27,7 +27,7 @@ insert into bnd_member(
 ) values (
     'oso91'
     , 123123
-    , '¿À¼º¿Á'
+    , 'ì˜¤ì„±ì˜¥'
     , 'oso@naver.com'
     , '/dahyun.png'
     , '91-08-02'
@@ -45,7 +45,7 @@ insert into bnd_member(
 ) values (
     'odong1989'
     , 123123
-    , '¹Ù³ª³ª'
+    , 'ë°”ë‚˜ë‚˜'
     , 'banana@naver.com'
     , '/dahyun.png'
     , '89-05-05'
@@ -62,7 +62,7 @@ insert into bnd_group(
     bnd_group_no_seq.nextval
     , 'personal'
     , 'family'
-    , 'Á¤°¡³×'
+    , 'ì •ê°€ë„¤'
     , 'lk3ie'
 );
 
@@ -76,7 +76,7 @@ insert into bnd_group(
     bnd_group_no_seq.nextval
     , 'public'
     , 'game'
-    , '´ÜÇ³Á¶±âÃà±¸'
+    , 'ë‹¨í’ì¡°ê¸°ì¶•êµ¬'
     , 'ijih3'
 );
     
@@ -92,10 +92,10 @@ insert into bnd_document(
     1
     , bnd_document_no_seq.nextval
     , 'jsh4646'
-    , 'Àç¹ÌÀÖ¾ú´Ù'
+    , 'ì¬ë¯¸ìˆì—ˆë‹¤'
     , '20-03-07'
     , '20-03-08'
-    , '½Å°¡³×±¹¹ä'
+    , 'ì‹ ê°€ë„¤êµ­ë°¥'
 );
 
 insert into bnd_document(
@@ -110,10 +110,10 @@ insert into bnd_document(
     2
     , bnd_document_no_seq.nextval
     , 'jsh4646'
-    , '´Ù¸®°¡ Àú¸± Á¤µµ·Î ´Ş·È´Ù..'
+    , 'ë‹¤ë¦¬ê°€ ì €ë¦´ ì •ë„ë¡œ ë‹¬ë ¸ë‹¤..'
     , '20-03-15'
     , '20-03-15'
-    , 'È£³²°í ¿îµ¿Àå'
+    , 'í˜¸ë‚¨ê³  ìš´ë™ì¥'
 );
 
 insert into bnd_document(
@@ -128,10 +128,10 @@ insert into bnd_document(
     1
     , bnd_document_no_seq.nextval
     , 'oso91'
-    , 'µî»ê¤»'
+    , 'ë“±ì‚°ã…‹'
     , '20-03-17'
     , '20-03-18'
-    , '³»Àå»ê'
+    , 'ë‚´ì¥ì‚°'
 );
 
 insert into bnd_groupjoin(
@@ -174,9 +174,35 @@ insert into bnd_hashtag(
     hash_no
     , hash_tag
     , document_no
+    , group_no 
 ) values (
     bnd_hash_no_seq.nextval
-    , '#¿ª½Ã'
+    , '#ì—­ì‹œ'
+    , 1
+    , 1 
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+        , group_no 
+) values (
+    bnd_hash_no_seq.nextval
+    , '#ì‹ ê°€ë„¤'
+    , 1
+    ,1
+);
+
+insert into bnd_hashtag(
+    hash_no
+    , hash_tag
+    , document_no
+        , group_no 
+) values (
+    bnd_hash_no_seq.nextval
+    , '#ì •ìêµ­ë°¥'
+    , 1
     , 1
 );
 
@@ -184,60 +210,119 @@ insert into bnd_hashtag(
     hash_no
     , hash_tag
     , document_no
+        , group_no 
 ) values (
     bnd_hash_no_seq.nextval
-    , '#½Å°¡³×'
+    , '#ë§›ì§‘'
     , 1
+    ,1
 );
 
 insert into bnd_hashtag(
     hash_no
     , hash_tag
     , document_no
+        , group_no 
 ) values (
     bnd_hash_no_seq.nextval
-    , '#Á¤À¾±¹¹ä'
-    , 1
-);
-
-insert into bnd_hashtag(
-    hash_no
-    , hash_tag
-    , document_no
-) values (
-    bnd_hash_no_seq.nextval
-    , '#¸ÀÁı'
-    , 1
-);
-
-insert into bnd_hashtag(
-    hash_no
-    , hash_tag
-    , document_no
-) values (
-    bnd_hash_no_seq.nextval
-    , '#Á¤À¾'
+    , '#ì •ì'
     , 2
+    ,2
 );
 
 insert into bnd_hashtag(
     hash_no
     , hash_tag
     , document_no
+        , group_no 
 ) values (
     bnd_hash_no_seq.nextval
-    , '#´ÜÇ³Á¶±âÃà±¸'
+    , '#ë‹¨í’ì¡°ê¸°ì¶•êµ¬'
     , 2
+    ,2
 );
 
 insert into bnd_hashtag(
     hash_no
     , hash_tag
     , document_no
+           , group_no 
 ) values (
     bnd_hash_no_seq.nextval
-    , '#¸ğ±³'
+    , '#ëª¨êµ'
     , 3
+    ,2
 );
 
+insert into bnd_note(
+    note_no
+    , note_title
+    , note_content
+    , member_id
+    , note_receiver
+) values (
+    bnd_note_no_seq.nextval
+    , 'ì˜ ì§€ë‚´ëƒ?'
+    , 'ê°œ ì‹œë°œëŸ¼ì•„ ì¸ì‚¬ì¢€ í•˜ê³  ì‚´ì•„'
+    , 'jsh4646'
+    , 'oso91'
+);
+
+insert into bnd_note(
+    note_no
+    , note_title
+    , note_content
+    , member_id
+    , note_receiver
+) values (
+    bnd_note_no_seq.nextval
+    , 'ì¢€ ì½ì–´ ì”¨ë°œ'
+    , 'ã…‡ã…‡'
+    , 'jsh4646'
+    , 'oso91'
+);
+
+
+insert into bnd_photo(
+    group_no
+    , document_no
+    , photo_originfile
+    , photo_savedfile
+    , photo_no
+) values (
+   1
+    ,1
+    ,'a'
+    ,'doc-1-1-01.jpg'
+    ,bnd_photo_no_seq.nextval 
+);
+
+insert into bnd_photo(
+    group_no
+    , document_no
+    , photo_originfile
+    , photo_savedfile
+    , photo_no
+) values (
+   2
+    ,2
+    ,'a'
+    ,'doc-2-2-01.jpg'
+    ,bnd_photo_no_seq.nextval 
+);
+
+insert into bnd_photo(
+    group_no
+    , document_no
+    , photo_originfile
+    , photo_savedfile
+    , photo_no
+) values (
+   1
+    ,3
+    ,'a'
+    ,'doc-1-3-01.jpg'
+    ,bnd_photo_no_seq.nextval 
+);
 commit;
+
