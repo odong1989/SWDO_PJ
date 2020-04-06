@@ -23,7 +23,7 @@
 <script type="text/javascript">
 var temp = '';
 function selectGroup(pk) {
-	location.href="group?no="+pk;
+	location.href="../document/group?no="+pk;
 }
 function invite(pk) {
 	location.href="../group/groupcode?no="+pk;
@@ -227,7 +227,7 @@ td.new.day {
 			 	</template>
 			 	<template slot="footer">
 			 		<div><input v-model="message"><button @click="doSend">제출</button></div>
-			 		
+			 		<input type = "hidden" id="gno" value="${gno }">
 			 	</template>
 			  </modal>
 		</div>
@@ -360,10 +360,13 @@ Vue.component('modal', {
 				if (this.message.length > 0) {
 // 					여기에 이벤트를 주면됩니다
 					var msg = this.message
+					groupnoh = document.getElementById("gno").value;
 					$.ajax({
 						url:"insertCaution",
 						type:"get",
-						data:{"caution" : msg},
+						data:{"caution" : msg,
+							"gno" : groupnoh
+							},
 						success:
 						function(result){
 							if(result == "true"){

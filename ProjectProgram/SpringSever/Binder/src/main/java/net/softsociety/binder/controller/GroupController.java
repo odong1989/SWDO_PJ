@@ -156,10 +156,11 @@ public class GroupController {
 		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
 		logger.info("groupMemberMgr {}",join);
 		model.addAttribute("gjoin",join);
+		model.addAttribute("gno",no);
 		return "group/groupMemberMgr";
 	}
 	
-	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
+	@RequestMapping(value="/group/selectGJM", method=RequestMethod.GET)
 	@ResponseBody
 	public String selectGJM(String memberCheck) {
 		
@@ -174,7 +175,7 @@ public class GroupController {
 		return chk;
 	}
 	
-	@RequestMapping(value="updateGJMS", method=RequestMethod.GET)
+	@RequestMapping(value="/group/updateGJMS", method=RequestMethod.GET)
 	@ResponseBody
 	public String memberUpdate(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
@@ -189,7 +190,7 @@ public class GroupController {
 		}
 		return chk;
 	}
-	@RequestMapping(value="updateGJMC", method=RequestMethod.GET)
+	@RequestMapping(value="/group/updateGJMC", method=RequestMethod.GET)
 	@ResponseBody
 	public String memberUpdate2(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
@@ -204,7 +205,7 @@ public class GroupController {
 		}
 		return chk;
 	}
-	@RequestMapping(value="deleteGMember", method=RequestMethod.GET)
+	@RequestMapping(value="/group/deleteGMember", method=RequestMethod.GET)
 	@ResponseBody
 	public String gmemberDelete(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
@@ -220,14 +221,14 @@ public class GroupController {
 		return chk;
 	}
 	
-	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
+	@RequestMapping(value="/group/insertCaution", method=RequestMethod.GET)
 	@ResponseBody
-	public String insertCaution(Document vo, String caution, HttpSession session) {
+	public String insertCaution(Document vo, String caution, HttpSession session, int gno) {
 		
 		logger.info("insertCaution {}",caution);
 		String member_id = (String) session.getAttribute("loginId");
 		vo.setMember_id(member_id);
-		vo.setGroup_no(1);
+		vo.setGroup_no(gno);
 		vo.setDocument_content(caution);
 		int chknum = documentDao.insertCaution(vo);
 
@@ -240,7 +241,7 @@ public class GroupController {
 		return chk;
 	}
 	
-	@RequestMapping(value="sendEmail", method=RequestMethod.GET)
+	@RequestMapping(value="/group/sendEmail", method=RequestMethod.GET)
 	@ResponseBody
 	public String sendEmail(String email) {
 		logger.info("email {}",email);
