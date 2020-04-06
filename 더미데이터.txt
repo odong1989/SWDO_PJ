@@ -282,6 +282,19 @@ insert into bnd_note(
     , 'oso91'
 );
 
+insert into bnd_note(
+    note_no
+    , note_title
+    , note_content
+    , member_id
+    , note_receiver
+) values (
+    bnd_note_no_seq.nextval
+    , '미안ㅋㅋ'
+    , 'ㅋㅋㅋ 못봄'
+    , 'oso91'
+    , 'jsh4646'
+);
 
 insert into bnd_photo(
     group_no

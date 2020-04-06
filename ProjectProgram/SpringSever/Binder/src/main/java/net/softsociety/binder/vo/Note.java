@@ -25,5 +25,6 @@ create table bnd_note(
 	private String member_id;
 	private String note_receiver;
 	private int note_read;
+	private String note_date;
 
 }
