@@ -22,6 +22,17 @@
 		and
 		    bnd_document.document_no = bnd_photo.document_no
 	</select> 
+
+ 	<select id="selectCaution" parameterType="int" resultType="document">
+	 	select
+		    bnd_document.document_content
+		from
+		    bnd_document
+		where
+		    bnd_document.group_no = #{group_no}
+		and
+		    bnd_document.document_notice = 1
+	</select> 
 	
 	<select id="selectDocumentsForCalendar" parameterType="int" resultType="hashmap">
 	 	select
@@ -60,4 +71,13 @@
 		,#{document_destination}
 		)
 	</insert>
+	
+	<delete id="deleteCaution" parameterType="int">
+		delete from
+		bnd_document
+		where 
+		bnd_document.group_no = #{group_no}
+		and
+		bnd_document.document_notice = 1
+	</delete>
 </mapper>
