@@ -24,6 +24,7 @@
 		, member_id
 		, note_receiver
  		, note_read
+ 		, note_date
 	from
 		bnd_note
 	where
@@ -52,6 +53,7 @@
 			, member_id
 			, note_receiver
  			, note_read
+ 			, note_date
 		from
 			bnd_note
 		where
