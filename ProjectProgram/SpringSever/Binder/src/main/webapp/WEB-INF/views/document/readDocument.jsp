@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" contents="width=device-width, initial-scale=1.0">
-<title>${group_name }</title>
+<title>${group_name}</title>
     <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
@@ -14,7 +16,6 @@
 <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
 
 <script type="text/javascript">
 var temp = '';
@@ -37,14 +38,34 @@ function groupMgr(pk) {
 //btn1 : 게시판->캘린더로 변경
 $(document).on("click","#btn1",function(){
 	$.ajax({
-			url:"<c:url value='/calender/calenderMain' />",
-			type:"get",
 			data:{"group_no":${group_no}},
-			success:function(data){
-				alert("full start");
-				document.getElementById('right-body').innerHTML=data;
-			     $('#calendar').fullCalendar({
-			    	 });
+			url:"<c:url value='/calender/calenderMain'/>",
+			type:"get",
+			success:function(documentList){
+				alert("일정데이터 documentList(자료형 : ArrayList<HashMap<String, Object>>)만 수신합니다. ");
+				alert("일정데이터 documentList : "+ documentList);
+				var temp = "<div id='calendar'></div>";
+				document.getElementById('right-body').innerHTML=temp;
+				var calendar = $('#calendar').fullCalendar({
+					events: [
+					    { title: '${documentList[1].DOCUMENT_DESTINATION}',
+					      start: '${documentList[1].DOCUMENT_REGDATE}',
+					      end:   '${documentList[1].DOCUMENT_FINALDAY}'
+						}
+				    /*events: [
+					    { 
+					    	title: '풀캘린더 기본입력형입니다.', 
+					        start: '2020-04-01',
+					        end: '2020-04-02'
+					    },
+					    { 
+					    	title: 'JSTL-foreach로도 가능할까요?', 
+					        start: '2020-04-05',
+					        end: '2020-04-09'
+					    }
+					  ]*/
+					  ]
+					})
 			},
 			error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
 	});
@@ -112,7 +133,7 @@ $(document).on("click","#btn2",function(){
 						<a href="javascript:invite(${group_no })">
 							<img src="<c:url value='/img/invite.png' />">
 						</a>
-						<a href="javascript:write(${group_no })">
+						<a href="javascript:write(${group_no})">
 							<img src="<c:url value='/img/pencil.png' />">
 						</a>
 					</td>

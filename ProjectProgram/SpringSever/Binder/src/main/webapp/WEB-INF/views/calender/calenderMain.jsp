@@ -31,8 +31,8 @@
 					<img src="<c:url value='/img/cal.png' />" id="btn2">
 				</td>
 			</tr>
-			</table>
-	    <div class="container">
+				</table>
+		    <div class="container">
 
         <!-- 일자 클릭시 메뉴오픈 -->
         <div id="contextMenu" class="dropdown clearfix">
