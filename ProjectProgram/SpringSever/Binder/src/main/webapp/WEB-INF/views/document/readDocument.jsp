@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
 
-    <script src="<c:url value='/js/main.js' />"></script>
 <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -42,7 +41,10 @@ $(document).on("click","#btn1",function(){
 			type:"get",
 			data:{"group_no":${group_no}},
 			success:function(data){
-				$('#calendar').fullCalendar({});
+				alert("full start");
+				document.getElementById('right-body').innerHTML=data;
+			     $('#calendar').fullCalendar({
+			    	 });
 			},
 			error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
 	});
@@ -54,7 +56,7 @@ $(document).on("click","#btn2",function(){
 			type:"get",
 			success:function(data){		
 				document.getElementById('right-body').innerHTML=temp;
-				//document.getElementById('right-body').innerHTML=data;
+				document.getElementById('right-body').innerHTML=data;
 			},
 			error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
 	});
@@ -146,10 +148,10 @@ $(document).on("click","#btn2",function(){
 			</table>
 		</div>
 	</div>
-    <script src="<c:url value='/vendor/js/jquery.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/bootstrap.min.js' />"></script>
     <script src="<c:url value='/vendor/js/moment.min.js' />"></script>
+    <script src="<c:url value='/vendor/js/jquery.min.js' />"></script>
     <script src="<c:url value='/vendor/js/fullcalendar.min.js' />"></script>
+    <script src="<c:url value='/vendor/js/bootstrap.min.js' />"></script>
  	<script src="<c:url value='/vendor/js/ko.js' />"></script>
     <script src="<c:url value='/vendor/js/select2.min.js' />"></script>
     <script src="<c:url value='/vendor/js/bootstrap-datetimepicker.min.js' />"></script>

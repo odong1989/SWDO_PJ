@@ -81,7 +81,7 @@ $(document).on("click","#btn2",function(){
 			url:"<c:url value='/document/boardTemp' />",
 			type:"get",
 			success:function(data){		
-				document.getElementById('right-body').innerHTML=temp;
+				c
 				//document.getElementById('right-body').innerHTML=data;
 			},
 			error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
