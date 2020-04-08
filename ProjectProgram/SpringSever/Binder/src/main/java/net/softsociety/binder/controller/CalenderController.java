@@ -49,7 +49,7 @@ public class CalenderController {
 		
 		ArrayList<HashMap<String, Object>> documentList = null;
 		documentList = documentDao.selectDocumentsForCalendar(groupCal);
-		logger.info("calenderMain - 리턴해줄 일정(document)들 : {}",documentList);
+		logger.info("calenderMain 캘린더 위해 리턴하는 값 : {}",documentList);
 		
 		return documentList;
 		//return "/calender/calenderMain"; //선생님의 조언에 따라 데이터를 직통으로 리턴하는 것으로 변경.

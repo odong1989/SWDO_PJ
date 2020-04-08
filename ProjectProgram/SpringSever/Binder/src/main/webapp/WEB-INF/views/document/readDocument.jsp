@@ -42,15 +42,25 @@ $(document).on("click","#btn1",function(){
 			url:"<c:url value='/calender/calenderMain'/>",
 			type:"get",
 			success:function(documentList){
-				alert("일정데이터 documentList(자료형 : ArrayList<HashMap<String, Object>>)만 수신합니다. ");
-				alert("일정데이터 documentList : "+ documentList);
-				var temp = "<div id='calendar'></div>";
+				var tempDocumentList = documentList[0].DOCUMENT_FINALDAY;
+				console.log(documentList);
+			//	alert("일정데이터 documentList(자료형 : ArrayList<HashMap<String, Object>>)만 수신합니다. ");
+			//	alert("일정데이터 documentList시작일날짜정보 : "+ '${documentList[0].DOCUMENT_REGDATE}');
+			//	alert("일정데이터 documentList마지막날짜정보 : "+ '${documentList[0].DOCUMENT_FINALDAY}');
+				alert("tempDocumentList : "+ documentList[0].DOCUMENT_FINALDAY);
+			var temp = "<div id='calendar'></div>";
 				document.getElementById('right-body').innerHTML=temp;
 				var calendar = $('#calendar').fullCalendar({
 					events: [
+					    { title: '${documentList[0].DOCUMENT_DESTINATION}',
+						  start: '${documentList[0].DOCUMENT_REGDATE}',
+					      end  : tempDocumentList, 
+					      imageurl :'<c:url value="/img/bell.png" />' 
+					      //imageurl :'/${documentList[0].PHOTO_SAVEDFILE}'
+					    },
 					    { title: '${documentList[1].DOCUMENT_DESTINATION}',
-					      start: '${documentList[1].DOCUMENT_REGDATE}',
-					      end:   '${documentList[1].DOCUMENT_FINALDAY}'
+						  start: '${documentList[1].DOCUMENT_REGDATE}',
+						    end: documentList[1].DOCUMENT_FINALDAY
 						}
 				    /*events: [
 					    { 
@@ -65,6 +75,10 @@ $(document).on("click","#btn1",function(){
 					    }
 					  ]*/
 					  ]
+		          , eventRender:function(event, eventElement) {
+		                if(event.imageurl) {
+		                    eventElement.find("span.fc-title").prepend("<center><img src='" + event.imageurl + "'><center>");
+		                }}
 					})
 			},
 			error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
