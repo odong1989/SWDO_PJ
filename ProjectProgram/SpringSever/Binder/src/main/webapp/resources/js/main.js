@@ -163,60 +163,6 @@ var calendar = $('#calendar').fullCalendar({
    *  일정 받아옴 
    * ************** */
   
-  //이승무 선생님의 테스트5번 리스트리턴하여 출력식 참조
-  events: function (start, end, timezone, callback) {
-	    $.ajax({
-	        url: "getUserSchedule",
-	    	type: "post",
-	        dataType:"json",
-	        /*{ "group_no":$("group_no").val(),
-	        	"document_no":$("document_no").val(),
-	        	"member_id":$("member_id").val(),
-	        	"document_content":$("document_content").val(),
-	        	"document_regdate":$("document_regdate").val(),
-	        	"document_finalday":$("document_finalday").val(),
-	        	"document_destination":$("document_destination").val(),	        	
-	        	"document_notice":$("document_notices").val()
-	          } */
-	        success: function (response) {
-	        	alert("response :"+response);
-	          var fixedDate = response.map(function (array) {
-	            if (array.allDay && array.start !== array.end) {
-	              // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
-	              array.end = moment(array.end).add(1, 'days');
-	            }
-	            return array;
-	          })
-	          callback(fixedDate);
-	        }
-	      });
-	    },
-	 /*
-      events: function (start, end, timezone, callback) {
-     $.ajax({
-      type: "get",
-      url: "data.json",
-      data: {
-        // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
-      },
-      success: function (response) {
-        var fixedDate = response.map(function (array) {
-          if (array.allDay && array.start !== array.end) {
-            // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
-            array.end = moment(array.end).add(1, 'days');
-          }
-          return array;
-        })
-        callback(fixedDate);
-      }
-    });
-  },
-  eventAfterAllRender: function (view) {
-    if (view.name == "month") {
-      $(".fc-content").css('height', 'auto');
-    }
-  },
-  */
   //일정 리사이즈
   eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
     $('.popover.fade.top').remove();
