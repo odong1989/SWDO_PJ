@@ -411,6 +411,7 @@ Vue.component('modal', {
 			}
 		}
 	})
+	//앱시작3
 	new Vue({
 	  el: '#app3',
 	  data: function(){
