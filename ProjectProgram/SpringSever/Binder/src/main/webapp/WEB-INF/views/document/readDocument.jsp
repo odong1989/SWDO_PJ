@@ -893,7 +893,7 @@ $(document).on("click","#btn2",function(){
 							<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
 							<div id="app1">
 							<button @click="openModal">관리</button>
-							<modal v-if="showModal1" @close="closeModal">
+							<modal v-if="showModal" @close="closeModal">
 								 	<template slot="header"><h3>회원목록</h3></template>
 								 	<template slot="body">
 										<table>
@@ -927,7 +927,7 @@ $(document).on("click","#btn2",function(){
 										</table>
 								 	</template>
 								 	<template slot="footer">
-								 		<button @click="closeModal">제출</button>
+								 		<button @click="closeModal">닫기</button>
 								 	</template>
 								  </modal>
 							</div>
@@ -1241,6 +1241,7 @@ $(document).on("click","#btn2",function(){
 								function(result){
 									if(result == "true"){
 										alert("성공")
+										history.go(0);
 									}else {
 										alert("실패")
 									}
