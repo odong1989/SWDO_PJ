@@ -218,6 +218,9 @@
 		true;
 	}
 </script>
+	<style>
+	#btntd{text-align: center;}
+</style>
 </head>
 <body>
 	<form id="joinform" action="<c:url value='/member/memberJoin' />"
@@ -269,7 +272,7 @@
 			</tr>
 		</table>
 		<div id="btntd">
-			<input type="button" value="취소"> <input type="submit"
-				value="가입" id="joinsubmit">
+			<input type="button" value="취소" onclick="history.go(-1)"> 
+			<input type="submit" value="가입" id="joinsubmit">
 		</div>
 	</form>

@@ -48,6 +48,7 @@ public class DocumentController {
 			Model model)
 	{	
 		logger.info("mainDocument 이동");
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
 		logger.info("mainDocument - member_id :{}",member_id);
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
@@ -60,6 +61,7 @@ public class DocumentController {
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		
 		return "/document/mainDocument";
 		
@@ -112,9 +114,19 @@ public class DocumentController {
 	public String writeDocument(HttpSession session, int no ,Model model)
 	{	//선택한 그룹의 번호값을 갖고와야한다. //int no :선택한 모임(그룹)의 PK번호
 		logger.info("writeDocument 메소드 실시& 이동");	
-		String member_id = null;
-		member_id = (String) session.getAttribute("loginId");
-		logger.info("mainDocument - member_id :{}",member_id);
+		//모든 페이지에 있어야 하는 출력데이터
+		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		logger.info("-그룹리스트 : {}", groupJoinList);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		logger.info("mainDocument - 그룹의 번호(PK) :{}",no);		
 		model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
 		
