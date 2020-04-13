@@ -152,8 +152,15 @@ td.new.day {
 		<div id="right-body">
 			<div>
 				<div class="GroupMemberList">
-					<div id="app">
+					<div id="app1">
 						<table>
+							<tr>
+							<td>
+								<br/><br/>
+								<h1>회원목록</h1>
+								<br/><br/><br/><br/>
+							</td>
+							</tr>
 							<c:forEach var="gjoin" items="${gjoin }">
 							<tr>
 								<td class='center'>${gjoin.member_id }</td>
@@ -165,30 +172,21 @@ td.new.day {
 									일반회원
 								</c:if>
 								</td>
+								<td>
+								     
+								</td>
 								
-									<td><button @click="deleteMember('${gjoin.member_id }')">삭제</button></td>
-									<td><button @click='openModal'>수정</button></td>
+									
+									<td width="30px"><img src="<c:url value='/img/subManager.png' />" @click="subManager('${gjoin.member_id }')"></td>
+									<td width="30px"><img src="<c:url value='/img/commonMember.png' />" @click="commonMember('${gjoin.member_id }')"></td>
+									<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" @click="deleteMember('${gjoin.member_id }')"></td>
 								
 								</tr>
 								<input type="hidden" id="memberidh" value="${gjoin.member_id}">
 								<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
 							</c:forEach>
 						</table>
-
-						<modal v-if="showModal" @close="closeModal">
-						 <!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
-						<template slot="header">
-						<h3>회원멤버등급조정</h3>
-						</template>
-						<template slot="body">
-						<div>변경할 값을 선택해주세요</div>
-						</template>
-						<template slot="footer"> 
-							<button @click="subManager">부관리자</button>
-							<button @click="notManager">일반회원</button>
-						</template>
-						 </modal>
-					</div>
+						</div>
 				</div>
 			</div>
 	</div>
@@ -240,6 +238,7 @@ td.new.day {
     </div>
  <script>
 var groupnoh='';
+var memberidh='';
 var msg; // 데이터 받아올 var
 
 Vue.component('modal', {
@@ -275,6 +274,78 @@ Vue.component('modal', {
 		  </transition>
 		  `
 	})
+	//앱시작1
+		new Vue({
+	  el: '#app1',
+	  data: 
+		{
+	    showModal: false,    
+		},
+	  methods: {
+			openModal(){
+				this.showModal = true
+			},
+			closeModal(){
+				this.showModal = false
+			},
+			deleteMember(memberidh){
+				groupnoh = document.getElementById("groupnoh").value;
+				$.ajax({
+					url:"deleteGMember",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+							history.go(0);
+						}else {
+							alert("실패")
+						}
+					}
+				})
+	  		},
+			subManager(memberidh){
+	  			groupnoh = document.getElementById("groupnoh").value;
+				$.ajax({
+					url:"updateGJMS",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+							history.go(0);
+						}else {
+							alert("실패")
+						}
+					}
+				})
+			},
+			commonMember(memberidh){
+	  			groupnoh = document.getElementById("groupnoh").value;
+				$.ajax({
+					url:"updateGJMC",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+							history.go(0);
+						}else {
+							alert("실패")
+						}
+					}
+				})
+			}
+	 	}
+	})
+	
+	
 	//앱시작2
 	new Vue({
 		el: '#app2',
@@ -317,7 +388,7 @@ Vue.component('modal', {
 			},
 			doSend(){
 				if (this.message.length > 0) {
-		// 		여기에 이벤트를 주면됩니다
+		// 		이메일로 보내기
 				$.ajax({
 				url:"sendEmail",
 				type:"get",
@@ -335,7 +406,7 @@ Vue.component('modal', {
 				this.closeModal()
 				}
 				else {
-					alert('메세지 입력필요')
+					alert('이메일 입력필요')
 				}
 			}
 		}
@@ -384,77 +455,7 @@ Vue.component('modal', {
 			}
 	  }
 	})
-	// 앱시작1
 
-	new Vue({
-	  el: '#app',
-	  data: 
-		{
-	    showModal: false,
-	    member123: ''    
-		},
-	  methods: {
-			openModal(){
-				this.showModal = true
-			},
-			closeModal(){
-				this.showModal = false
-			},
-			subManager(){
-				$.ajax({
-					url:"updateGJMS",
-					type:"get",
-					data:{"memberid" : memberidh,
-						 "groupno" : groupnoh},
-					success:
-						function(result){
-						if(result == "true"){
-							alert("성공")
-						}else {
-							alert("실패")
-						}
-					}
-				})
-				this.closeModal();
-			},
-			notManager(){
-				$.ajax({
-					url:"updateGJMC",
-					type:"get",
-					data:{"memberid" : memberidh,
-						 "groupno" : groupnoh},
-					success:
-						function(result){
-						if(result == "true"){
-							alert("성공")
-						}else {
-							alert("실패")
-						}
-					}
-				})
-				this.closeModal();
-			},
-			deleteMember(memberidh){
-				groupnoh = document.getElementById("groupnoh").value;
-				$.ajax({
-					url:"deleteGMember",
-					type:"get",
-					data:{"memberid" : memberidh,
-						 "groupno" : groupnoh},
-					success:
-						function(result){
-						if(result == "true"){
-							alert("성공")
-							history.go(0);
-						}else {
-							alert("실패")
-						}
-					}
-				})
-				this.closeModal();
-	  			}
-	 	}
-	})
 </script>
 </body>
 </html>
