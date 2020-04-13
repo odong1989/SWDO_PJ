@@ -28,92 +28,157 @@ function selectGroup(pk) {
 function invite(pk) {
 	location.href="../group/groupcode?no="+pk;
 }
+
+$(
+	//부매니저아이콘 마우스오버시 툴팁
+	$('#subManagerIcon').mouseover(function(e){
+		var tip = $(this).attr('title');
+		$(this).attr('title','');
+		$(this).append('<div id="subtooltip"><div class="tipBody">'+ tip + '</div></div>');
+	}).mousemove(function(e) 
+			   {
+        //마우스가 움직일 때 툴 팁이 따라 다니도록 위치값 업데이트
+       $('#tooltip').css('top', e.pageY + 10 );
+       $('#tooltip').css('left', e.pageX + 10 );
+   }).mouseout(function() 
+   {
+       //위에서 껐던 브라우져에서 제공하는 기본 툴 팁을 복원
+       $(this).attr('title',$('.tipBody').html());
+       $(this).children('div#tooltip').remove();
+   	})
+)
+$(
+		//일반회원아이콘 마우스오버시 툴팁
+		$('#commonMemberIcon').mouseover(function(e){
+			var tip = $(this).attr('title');
+			$(this).attr('title','');
+			$(this).append('<div id="commontooltip"><div class="tipBody">'+ tip + '</div></div>');
+		}).mousemove(function(e) 
+				   {
+	        //마우스가 움직일 때 툴 팁이 따라 다니도록 위치값 업데이트
+	       $('#tooltip').css('top', e.pageY + 10 );
+	       $('#tooltip').css('left', e.pageX + 10 );
+	   }).mouseout(function() 
+	   {
+	       //위에서 껐던 브라우져에서 제공하는 기본 툴 팁을 복원
+	       $(this).attr('title',$('.tipBody').html());
+	       $(this).children('div#tooltip').remove();
+	   })
+)
+$(
+		//회원삭제아이콘 마우스오버시 툴팁
+		$('#deleteMemberIcon').mouseover(function(e){
+			var tip = $(this).attr('title');
+			$(this).attr('title','');
+			$(this).append('<div id="deletetooltip"><div class="tipBody">'+ tip + '</div></div>');
+		}).mousemove(function(e) 
+				   {
+	        //마우스가 움직일 때 툴 팁이 따라 다니도록 위치값 업데이트
+	       $('#tooltip').css('top', e.pageY + 10 );
+	       $('#tooltip').css('left', e.pageX + 10 );
+	   }).mouseout(function() 
+	   {
+	       //위에서 껐던 브라우져에서 제공하는 기본 툴 팁을 복원
+	       $(this).attr('title',$('.tipBody').html());
+	       $(this).children('div#tooltip').remove();
+	   })
+)
+
 //20.03.29 병합 되지 않아서 직접 추가1 - 부트스트랩 한글 표기설정//단계2. 달력을 한글로 표기설정.(없을 시 영문으로 표기됩니다.)
 //로드할 메인jsp에서 설정해둬야 적용되어서 주석처리해도 무방합니다..
-(function($){
-$.fn.datepicker.dates['kr'] = {
-            days: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
-            daysShort: ["일", "월", "화", "수", "목", "금", "토", "일"],
-            daysMin: ["일", "월", "화", "수", "목", "금", "토", "일"],
-            months: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-            monthsShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-        };
-    }(jQuery));
+// (function($){
+// $.fn.datepicker.dates['kr'] = {
+//             days: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+//             daysShort: ["일", "월", "화", "수", "목", "금", "토", "일"],
+//             daysMin: ["일", "월", "화", "수", "목", "금", "토", "일"],
+//             months: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+//             monthsShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+//         };
+//     }(jQuery));
     
-    //단계3. 부트스트랩 기본설정 
-    $(function(){
-        $('#datepicker').datepicker({
-            calendarWeeks: false,
-            todayHighlight: true,
-            language: "kr"
-        })
-    //단계4. 사용자가 선택한 날짜를 alert로 출력합니다.
-        .on("changeDate",function(e){
-            alert(e.date);
-        })
-    });
-//20.03.29 병합 되지 않아서 직접 추가2 - 게시판<->캘린더 스위칭.
-//btn1 : 게시판->캘린더로 변경
-$(document).on("click","#btn1",function(){
-	$.ajax({
-			url:"<c:url value='/calender/calenderMain' />",
-			type:"get",
-			success:function(data){
-				temp = document.getElementById('right-body').innerHTML;
-				document.getElementById('right-body').innerHTML=data;
-		//부트스트랩-데이트피커 실행문
-				$('#datepicker').datepicker({
-	                calendarWeeks: false,
-	                todayHighlight: true,
-	                language: "kr"
-	            });
-			},
-			error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
-	});
-});
-//btn2 : 캘린더->게시판으로 변경
-$(document).on("click","#btn2",function(){
-	$.ajax({
-			url:"<c:url value='/document/boardTemp' />",
-			type:"get",
-			success:function(data){		
-				document.getElementById('right-body').innerHTML=temp;
-				//document.getElementById('right-body').innerHTML=data;
-			},
-			error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
-	});
-});
+//     //단계3. 부트스트랩 기본설정 
+//     $(function(){
+//         $('#datepicker').datepicker({
+//             calendarWeeks: false,
+//             todayHighlight: true,
+//             language: "kr"
+//         })
+//     //단계4. 사용자가 선택한 날짜를 alert로 출력합니다.
+//         .on("changeDate",function(e){
+//             alert(e.date);
+//         })
+//     });
+// //20.03.29 병합 되지 않아서 직접 추가2 - 게시판<->캘린더 스위칭.
+// //btn1 : 게시판->캘린더로 변경
+// $(document).on("click","#btn1",function(){
+// 	$.ajax({
+// 			url:"<c:url value='/calender/calenderMain' />",
+// 			type:"get",
+// 			success:function(data){
+// 				temp = document.getElementById('right-body').innerHTML;
+// 				document.getElementById('right-body').innerHTML=data;
+// 		//부트스트랩-데이트피커 실행문
+// 				$('#datepicker').datepicker({
+// 	                calendarWeeks: false,
+// 	                todayHighlight: true,
+// 	                language: "kr"
+// 	            });
+// 			},
+// 			error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
+// 	});
+// });
+// //btn2 : 캘린더->게시판으로 변경
+// $(document).on("click","#btn2",function(){
+// 	$.ajax({
+// 			url:"<c:url value='/document/boardTemp' />",
+// 			type:"get",
+// 			success:function(data){		
+// 				document.getElementById('right-body').innerHTML=temp;
+// 				//document.getElementById('right-body').innerHTML=data;
+// 			},
+// 			error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
+// 	});
+// });
 
 </script>
+
 <style>
-table.table-condensed {
-	width: 650px; /*데이터피커의 총 가로폭을 설정할 수 있습니다.*/
-	height: 450px; /*데이터피커의 총 세로폭을 설정할 수 있습니다.*/
-	border-style: double;
-	font-family: 돋움; /*데이터피커의 날짜들의 폰트 설정 가능.*/
+ #app1{
+ 	float:left;
+ 	margin:0px 15px 0px 15px;
+ }
+ .GroupMemberList {
+	witdh : 200px;
+	height : 200px;
+	display:inline;
+	background : red;
+	}
+ .Management {
+ 	witdh : 200px;
+	height : 200px;
+	display:inline;
+	background : blue;
+ }
+ #subManagerIcon{
+ 	cursor:pointer;
+ 	
+ 				
+ }
+ #commonMemberIcon{
+ 	cursor:pointer;
+ 	
+ }
+ #deleteMemberIcon{
+ 	cursor:pointer; 	
+	
 }
 
-td.day { /*현재 달의 일자들을 설정할 수 있습니다.*/
-	color: cyan;
-	text-align: left;
-	font-size: larger;
-}
-
-td.old.day {
-	text-align: left;
-	vertical-align: top;
-	/*오래전 날짜들은 X선(대각선)을 그을 수 있습니다.
-	     당장은 필요없다고 답변받아 사용할 수 있도록 주석처리만 함.*/
-	/*
-	     background: <line x1:"0" y1="100%" x2="100%" y2="0" stroke="gray">;
-	     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="0" x2="100%" y2="100%" stroke="gray" /><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>');*/
-}
-
-td.new.day {
-	text-align: left;
-	vertical-align: top;
+#subManagerIcon .tipBody {
+    background-color: black;
+    padding: 8px;
 }
 </style>
+
 </head>
 <body>
 	<div id="gaibu-top">
@@ -173,13 +238,16 @@ td.new.day {
 								</c:if>
 								</td>
 								<td>
-								     
 								</td>
-								
-									
-									<td width="30px"><img src="<c:url value='/img/subManager.png' />" @click="subManager('${gjoin.member_id }')"></td>
-									<td width="30px"><img src="<c:url value='/img/commonMember.png' />" @click="commonMember('${gjoin.member_id }')"></td>
-									<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" @click="deleteMember('${gjoin.member_id }')"></td>
+								<c:if test="loginid"></c:if>									
+									<td width="30px">
+									<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
+									 @click="subManager('${gjoin.member_id }')">
+									 </td>
+									<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
+									title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
+									<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
+									 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
 								
 								</tr>
 								<input type="hidden" id="memberidh" value="${gjoin.member_id}">
@@ -190,52 +258,7 @@ td.new.day {
 				</div>
 			</div>
 	</div>
-<!-- management start -->
-	<div class="Management">
-		<div id="app2">
-				<button id="show-modal2" @click="openModal">초대코드보내기</button>
-			  
-			  <modal v-if="showModal2" @close="closeModal">
-			<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
-			 	<template slot="header"><h3>초대코드 보내기</h3></template>
-			 	<template slot="body">
-			 	<div>초대코드를 보낼 아이디를 입력해주세요</div>
-			 	<div><input v-model="memberid"></div>
-			 	<button  @click="showMember">멤버확인</button>
-			 	</template>
-			 	<template slot="footer">
-			 		<div>초대코드를 보낼 이메일을 입력해주세요</div>
-			 		<div><input v-model="message"></div>
-			 		<button @click="doSend">제출</button>
-			 	</template>
-			  </modal>
-		</div>
-	<div>	
-<!--  manangement end-->
-<!-- groupcaution -->
-	<div class="Caution">
-		<div id="app3">
-				<button id="show-modal3" @click="openModal">공지사항등록</button>
-			  
-			  <modal v-if="showModal3" @close="closeModal">
-			<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
-			 	<template slot="header"><h3>공지사항등록</h3></template>
-			 	<template slot="body">
-			 	<div>내용을 입력해주세요</div>
-			 	</template>
-			 	<template slot="footer">
-			 		<div><input v-model="message"><button @click="doSend">제출</button></div>
-			 		<input type = "hidden" id="gno" value="${gno }">
-			 	</template>
-			  </modal>
-		</div>
-	</div>
-<!-- groupcautionend -->
 </div>
-
-            </div>
-        </div>
-    </div>
  <script>
 var groupnoh='';
 var memberidh='';
@@ -344,118 +367,7 @@ Vue.component('modal', {
 			}
 	 	}
 	})
-	
-	
-	//앱시작2
-	new Vue({
-		el: '#app2',
-		data: function(){
-		return {
-		  	showModal2: false,
-		   	message: '',
-		   	memberid: ''
-			 }
-		 },
-		methods: {
-			openModal(){
-				this.showModal2 = true
-			},
-		showMember(){
-			if(this.memberid.length > 0) {
-			var mid = this.memberid;
-			$.ajax({
-				url:"selectGJM",
-				type:"get",
-				data:{"memberCheck" : mid},
-				success:
-					function(result){
-					if(result == "true"){
-						alert("성공")
-					}else {
-						alert("존재안함")
-					}
-				}
-			})
-			this.memberid = ''
-			this.closeModal()
-			}
-			else {
-					alert("아이디입력필요")
-				}
-			},
-			closeModal(){
-				this.showModal2 = false
-			},
-			doSend(){
-				if (this.message.length > 0) {
-		// 		이메일로 보내기
-				$.ajax({
-				url:"sendEmail",
-				type:"get",
-				data:{"email" : this.message},
-				success:
-					function(result){
-					if(result == "true"){
-						alert("성공")
-					}else {
-						alert("실패")
-					}
-				}
-			})
-				this.message =''
-				this.closeModal()
-				}
-				else {
-					alert('이메일 입력필요')
-				}
-			}
-		}
-	})
-	//앱시작3
-	new Vue({
-	  el: '#app3',
-	  data: function(){
-	    return {
-	    	showModal3: false,
-	    	message: '',
-		 }
-	  },
-	  methods: {
-			openModal(){
-				this.showModal3 = true
-				
-			},
-			closeModal(){
-				this.showModal3 = false
-			},
-			doSend(){
-				if (this.message.length > 0) {
-// 					여기에 이벤트를 주면됩니다
-					var msg = this.message
-					groupnoh = document.getElementById("gno").value;
-					$.ajax({
-						url:"insertCaution",
-						type:"get",
-						data:{"caution" : msg,
-							"gno" : groupnoh
-							},
-						success:
-						function(result){
-							if(result == "true"){
-								alert("성공")
-							}else {
-								alert("실패")
-							}
-						}
-					})
-					this.message =''
-					this.closeModal()
-				}else {
-					alert('텍스트 입력필요')
-				}
-			}
-	  }
-	})
+
 
 </script>
 </body>

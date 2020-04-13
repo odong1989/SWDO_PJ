@@ -159,7 +159,7 @@ public class GroupController {
 		return "group/groupMemberMgr";
 	}
 	
-	@RequestMapping(value="/group/selectGJM", method=RequestMethod.GET)
+	@RequestMapping(value="/document/selectGJM", method=RequestMethod.GET)
 	@ResponseBody
 	public String selectGJM(String memberCheck) {
 		
@@ -220,7 +220,7 @@ public class GroupController {
 		return chk;
 	}
 	
-	@RequestMapping(value="/group/insertCaution", method=RequestMethod.GET)
+	@RequestMapping(value="/document/insertCaution", method=RequestMethod.GET)
 	@ResponseBody
 	public String insertCaution(Document vo, String caution, HttpSession session, int gno) {
 		
@@ -243,7 +243,7 @@ public class GroupController {
 		return chk;
 	}
 	
-	@RequestMapping(value="/group/sendEmail", method=RequestMethod.GET)
+	@RequestMapping(value="/document/sendEmail", method=RequestMethod.GET)
 	@ResponseBody
 	public String sendEmail(String email) {
 		logger.info("email {}",email);
