@@ -12,16 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
+import net.softsociety.binder.dao.GroupMemberDAO;
 import net.softsociety.binder.dao.HashTagDAO;
 import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.dao.PhotoDAO;
 import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
+import net.softsociety.binder.vo.GroupJoin;
 import net.softsociety.binder.vo.HashTag;
 import net.softsociety.binder.vo.Note;
 import net.softsociety.binder.vo.Photo;
@@ -39,6 +42,7 @@ public class DocumentController {
 	@Autowired HashTagDAO   hashTagDao;
 	@Autowired NoteDAO 	    noteDao;
 	@Autowired PhotoDAO 	photoDao;
+	@Autowired GroupMemberDAO groupMemberDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
@@ -68,7 +72,7 @@ public class DocumentController {
 	}	
 	
 	@RequestMapping(value="group", method=RequestMethod.GET)
-	public String group(HttpSession session, int no , Model model)
+	public String group(HttpSession session, int no , Model model, GroupJoin vo)
 	{	
 		logger.info("mainDocument 이동");
 		String member_id = (String) session.getAttribute("loginId");
@@ -97,6 +101,11 @@ public class DocumentController {
 		logger.info("-해시태그");
 		model.addAttribute("hashTagList", hashTagList);
 		model.addAttribute("group_no", no);
+		vo.setGroup_no(no);
+		logger.info("groupMemberMgr {}",vo);
+		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
+		logger.info("groupMemberMgr {}",join);
+		model.addAttribute("gjoin",join);
 		return "/document/readDocument";
 	}
 	
@@ -215,6 +224,107 @@ public class DocumentController {
 		
 		return "/document/editDocument";
 		
+	}
+	//그룹멤버확인 초대코드아이디로 보낼때
+	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
+	@ResponseBody
+	public String selectGJM(String memberCheck) {
+		
+		String memberCheck2 = groupMemberDao.selectGroupJoinMemberOne(memberCheck);
+		logger.info("selectGJM {}",memberCheck2);
+		String chk = null;
+		if (memberCheck2 != null) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	//그룹회원 부매니저로 전환
+	@RequestMapping(value="updateGJMS", method=RequestMethod.GET)
+	@ResponseBody
+	public String memberUpdate(GroupJoin vo, String memberid, int groupno) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		logger.info("updateGJMS {}",vo);
+		int memberUpdate = groupMemberDao.updateGroupMember(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	//그룹회원 일반회원 전환
+	@RequestMapping(value="updateGJMC", method=RequestMethod.GET)
+	@ResponseBody
+	public String memberUpdate2(GroupJoin vo, String memberid, int groupno) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		logger.info("updateGJMC {}",vo);
+		int memberUpdate = groupMemberDao.updateGroupMember2(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	//그룹회원삭제
+	@RequestMapping(value="deleteGMember", method=RequestMethod.GET)
+	@ResponseBody
+	public String gmemberDelete(GroupJoin vo, String memberid, int groupno) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		logger.info("deleteGMember {}",vo);
+		int memberUpdate = groupMemberDao.deleteGMember(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	//공지사항 등록
+	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
+	@ResponseBody
+	public String insertCaution(Document vo, String caution, HttpSession session, int gno) {
+		
+		logger.info("insertCaution {}",caution);
+		String member_id = (String) session.getAttribute("loginId");
+		vo.setMember_id(member_id);
+		vo.setGroup_no(gno);
+		vo.setDocument_content(caution);
+		int chkdel = documentDao.deleteCaution(gno);
+		logger.info("insertCaution - deleteCaution {}",chkdel);
+		
+		int chknum = documentDao.insertCaution(vo);
+		
+		String chk = null;
+		if (chknum != 0) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
+	//초대코드 이메일로 보내기
+	@RequestMapping(value="sendEmail", method=RequestMethod.GET)
+	@ResponseBody
+	public String sendEmail(String email) {
+		logger.info("email {}",email);
+		
+		
+		String chk = null;
+		if (email != null) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
 	}
 	
 	

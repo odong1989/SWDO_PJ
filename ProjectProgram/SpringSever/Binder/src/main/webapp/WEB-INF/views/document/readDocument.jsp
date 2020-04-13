@@ -18,9 +18,10 @@
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/css/main.css'/>" >
+    <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
 var temp = '';
 function selectGroup(pk) {
@@ -890,6 +891,46 @@ $(document).on("click","#btn2",function(){
 					<div class="menu-group-button-right">
 						<c:if test="${glist.MEMBER_LEVEL == 1 }">
 							<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
+							<div id="app1">
+							<button @click="openModal">관리</button>
+							<modal v-if="showModal" @close="closeModal">
+								 	<template slot="header"><h3>회원목록</h3></template>
+								 	<template slot="body">
+										<table>
+											<c:forEach var="gjoin" items="${gjoin }">
+												<tr>
+												<td class='center'>${gjoin.member_id }</td>
+												<td class='center'><c:if test="${gjoin.member_level == 1 }">
+													관리자
+												</c:if> <c:if test="${gjoin.member_level == 2 }">
+													부관리자
+												</c:if> <c:if test="${gjoin.member_level == 3 }">
+													일반회원
+												</c:if>
+												</td>
+												<td>
+												</td>
+												<c:if test="loginid"></c:if>									
+													<td width="30px">
+													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
+													 @click="subManager('${gjoin.member_id }')">
+													 </td>
+													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
+													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
+													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
+													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
+												
+												</tr>
+												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
+												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
+											</c:forEach>
+										</table>
+								 	</template>
+								 	<template slot="footer">
+								 		<button @click="closeModal">닫기</button>
+								 	</template>
+								  </modal>
+							</div>
 							<img src="<c:url value='/img/crown_gold.png' />">
 						</c:if>
 						<c:if test="${glist.MEMBER_LEVEL == 2 }">
@@ -911,12 +952,53 @@ $(document).on("click","#btn2",function(){
 						<a href="javascript:write(${group_no})">
 							<img src="<c:url value='/img/pencil.png' />">
 						</a>
+											<!-- invite start -->
+						<div class="Management">
+							<div id="app2">
+									<button id="show-modal2" @click="openModal">send</button>
+								  
+								  <modal v-if="showModal2" @close="closeModal">
+								<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
+								 	<template slot="header"><h3>초대코드 보내기</h3></template>
+								 	<template slot="body">
+								 	<div>초대코드를 보낼 아이디를 입력해주세요</div>
+								 	<div><input v-model="memberid"></div>
+								 	<button  @click="showMember">멤버확인</button>
+								 	</template>
+								 	<template slot="footer">
+								 		<div>초대코드를 보낼 이메일을 입력해주세요</div>
+								 		<div><input v-model="message"></div>
+								 		<button @click="doSend">제출</button>
+								 	</template>
+								  </modal>
+							</div>
+					<!--  invite end-->	
 					</td>
 					<td width="auto" align="center"><p id="notice">공지사항 :
 					<c:if test="${caution.document_content != '' }">
 							${caution.document_content }
 					</c:if>
-							</p></td>
+					<!-- groupcaution -->
+					<div class="Caution">
+						<div id="app3">
+							<img src="<c:url value='/img/pencil.png' />" id="show-modal3" @click="openModal">
+							  
+							 <modal v-if="showModal3" @close="closeModal">
+							<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
+							 	<template slot="header"><h3>공지사항등록</h3></template>
+							 	<template slot="body">
+							 	<div>내용을 입력해주세요</div>
+							 	</template>
+							 	<template slot="footer">
+							 		<div><input v-model="message"><button @click="doSend">제출</button></div>
+							 		<input type = "hidden" id="gno" value="${group_no }">
+							 	</template>
+							  </modal>
+						</div>
+					</div>
+				<!-- groupcautionend -->
+							</p>
+							</td>
 					<td width="21%" align="right">
 						<img src="<c:url value='/img/f5.png' />">
 						<img src="<c:url value='/img/cal.png' />" id="btn1">
@@ -955,5 +1037,224 @@ $(document).on("click","#btn2",function(){
     <script src="<c:url value='/js/addEvent.js' />"></script>
     <script src="<c:url value='/js/editEvent.js' />"></script>
     <script src="<c:url value='/js/etcSetting.js' />"></script>
+    <script>
+		var groupnoh='';
+		var memberidh='';
+		var msg; // 데이터 받아올 var
+		
+		Vue.component('modal', {
+			  template: `
+				  <transition name="modal">
+				    <div class="modal-mask" @click.self="$emit('close')">
+				      <div class="modal-wrapper">
+				        <div class="modal-container">
+				          
+						<div class="modal-header">
+				            <slot name="header">
+				              default header
+				            </slot>
+				          </div>
+		
+				          <div class="modal-body">
+				            <slot name="body">
+				              default body
+				            </slot>
+				          </div>
+		
+				          <div class="modal-footer">
+				            <slot name="footer">
+				              default footer
+				              <button class="modal-default-button" @click="$emit('close')">
+				                	close
+				              </button>		
+				            </slot>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </transition>
+				  `
+		})
+		//앱시작1
+		new Vue({
+	  el: '#app1',
+	  data: 
+		{
+	    showModal: false,    
+		},
+	  methods: {
+			openModal(){
+				this.showModal = true
+			},
+			closeModal(){
+				this.showModal = false
+			},
+			deleteMember(memberidh){
+				groupnoh = document.getElementById("groupnoh").value;
+				$.ajax({
+					url:"deleteGMember",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+							history.go(0);
+						}else {
+							alert("실패")
+						}
+					}
+				})
+	  		},
+			subManager(memberidh){
+	  			groupnoh = document.getElementById("groupnoh").value;
+				$.ajax({
+					url:"updateGJMS",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+							history.go(0);
+						}else {
+							alert("실패")
+						}
+					}
+				})
+			},
+			commonMember(memberidh){
+	  			groupnoh = document.getElementById("groupnoh").value;
+				$.ajax({
+					url:"updateGJMC",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+							history.go(0);
+						}else {
+							alert("실패")
+						}
+					}
+				})
+			}
+	 	}
+	})
+		//앱시작2
+			new Vue({
+				el: '#app2',
+				data: function(){
+				return {
+				  	showModal2: false,
+				   	message: '',
+				   	memberid: ''
+					 }
+				 },
+				methods: {
+					openModal(){
+						this.showModal2 = true
+					},
+				showMember(){
+					if(this.memberid.length > 0) {
+					var mid = this.memberid;
+					$.ajax({
+						url:"selectGJM",
+						type:"get",
+						data:{"memberCheck" : mid},
+						success:
+							function(result){
+							if(result == "true"){
+								alert("성공")
+							}else {
+								alert("존재안함")
+							}
+						}
+					})
+					this.memberid = ''
+					this.closeModal()
+					}
+					else {
+							alert("아이디입력필요")
+						}
+					},
+					closeModal(){
+						this.showModal2 = false
+					},
+					doSend(){
+						if (this.message.length > 0) {
+				// 		이메일로 보내기
+						$.ajax({
+						url:"sendEmail",
+						type:"get",
+						data:{"email" : this.message},
+						success:
+							function(result){
+							if(result == "true"){
+								alert("성공")
+							}else {
+								alert("실패")
+							}
+						}
+					})
+						this.message =''
+						this.closeModal()
+						}
+						else {
+							alert('이메일 입력필요')
+						}
+					}
+				}
+			})
+			//앱시작3
+			new Vue({
+			  el: '#app3',
+			  data: function(){
+			    return {
+			    	showModal3: false,
+			    	message: '',
+				 }
+			  },
+			  methods: {
+					openModal(){
+						this.showModal3 = true
+						
+					},
+					closeModal(){
+						this.showModal3 = false
+					},
+					doSend(){
+						if (this.message.length > 0) {
+							var msg = this.message
+							groupnoh = document.getElementById("gno").value;
+							$.ajax({
+								url:"insertCaution",
+								type:"get",
+								data:{"caution" : msg,
+									"gno" : groupnoh
+									},
+								success:
+								function(result){
+									if(result == "true"){
+										alert("성공")
+										history.go(0);
+									}else {
+										alert("실패")
+									}
+								}
+							})
+							this.message =''
+							this.closeModal()
+						}else {
+							alert('텍스트 입력필요')
+						}
+					}
+			  }
+			})
+	</script>
 </body>
 </html>
