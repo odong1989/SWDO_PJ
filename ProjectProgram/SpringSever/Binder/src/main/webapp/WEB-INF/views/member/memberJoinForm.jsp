@@ -59,6 +59,7 @@ function formCheck(){//id및 입력사항 유효성 검사체크
 		height:50px;
 		font-size:13px;
 	}
+
 </style>
 </head>
 <body>

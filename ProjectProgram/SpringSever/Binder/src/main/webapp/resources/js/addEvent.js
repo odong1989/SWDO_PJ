@@ -37,7 +37,8 @@ var newEvent = function (start, end, eventType) {
 
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
-    $('#save-event').on('click', function () {
+//    $('#save-event').on('click', function () {
+    $(document).on('click','#save-event',function(){
         alert('일정명은 필수입니다.');
         var eventData = {
             _id: eventId,

@@ -18,11 +18,20 @@
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/css/main.css'/>" >
-    <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 <script type="text/javascript">
+//아래의 3가지 방식을 통하여 HTMl의 변경이 되었다면 최후에 자신들이 갖고 있는 내용적용시기키도록 한다.
+/* window.onload = function() {
+	????
+}
+$(document).ready(function() {
+	???
+});
+$(function() {
+	???
+}); */
 var temp = '';
 function selectGroup(pk) {
 	location.href="<c:url value='/document/group' />?no="+pk;
@@ -39,6 +48,7 @@ function write(pk) {
 function groupMgr(pk) {
 	location.href="<c:url value='/group/groupMemberMgr' />?no="+pk;
 }
+
 //btn1 : 게시판->캘린더로 변경
 $(document).on("click","#btn1",function(){
 	$.ajax({
@@ -46,15 +56,18 @@ $(document).on("click","#btn1",function(){
 			url:"<c:url value='/calender/calenderMain'/>",
 			type:"get",
 			success:function(documentList){
+
 				var tempDocumentList = documentList[0].DOCUMENT_FINALDAY;
 				console.log(documentList);
 			//	alert("일정데이터 documentList(자료형 : ArrayList<HashMap<String, Object>>)만 수신합니다. ");
 			//	alert("일정데이터 documentList시작일날짜정보 : "+ '${documentList[0].DOCUMENT_REGDATE}');
 			//	alert("일정데이터 documentList마지막날짜정보 : "+ '${documentList[0].DOCUMENT_FINALDAY}');
 				alert("tempDocumentList : "+ documentList[0].DOCUMENT_FINALDAY);
-				 
-		
+
+
+
 				var changeToFullCalendar ='<div class="container">';
+				changeToFullCalendar +='<div class="container">';
 				changeToFullCalendar +='<!-- 일자 클릭시 메뉴오픈 -->';
 				changeToFullCalendar += '<div id="contextMenu" class="dropdown clearfix">';
 				changeToFullCalendar +=      '<ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"style="display:block;position:static;margin-bottom:5px;">';
@@ -193,315 +206,10 @@ $(document).on("click","#btn1",function(){
 				console.log(changeToFullCalendar);
 						
 				document.getElementById('right-body').innerHTML=changeToFullCalendar;
-				//==========================================
-				var eventModal = $('#eventModal');
-
-var modalTitle = $('.modal-title');
-var editAllDay = $('#edit-allDay');
-var editTitle = $('#edit-title');
-var editStart = $('#edit-start');
-var editEnd = $('#edit-end');
-var editType = $('#edit-type');
-var editColor = $('#edit-color');
-var editDesc = $('#edit-desc');
-
-var addBtnContainer = $('.modalBtnContainer-addEvent');
-var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
-
-
-/* ****************
- *  새로운 일정 생성
- * ************** */
-var newEvent = function (start, end, eventType) {
-
-    $("#contextMenu").hide(); //메뉴 숨김
-
-    modalTitle.html('새로운 일정');
-    editType.val(eventType).prop('selected', true);
-    editTitle.val('');
-    editStart.val(start);
-    editEnd.val(end);
-    editDesc.val('');
-    
-    addBtnContainer.show();
-    modifyBtnContainer.hide();
-    eventModal.modal('show');
-
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-    var eventId = 1 + Math.floor(Math.random() * 1000);
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-
-    //새로운 일정 저장버튼 클릭
-    $('#save-event').unbind();
-//    $('#save-event').on('click', function () {
-    $(document).on('click','#save-event',function(){
-        alert('일정명은 필수입니다.');
-        var eventData = {
-            _id: eventId,
-            title: editTitle.val(),
-            start: editStart.val(),
-            end: editEnd.val(),
-            description: editDesc.val(),
-            type: editType.val(),
-            username: '사나',
-            backgroundColor: editColor.val(),
-            textColor: '#ffffff',
-            allDay: false
-        };
-
-        if (eventData.start > eventData.end) {
-            alert('끝나는 날짜가 앞설 수 없습니다.');
-            return false;
-        }
-
-        if (eventData.title === '') {
-            alert('일정명은 필수입니다.');
-            return false;
-        }
-
-        var realEndDay;
-
-        if (editAllDay.is(':checked')) {
-            eventData.start = moment(eventData.start).format('YYYY-MM-DD');
-            //render시 날짜표기수정
-            eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
-            //DB에 넣을때(선택)
-            realEndDay = moment(eventData.end).format('YYYY-MM-DD');
-
-            eventData.allDay = true;
-        }
-
-        $("#calendar").fullCalendar('renderEvent', eventData, true);
-        eventModal.find('input, textarea').val('');
-        editAllDay.prop('checked', false);
-        eventModal.modal('hide');
-
-        //새로운 일정 저장
-        $.ajax({
-            type: "get",
-            url: "",
-            data: {
-                //.....
-            },
-            success: function (response) {
-                //DB연동시 중복이벤트 방지를 위한
-                //$('#calendar').fullCalendar('removeEvents');
-                //$('#calendar').fullCalendar('refetchEvents');
-            }
-        });
-    });
-};
-				//===========================================
-				//[3]addEvent.js start
-				/* ****************
-				 *  일정 편집
-				 * ************** */
-				var editEvent = function (event, element, view) {
-				    $('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
-				    $('.popover.fade.top').remove();
-				    $(element).popover("hide");
-				    if (event.allDay === true) {
-				        editAllDay.prop('checked', true);
-				    } else {
-				        editAllDay.prop('checked', false);
-				    }
-				    if (event.end === null) {
-				        event.end = event.start;
-				    }
-				    if (event.allDay === true && event.end !== event.start) {
-				        editEnd.val(moment(event.end).subtract(1, 'days').format('YYYY-MM-DD HH:mm'))
-				    } else {
-				        editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
-				    }
-				    modalTitle.html('일정 수정');
-				    editTitle.val(event.title);
-				    editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
-				    editType.val(event.type);
-				    editDesc.val(event.description);
-				    editColor.val(event.backgroundColor).css('color', event.backgroundColor);
-				    addBtnContainer.hide();
-				    modifyBtnContainer.show();
-				    eventModal.modal('show');
-				
-				    //업데이트 버튼 클릭시
-				    $('#updateEvent').unbind();
-				    $('#updateEvent').on('click', function () {
-				
-				        if (editStart.val() > editEnd.val()) {
-				            alert('끝나는 날짜가 앞설 수 없습니다.');
-				            return false;
-				        }
-				
-				        if (editTitle.val() === '') {
-				            alert('일정명은 필수입니다.')
-				            return false;
-				        }
-				
-				        var statusAllDay;
-				        var startDate;
-				        var endDate;
-				        var displayDate;
-				
-				        if (editAllDay.is(':checked')) {
-				            statusAllDay = true;
-				            startDate = moment(editStart.val()).format('YYYY-MM-DD');
-				            endDate = moment(editEnd.val()).format('YYYY-MM-DD');
-				            displayDate = moment(editEnd.val()).add(1, 'days').format('YYYY-MM-DD');
-				        } else {
-				            statusAllDay = false;
-				            startDate = editStart.val();
-				            endDate = editEnd.val();
-				            displayDate = endDate;
-				        }
-				
-				        eventModal.modal('hide');
-				
-				        event.allDay = statusAllDay;
-				        event.title = editTitle.val();
-				        event.start = startDate;
-				        event.end = displayDate;
-				        event.type = editType.val();
-				        event.backgroundColor = editColor.val();
-				        event.description = editDesc.val();
-				
-				        $("#calendar").fullCalendar('updateEvent', event);
-				
-				        //일정 업데이트
-				        $.ajax({
-				            type: "get",
-				            url: "",
-				            data: {
-				                //...
-				            },
-				            success: function (response) {
-				                alert('수정되었습니다.')
-				            }
-				        });
-				
-				    });
-				};
-				
-				// 삭제버튼
-				$('#deleteEvent').on('click', function () {
-				    
-				    $('#deleteEvent').unbind();
-				    $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
-				    eventModal.modal('hide');
-				
-				    //삭제시
-				    $.ajax({
-				        type: "get",
-				        url: "",
-				        data: {
-				            //...
-				        },
-				        success: function (response) {
-				            alert('삭제되었습니다.');
-				        }
-				    });
-				
-				});
-				
-				
-				//[3]addEvent.js end
-				//============================================
-				
-				//============================
-				//[1] main.js
-				var draggedEventIsAllDay;
-var activeInactiveWeekends = true;
-
-function getDisplayEventDate(event) {
-
-  var displayEventDate;
-
-  if (event.allDay == false) {
-    var startTimeEventInfo = moment(event.start).format('HH:mm');
-    var endTimeEventInfo = moment(event.end).format('HH:mm');
-    displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
-  } else {
-    displayEventDate = "하루종일";
-  }
-
-  return displayEventDate;
-}
-
-function filtering(event) {
-  var show_username = true;
-  var show_type = true;
-
-  var username = $('input:checkbox.filter:checked').map(function () {
-    return $(this).val();
-  }).get();
-  var types = $('#type_filter').val();
-
-  show_username = username.indexOf(event.username) >= 0;
-
-  if (types && types.length > 0) {
-    if (types[0] == "all") {
-      show_type = true;
-    } else {
-      show_type = types.indexOf(event.type) >= 0;
-    }
-  }
-
-  return show_username && show_type;
-}
-
-function calDateWhenResize(event) {
-
-  var newDates = {
-    startDate: '',
-    endDate: ''
-  };
-
-  if (event.allDay) {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
-  } else {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
-  }
-
-  return newDates;
-}
-
-function calDateWhenDragnDrop(event) {
-  // 드랍시 수정된 날짜반영
-  var newDates = {
-    startDate: '',
-    endDate: ''
-  }
-
-  // 날짜 & 시간이 모두 같은 경우
-  if(!event.end) {
-    event.end = event.start;
-  }
-
-  //하루짜리 all day
-  if (event.allDay && event.end === event.start) {
-    console.log('1111')
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = newDates.startDate;
-  }
-
-  //2일이상 all day
-  else if (event.allDay && event.end !== null) {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
-  }
-
-  //all day가 아님
-  else if (!event.allDay) {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
-  }
-
-  return newDates;
-}
-
 				var calendar = $('#calendar').fullCalendar({
+
 						//------------------------------------------
+				
 					  eventRender: function (event, element, view) {
 					    //일정에 hover시 요약
 					    element.popover({
@@ -527,8 +235,11 @@ function calDateWhenDragnDrop(event) {
 					      html: true,
 					      container: 'body'
 					    });
+
 					    return filtering(event);
+
 					  },
+
 					  //주말 숨기기 & 보이기 버튼
 					  customButtons: {
 					    viewWeekends: {
@@ -541,6 +252,7 @@ function calDateWhenDragnDrop(event) {
 					      }
 					    }
 					  },
+
 					  header: {
 					    left: 'today, prevYear, nextYear, viewWeekends',
 					    center: 'prev, title, next',
@@ -563,9 +275,13 @@ function calDateWhenDragnDrop(event) {
 					      columnFormat: ''
 					    }
 					  },
+
+					
+					  
 					  // 일정 받아옴 
 					events: [
-					    { title: '${documentList[0].DOCUMENT_DESTINATION}',
+					    {
+						  title: '${documentList[0].DOCUMENT_DESTINATION}',
 						  start: '${documentList[0].DOCUMENT_REGDATE}',
 					      end  : tempDocumentList, 
 					      imageurl :'<c:url value="/img/bell.png" />' 
@@ -588,6 +304,7 @@ function calDateWhenDragnDrop(event) {
 					    }
 					  ]*/
 					  ],
+
 					    //저장된 이미지를 불러오기  
 					   eventRender:function(event, eventElement) {
 		                if(event.imageurl) {
@@ -596,8 +313,10 @@ function calDateWhenDragnDrop(event) {
 					  //일정 리사이즈
 					  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
 					    $('.popover.fade.top').remove();
+
 					    //리사이즈시 수정된 날짜반영. 하루를 빼야 정상적으로 반영됨.
 					    var newDates = calDateWhenResize(event);
+
 					    //리사이즈한 일정 업데이트
 					    $.ajax({
 					      type: "get",
@@ -610,13 +329,17 @@ function calDateWhenDragnDrop(event) {
 					        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
 					      }
 					    });
+
 					  },
+
 					  eventDragStart: function (event, jsEvent, ui, view) {
 					    draggedEventIsAllDay = event.allDay;
 					  },
+
 					  //일정 드래그앤드롭
 					  eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
 					    $('.popover.fade.top').remove();
+
 					    //주,일 view일때 종일 <-> 시간 변경불가
 					    if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
 					      if (draggedEventIsAllDay !== event.allDay) {
@@ -625,8 +348,10 @@ function calDateWhenDragnDrop(event) {
 					        return false;
 					      }
 					    }
+
 					    // 드랍시 수정된 날짜반영
 					    var newDates = calDateWhenDragnDrop(event);
+
 					    //드롭한 일정 업데이트
 					    $.ajax({
 					      type: "get",
@@ -638,10 +363,14 @@ function calDateWhenDragnDrop(event) {
 					        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
 					      }
 					    });
+
 					  },
+
 					  select: function (startDate, endDate, jsEvent, view) {
+
 					    $(".fc-body").unbind('click');
 					    $(".fc-body").on('click', 'td', function (e) {
+
 					      $("#contextMenu")
 					        .addClass("contextOpened")
 					        .css({
@@ -651,7 +380,9 @@ function calDateWhenDragnDrop(event) {
 					        });
 					      return false;
 					    });
+
 					    var today = moment();
+
 					    if (view.name == "month") {
 					      startDate.set({
 					        hours: today.hours(),
@@ -659,6 +390,7 @@ function calDateWhenDragnDrop(event) {
 					      });
 					      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
 					      endDate = moment(endDate).subtract(1, 'days');
+
 					      endDate.set({
 					        hours: today.hours() + 1,
 					        minute: today.minutes()
@@ -668,26 +400,33 @@ function calDateWhenDragnDrop(event) {
 					      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
 					      endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
 					    }
+
 					    //날짜 클릭시 카테고리 선택메뉴
 					    var $contextMenu = $("#contextMenu");
 					    $contextMenu.on("click", "a", function (e) {
 					      e.preventDefault();
+
 					      //닫기 버튼이 아닐때
 					      if ($(this).data().role !== 'close') {
 					        newEvent(startDate, endDate, $(this).html());
 					      }
+
 					      $contextMenu.removeClass("contextOpened");
 					      $contextMenu.hide();
 					    });
+
 					    $('body').on('click', function () {
 					      $contextMenu.removeClass("contextOpened");
 					      $contextMenu.hide();
 					    });
+
 					  },
+
 					  //이벤트 클릭시 수정이벤트
 					  eventClick: function (event, jsEvent, view) {
 					    editEvent(event);
 					  },
+
 					  locale: 'ko',
 					  timezone: "local",
 					  nextDayThreshold: "09:00:00",
@@ -719,129 +458,14 @@ function calDateWhenDragnDrop(event) {
 					  longPressDelay: 0,
 					  eventLongPressDelay: 0,
 					  selectLongPressDelay: 0
+
 				});//seccess END
-				//[1]main.js END
-
-				
-				//========================================
-				//[2] editEvent.js
-				/* ****************
-				 *  일정 편집
-				 * ************** */
-				var editEvent = function (event, element, view) {
-
-				    $('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
-
-				    $('.popover.fade.top').remove();
-				    $(element).popover("hide");
-
-				    if (event.allDay === true) {
-				        editAllDay.prop('checked', true);
-				    } else {
-				        editAllDay.prop('checked', false);
-				    }
-
-				    if (event.end === null) {
-				        event.end = event.start;
-				    }
-
-				    if (event.allDay === true && event.end !== event.start) {
-				        editEnd.val(moment(event.end).subtract(1, 'days').format('YYYY-MM-DD HH:mm'))
-				    } else {
-				        editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
-				    }
-
-				    modalTitle.html('일정 수정');
-				    editTitle.val(event.title);
-				    editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
-				    editType.val(event.type);
-				    editDesc.val(event.description);
-				    editColor.val(event.backgroundColor).css('color', event.backgroundColor);
-
-				    addBtnContainer.hide();
-				    modifyBtnContainer.show();
-				    eventModal.modal('show');
-
-				    //업데이트 버튼 클릭시
-				    $('#updateEvent').unbind();
-				    $('#updateEvent').on('click', function () {
-
-				        if (editStart.val() > editEnd.val()) {
-				            alert('끝나는 날짜가 앞설 수 없습니다.');
-				            return false;
-				        }
-
-				        if (editTitle.val() === '') {
-				            alert('일정명은 필수입니다.')
-				            return false;
-				        }
-
-				        var statusAllDay;
-				        var startDate;
-				        var endDate;
-				        var displayDate;
-
-				        if (editAllDay.is(':checked')) {
-				            statusAllDay = true;
-				            startDate = moment(editStart.val()).format('YYYY-MM-DD');
-				            endDate = moment(editEnd.val()).format('YYYY-MM-DD');
-				            displayDate = moment(editEnd.val()).add(1, 'days').format('YYYY-MM-DD');
-				        } else {
-				            statusAllDay = false;
-				            startDate = editStart.val();
-				            endDate = editEnd.val();
-				            displayDate = endDate;
-				        }
-
-				        eventModal.modal('hide');
-
-				        event.allDay = statusAllDay;
-				        event.title = editTitle.val();
-				        event.start = startDate;
-				        event.end = displayDate;
-				        event.type = editType.val();
-				        event.backgroundColor = editColor.val();
-				        event.description = editDesc.val();
-
-				        $("#calendar").fullCalendar('updateEvent', event);
-
-				        //일정 업데이트
-				        $.ajax({
-				            type: "get",
-				            url: "",
-				            data: {
-				                //...
-				            },
-				            success: function (response) {
-				                alert('수정되었습니다.')
-				            }
-				        });
-
-				    });
-				};
-
-				// 삭제버튼
-				$('#deleteEvent').on('click', function () {
-				    
-				    $('#deleteEvent').unbind();
-				    $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
-				    eventModal.modal('hide');
-
-				    //삭제시
-				    $.ajax({
-				        type: "get",
-				        url: "",
-				        data: {
-				            //...
-				        },
-				        success: function (response) {
-				            alert('삭제되었습니다.');
-				        }
-				    });
-
+				$(document).ready(function() {
+					alert("리로딩을 합니다.")
+				    <script src="<c:url value='/js/addEvent.js' />"></script>
+				    <script src="<c:url value='/js/editEvent.js' />"></script>
+				    <script src="<c:url value='/js/etcSetting.js' />"></script>
 				});
-				//[2]
-				//=======================================
 			},
 			error:function(){alert("캘린더 로드 중 에러가 발생되었습니다.")}
 	});
@@ -858,6 +482,7 @@ $(document).on("click","#btn2",function(){
 			error:function(){alert("게시판(document) 로드 중 에러가 발생되었습니다.")}
 	});
 });
+
 </script>
 
     <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
@@ -891,46 +516,6 @@ $(document).on("click","#btn2",function(){
 					<div class="menu-group-button-right">
 						<c:if test="${glist.MEMBER_LEVEL == 1 }">
 							<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
-							<div id="app1">
-							<button @click="openModal">관리</button>
-							<modal v-if="showModal1" @close="closeModal">
-								 	<template slot="header"><h3>회원목록</h3></template>
-								 	<template slot="body">
-										<table>
-											<c:forEach var="gjoin" items="${gjoin }">
-												<tr>
-												<td class='center'>${gjoin.member_id }</td>
-												<td class='center'><c:if test="${gjoin.member_level == 1 }">
-													관리자
-												</c:if> <c:if test="${gjoin.member_level == 2 }">
-													부관리자
-												</c:if> <c:if test="${gjoin.member_level == 3 }">
-													일반회원
-												</c:if>
-												</td>
-												<td>
-												</td>
-												<c:if test="loginid"></c:if>									
-													<td width="30px">
-													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
-													 @click="subManager('${gjoin.member_id }')">
-													 </td>
-													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
-													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
-													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
-													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
-												
-												</tr>
-												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
-												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
-											</c:forEach>
-										</table>
-								 	</template>
-								 	<template slot="footer">
-								 		<button @click="closeModal">제출</button>
-								 	</template>
-								  </modal>
-							</div>
 							<img src="<c:url value='/img/crown_gold.png' />">
 						</c:if>
 						<c:if test="${glist.MEMBER_LEVEL == 2 }">
@@ -952,53 +537,12 @@ $(document).on("click","#btn2",function(){
 						<a href="javascript:write(${group_no})">
 							<img src="<c:url value='/img/pencil.png' />">
 						</a>
-											<!-- invite start -->
-						<div class="Management">
-							<div id="app2">
-									<button id="show-modal2" @click="openModal">send</button>
-								  
-								  <modal v-if="showModal2" @close="closeModal">
-								<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
-								 	<template slot="header"><h3>초대코드 보내기</h3></template>
-								 	<template slot="body">
-								 	<div>초대코드를 보낼 아이디를 입력해주세요</div>
-								 	<div><input v-model="memberid"></div>
-								 	<button  @click="showMember">멤버확인</button>
-								 	</template>
-								 	<template slot="footer">
-								 		<div>초대코드를 보낼 이메일을 입력해주세요</div>
-								 		<div><input v-model="message"></div>
-								 		<button @click="doSend">제출</button>
-								 	</template>
-								  </modal>
-							</div>
-					<!--  invite end-->	
 					</td>
 					<td width="auto" align="center"><p id="notice">공지사항 :
 					<c:if test="${caution.document_content != '' }">
 							${caution.document_content }
 					</c:if>
-					<!-- groupcaution -->
-					<div class="Caution">
-						<div id="app3">
-							<img src="<c:url value='/img/pencil.png' />" id="show-modal3" @click="openModal">
-							  
-							 <modal v-if="showModal3" @close="closeModal">
-							<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
-							 	<template slot="header"><h3>공지사항등록</h3></template>
-							 	<template slot="body">
-							 	<div>내용을 입력해주세요</div>
-							 	</template>
-							 	<template slot="footer">
-							 		<div><input v-model="message"><button @click="doSend">제출</button></div>
-							 		<input type = "hidden" id="gno" value="${group_no }">
-							 	</template>
-							  </modal>
-						</div>
-					</div>
-				<!-- groupcautionend -->
-							</p>
-							</td>
+							</p></td>
 					<td width="21%" align="right">
 						<img src="<c:url value='/img/f5.png' />">
 						<img src="<c:url value='/img/cal.png' />" id="btn1">
@@ -1037,223 +581,5 @@ $(document).on("click","#btn2",function(){
     <script src="<c:url value='/js/addEvent.js' />"></script>
     <script src="<c:url value='/js/editEvent.js' />"></script>
     <script src="<c:url value='/js/etcSetting.js' />"></script>
-    <script>
-		var groupnoh='';
-		var memberidh='';
-		var msg; // 데이터 받아올 var
-		
-		Vue.component('modal', {
-			  template: `
-				  <transition name="modal">
-				    <div class="modal-mask" @click.self="$emit('close')">
-				      <div class="modal-wrapper">
-				        <div class="modal-container">
-				          
-						<div class="modal-header">
-				            <slot name="header">
-				              default header
-				            </slot>
-				          </div>
-		
-				          <div class="modal-body">
-				            <slot name="body">
-				              default body
-				            </slot>
-				          </div>
-		
-				          <div class="modal-footer">
-				            <slot name="footer">
-				              default footer
-				              <button class="modal-default-button" @click="$emit('close')">
-				                	close
-				              </button>		
-				            </slot>
-				          </div>
-				        </div>
-				      </div>
-				    </div>
-				  </transition>
-				  `
-		})
-		//앱시작1
-		new Vue({
-	  el: '#app1',
-	  data: 
-		{
-	    showModal: false,    
-		},
-	  methods: {
-			openModal(){
-				this.showModal = true
-			},
-			closeModal(){
-				this.showModal = false
-			},
-			deleteMember(memberidh){
-				groupnoh = document.getElementById("groupnoh").value;
-				$.ajax({
-					url:"deleteGMember",
-					type:"get",
-					data:{"memberid" : memberidh,
-						 "groupno" : groupnoh},
-					success:
-						function(result){
-						if(result == "true"){
-							alert("성공")
-							history.go(0);
-						}else {
-							alert("실패")
-						}
-					}
-				})
-	  		},
-			subManager(memberidh){
-	  			groupnoh = document.getElementById("groupnoh").value;
-				$.ajax({
-					url:"updateGJMS",
-					type:"get",
-					data:{"memberid" : memberidh,
-						 "groupno" : groupnoh},
-					success:
-						function(result){
-						if(result == "true"){
-							alert("성공")
-							history.go(0);
-						}else {
-							alert("실패")
-						}
-					}
-				})
-			},
-			commonMember(memberidh){
-	  			groupnoh = document.getElementById("groupnoh").value;
-				$.ajax({
-					url:"updateGJMC",
-					type:"get",
-					data:{"memberid" : memberidh,
-						 "groupno" : groupnoh},
-					success:
-						function(result){
-						if(result == "true"){
-							alert("성공")
-							history.go(0);
-						}else {
-							alert("실패")
-						}
-					}
-				})
-			}
-	 	}
-	})
-		//앱시작2
-			new Vue({
-				el: '#app2',
-				data: function(){
-				return {
-				  	showModal2: false,
-				   	message: '',
-				   	memberid: ''
-					 }
-				 },
-				methods: {
-					openModal(){
-						this.showModal2 = true
-					},
-				showMember(){
-					if(this.memberid.length > 0) {
-					var mid = this.memberid;
-					$.ajax({
-						url:"selectGJM",
-						type:"get",
-						data:{"memberCheck" : mid},
-						success:
-							function(result){
-							if(result == "true"){
-								alert("성공")
-							}else {
-								alert("존재안함")
-							}
-						}
-					})
-					this.memberid = ''
-					this.closeModal()
-					}
-					else {
-							alert("아이디입력필요")
-						}
-					},
-					closeModal(){
-						this.showModal2 = false
-					},
-					doSend(){
-						if (this.message.length > 0) {
-				// 		이메일로 보내기
-						$.ajax({
-						url:"sendEmail",
-						type:"get",
-						data:{"email" : this.message},
-						success:
-							function(result){
-							if(result == "true"){
-								alert("성공")
-							}else {
-								alert("실패")
-							}
-						}
-					})
-						this.message =''
-						this.closeModal()
-						}
-						else {
-							alert('이메일 입력필요')
-						}
-					}
-				}
-			})
-			//앱시작3
-			new Vue({
-			  el: '#app3',
-			  data: function(){
-			    return {
-			    	showModal3: false,
-			    	message: '',
-				 }
-			  },
-			  methods: {
-					openModal(){
-						this.showModal3 = true
-						
-					},
-					closeModal(){
-						this.showModal3 = false
-					},
-					doSend(){
-						if (this.message.length > 0) {
-							var msg = this.message
-							groupnoh = document.getElementById("gno").value;
-							$.ajax({
-								url:"insertCaution",
-								type:"get",
-								data:{"caution" : msg,
-									"gno" : groupnoh
-									},
-								success:
-								function(result){
-									if(result == "true"){
-										alert("성공")
-									}else {
-										alert("실패")
-									}
-								}
-							})
-							this.message =''
-							this.closeModal()
-						}else {
-							alert('텍스트 입력필요')
-						}
-					}
-			  }
-			})
-	</script>
 </body>
 </html>

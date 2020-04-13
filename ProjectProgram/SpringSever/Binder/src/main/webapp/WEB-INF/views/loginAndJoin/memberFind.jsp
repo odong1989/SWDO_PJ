@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<head>
     <meta charset="UTF-8">
     <title>Document</title>
+<link href="<c:url value='/css/joinform.css' />" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
     <style type="text/css">
         div#left_idFind{
             width:300px;
@@ -17,11 +19,12 @@
             float:left;
         }
     </style>
+
 </head>
 <body>
     <div class="wrapFindIDorPW">
         <div id="left_idFind" >
-            <table>
+            <table id="joinformtable">
                 <tr>
                     <td>아이디 찾기</td>
                 </tr>
@@ -44,7 +47,7 @@
         </div>
 
         <div id="left_idFind" >
-                <table >
+            		<table id="joinformtable">
                     <tr>
                         <td>비밀번호 재설정하기</td>
                     </tr>
