@@ -3,36 +3,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FullCalendar Example</title>
+    <link rel=" shortcut icon" href="image/favicon.ico">
+
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
 
-
     <link rel="stylesheet" href="<c:url value='/css/main.css'/>" >
     <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
-  		<table id="document-body">
-			<tr height="40px">
-				<td width="21%">
-					<a href="javascript:invite(${group_no })">
-						<img src="<c:url value='/img/invite.png' />">
-					</a>
-					<a href="javascript:write(${group_no })">
-						<img src="<c:url value='/img/pencil.png' />">
-					</a>
-				</td>
-				<td width="auto" align="center"><p id="notice">공지사항 :
-				<c:if test="${caution.document_content != '' }">
-						${caution.document_content }
-				</c:if>
-						</p></td>
-				<td width="21%" align="right">
-					<img src="<c:url value='/img/f5.png' />">
-					<img src="<c:url value='/img/cal.png' />" id="btn2">
-				</td>
-			</tr>
-				</table>
-		    <div class="container">
+
+    <div class="container">
 
         <!-- 일자 클릭시 메뉴오픈 -->
         <div id="contextMenu" class="dropdown clearfix">
@@ -179,17 +163,3 @@
         <!-- /.filter panel -->
     </div>
     <!-- /.container -->
-	
-	
-				
-    <script src="<c:url value='/vendor/js/jquery.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/bootstrap.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/moment.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/fullcalendar.min.js' />"></script>
- 	<script src="<c:url value='/vendor/js/ko.js' />"></script>
-    <script src="<c:url value='/vendor/js/select2.min.js' />"></script>
-    <script src="<c:url value='/vendor/js/bootstrap-datetimepicker.min.js' />"></script>
-    <script src="<c:url value='/js/main.js' />"></script>
-    <script src="<c:url value='/js/addEvent.js' />"></script>
-    <script src="<c:url value='/js/editEvent.js' />"></script>
-    <script src="<c:url value='/js/etcSetting.js' />"></script>
