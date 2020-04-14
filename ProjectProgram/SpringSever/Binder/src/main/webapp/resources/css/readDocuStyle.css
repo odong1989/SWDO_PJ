@@ -1,0 +1,45 @@
+ #app1{
+ 	float:left;
+ 	margin:0px 15px 0px 15px;
+ 	cursor:pointer;
+ }
+ #app2{
+ 	float:left;
+ 	margin:0px 10px 0px 10px;
+ 	cursor:pointer;
+ }
+ #app3{
+ 	float:left;
+ 	margin:3px 15px 0px 15px;
+ 	cursor:pointer;
+ }
+ .GroupMemberList {
+	witdh : 200px;
+	height : 200px;
+	display:inline;
+	background : red;
+	}
+ .Management {
+ 	witdh : 200px;
+	height : 200px;
+	display:inline;
+	background : blue;
+ }
+ #subManagerIcon{
+ 	cursor:pointer;
+ 	
+ 				
+ }
+ #commonMemberIcon{
+ 	cursor:pointer;
+ 	
+ }
+ #deleteMemberIcon{
+ 	cursor:pointer; 	
+	
+}
+
+#subManagerIcon .tipBody {
+    background-color: black;
+    padding: 8px;
+}
