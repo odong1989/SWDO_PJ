@@ -88,12 +88,11 @@ public class loginAndJoinController {
 	@RequestMapping(value="memberJoin", method=RequestMethod.POST)
 	public String memberJoin(Member member, MultipartFile upload) {
 		Photo photo = new Photo();
-		logger.info("memberJoin메소드입니다");
-		logger.info("회원가입 자료 전달");
+		logger.info("memberJoin메소드입니다. 회원가입 자료 전달받고 실시");
 		logger.info("form을 통해 기입된 member 정보 : {}",member);
-  		logger.info("member의 사진 정보(최초) : {}",member.getMember_photo());
-  		member.setMember_birthday("20-04-01");
-  		
+		logger.info("form을 통해 기입된 첨부사진(upload) 정보 : {}",upload);
+		
+		
 		logger.info("memberJoin메소드-프로필 사진 업로드 시작");		
         if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
             //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)

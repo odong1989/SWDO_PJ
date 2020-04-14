@@ -218,7 +218,7 @@
 
 			//4/13추가
 			if(!(isDateFormCheck(member_birthday.value))){
-				alert("YYYY-MM-DD형식으로 입력해주세요! (예 : 2000-01-01)");
+				alert("생일을 입력해주세요.");
 				return false;
 			}
 			
@@ -261,8 +261,8 @@
 </style>
 </head>
 <body>
-	<form id="joinform" action="<c:url value='/member/memberJoin' />"
-		method="post">
+<!-- <form id="joinform" action="<c:url value='/member/memberJoin' />" method="post"> -->
+	<form id="joinform" action="<c:url value='/loginAndJoin/memberJoin' />" method="post" enctype="multipart/form-data">
 		<table id="joinformtable">
 			<tr>
 				<td class="lefttd">아이디</td>
@@ -299,11 +299,19 @@
 			</tr>
 			<tr>
 				<td class="lefttd">이름</td>
-				<td class="righttd"><input type="text" name="member_name" id="nname"></td>
+				<td class="righttd">
+					<input type="text" name="member_name" placeholder="본명을 기입해주세요." id="nname">
+				</td>
 			</tr>
 			<tr>
+				<td></td>
+				<td class="chktd">
+					<div id="nname_div"></div><!-- 개행(엔터)용도로만 생성. 현재 별도의 ajax안내문 코딩은 없음 -->
+				</td>
+			</tr>		
+			<tr>
 				<td class="lefttd">이메일</td>
-				<td class="righttd"><input type="email" name="member_mail"id="mmail"></td>
+				<td class="righttd"><input type="email" name="member_mail" placeholder="사용하시는 이메일로 입력해주세요"  id="mmail"></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -347,6 +355,13 @@
 					<input type="radio" name="member_married" value="1">기혼
 				</td>
 			</tr>
+			<tr>
+				<td></td>
+				<td class="chktd">
+					<div id="married_div"></div><!-- 개행(엔터)용도로만 생성. 현재 별도의 ajax안내문 코딩은 없음 -->
+				</td>
+			</tr>		
+			
 			
 			<tr>
 				<td class="lefttd">결혼일</td>

@@ -141,6 +141,8 @@ public class MemberController {
 			if(member.getMember_pw().equals(newMember.getMember_pw())) {
 				session.setAttribute("loginId", member.getMember_id());
 				logger.info("-성공. 세션 설정 session : {}",session.getAttribute("loginId"));
+				logger.info("-메인페이지로 이동");
+				return "redirect:/document/mainDocument";
 			} 
 			//비밀번호 불일치
 			else {
@@ -154,8 +156,6 @@ public class MemberController {
 			model.addAttribute("errMsg",errMsg);
 			return "index";
 		}
-		logger.info("-메인페이지로 이동");
-		return "redirect:/document/mainDocument";
 	}
 	
 	
