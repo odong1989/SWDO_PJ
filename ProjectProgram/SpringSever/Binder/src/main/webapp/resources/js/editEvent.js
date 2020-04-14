@@ -94,8 +94,8 @@ var editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$('#deleteEvent').on('click', function () {
-    
+//$('#deleteEvent').on('click', function () { //오리지널
+    $(document).on('click','#deleteEvent',function(){ //ajax통해 로딩되기에 재로딩 실시
     $('#deleteEvent').unbind();
     $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
     eventModal.modal('hide');
