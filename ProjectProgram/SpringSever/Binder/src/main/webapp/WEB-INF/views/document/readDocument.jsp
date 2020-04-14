@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/css/main.css'/>" >
     <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
+    <link href="<c:url value='/css/readDocuStyle.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -890,9 +891,8 @@ $(document).on("click","#btn2",function(){
 					</div>
 					<div class="menu-group-button-right">
 						<c:if test="${glist.MEMBER_LEVEL == 1 }">
-							<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
 							<div id="app1">
-							<button @click="openModal">관리</button>
+							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
 							<modal v-if="showModal" @close="closeModal">
 								 	<template slot="header"><h3>회원목록</h3></template>
 								 	<template slot="body">
@@ -934,7 +934,46 @@ $(document).on("click","#btn2",function(){
 							<img src="<c:url value='/img/crown_gold.png' />">
 						</c:if>
 						<c:if test="${glist.MEMBER_LEVEL == 2 }">
-							<a href="javascript:groupMgr(${glist.GROUP_NO })">관리</a>
+							<div id="app1">
+							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
+							<modal v-if="showModal" @close="closeModal">
+								 	<template slot="header"><h3>회원목록</h3></template>
+								 	<template slot="body">
+										<table>
+											<c:forEach var="gjoin" items="${gjoin }">
+												<tr>
+												<td class='center'>${gjoin.member_id }</td>
+												<td class='center'><c:if test="${gjoin.member_level == 1 }">
+													관리자
+												</c:if> <c:if test="${gjoin.member_level == 2 }">
+													부관리자
+												</c:if> <c:if test="${gjoin.member_level == 3 }">
+													일반회원
+												</c:if>
+												</td>
+												<td>
+												</td>
+												<c:if test="loginid"></c:if>									
+													<td width="30px">
+													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
+													 @click="subManager('${gjoin.member_id }')">
+													 </td>
+													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
+													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
+													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
+													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
+												
+												</tr>
+												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
+												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
+											</c:forEach>
+										</table>
+								 	</template>
+								 	<template slot="footer">
+								 		<button @click="closeModal">닫기</button>
+								 	</template>
+								  </modal>
+							</div>
 							<img src="<c:url value='/img/crown_silver.png' />">
 						</c:if>
 					</div>
@@ -947,15 +986,15 @@ $(document).on("click","#btn2",function(){
 				<tr height="40px">
 					<td width="21%">
 						<a href="javascript:invite(${group_no })">
-							<img src="<c:url value='/img/invite.png' />">
+							<img src="<c:url value='/img/invite.png' />" title="초대코드생성">
 						</a>
 						<a href="javascript:write(${group_no})">
-							<img src="<c:url value='/img/pencil.png' />">
+							<img src="<c:url value='/img/pencil.png' />" title="글쓰기"> 
 						</a>
 											<!-- invite start -->
 						<div class="Management">
 							<div id="app2">
-									<button id="show-modal2" @click="openModal">send</button>
+									<img src= "<c:url value='/img/InviteMember.png'/>" title="초대코드보내기" id="show-modal2" @click="openModal">
 								  
 								  <modal v-if="showModal2" @close="closeModal">
 								<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
@@ -978,10 +1017,12 @@ $(document).on("click","#btn2",function(){
 					<c:if test="${caution.document_content != '' }">
 							${caution.document_content }
 					</c:if>
-					<!-- groupcaution -->
-					<div class="Caution">
+							</p>
+							</td>
+					<td width="21%" align="right">
+						<!-- groupcaution -->
 						<div id="app3">
-							<img src="<c:url value='/img/pencil.png' />" id="show-modal3" @click="openModal">
+							<img src="<c:url value='/img/CautionWrite.png' />" title="공지사항수정" id="show-modal3" @click="openModal">
 							  
 							 <modal v-if="showModal3" @close="closeModal">
 							<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
@@ -995,13 +1036,9 @@ $(document).on("click","#btn2",function(){
 							 	</template>
 							  </modal>
 						</div>
-					</div>
 				<!-- groupcautionend -->
-							</p>
-							</td>
-					<td width="21%" align="right">
 						<img src="<c:url value='/img/f5.png' />">
-						<img src="<c:url value='/img/cal.png' />" id="btn1">
+						<img src="<c:url value='/img/cal.png' />" id="btn1" title="캘린더화면으로전환">
 					</td>
 				</tr>
 				<c:forEach var="dlist" items="${documentList }">
