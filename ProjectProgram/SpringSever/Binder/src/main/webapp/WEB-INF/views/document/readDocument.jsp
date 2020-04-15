@@ -59,10 +59,7 @@ $(document).on("click","#btn1",function(){
 				changeToFullCalendar +='<!-- 일자 클릭시 메뉴오픈 -->';
 				changeToFullCalendar += '<div id="contextMenu" class="dropdown clearfix">';
 				changeToFullCalendar +=      '<ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"style="display:block;position:static;margin-bottom:5px;">';
-				changeToFullCalendar +=     	'<li><a tabindex="-1" href="#">카테고리1</a></li>';
-				changeToFullCalendar +=      	'<li><a tabindex="-1" href="#">카테고리2</a></li>';
-				changeToFullCalendar +=      	'<li><a tabindex="-1" href="#">카테고리3</a></li>';
-				changeToFullCalendar +=       	'<li><a tabindex="-1" href="#">카테고리4</a></li>';
+				changeToFullCalendar +=     	'<li><a tabindex="-1" href="#">일정등록</a></li>';
 				changeToFullCalendar +=       	'<li class="divider"></li>';
 				changeToFullCalendar +=      	'<li><a tabindex="-1" href="#" data-role="close">Close</a></li>';
 				changeToFullCalendar +=    '</ul>';
@@ -109,17 +106,16 @@ $(document).on("click","#btn1",function(){
 				changeToFullCalendar +=                      '<input class="inputModal" type="text" name="edit-end" id="edit-end" />';
 				changeToFullCalendar +=                     '</div>';
 				changeToFullCalendar +=               '</div>';
+				
+														<!--새로운일정 등록 모달팝업창 -사진등록-모달바디 -->				
 				changeToFullCalendar +=                 '<div class="row">';
 				changeToFullCalendar +=                    '<div class="col-xs-12">';
-				changeToFullCalendar +=                         '<label class="col-xs-4" for="edit-type">구분</label>';
-				changeToFullCalendar +=                          '<select class="inputModal" type="text" name="edit-type" id="edit-type">';
-				changeToFullCalendar +=                             '<option value="카테고리1">카테고리1</option>';
-				changeToFullCalendar +=                             '<option value="카테고리2">카테고리2</option>';
-				changeToFullCalendar +=                                '<option value="카테고리3">카테고리3</option>';
-				changeToFullCalendar +=                               '<option value="카테고리4">카테고리4</option>';
-				changeToFullCalendar +=                       '</select>';
-				changeToFullCalendar +=                       '</div>';
+				changeToFullCalendar +=                         '<label class="col-xs-4" for="edit-type">사진등록</label>';
+				changeToFullCalendar +=                         '<input type="file" class="inputModal" name="upload" id="imgInp">';
+				changeToFullCalendar +=  				    '    <img id="previewImg" src="#" width="250" height="250" alt="프사 미리보기" />';
+				changeToFullCalendar +=                    '</div>';
 				changeToFullCalendar +=                 '</div>';
+				
 				changeToFullCalendar +=                '<div class="row">';
 				changeToFullCalendar +=                    '<div class="col-xs-12">';
 				changeToFullCalendar +=                         '<label class="col-xs-4" for="edit-color">색상</label>';
@@ -156,39 +152,6 @@ $(document).on("click","#btn1",function(){
 				changeToFullCalendar +=       '</div><!-- /.modal-dialog -->';
 				changeToFullCalendar +=   '</div><!-- /.modal -->';
 							
-				changeToFullCalendar +=   '<div class="panel panel-default">';
-							
-				changeToFullCalendar +=    '<div class="panel-heading">';
-				changeToFullCalendar +=         '<h3 class="panel-title">필터</h3>';
-				changeToFullCalendar +=     '</div>';
-							
-				changeToFullCalendar +=     '<div class="panel-body">';
-							
-				changeToFullCalendar +=        '<div class="col-lg-6">';
-				changeToFullCalendar +=              '<label for="calendar_view">구분별</label>';
-				changeToFullCalendar +=              '<div class="input-group">';
-				changeToFullCalendar +=                   '<select class="filter" id="type_filter" multiple="multiple">';
-		        changeToFullCalendar +=                     '<option value="카테고리1">카테고리1</option>';
-		        changeToFullCalendar +=                       '<option value="카테고리2">카테고리2</option>';
-		        changeToFullCalendar +=                      '<option value="카테고리3">카테고리3</option>';
-		        changeToFullCalendar +=                      '<option value="카테고리4">카테고리4</option>';
-		        changeToFullCalendar +=                  '</select>';
-		        changeToFullCalendar +=              '</div>';
-		        changeToFullCalendar +=          '</div>';
-							
-		        changeToFullCalendar +=       '<div class="col-lg-6">';
-		        changeToFullCalendar +=          '<label for="calendar_view">등록자별</label>';
-		        changeToFullCalendar +=              '<div class="input-group">';
-		        changeToFullCalendar +=                   '<label class="checkbox-inline"><input class="filter" type="checkbox" value="정연"checked>정연</label>';
-		        changeToFullCalendar +=                  '<label class="checkbox-inline"><input class="filter" type="checkbox" value="다현"checked>다현</label>';
-		        changeToFullCalendar +=                   '<label class="checkbox-inline"><input class="filter" type="checkbox" value="사나"checked>사나</label>';
-		        changeToFullCalendar +=                  '<label class="checkbox-inline"><input class="filter" type="checkbox" value="나연"checked>나연</label>';
-                changeToFullCalendar +=                 '<label class="checkbox-inline"><input class="filter" type="checkbox" value="지효"checked>지효</label>';
-                changeToFullCalendar +=               '</div>';
-                changeToFullCalendar +=           '</div>';
-                changeToFullCalendar +=       '</div>';
-                changeToFullCalendar +=   '</div>';
-                changeToFullCalendar +=   '<!-- /.filter panel -->';
                 changeToFullCalendar +=   '</div>';
                 changeToFullCalendar +=   '<!-- /.container -->';
 				console.log(changeToFullCalendar);
@@ -202,7 +165,8 @@ var editAllDay = $('#edit-allDay');
 var editTitle = $('#edit-title');
 var editStart = $('#edit-start');
 var editEnd = $('#edit-end');
-var editType = $('#edit-type');
+//var editType = $('#edit-type'); //원래는 이거지만 사진등록으로 바꾼다.
+//var imgInp = $('#imgInp');		  //기존의 #edit-type에서 변경하였다. 필요할까?
 var editColor = $('#edit-color');
 var editDesc = $('#edit-desc');
 
@@ -236,7 +200,7 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').unbind();
 //    $('#save-event').on('click', function () {
     $(document).on('click','#save-event',function(){
-        alert('일정명은 필수입니다.');
+    //    alert('일정명은 필수입니다.');
         var eventData = {
             _id: eventId,
             title: editTitle.val(),
@@ -255,8 +219,8 @@ var newEvent = function (start, end, eventType) {
             return false;
         }
 
-        if (eventData.title === '') {
-            alert('일정명은 필수입니다.');
+        if (eventData.title == '') {
+         //   alert('일정명은 필수입니다.');
             return false;
         }
 
@@ -292,7 +256,25 @@ var newEvent = function (start, end, eventType) {
         });
     });
 };
-				//===========================================
+
+				 //이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트입니다.------------------------------
+				        $(function() {
+				            $("#imgInp").on('change', function(){
+				                readURL(this);
+				            });
+				        });
+				        function readURL(input) {
+				            if (input.files && input.files[0]) {
+				            var reader = new FileReader();
+				            reader.onload = function (e) {
+				                    $('#previewImg').attr('src', e.target.result);
+				                }
+				              reader.readAsDataURL(input.files[0]);
+				            }
+				        }
+				 //이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트 종료.----------------------------
+
+ 				//===========================================
 				//[3]addEvent.js start
 				/* ****************
 				 *  일정 편집
@@ -333,8 +315,8 @@ var newEvent = function (start, end, eventType) {
 				            return false;
 				        }
 				
-				        if (editTitle.val() === '') {
-				            alert('일정명은 필수입니다.')
+				        if (editTitle.val() == '') {
+				          //  alert('일정명은 필수입니다.')
 				            return false;
 				        }
 				
@@ -516,7 +498,7 @@ function calDateWhenDragnDrop(event) {
 					      content: $('<div />', {
 					          class: 'popoverInfoCalendar'
 					        }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
-					        .append('<p><strong>구분:</strong> ' + event.type + '</p>')
+					        .append('<p><strong>:</strong> ' + event.type + '</p>')
 					        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
 					        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
 					      delay: {
@@ -571,11 +553,11 @@ function calDateWhenDragnDrop(event) {
 					      end  : tempDocumentList, 
 					      imageurl :'<c:url value="/img/bell.png" />' 
 					      //imageurl :'/${documentList[0].PHOTO_SAVEDFILE}'
-					    },
-					    { title: '${documentList[1].DOCUMENT_DESTINATION}',
+					    }
+					 /*   { title: '${documentList[1].DOCUMENT_DESTINATION}',
 						  start: '${documentList[1].DOCUMENT_REGDATE}',
 						    end: documentList[1].DOCUMENT_FINALDAY
-						}
+						}*/
 				    /*events: [
 					    { 
 					    	title: '풀캘린더 기본입력형입니다.', 
@@ -772,8 +754,8 @@ function calDateWhenDragnDrop(event) {
 				            return false;
 				        }
 
-				        if (editTitle.val() === '') {
-				            alert('일정명은 필수입니다.')
+				        if (editTitle.val() == '') {
+				         //   alert('일정명은 필수입니다.')
 				            return false;
 				        }
 
