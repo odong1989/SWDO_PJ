@@ -89,6 +89,7 @@ public class DocumentController {
 		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		
+//		ArrayList<Document> caution = documentDao.selectCaution(no);
 		Document caution = documentDao.selectCaution(no);
 		logger.info("-공지사항 : {}", caution);
 		model.addAttribute("caution", caution);

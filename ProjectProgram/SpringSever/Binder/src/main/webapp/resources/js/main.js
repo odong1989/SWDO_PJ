@@ -1,6 +1,9 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
+var groupNum =groupNumber.value;
 
+//alert("groupNum : "+ groupNum); //개인적 확인용
+console.log(groupNum);
 function getDisplayEventDate(event) {
 
   var displayEventDate;
@@ -92,7 +95,7 @@ function calDateWhenDragnDrop(event) {
 
 
 var calendar = $('#calendar').fullCalendar({
-	
+	//  resources: "getUserSchedule",
   eventRender: function (event, element, view) {
     //일정에 hover시 요약
     element.popover({
@@ -105,7 +108,7 @@ var calendar = $('#calendar').fullCalendar({
       }),
       content: $('<div />', {
           class: 'popoverInfoCalendar'
-        }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
+        }).append('<p><strong>동록자는 죽었어:</strong> ' + event.username + '</p>')
         .append('<p><strong>구분:</strong> ' + event.type + '</p>')
         .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
         .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
@@ -162,7 +165,35 @@ var calendar = $('#calendar').fullCalendar({
   /* ****************
    *  일정 받아옴 
    * ************** */
-  
+  events: function (start, end, timezone, callback) {
+    $.ajax({
+      type: "post",
+	  url: "getUserSchedule",  //	  url:"<c:url value='/calender/getUserSchedule'/>",
+	  data:{"group_no":groupNum},
+	  dataType:"json",
+	  success: function (arrCalender) {
+      	console.log(arrCalender);
+      var fixedDate = arrCalender.map(function (array) {
+          if (array.allDay && array.start !== array.end) {
+            // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+            array.end = moment(array.end).add(1, 'days');
+          }
+        //  alert("회원님의 일정을 로딩하고 있습니다.");
+         // alert("fixedDate"+fixedDate);
+          return array;
+        })
+        callback(fixedDate);
+      },
+	 error: function(){alert("어렵네");}
+    });
+  },
+
+  eventAfterAllRender: function (view) {
+    if (view.name == "month") {
+      $(".fc-content").css('height', 'auto');
+    }
+  },
+
   //일정 리사이즈
   eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
     $('.popover.fade.top').remove();

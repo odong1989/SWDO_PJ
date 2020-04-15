@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.softsociety.binder.vo.CalenderVO;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.GroupJoin;
 
@@ -39,9 +40,9 @@ public class DocumentDAO {
 	}
 	
 	//캘린더의 출력을 위해 마지막날짜등을 추가로 받도록 실시.
-	public ArrayList<HashMap<String, Object>> selectDocumentsForCalendar(GroupJoin groupCal){
+	public ArrayList<HashMap<String,Object>> selectDocumentsForCalendar(GroupJoin groupCal){
 		logger.info("DocumentDAO.java - selectDocumentsForCalendar시작 & 그룹번호 : {})",groupCal);	
-		ArrayList<HashMap<String, Object>> documentList = null;
+		ArrayList<HashMap<String,Object>> documentList = null;
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
 			documentList = mapper.selectDocumentsForCalendar(groupCal);
@@ -81,8 +82,9 @@ public class DocumentDAO {
 		return cau;
 	}
 	
+//	public ArrayList<Document> selectCaution(int group_no) {
 	public Document selectCaution(int group_no) {
-		logger.info("DocumentDAO.java - selectCaution({})", group_no);
+	logger.info("DocumentDAO.java - selectCaution({})", group_no);
 		Document vo = null;
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
