@@ -43,6 +43,24 @@ insert into bnd_member(
     , member_birthday
     , member_lastlogin
 ) values (
+    'test'
+    , 123123
+    , '테스터'
+    , 'test@te.st'
+    , '/dahyun.png'
+    , '91-08-02'
+    , '20-03-29'
+);
+
+insert into bnd_member(
+    member_id
+    , member_pw
+    , member_name
+    , member_mail
+    , member_photo
+    , member_birthday
+    , member_lastlogin
+) values (
     'odong1989'
     , 123123
     , '바나나'
@@ -78,6 +96,20 @@ insert into bnd_group(
     , 'game'
     , '단풍조기축구'
     , 'ijih3'
+);
+
+insert into bnd_group(
+    group_no
+    , group_category
+    , group_subcategory
+    , group_name
+    , group_code
+) values (
+    9999
+    , 'personal'
+    , 'family'
+    , '테스트그룹'
+    , 'lk3ie'
 );
     
 insert into bnd_document(
@@ -167,6 +199,18 @@ insert into bnd_groupjoin(
     1
     , 'oso91'
     , 3
+    , sysdate
+);
+
+insert into bnd_groupjoin(
+    group_no
+    , member_id
+    , member_level
+    , group_joindate
+) values (
+    9999
+    , 'test'
+    , 1
     , sysdate
 );
 
