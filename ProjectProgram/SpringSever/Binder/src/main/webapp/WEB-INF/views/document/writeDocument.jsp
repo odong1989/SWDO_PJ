@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,60 +79,40 @@
 			</c:forEach>
 		</div>
 		<div id="right-body">
-		<!--
-			VO인 document.java의 구조를 준수한다.  			//본 폼에서 담당하는 정보 여부
-			private int group_no;					//X(본 문서의 번호에서 자동퍼오도록 한다	.)	
-			private int document_no;				//X이건 SQL에서 알아서 nextval로 체크.
-			private String member_id;				//X세션의 정보를 준다.
-			private String document_content;		//ㅇ id='content'
-			private String document_regdate;		//ㅇ id='startDate'
-			private String document_finalday;		//ㅇ id='endDate'
-			private String document_destination;	//ㅇ id='place'  (장소정보이다. 미입력시 널값으로 처리됨)
-			-id를 설정한 이유는 유효성검사를 할 수 있도록 하고자 미리 정의한 것임.
-		 -->
-
 		 <form action="documentInsert" method="POST" enctype="multipart/form-data"> 
-		<!-- <form action="documentInsert" method="POST"> -->
-				<p그룹번호> </p>
-			        <tr>
-				        <td>
-				        	<input type="hidden" name='group_no' value="${writeDocumentGroup_no}"> 				        
-				        </td>
-			        </tr>
-                	<tr height="40px">
-	         			<td width="5%"> < </td>
-				        <td width="45%">	
-				            	<p id='currentDate' style="display:inline;"></p>
-				   		        <input type="text" placeholder="장소" id='place' name="document_destination" >
-				        </td>
-				        <td width="45%">
-				        	<input type='date' id='startDate' name='document_regdate'/> 부터 
-				            <input type='date' id='endDate' name='document_finalday' />   
-				        </td>
-				        <td width="5%"> > </td>
-					</tr>        
+		 	<!--그룹번호를 같이보내줍니다 -->		
+			<table class="wirteDocForm">		
+			 	<tr><td><input type="hidden" name='group_no' value="${writeDocumentGroup_no}"></td></tr>
+			     	<tr>
+				        <td width=15%> <p id='currentDate' style="display:inline;"></p> </td>
+				        <td width=25%> <input type="text" placeholder="장소" id='place' name="document_destination" > </td>
+				        <td width=30%> <input type='date' id='startDate' name='document_regdate'  style="display:inline;"/> 부터  </td>
+				   		<td width=30%> <input type='date' id='endDate' name='document_finalday'  style="display:inline;"/> 까지   </td>
+					</tr>
+				        
 				    <tr>
-				        <td style="width:50%;" colspan="2">
-				    		    <!-- <form id="form1" runat="server"> -->  
- 						        <input type='file' id="imgInp" name="upload" />
-       						    <img id="previewImg" src="#" alt="첨부한 사진을 미리 볼 수 있습니다." />
-                                <!-- </form> -->
-				        </td>
+						<td colspan=3>
 
-				    	<td style="width:50%;" colspan="2">
-				    		<textarea rows="15" width="300" style="resize: none;" id='content' name="document_content"></textarea> 
+       					    <img id="previewImg" src="<c:url value='/img/preViewImage.png' />" width="300" height="300" alt="첨부사진 미리보기" ><br> 
+					        <input type='file' id="imgInp" name="upload" />
+				        </td>
+				    	<td>
+				    		<textarea rows="18" width="300" style="resize: none" 
+				    		          id='content' name="document_content" placeholder="기록하고 싶은 내용을 적으세요">
+				    		</textarea> 
 				    	</td> 
-				   	</tr>                
-				   	<tr>
-				   		<td colspan="4"> <input type="text" placeholder="#해시태그를 입력해주세요" > </td>
-				   	</tr>
-				   	<tr ">
-				   		<td colspan="4" style="text-align:center;">
-					   	    <input type="submit" value="등록">
-					   		<input type="button" value="취소">
+				   	</tr>     
+				   	           
+				   	<tr border="0px">
+				   		<td colspan="4" border="0"> 
+				   			<input type="text" placeholder="#해시태그를 입력해주세요" style="width:400px;"> 
 				   		</td>
 				   	</tr>
-                 </table>
+           </table>
+           <div style="text-align: center;">
+					<input type="submit" value="등록">
+			   		<input type="button" value="취소">
+		   </div>
            </form>
 			     <script>
 			  	        document.getElementById('currentDate').innerHTML = new Date().toISOString().substring(0, 10);

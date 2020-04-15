@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.softsociety.binder.vo.CalenderVO;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.GroupJoin;
 
@@ -39,9 +40,9 @@ public class DocumentDAO {
 	}
 	
 	//캘린더의 출력을 위해 마지막날짜등을 추가로 받도록 실시.
-	public ArrayList<HashMap<String, Object>> selectDocumentsForCalendar(GroupJoin groupCal){
+	public ArrayList<HashMap<String,Object>> selectDocumentsForCalendar(GroupJoin groupCal){
 		logger.info("DocumentDAO.java - selectDocumentsForCalendar시작 & 그룹번호 : {})",groupCal);	
-		ArrayList<HashMap<String, Object>> documentList = null;
+		ArrayList<HashMap<String,Object>> documentList = null;
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
 			documentList = mapper.selectDocumentsForCalendar(groupCal);
@@ -81,8 +82,9 @@ public class DocumentDAO {
 		return cau;
 	}
 	
+//	public ArrayList<Document> selectCaution(int group_no) {
 	public Document selectCaution(int group_no) {
-		logger.info("DocumentDAO.java - selectCaution({})", group_no);
+	logger.info("DocumentDAO.java - selectCaution({})", group_no);
 		Document vo = null;
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
@@ -94,4 +96,19 @@ public class DocumentDAO {
 		return vo;
 	}
 
+	public int selectDocumentNoOne(Document caution){	//글추가(insertCaution)시 사진도 첨부위해서 글번호 확인용. 
+		logger.info("DocumentDAO.java - selectDocumentNoOne 메소드 시작");
+		logger.info("DocumentDAO.java - selectDocumentNoOne : {}", caution); 
+		//그룹번호,작성자계정,작성한컨텐츠 이 3가지를 조건으로 리턴
+		int docNumber = 0;
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+			docNumber = mapper.selectDocumentNoOne(caution);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		logger.info("DocumentDAO.java - selectDocumentNoOne 메소드 종료");
+		return docNumber;
+	}
 }

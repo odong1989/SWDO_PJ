@@ -89,6 +89,7 @@ public class DocumentController {
 		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		
+//		ArrayList<Document> caution = documentDao.selectCaution(no);
 		Document caution = documentDao.selectCaution(no);
 		logger.info("-공지사항 : {}", caution);
 		model.addAttribute("caution", caution);
@@ -146,7 +147,7 @@ public class DocumentController {
 	//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
 	//uploadPath는 "/uploadFile"으로 설정되어있다.;
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
-	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload)
+	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model)
 	{	
 		logger.info("documentInsert메소드 시작.");
 		logger.info("documentInsert메소드 세션계정 : {}",session.getAttribute("loginId"));
@@ -157,56 +158,62 @@ public class DocumentController {
 		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
 
         //
-	     int count = documentDao.insertCaution(writeDocument);
+	     int count = documentDao.insertCaution(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
 	     logger.info("3.VO를 DB에 INSERT count : {}",count);
 	     if(count ==0) {
-	            logger.info("등록실패");
+	            logger.info("글(document) 등록실패");
 	     }
-		//게시글(Document) insert 코드 종료.---------------------------------------------------
+	     else if(count ==1) {
+	            logger.info("글(document) 등록성공");
+	     }
+		//게시글(Document) insert 코드 종료.아래에는 사진추가 메소드가 실시.---------------------------------------------------
 	     
-	    // 
+	    //게시글 추가시 사진첨부여부를 따진다.
         if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
             //2.업로드된 파일의 경로(파일명)을 photoVO에게 설정(set)
         	//이외에도 도큐먼트번호, 그룹번호도 같이 부여한다.
         	photo.setDocument_no(writeDocument.getDocument_no());
         	photo.setGroup_no(writeDocument.getGroup_no());
-            String savedfile = FileService.saveFile(upload, uploadPath);
+            //글이 DB에 등록된 다음에 확정되는 글의 번호까지 추가해야한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
+        	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));
+        	
+        	String savedfile = FileService.saveFile(upload, uploadPath);
             photo.setPhoto_savedfile(savedfile); //DB가 사용한 파일의 별명
             photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
-            logger.info("photoVO의 정보 : {}",photo);
+            
+            // logger.info("photoVO의 정보 : {}",photo); 
             
             // 3.photoVO를 DB에 INSERT            
             int count2 = photoDao.photoInsert(photo);
             logger.info("3.VO를 DB에 INSERT count : {}",count);
             if(count2 ==0) {
-                   logger.info("등록실패");
+                   logger.info("사진을 HDD저장&사진정보 DB등록 실패");
             }
+            else if(count2 ==1) {
+                logger.info("사진을 HDD저장&사진정보 DB등록 성공");
+            }
+            
         }
 
-	     
+		logger.info("mainDocument 이동");
+		//모든 페이지에 있어야 하는 출력데이터
+		String member_id = (String) session.getAttribute("loginId");
+		logger.info("mainDocument - member_id :{}",member_id);
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		logger.info("-그룹리스트 : {}", groupJoinList);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		
 		logger.info("documentInsert메소드 종료.");
 		return "/document/mainDocument";
 		//return "/document/readDocument";//readDocument이동시 가입한 그룹들이 출력되지 않음.
-		
-		/* 신경써야할 자료 목록. 체크 완료시 삭제할 것!
-			VO인 document.java의 구조를 준수한다.  			//본 폼에서 담당하는 정보 여부
-			private int group_no;					//ㅇ 	
-			private int document_no;				//X이건 SQL에서 알아서 nextval로 체크.
-			private String member_id;				//X세션의 정보를 준다.
-			private String document_content;		//ㅇ id='content'
-			private String document_regdate;		//ㅇ id='startDate'
-			private String document_finalday;		//ㅇ id='endDate'
-			private String document_destination;	//ㅇ id='place'  (장소정보이다. 미입력시 널값으로 처리됨)
-
-
-			첨부하는 사진은 Photo.java VO를 준수한다.
-			private int 	documnet_no;			//X(본 문서의 번호에서 자동퍼오도록 한다	.)
-			private String 	photo_originfile;		//O(사용자가 업로드시 사용한 파일의 원래이름
-			private String 	photo_savefile;			//X
-			private int 	photo_no;				//X 
-		 */
-		
 	}
 	
 	
