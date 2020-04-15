@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,7 +115,7 @@
 				        <td style="width:50%;" colspan="2">
 				    		    <!-- <form id="form1" runat="server"> -->  
  						        <input type='file' id="imgInp" name="upload" />
-       						    <img id="previewImg" src="#" alt="첨부한 사진을 미리 볼 수 있습니다." />
+       						    <img id="previewImg" src="#" width="250" height="250" alt="첨부사진 미리보기" />    	
                                 <!-- </form> -->
 				        </td>
 

@@ -94,4 +94,19 @@ public class DocumentDAO {
 		return vo;
 	}
 
+	public int selectDocumentNoOne(Document caution){	//글추가(insertCaution)시 사진도 첨부위해서 글번호 확인용. 
+		logger.info("DocumentDAO.java - selectDocumentNoOne 메소드 시작");
+		logger.info("DocumentDAO.java - selectDocumentNoOne : {}", caution); 
+		//그룹번호,작성자계정,작성한컨텐츠 이 3가지를 조건으로 리턴
+		int docNumber = 0;
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+			docNumber = mapper.selectDocumentNoOne(caution);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		logger.info("DocumentDAO.java - selectDocumentNoOne 메소드 종료");
+		return docNumber;
+	}
 }

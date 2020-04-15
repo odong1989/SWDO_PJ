@@ -14,4 +14,5 @@ public interface DocumentMapper {
 	public int insertCaution(Document caution);
 	public int deleteCaution(int group_no);
 	public Document selectCaution(int group_no);
+	public int selectDocumentNoOne(Document caution);	//글추가(insertCaution)시 사진도 첨부위해서 글번호 확인용. 
 }

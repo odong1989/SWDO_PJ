@@ -67,7 +67,7 @@
 		,bnd_document_no_seq.nextval
 		,#{member_id}
 		,#{document_content}
-		,1
+		,#{document_notice}
 		,#{document_destination}
 		)
 	</insert>
@@ -80,4 +80,15 @@
 		and
 		bnd_document.document_notice = 1
 	</delete>
+
+
+ 	<select id="selectDocumentNoOne" parameterType="document" resultType="int">
+	 	select
+		    document_no
+		from
+		    bnd_document
+		where
+		    bnd_document.document_content = #{document_content}
+	</select> 
+
 </mapper>
