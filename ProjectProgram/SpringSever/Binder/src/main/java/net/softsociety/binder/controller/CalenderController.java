@@ -33,7 +33,7 @@ public class CalenderController {
 	@ResponseBody
 	public ArrayList<HashMap<String, Object>> calenderMain(String group_no ,HttpSession session)
 	{	
-		logger.info("calenderMain 캘린더 jsp페이지로 이동  실시.");
+		//logger.info("calenderMain 캘린더 jsp페이지로 이동  실시.");
 		//목표 : 사용자의 소속된 그룹된 관련된 스케쥴(Document들)을 모두 로드 해야 한다.
 
 		//스텝1 : 정상적으로 값 수신되었는지 확인.

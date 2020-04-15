@@ -547,30 +547,17 @@ function calDateWhenDragnDrop(event) {
 					    }
 					  },
 					  // 일정 받아옴 
+					/*아래와 같은 단순한 events로는 해결이 어려워 json등을 활용하고자 한다.
 					events: [
 					    { title: '${documentList[0].DOCUMENT_DESTINATION}',
 						  start: '${documentList[0].DOCUMENT_REGDATE}',
 					      end  : tempDocumentList, 
-					      imageurl :'<c:url value="/img/bell.png" />' 
-					      //imageurl :'/${documentList[0].PHOTO_SAVEDFILE}'
+					   	  imageurl :'/${documentList[0].PHOTO_SAVEDFILE}'
 					    }
-					 /*   { title: '${documentList[1].DOCUMENT_DESTINATION}',
-						  start: '${documentList[1].DOCUMENT_REGDATE}',
-						    end: documentList[1].DOCUMENT_FINALDAY
-						}*/
-				    /*events: [
-					    { 
-					    	title: '풀캘린더 기본입력형입니다.', 
-					        start: '2020-04-01',
-					        end: '2020-04-02'
-					    },
-					    { 
-					    	title: 'JSTL-foreach로도 가능할까요?', 
-					        start: '2020-04-05',
-					        end: '2020-04-09'
-					    }
-					  ]*/
-					  ],
+					    
+					  */
+					  // 일정 받아옴 
+					  events:
 					    //저장된 이미지를 불러오기  
 					   eventRender:function(event, eventElement) {
 		                if(event.imageurl) {
