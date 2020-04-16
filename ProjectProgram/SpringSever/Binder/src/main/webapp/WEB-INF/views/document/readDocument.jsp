@@ -75,89 +75,10 @@ function calender(pk) {
 					</div>
 					<div class="menu-group-button-right">
 						<c:if test="${glist.MEMBER_LEVEL == 1 }">
-							<div id="app1">
-							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
-							<modal v-if="showModal" @close="closeModal">
-								 	<template slot="header"><h3>회원목록</h3></template>
-								 	<template slot="body">
-										<table>
-											<c:forEach var="gjoin" items="${gjoin }">
-												<tr>
-												<td class='center'>${gjoin.member_id }</td>
-												<td class='center'><c:if test="${gjoin.member_level == 1 }">
-													관리자
-												</c:if> <c:if test="${gjoin.member_level == 2 }">
-													부관리자
-												</c:if> <c:if test="${gjoin.member_level == 3 }">
-													일반회원
-												</c:if>
-												</td>
-												<td>
-												</td>
-												<c:if test="loginid"></c:if>									
-													<td width="30px">
-													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
-													 @click="subManager('${gjoin.member_id }')">
-													 </td>
-													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
-													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
-													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
-													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
-												
-												</tr>
-												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
-												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
-											</c:forEach>
-										</table>
-								 	</template>
-								 	<template slot="footer">
-								 		<button @click="closeModal">닫기</button>
-								 	</template>
-								  </modal>
-							</div>
+							
 							<img src="<c:url value='/img/crown_gold.png' />">
 						</c:if>
 						<c:if test="${glist.MEMBER_LEVEL == 2 }">
-							<div id="app1">
-							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
-							<modal v-if="showModal" @close="closeModal">
-								 	<template slot="header"><h3>회원목록</h3></template>
-								 	<template slot="body">
-										<table>
-											<c:forEach var="gjoin" items="${gjoin }">
-												<tr>
-												<td class='center'>${gjoin.member_id }</td>
-												<td class='center'><c:if test="${gjoin.member_level == 1 }">
-													관리자
-												</c:if> <c:if test="${gjoin.member_level == 2 }">
-													부관리자
-												</c:if> <c:if test="${gjoin.member_level == 3 }">
-													일반회원
-												</c:if>
-												</td>
-												<td>
-												</td>
-												<c:if test="loginid"></c:if>									
-													<td width="30px">
-													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
-													 @click="subManager('${gjoin.member_id }')">
-													 </td>
-													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
-													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
-													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
-													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
-												
-												</tr>
-												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
-												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
-											</c:forEach>
-										</table>
-								 	</template>
-								 	<template slot="footer">
-								 		<button @click="closeModal">닫기</button>
-								 	</template>
-								  </modal>
-							</div>
 							<img src="<c:url value='/img/crown_silver.png' />">
 						</c:if>
 					</div>
@@ -175,6 +96,49 @@ function calender(pk) {
 						<a href="javascript:write(${group_no})">
 							<img src="<c:url value='/img/pencil.png' />" title="글쓰기"> 
 						</a>
+						<c:if test="${glist.MEMBER_LEVEL != 3 }">
+						<!-- 회원관리 -->
+						<div id="app1">
+							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
+							<modal v-if="showModal" @close="closeModal">
+								 	<template slot="header"><h3>회원목록</h3></template>
+								 	<template slot="body">
+										<table>
+											<c:forEach var="gjoin" items="${gjoin }">
+												<tr>
+												<td class='center'>${gjoin.member_id }</td>
+												<td class='center'><c:if test="${gjoin.member_level == 1 }">
+													관리자
+												</c:if> <c:if test="${gjoin.member_level == 2 }">
+													부관리자
+												</c:if> <c:if test="${gjoin.member_level == 3 }">
+													일반회원
+												</c:if>
+												</td>
+												<td>
+												</td>
+												<c:if test="loginid"></c:if>									
+													<td width="30px">
+													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
+													 @click="subManager('${gjoin.member_id }')">
+													 </td>
+													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
+													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
+													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
+													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
+												
+												</tr>
+												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
+												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
+											</c:forEach>
+										</table>
+								 	</template>
+								 	<template slot="footer">
+								 		<button @click="closeModal">닫기</button>
+								 	</template>
+								  </modal>
+							</div>
+							</c:if>
 											<!-- invite start -->
 						<div class="Management">
 							<div id="app2">
@@ -264,7 +228,8 @@ function calender(pk) {
 		var groupnoh='';
 		var memberidh='';
 		var msg; // 데이터 받아올 var
-		
+
+				
 		Vue.component('modal', {
 			  template: `
 				  <transition name="modal">
@@ -409,7 +374,20 @@ function calender(pk) {
 						this.showModal2 = false
 					},
 					doSend(){
-						if (this.message.length > 0) {
+
+						var str = this.message
+						
+						function chkEmail(str) {
+
+						    var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+						    if (regExp.test(str)) return true;
+
+						    else return false;
+
+						}
+						
+						if (chkEmail(str)) {
 				// 		이메일로 보내기
 						$.ajax({
 						url:"sendEmail",
@@ -428,7 +406,7 @@ function calender(pk) {
 						this.closeModal()
 						}
 						else {
-							alert('이메일 입력필요')
+							alert('이메일형식을 확인해주세요')
 						}
 					}
 				}
