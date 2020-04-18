@@ -19,7 +19,7 @@ var newEvent = function (start, end, eventType) {
 
     $("#contextMenu").hide(); //메뉴 숨김
 
-    modalTitle.html('새로운 일정');
+    modalTitle.html('새로운 일정추가하기');
     editType.val(eventType).prop('selected', true);
     editTitle.val('');
     editStart.val(start);
@@ -38,7 +38,7 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').unbind();
 //    $('#save-event').on('click', function () {
     $(document).on('click','#save-event',function(){
-        alert('일정명은 필수입니다.');
+   //     alert('일정명은 필수입니다.');
         var eventData = {
             _id: eventId,
             title: editTitle.val(),
@@ -57,7 +57,7 @@ var newEvent = function (start, end, eventType) {
             return false;
         }
 
-        if (eventData.title === '') {
+        if (eventData.title == '') {
             alert('일정명은 필수입니다.');
             return false;
         }
@@ -82,11 +82,12 @@ var newEvent = function (start, end, eventType) {
         //새로운 일정 저장
         $.ajax({
             type: "get",
-            url: "",
-            data: {
-                //.....
-            },
-            success: function (response) {
+            url: "/document/documentInsert",
+            data: {"group_no":groupNum,
+            	   "Document":writeDocument,
+            	   "MultipartFile":upload
+        	},
+            success: function () {
                 //DB연동시 중복이벤트 방지를 위한
                 //$('#calendar').fullCalendar('removeEvents');
                 //$('#calendar').fullCalendar('refetchEvents');
