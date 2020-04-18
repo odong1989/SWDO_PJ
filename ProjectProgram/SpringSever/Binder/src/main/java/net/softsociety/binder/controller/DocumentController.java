@@ -29,8 +29,6 @@ import net.softsociety.binder.vo.HashTag;
 import net.softsociety.binder.vo.Note;
 import net.softsociety.binder.vo.Photo;
 
-
-
 //@선언
 @Controller
 @RequestMapping(value="document/")

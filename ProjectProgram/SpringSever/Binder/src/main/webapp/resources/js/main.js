@@ -1,7 +1,7 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 var groupNum =groupNumber.value;
-
+var colorCNT=0;
 //alert("groupNum : "+ groupNum); //개인적 확인용
 console.log(groupNum);
 function getDisplayEventDate(event) {
@@ -173,10 +173,24 @@ var calendar = $('#calendar').fullCalendar({
 	  dataType:"json",
 	  success: function (arrCalender) {
       	console.log(arrCalender);
-      var fixedDate = arrCalender.map(function (array) {
+      var fixedDate = arrCalender.map(function (array) {   
+    	  switch(colorCNT){
+    	  case 0 : array.backgroundColor = "#D25565"; colorCNT=1; break;
+    	  case 1 : array.backgroundColor = "#9775fa"; colorCNT=2; break;
+    	  case 2 : array.backgroundColor = "#ffa94d"; colorCNT=3; break;
+    	  case 3 : array.backgroundColor = "#74c0fc"; colorCNT=4; break;
+    	  case 4 : array.backgroundColor = "#f06595"; colorCNT=5; break;
+    	  case 5 : array.backgroundColor = "#63e6be"; colorCNT=6; break;
+    	  case 6 : array.backgroundColor = "#a9e34b"; colorCNT=7; break;
+    	  case 7 : array.backgroundColor = "#4d638c"; colorCNT=8; break;
+    	  case 8 : array.backgroundColor = "#ffa94d"; colorCNT=9; break;
+    	  case 9 : array.backgroundColor = "#495057"; colorCNT=0; break;
+    	  }
+          
           if (array.allDay && array.start !== array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
             array.end = moment(array.end).add(1, 'days');
+
           }
         //  alert("회원님의 일정을 로딩하고 있습니다.");
          // alert("fixedDate"+fixedDate);
@@ -184,7 +198,7 @@ var calendar = $('#calendar').fullCalendar({
         })
         callback(fixedDate);
       },
-	 error: function(){alert("어렵네");}
+	 error: function(){alert("일정 로드중 에러발생");}
     });
   },
 

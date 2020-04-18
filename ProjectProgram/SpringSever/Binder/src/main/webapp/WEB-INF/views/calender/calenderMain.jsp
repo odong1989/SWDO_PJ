@@ -243,10 +243,7 @@ function groupMgr(pk) {
         <div id="contextMenu" class="dropdown clearfix">
             <ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"
                 style="display:block;position:static;margin-bottom:5px;">
-                <li><a tabindex="-1" href="#">카테고리1</a></li>
-                <li><a tabindex="-1" href="#">카테고리2</a></li>
-                <li><a tabindex="-1" href="#">카테고리3</a></li>
-                <li><a tabindex="-1" href="#">카테고리4</a></li>
+                <li><a tabindex="-1" href="#">일정추가하기</a></li>
                 <li class="divider"></li>
                 <li><a tabindex="-1" href="#" data-role="close">Close</a></li>
             </ul>
@@ -293,10 +290,7 @@ function groupMgr(pk) {
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-type">구분</label>
                                 <select class="inputModal" type="text" name="edit-type" id="edit-type">
-                                    <option value="카테고리1">카테고리1</option>
-                                    <option value="카테고리2">카테고리2</option>
-                                    <option value="카테고리3">카테고리3</option>
-                                    <option value="카테고리4">카테고리4</option>
+                                    <option value="일정추가">일정추가</option>
                                 </select>
                             </div>
                         </div>
@@ -346,6 +340,7 @@ function groupMgr(pk) {
 
             <div class="panel-body">
 
+				<!--  
                 <div class="col-lg-6">
                     <label for="calendar_view">구분별</label>
                     <div class="input-group">
@@ -357,6 +352,7 @@ function groupMgr(pk) {
                         </select>
                     </div>
                 </div>
+                -->
 
                 <div class="col-lg-6">
                     <label for="calendar_view">등록자별</label>

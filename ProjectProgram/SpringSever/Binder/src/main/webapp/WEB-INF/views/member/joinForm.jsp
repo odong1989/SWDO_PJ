@@ -324,8 +324,8 @@
 			<tr>
 				<td class="lefttd">프로필 사진</td>
 				<td class="righttd">
-				    <input type='file' id="imgInp" name="upload" />		       						  
-				    <img id="previewImg" src="#" width="250" height="250" alt="프사 미리보기" />    	
+ 				    <input type='file' id="imgInp" name="upload" />		       						  
+				  <!--<img id="previewImg" src="#" width="250" height="250" alt="프사 미리보기" /> -->   	 
 				</td>
 			</tr>
 			<tr><!-- 첨부사진 미리보기 가능하게 -->

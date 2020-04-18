@@ -78,33 +78,10 @@ public class CalenderController {
 		logger.info("calenderMain -GroupJoin groupCal : {}",groupCal);
 		
 		ArrayList<HashMap<String,Object>> documentList = null;
-		documentList = documentDao.selectDocumentsForCalendar(groupCal);
+		documentList = documentDao.selectDocumentsForCalendar(groupCal);		
+		
 		logger.info("getUserSchedule 메소드 - documentList : {}",documentList);
 		return documentList;	
-
-		/*
-		private String	title;
-		private String	start;
-		private String  end;
-		*/
-		
-//		ArrayList<CalenderVO> arrCalender = new ArrayList<>();
-//		for(int i=0; i<documentList.size();i++) {
-//	//		arrCalender.add(new CalenderVO(documentList.get(i).get("DOCUMENT_CONTENT"), 
-//			System.out.println(documentList.get(i).getTitle());
-//			System.out.println(documentList.get(i).getStart());
-//			System.out.println(documentList.get(i).getEnd());
-//			arrCalender.add(new CalenderVO(documentList.get(i).getTitle(),
-//											documentList.get(i).getStart(),documentList.get(i).getEnd()));
-//			arrCalender.add(documentList.get(i).getTitle(),documentList.get(i).getStart(),documentList.get(i).getEnd());
-//			arrCalender.add(documentList.get(i));
-//			
-			//	arrCalender.add( (documentList.get(i));
-			//	System.out.println(documentList.get(i).get("DOCUMENT_REGDATE"));
-//		}
-		
-	//	logger.info("getUserSchedule 메소드 - 캘린더 위해 리턴하는 arrCalender의 값 : {}",arrCalender);
-	//	return arrCalender;
 	
 	}	
 }
