@@ -92,12 +92,13 @@
 				        
 				    <tr>
 						<td colspan=3>
+
        					    <img id="previewImg" src="<c:url value='/img/preViewImage.png' />" width="300" height="300" alt="첨부사진 미리보기" ><br> 
 					        <input type='file' id="imgInp" name="upload" />
 				        </td>
 				    	<td>
 				    		<textarea rows="18" width="300" style="resize: none" 
-				    		          id='content' name="document_content" placeholder="일정명">
+				    		          id='content' name="document_content" placeholder="기록하고 싶은 내용을 적으세요">
 				    		</textarea> 
 				    	</td> 
 				   	</tr>     

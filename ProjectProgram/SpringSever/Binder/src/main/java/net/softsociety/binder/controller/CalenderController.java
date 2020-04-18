@@ -81,7 +81,7 @@ public class CalenderController {
 		documentList = documentDao.selectDocumentsForCalendar(groupCal);		
 		
 		logger.info("getUserSchedule 메소드 - documentList : {}",documentList);
-		return documentList;		
-	}	
+		return documentList;	
 	
+	}	
 }
