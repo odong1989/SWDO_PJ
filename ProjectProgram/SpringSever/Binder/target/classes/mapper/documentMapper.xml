@@ -42,6 +42,7 @@
 		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd')  "start"
 		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd') "end"
 		    , bnd_document.document_content 					    "backgroundColor"
+		    , bnd_document.document_content 					    "allDay"
 		from
 		    bnd_document, bnd_photo
 		where

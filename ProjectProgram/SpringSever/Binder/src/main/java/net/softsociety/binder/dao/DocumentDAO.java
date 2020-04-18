@@ -47,18 +47,6 @@ public class DocumentDAO {
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
 			documentList = mapper.selectDocumentsForCalendar(groupCal);
-			/*
-			switch(colorCNT) {
-	   		case 2 : documentList.put("backgroundColor", "#9775fa"); break;//보라색
-    		case 3 : "backgroundColor":"#ffa94d"; break;//주황색		
-    		case 4 : "backgroundColor":"#74c0fc"; break;//파란색
-    		case 5 : "backgroundColor":"#f06595"; break;//핑크색
-    		case 6 : "backgroundColor":"#63e6be"; break;//연두색
-    		case 7 : "backgroundColor":"#a9e34b"; break;//초록색
-    		case 8 : "backgroundColor":"#4d638c"; break;//남색
-    		case 9 : "backgroundColor":"#495057"; break;//검정색
-			}
-			*/
 		}
 		catch(Exception e){
 			e.printStackTrace();

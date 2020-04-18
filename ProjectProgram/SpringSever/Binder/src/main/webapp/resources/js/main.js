@@ -1,9 +1,11 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
+
 var groupNum =groupNumber.value;
 var colorCNT=0;
 //alert("groupNum : "+ groupNum); //개인적 확인용
-console.log(groupNum);
+//console.log(groupNum);
+
 function getDisplayEventDate(event) {
 
   var displayEventDate;
@@ -73,7 +75,6 @@ function calDateWhenDragnDrop(event) {
 
   //하루짜리 all day
   if (event.allDay && event.end === event.start) {
-    console.log('1111')
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
     newDates.endDate = newDates.startDate;
   }
@@ -86,8 +87,10 @@ function calDateWhenDragnDrop(event) {
 
   //all day가 아님
   else if (!event.allDay) {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
+    //newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
+    //newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
+    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
+    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD');
   }
 
   return newDates;
@@ -174,17 +177,17 @@ var calendar = $('#calendar').fullCalendar({
 	  success: function (arrCalender) {
       	console.log(arrCalender);
       var fixedDate = arrCalender.map(function (array) {   
-    	  switch(colorCNT){
-    	  case 0 : array.backgroundColor = "#D25565"; colorCNT=1; break;
-    	  case 1 : array.backgroundColor = "#9775fa"; colorCNT=2; break;
-    	  case 2 : array.backgroundColor = "#ffa94d"; colorCNT=3; break;
-    	  case 3 : array.backgroundColor = "#74c0fc"; colorCNT=4; break;
-    	  case 4 : array.backgroundColor = "#f06595"; colorCNT=5; break;
-    	  case 5 : array.backgroundColor = "#63e6be"; colorCNT=6; break;
-    	  case 6 : array.backgroundColor = "#a9e34b"; colorCNT=7; break;
-    	  case 7 : array.backgroundColor = "#4d638c"; colorCNT=8; break;
-    	  case 8 : array.backgroundColor = "#ffa94d"; colorCNT=9; break;
-    	  case 9 : array.backgroundColor = "#495057"; colorCNT=0; break;
+    	  switch(colorCNT){    
+    	  case 0 : array.backgroundColor = "#D25565"; colorCNT=1; array.allDay=true; break;
+    	  case 1 : array.backgroundColor = "#9775fa"; colorCNT=2; array.allDay=true; break;
+    	  case 2 : array.backgroundColor = "#ffa94d"; colorCNT=3; array.allDay=true; break;
+    	  case 3 : array.backgroundColor = "#74c0fc"; colorCNT=4; array.allDay=true; break;
+    	  case 4 : array.backgroundColor = "#f06595"; colorCNT=5; array.allDay=true; break;
+    	  case 5 : array.backgroundColor = "#63e6be"; colorCNT=6; array.allDay=true; break;
+    	  case 6 : array.backgroundColor = "#a9e34b"; colorCNT=7; array.allDay=true; break;
+    	  case 7 : array.backgroundColor = "#4d638c"; colorCNT=8; array.allDay=true; break;
+    	  case 8 : array.backgroundColor = "#ffa94d"; colorCNT=9; array.allDay=true; break;
+    	  case 9 : array.backgroundColor = "#495057"; colorCNT=0; array.allDay=true; break;
     	  }
           
           if (array.allDay && array.start !== array.end) {
@@ -287,17 +290,21 @@ var calendar = $('#calendar').fullCalendar({
         hours: today.hours(),
         minute: today.minutes()
       });
-      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+    //startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+      startDate = moment(startDate).format('YYYY-MM-DD');
       endDate = moment(endDate).subtract(1, 'days');
 
       endDate.set({
         hours: today.hours() + 1,
         minute: today.minutes()
       });
-      endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+   //endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+     endDate = moment(endDate).format('YYYY-MM-DD');
     } else {
-      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
-      endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+    //startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+    //endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+      startDate = moment(startDate).format('YYYY-MM-DD');
+      endDate = moment(endDate).format('YYYY-MM-DD');
     }
 
     //날짜 클릭시 카테고리 선택메뉴
@@ -345,12 +352,12 @@ var calendar = $('#calendar').fullCalendar({
   eventLimitClick: 'week', //popover
   navLinks: true,
   //defaultDate: moment('2019-05'), //실제 사용시 삭제
-  timeFormat: 'HH:mm',
+  //timeFormat: 'HH:mm',
   defaultTimedEventDuration: '01:00:00',
   editable: true,
   minTime: '00:00:00',
   maxTime: '24:00:00',
-  slotLabelFormat: 'HH:mm',
+  //slotLabelFormat: 'HH:mm',
   weekends: true,
   nowIndicator: true,
   dayPopoverFormat: 'MM/DD dddd',

@@ -269,6 +269,14 @@ function groupMgr(pk) {
 
                         <div class="row">
                             <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-title">장소</label>
+                                <input class="inputModal" type="text" name="document_destination" id="edit-title" required="required" />
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-title">일정명</label>
                                 <input class="inputModal" type="text" name="edit-title" id="edit-title"
                                     required="required" />
@@ -332,28 +340,12 @@ function groupMgr(pk) {
         </div><!-- /.modal -->
 
   
+  		<!-- 패널부분을 삭제하면 풀캘린더에 일정이 나오지 않더라. 아직은 아래의 패널쪽 div들은 지우지 말것. -->
         <div class="panel panel-default">
-
             <div class="panel-heading">
                 <h3 class="panel-title">필터</h3>
             </div>
-
             <div class="panel-body">
-
-				<!--  
-                <div class="col-lg-6">
-                    <label for="calendar_view">구분별</label>
-                    <div class="input-group">
-                        <select class="filter" id="type_filter" multiple="multiple">
-                            <option value="카테고리1">카테고리1</option>
-                            <option value="카테고리2">카테고리2</option>
-                            <option value="카테고리3">카테고리3</option>
-                            <option value="카테고리4">카테고리4</option>
-                        </select>
-                    </div>
-                </div>
-                -->
-
                 <div class="col-lg-6">
                     <label for="calendar_view">등록자별</label>
                     <div class="input-group">
@@ -369,7 +361,6 @@ function groupMgr(pk) {
                                 checked>지효</label>
                     </div>
                 </div>
-
             </div>
         </div>
         <!-- /.filter panel -->
