@@ -14,6 +14,7 @@
 		<typeAlias type="net.softsociety.binder.vo.GroupJoin" alias="groupjoin"/>
 		<typeAlias type="net.softsociety.binder.vo.Note" alias="note"/>
 		<typeAlias type="net.softsociety.binder.vo.Photo" alias="photo"/>
+		<typeAlias type="net.softsociety.binder.vo.Reply" alias="reply"/>
 	</typeAliases>
 	<mappers> 
 		<mapper resource="mapper/memberMapper.xml" />
@@ -23,6 +24,7 @@
 		<mapper resource="mapper/groupJoinMapper.xml" />
 		<mapper resource="mapper/noteMapper.xml" />
 		<mapper resource="mapper/photoMapper.xml" />		
+		<mapper resource="mapper/replyMapper.xml" />		
 	</mappers>
 </configuration>
 

@@ -22,6 +22,7 @@ import net.softsociety.binder.dao.GroupMemberDAO;
 import net.softsociety.binder.dao.HashTagDAO;
 import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.dao.PhotoDAO;
+import net.softsociety.binder.dao.ReplyDAO;
 import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
@@ -29,6 +30,7 @@ import net.softsociety.binder.vo.GroupJoin;
 import net.softsociety.binder.vo.HashTag;
 import net.softsociety.binder.vo.Note;
 import net.softsociety.binder.vo.Photo;
+import net.softsociety.binder.vo.Reply;
 
 //@선언
 @Controller
@@ -42,6 +44,7 @@ public class DocumentController {
 	@Autowired NoteDAO 	    noteDao;
 	@Autowired PhotoDAO 	photoDao;
 	@Autowired GroupMemberDAO groupMemberDao;
+	@Autowired ReplyDAO replyDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
@@ -348,4 +351,57 @@ public class DocumentController {
 		return chk;
 	}
 	
+	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
+	public String readContentDocument(HttpSession session, int no , Model model) {
+		logger.info("readContent {}", no);
+		
+		String member_id = (String) session.getAttribute("loginId");
+		
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
+		model.addAttribute("documentno", no);
+		model.addAttribute("loginId", member_id);
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
+		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
+		model.addAttribute("documentList", documentList);
+		
+		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
+		logger.info("-해시태그");
+		model.addAttribute("hashTagList", hashTagList);
+		
+		model.addAttribute("Reply", new Reply());
+	
+		return "document/readContentDocument";
+	}
+	
+	@RequestMapping(value="writeReply", method=RequestMethod.POST)
+	@ResponseBody
+	public String writeReply(Reply vo) {
+		logger.info("writeReply 시작{}", vo);
+		int replychk = replyDao.insertReply(vo);
+		String chk;
+		if(replychk == 1) {
+			logger.info("writeReply 성공 {}", replychk);
+			chk ="true";
+		}else {
+			chk="false";
+		}
+		return chk;
+	}
+	@RequestMapping(value="getReply", method=RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<Reply> getReply(int no){
+		logger.info("getReply 시작 {}", no);
+		ArrayList<Reply> replyList = replyDao.selectReply(no);
+		logger.info("getReply 확인 {}", replyList);
+		return replyList;
+	}
 }

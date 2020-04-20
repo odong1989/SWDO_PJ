@@ -113,8 +113,8 @@
 				<c:forEach var="dlist" items="${documentList }">
 					<tr>
 						<td class="document-one">
-								<a href="javascript:edit(${dlist.DOCUMENT_NO })">
-									<div class="document-image" style="background-image:url(<c:url value='/profile/${dlist.PHOTO_SAVEDFILE }'/>);">
+								<a href="javascript:readContent(${dlist.DOCUMENT_NO })">
+									<div class="document-image" style="background-image:url(<c:url value='/profile/${dlist.PHOTO_SAVEDFILE }'/>);" >
 										<div class="document-image-bottom">
 											<p>${dlist.DOCUMENT_DESTINATION }</p>
 										</div>
