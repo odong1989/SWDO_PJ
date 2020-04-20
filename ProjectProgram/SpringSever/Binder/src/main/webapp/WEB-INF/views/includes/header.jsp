@@ -38,9 +38,6 @@ function edit(pk) {
 function write(pk) {
 	location.href="<c:url value='/document/writeDocument' />?no="+pk;
 }
-function groupMgr(pk) {
-	location.href="<c:url value='/group/groupMemberMgr' />?no="+pk;
-}
 function calender(pk) {
 	location.href="<c:url value='/calender/calenderMain' />?no="+pk;
 }

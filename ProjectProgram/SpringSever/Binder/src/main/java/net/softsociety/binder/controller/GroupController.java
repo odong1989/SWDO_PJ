@@ -144,29 +144,6 @@ public class GroupController {
 		return "group/groupjoin";
 	}
 	
-	@RequestMapping(value="/group/groupMemberMgr", method=RequestMethod.GET)
-	public String vuelist(GroupJoin vo, HttpSession session, Model model, int no) {
-		//모든 페이지에 있어야 하는 출력데이터
-		String member_id = (String) session.getAttribute("loginId");
-		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
-		if (memoCheck.size() == 0){
-			model.addAttribute("newNoteCheck", "nashi");
-		} else {
-			model.addAttribute("newNoteCheck", "ari");
-		}
-		
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		model.addAttribute("groupJoinList", groupJoinList);
-		//공통 데이터 종료
-		
-		vo.setGroup_no(no);
-		logger.info("groupMemberMgr {}",vo);
-		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
-		logger.info("groupMemberMgr {}",join);
-		model.addAttribute("gjoin",join);
-		model.addAttribute("gno",no);
-		return "group/groupMemberMgr";
-	}
 	
 	@RequestMapping(value="/group/groupCreate", method=RequestMethod.GET)
 	public String groupCreate(HttpSession session, Group group, Model model)
