@@ -38,10 +38,9 @@ public class CalenderController {
 	@RequestMapping(value="calenderMain", method=RequestMethod.GET)
 	public String calenderMain(String group_no ,HttpSession session, int no , Model model){
 		
-		logger.info("calenderMain 캘린더 jsp페이지로 이동  실시.");
+		logger.info("calenderMain 이동");
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
-		logger.info("mainDocument - member_id :{}",member_id);
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
 		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
@@ -50,7 +49,6 @@ public class CalenderController {
 		}
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료		
 				
@@ -67,8 +65,6 @@ public class CalenderController {
 	{	
 		logger.info("calenderMain-getUserSchedule 메소드 시작");
 		//스텝1 : 정상적으로 값 수신되었는지 확인.
-		logger.info("calenderMain -로그인 세션 확인    :{}", (String) session.getAttribute("loginId"));
-		logger.info("calenderMain -그룹번호확인 - group_no : {}", Integer.parseInt(group_no));
 
 		//스텝2 :	DocumentDAO에서 아래의 메소드를 활용한다.
 		GroupJoin groupCal = new GroupJoin();

@@ -44,19 +44,19 @@ public class GroupController {
 	@RequestMapping(value="/group/groupcode", method=RequestMethod.GET)
 	public String groupcode(HttpSession session, int no , Model model)
 	{	
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
-		model.addAttribute("groupJoinList", groupJoinList);
-		
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
-		if (memoCheck == null){
+		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
 		}
 		
-		logger.info("코드 생성 시도");
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
+		
 		Group group = new Group();
 		group.setGroup_no(no);
 		HashMap<String, Object> oldgroup = groupDao.selectCode(group);
@@ -112,17 +112,18 @@ public class GroupController {
 	@RequestMapping(value="/group/groupjoin", method=RequestMethod.GET)
 	public String groupjoin(HttpSession session, String code , Model model)
 	{	
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
-		model.addAttribute("groupJoinList", groupJoinList);
-		
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
-		if (memoCheck == null){
+		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
 		}
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		
 		logger.info("코드 접근 시도 ({})", code);
 		Group group = new Group();
@@ -145,10 +146,18 @@ public class GroupController {
 	
 	@RequestMapping(value="/group/groupMemberMgr", method=RequestMethod.GET)
 	public String vuelist(GroupJoin vo, HttpSession session, Model model, int no) {
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		
 		vo.setGroup_no(no);
 		logger.info("groupMemberMgr {}",vo);
@@ -162,7 +171,19 @@ public class GroupController {
 	@RequestMapping(value="/group/groupCreate", method=RequestMethod.GET)
 	public String groupCreate(HttpSession session, Group group, Model model)
 	{	
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
+		
 		logger.info("그룹생성 : {}", group);
 		groupDao.insertGroup(group);
 		int group_no = groupDao.selectGroupNo(group.getGroup_name());
@@ -171,11 +192,6 @@ public class GroupController {
 		gjoin.setMember_id(member_id);
 		gjoin.setMember_level(1);
 		groupMemberDao.insertGroupJoinMaster(gjoin);
-		
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
-		model.addAttribute("groupJoinList", groupJoinList);
-		
 		
 		return "redirect:/document/mainDocument";
 	}

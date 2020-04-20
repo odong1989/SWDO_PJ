@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.MemberDAO;
+import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.Member;
+import net.softsociety.binder.vo.Note;
 
 //@선언
 @Controller
@@ -35,6 +37,7 @@ public class MemberController {
 	MemberDAO memdao;
 	@Autowired
 	GroupDAO groupdao;
+	NoteDAO noteDao;
 	
 	//1.회원가입================================================================================
 	//1.1[이동] 회원가입폼으로 이동.
@@ -183,10 +186,18 @@ public class MemberController {
 	public String memberMypage(Member member, String remember,HttpSession session,Model model) {
 		logger.info("마이페이지 프로세스 시작");
 		
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
 		ArrayList<Group> groupJoinList = groupdao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		
 		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);

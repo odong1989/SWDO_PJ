@@ -53,7 +53,6 @@ public class DocumentController {
 		logger.info("mainDocument 이동");
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
-		logger.info("mainDocument - member_id :{}",member_id);
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
 		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
@@ -62,7 +61,6 @@ public class DocumentController {
 		}
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
@@ -73,9 +71,8 @@ public class DocumentController {
 	@RequestMapping(value="group", method=RequestMethod.GET)
 	public String group(HttpSession session, int no , Model model, GroupJoin vo)
 	{	
-		logger.info("mainDocument 이동");
+		logger.info("readDocument 이동");
 		String member_id = (String) session.getAttribute("loginId");
-		logger.info("mainDocument - member_id :{}",member_id);
 		
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
 		if (memoCheck.size() == 0){
@@ -85,7 +82,6 @@ public class DocumentController {
 		}
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		
 //		ArrayList<Document> caution = documentDao.selectCaution(no);
@@ -94,7 +90,6 @@ public class DocumentController {
 		model.addAttribute("caution", caution);
 		
 		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
-		logger.info("-그룹 내 글 : {}",documentList);
 		model.addAttribute("documentList", documentList);
 		
 		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
@@ -112,7 +107,7 @@ public class DocumentController {
 	@RequestMapping(value="boardTemp", method=RequestMethod.GET)
 	public String boardTemp(HttpSession session )
 	{
-		logger.info("boardTemp 메소드 실시& 이동");		
+		logger.info("boardTemp 실행");		
 		return "/document/boardTemp";
 	}	
 	
@@ -122,7 +117,7 @@ public class DocumentController {
 	@RequestMapping(value="writeDocument", method=RequestMethod.GET)
 	public String writeDocument(HttpSession session, int no ,Model model)
 	{	//선택한 그룹의 번호값을 갖고와야한다. //int no :선택한 모임(그룹)의 PK번호
-		logger.info("writeDocument 메소드 실시& 이동");	
+		logger.info("writeDocument 실행");	
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
@@ -133,10 +128,8 @@ public class DocumentController {
 		}
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
-		logger.info("mainDocument - 그룹의 번호(PK) :{}",no);		
 		model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
 		
 		return "/document/writeDocument";
@@ -148,8 +141,7 @@ public class DocumentController {
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
 	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model)
 	{	
-		logger.info("documentInsert메소드 시작.");
-		logger.info("documentInsert메소드 세션계정 : {}",session.getAttribute("loginId"));
+		logger.info("documentInsert 실행");
 
 		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
 		Photo photo = new Photo();
@@ -194,10 +186,8 @@ public class DocumentController {
             
         }
 
-		logger.info("mainDocument 이동");
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
-		logger.info("mainDocument - member_id :{}",member_id);
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
 		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
@@ -206,11 +196,9 @@ public class DocumentController {
 		}
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		logger.info("-그룹리스트 : {}", groupJoinList);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
-		logger.info("documentInsert메소드 종료.");
 		return "/document/mainDocument";
 		//return "/document/readDocument";//readDocument이동시 가입한 그룹들이 출력되지 않음.
 	}
