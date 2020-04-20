@@ -96,7 +96,7 @@ public class loginAndJoinController {
 		logger.info("memberJoin메소드-프로필 사진 업로드 시작");		
         if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
             //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)
-            String savedfile = FileService.saveFile(upload, uploadPath, "profile");            
+            String savedfile = FileService.saveFile(upload, uploadPath, "profile", 0, 0);            
             photo.setPhoto_savedfile(savedfile);//DB가 사용한 파일의 별명
             photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
             member.setMember_photo(photo.getPhoto_savedfile());            

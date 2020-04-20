@@ -163,12 +163,11 @@ public class DocumentController {
         if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
             //2.업로드된 파일의 경로(파일명)을 photoVO에게 설정(set)
         	//이외에도 도큐먼트번호, 그룹번호도 같이 부여한다.
-        	photo.setDocument_no(writeDocument.getDocument_no());
         	photo.setGroup_no(writeDocument.getGroup_no());
             //글이 DB에 등록된 다음에 확정되는 글의 번호까지 추가해야한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
         	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));
         	
-        	String savedfile = FileService.saveFile(upload, uploadPath, "photo");
+        	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
             photo.setPhoto_savedfile(savedfile); //DB가 사용한 파일의 별명
             photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
             

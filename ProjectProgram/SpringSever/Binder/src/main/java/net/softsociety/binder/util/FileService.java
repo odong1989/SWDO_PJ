@@ -23,7 +23,7 @@ public class FileService {
 	//파일의 저장된 주소를 받고
 	//파일이 저장된 주소에 있는지를 확인합니다.
 	//마지막에는 파일명과 경로를 리턴해줍니다.
-	public static String saveFile(MultipartFile mfile, String uploadPath, String fileType) {
+	public static String saveFile(MultipartFile mfile, String uploadPath, String fileType, int group_no, int document_no) {
 									// 내가 저장하려는 파일, 저장겅료
 		/* static 메소드입니다.
 		 * static을 활용시 장점은 
@@ -88,6 +88,8 @@ public class FileService {
 		File serverFile = null;
 		
 		//같은 이름의 파일이 있는 경우의 처리
+		String savedPhoto = "doc-" + group_no + "-" + document_no + "-";
+		int photoNum = 1;
 		if(fileType.equals("profile")) {
 			while (true) {
 				serverFile = new File(uploadPath + "/" + savedFilename + ext);
@@ -100,6 +102,12 @@ public class FileService {
 				//원래파일명 뒤쪽에 시간을 덧붙여서 저장합니다. 동일명으로 인해 충돌하거나 덮어씌워지기를 방지하기 위한 것입니다.
 			}		
 		} else {
+			while(true) {
+				serverFile = new File(uploadPath + "/" + savedPhoto + photoNum + ext);
+				
+				if( !serverFile.isFile()) break;
+				photoNum++;
+			}
 			
 		}
 		
@@ -117,8 +125,9 @@ public class FileService {
 			savedFilename = null;
 			e.printStackTrace();
 		}
+		if(fileType.equals("profile")) return savedFilename + ext; //"내가 저장한 파일명.확장자" 를 리턴해줍니다.
+		else return savedPhoto + photoNum + ext;
 		
-		return savedFilename + ext; //"내가 저장한 파일명.확장자" 를 리턴해줍니다.
 		//사용자 전송->WAS(저장실시)->DB(저장완료후 "파일명.확장자" 와 파일의 저장경로"를 전달 받습니다. 
 		//이를통해 서버에 저장된 파일을 DB는 차트로 관리하는 형식이 되지요. 
 	}
