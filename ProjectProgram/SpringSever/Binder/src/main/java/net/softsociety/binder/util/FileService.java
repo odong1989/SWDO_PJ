@@ -23,7 +23,7 @@ public class FileService {
 	//파일의 저장된 주소를 받고
 	//파일이 저장된 주소에 있는지를 확인합니다.
 	//마지막에는 파일명과 경로를 리턴해줍니다.
-	public static String saveFile(MultipartFile mfile, String uploadPath) {
+	public static String saveFile(MultipartFile mfile, String uploadPath, String fileType) {
 									// 내가 저장하려는 파일, 저장겅료
 		/* static 메소드입니다.
 		 * static을 활용시 장점은 
@@ -88,16 +88,20 @@ public class FileService {
 		File serverFile = null;
 		
 		//같은 이름의 파일이 있는 경우의 처리
-		while (true) {
-			serverFile = new File(uploadPath + "/" + savedFilename + ext);
-								//업로드 경로                           저장할 파일명            + 확장자
+		if(fileType.equals("profile")) {
+			while (true) {
+				serverFile = new File(uploadPath + "/" + savedFilename + ext);
+									//업로드 경로                           저장할 파일명            + 확장자
+				
+				//같은 이름의 파일이 없으면 나감.
+				if ( !serverFile.isFile()) break;	
+				//같은 이름의 파일이 있으면 이름 뒤에 long 타입의 시간정보를 덧붙임.
+				savedFilename = savedFilename + new Date().getTime();	
+				//원래파일명 뒤쪽에 시간을 덧붙여서 저장합니다. 동일명으로 인해 충돌하거나 덮어씌워지기를 방지하기 위한 것입니다.
+			}		
+		} else {
 			
-			//같은 이름의 파일이 없으면 나감.
-			if ( !serverFile.isFile()) break;	
-			//같은 이름의 파일이 있으면 이름 뒤에 long 타입의 시간정보를 덧붙임.
-			savedFilename = savedFilename + new Date().getTime();	
-			//원래파일명 뒤쪽에 시간을 덧붙여서 저장합니다. 동일명으로 인해 충돌하거나 덮어씌워지기를 방지하기 위한 것입니다.
-		}		
+		}
 		
 		
 		

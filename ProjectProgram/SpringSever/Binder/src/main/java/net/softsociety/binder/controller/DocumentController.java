@@ -168,7 +168,7 @@ public class DocumentController {
             //글이 DB에 등록된 다음에 확정되는 글의 번호까지 추가해야한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
         	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));
         	
-        	String savedfile = FileService.saveFile(upload, uploadPath);
+        	String savedfile = FileService.saveFile(upload, uploadPath, "photo");
             photo.setPhoto_savedfile(savedfile); //DB가 사용한 파일의 별명
             photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
             
