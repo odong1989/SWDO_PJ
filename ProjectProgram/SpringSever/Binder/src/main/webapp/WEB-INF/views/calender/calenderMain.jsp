@@ -168,6 +168,7 @@ function groupMgr(pk) {
 			</c:forEach>
 		</div>
 		
+
 		<div id="right-body">
 			<table id="document-body">
 				<tr><td><input type="hidden" id='groupNumber' value="${groupNumber}"></td></tr>
@@ -253,55 +254,49 @@ function groupMgr(pk) {
         <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"></h4>
                     </div>
+                    
                     <div class="modal-body">
-
                         <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-allDay">하루종일</label>
-                                <input class='allDayNewEvent' id="edit-allDay" type="checkbox"></label>
+                           <div class="col-xs-12">
+                                <label class="col-xs-4" for="groupNum"></label>
+                                <input class="inputModal" type="hidden" name="groupNum" id="groupNum" value="${groupNumber}"/>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-title">장소</label>
-                                <input class="inputModal" type="text" name="document_destination" id="edit-title" required="required" />
-                            </div>
-                        </div>
-
 
                         <div class="row">
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-title">일정명</label>
-                                <input class="inputModal" type="text" name="edit-title" id="edit-title"
-                                    required="required" />
+                                <input class="inputModal" type="text" name="edit-title" id="edit-title" required="required" />
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-start">시작</label>
+                                <label class="col-xs-4" for="edit-desc">장소</label>
+                                <input class="inputModal" type="text" name="edit-desc" id="edit-desc" required="required" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-start">시작일</label>
                                 <input class="inputModal" type="text" name="edit-start" id="edit-start" />
                             </div>
                         </div>
+                        
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-end">끝</label>
+                                <label class="col-xs-4" for="edit-end">종료일</label>
                                 <input class="inputModal" type="text" name="edit-end" id="edit-end" />
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-type">구분</label>
-                                <select class="inputModal" type="text" name="edit-type" id="edit-type">
-                                    <option value="일정추가">일정추가</option>
-                                </select>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-color">색상</label>
@@ -318,13 +313,7 @@ function groupMgr(pk) {
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-desc">설명</label>
-                                <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
-                                    id="edit-desc"></textarea>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="modal-footer modalBtnContainer-addEvent">
                         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>

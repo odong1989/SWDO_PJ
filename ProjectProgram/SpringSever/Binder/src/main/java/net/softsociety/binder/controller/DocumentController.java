@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -212,6 +213,34 @@ public class DocumentController {
 		logger.info("documentInsert메소드 종료.");
 		return "/document/mainDocument";
 		//return "/document/readDocument";//readDocument이동시 가입한 그룹들이 출력되지 않음.
+	}
+	
+	//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
+	//uploadPath는 "/uploadFile"으로 설정되어있다.;
+	@RequestMapping(value="documentInsertTemp", method=RequestMethod.GET)
+	public void documentInsertTemp(HttpSession session, Document writeDocument)
+	{	
+		logger.info("documentInsertTemp메소드 시작.");
+		logger.info("documentInsertTemp메소드 세션계정 : {}",session.getAttribute("loginId"));
+
+		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
+		Photo photo = new Photo();
+		writeDocument.setMember_id((String)session.getAttribute("loginId"));
+		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
+
+        //
+	     int count = documentDao.insertCaution(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
+	     logger.info("3.VO를 DB에 INSERT count : {}",count);
+	     if(count ==0) {
+	            logger.info("글(document) 등록실패");
+	     }
+	     else if(count ==1) {
+	            logger.info("글(document) 등록성공");
+	     }
+		//게시글(Document) insert 코드 종료.아래에는 사진추가 메소드가 실시.---------------------------------------------------
+	
+		logger.info("documentInsertTemp메소드 종료.");
+	
 	}
 	
 	

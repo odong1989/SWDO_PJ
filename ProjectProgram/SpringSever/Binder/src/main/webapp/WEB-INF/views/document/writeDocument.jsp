@@ -10,8 +10,12 @@
 <title>${group_name }</title>
 <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>
+	.wirteDocForm td{text-align: center;}
+	
+</style>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type='text/javascript'
 	src='http://code.jquery.com/jquery-1.8.3.js'></script>
 <link rel="stylesheet"
@@ -84,35 +88,38 @@
 			<table class="wirteDocForm">		
 			 	<tr><td><input type="hidden" name='group_no' value="${writeDocumentGroup_no}"></td></tr>
 			     	<tr>
-				        <td width=15%> <p id='currentDate' style="display:inline;"></p> </td>
-				        <td width=25%> <input type="text" placeholder="장소" id='place' name="document_destination" > </td>
-				        <td width=30%> <input type='date' id='startDate' name='document_regdate'  style="display:inline;"/> 부터  </td>
-				   		<td width=30%> <input type='date' id='endDate' name='document_finalday'  style="display:inline;"/> 까지   </td>
+			     	    <td> <p> 오늘의 날짜 : </p> </td>
+				        <td> <p id='currentDate' style="display:inline;"></p> </td>
+				    </tr>
+				    <tr>
+				        <td> <input type='date' id='startDate' name='document_regdate'  style="display:inline;"/> 부터  </td>
+				   		<td> <input type='date' id='endDate' name='document_finalday'  style="display:inline;"/> 까지   </td>
 					</tr>
 				        
 				    <tr>
-						<td colspan=3>
-
-       					    <img id="previewImg" src="<c:url value='/img/preViewImage.png' />" width="300" height="300" alt="첨부사진 미리보기" ><br> 
+						<td>
+       					    <img id="previewImg" src="<c:url value='/img/preViewImage.png' />" width="200" height="200" alt="첨부사진 미리보기" >
 					        <input type='file' id="imgInp" name="upload" />
 				        </td>
 				    	<td>
-				    		<textarea rows="18" width="300" style="resize: none" 
-				    		          id='content' name="document_content" placeholder="기록하고 싶은 내용을 적으세요">
-				    		</textarea> 
+				    		<textarea rows="14" width="300" style="resize: none" id='content' name="document_content"></textarea> 
 				    	</td> 
 				   	</tr>     
-				   	           
-				   	<tr border="0px">
-				   		<td colspan="4" border="0"> 
-				   			<input type="text" placeholder="#해시태그를 입력해주세요" style="width:400px;"> 
+				   	<tr>	
+				   		<td width=25%> <input type="text" placeholder="장소" id='place' name="document_destination" > </td>
+				   		<td colspan="2" border="0"> 
+				   			<input type="text" placeholder="#해시태그를 입력해주세요" style="width:200px;"> 
 				   		</td>
-				   	</tr>
-           </table>
-           <div style="text-align: center;">
-					<input type="submit" value="등록">
-			   		<input type="button" value="취소">
-		   </div>
+				   	</tr>       
+           			<tr>
+           				<td>
+				            <div style="text-align: center;">
+							<input type="submit" value="등록">
+					   		<input type="button" value="취소">
+				   			</div>
+						</td>
+					</tr>
+          		</table>
            </form>
 			     <script>
 			  	        document.getElementById('currentDate').innerHTML = new Date().toISOString().substring(0, 10);

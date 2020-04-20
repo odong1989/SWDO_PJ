@@ -1,15 +1,17 @@
 var eventModal = $('#eventModal');
 var modalTitle = $('.modal-title');
-var editAllDay = $('#edit-allDay');	
+var editAllDay = $('#edit-allDay');
 
-var editTitle = $('#edit-title');	//컨텐츠
-var editStart = $('#edit-start');	//시작일
-var editEnd = $('#edit-end');		//종료일
-var editType = $('#edit-type');		
+var group_no =  $('#group_no');
+var editTitle = $('#edit-title');
+var destination = $('#destination');
+var editStart = $('#edit-start');
+var editEnd = $('#edit-end');
+
+var editType = $('#edit-type');
 var editColor = $('#edit-color');
-var editDesc = $('#edit-desc');		//장소
-var group_no = document.getElementById("groupNum").value;
-//alert("group_no :"+group_no);
+var editDesc = $('#edit-desc');
+
 
 var addBtnContainer = $('.modalBtnContainer-addEvent');
 var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
@@ -41,8 +43,13 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').unbind();
 //    $('#save-event').on('click', function () {
     $(document).on('click','#save-event',function(){
-    	//풀캘린더에 표현 역할 담당.
-    	var eventData = {
+        var eventData = {
+        	group_no: 			  group_no.val(),   //그룹번호
+        	document_content: 	  editTitle.val(),  //컨텐츠
+        	document_regdate:	  editStart.val(),  //시작일
+        	document_finalday:	  editEnd.val(),	   //마지막일
+        	document_destination: destination.val()
+        	/*오리지널
             _id: eventId,
             title: editTitle.val(),
             start: editStart.val(),
@@ -53,6 +60,7 @@ var newEvent = function (start, end, eventType) {
             backgroundColor: editColor.val(),
             textColor: '#ffffff',
             allDay: false
+            */
         };
 
         if (eventData.start > eventData.end) {
@@ -67,7 +75,7 @@ var newEvent = function (start, end, eventType) {
 
         var realEndDay;
 
-      //  if (editAllDay.is(':checked')) {
+        if (editAllDay.is(':checked')) {
             eventData.start = moment(eventData.start).format('YYYY-MM-DD');
             //render시 날짜표기수정
             eventData.end = moment(eventData.end).add(1, 'days').format('YYYY-MM-DD');
@@ -75,42 +83,23 @@ var newEvent = function (start, end, eventType) {
             realEndDay = moment(eventData.end).format('YYYY-MM-DD');
 
             eventData.allDay = true;
-        //}
+        }
 
         $("#calendar").fullCalendar('renderEvent', eventData, true);
         eventModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
-      
-        //DB에 저장하기 위한 변수
-        var eventSaveData = {
-        	group_no : group_no,   						 //그룹번호
-        	document_content : eventData.title,  		 //컨텐츠
-        	document_regdate : eventData.start, 	     //시작일
-        	document_finalday : eventData.end,	 		 //마지막일
-        	document_destination : eventData.description //장소
-        };
-        //alert("eventSaveData.group_no : "+eventSaveData.group_no);
-        //alert("eventSaveData.document_regdate : "+ eventSaveData.document_regdate);
-        //alert("eventSaveData.document_finalday : "+ eventSaveData.document_finalday);
-        //alert("eventSaveData.document_destination : "+eventSaveData.document_destination);
-        
 
-        /*data: {"group_no":$("eventSaveData.group_no").val(),
- 	   "document_regdate":$("eventSaveData.document_regdate").val(),
- 	   "document_finalday":$("eventSaveData.document_finalday").val(),
-   	   "document_destination":$("eventSaveData.document_destination").val()   
- },*/
         //새로운 일정 저장
         $.ajax({
-            url: "../document/documentInsertTemp",
-        	type: "GET",
-            data: eventSaveData,
-        	success: function () {
+            type: "post",
+            url: "documentInsert",
+            data: {"Document":eventData},
+            success: function () {
             		alert("dz");
             },
             error:function () {
-            	alert("DB저장이 되지 않았습니다.");
+            		alert("DB저장이 되지 않았습니다.");
             }
         });
     });
