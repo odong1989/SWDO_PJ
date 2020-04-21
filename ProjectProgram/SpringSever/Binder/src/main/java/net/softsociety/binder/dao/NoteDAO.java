@@ -35,7 +35,7 @@ public class NoteDAO {
 	public int insertNote(Note note) {
 		int result = 0;
 		try {
-			log.info("{쪽지 작성 : }",note);
+			log.info("쪽지 작성 : {}",note);
 			NoteMapper mapper = session.getMapper(NoteMapper.class);
 			result = mapper.insertNote(note);
 		}catch(Exception e) {

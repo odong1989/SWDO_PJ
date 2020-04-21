@@ -58,6 +58,8 @@ public class NoteController {
 	public String noteSend(HttpSession session, Note note)
 	{
 		log.info("쪽지 작성 {}", note);
+		String member_id = (String)session.getAttribute("loginId");
+		note.setMember_id(member_id);
 		noteDao.insertNote(note);
 		return "redirect:note/noteList";
 	}
