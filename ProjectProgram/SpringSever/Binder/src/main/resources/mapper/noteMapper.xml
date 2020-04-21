@@ -29,16 +29,20 @@
 		bnd_note
 	where
 		note_receiver = #{member_id}
+	order by
+		note_no desc
 	</select>
 
 	<insert id="insertNote" parameterType="note">
 		insert into	bnd_note(
 			note_no
+			, note_title
 			, note_content
 			, member_id
 			, note_receiver 
 		) values (
 			bnd_note_no_seq.nextval
+			, #{note_title}
 			, #{note_content}
 			, #{member_id}
 			, #{note_receiver}

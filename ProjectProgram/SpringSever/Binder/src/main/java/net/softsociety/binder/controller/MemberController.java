@@ -37,6 +37,7 @@ public class MemberController {
 	MemberDAO memdao;
 	@Autowired
 	GroupDAO groupdao;
+	@Autowired
 	NoteDAO noteDao;
 	
 	//1.회원가입================================================================================
@@ -188,17 +189,16 @@ public class MemberController {
 		
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
+		logger.info(member_id);
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
 		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
 		}
-		
 		ArrayList<Group> groupJoinList = groupdao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
-		
 		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);
 		return "member/memberMypage";

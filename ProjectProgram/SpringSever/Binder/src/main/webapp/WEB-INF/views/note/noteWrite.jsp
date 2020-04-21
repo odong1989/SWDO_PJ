@@ -51,9 +51,7 @@
 			<tr>
 				<td>내용</td>
 				<td>
-					<textarea name="note_content">
-					
-					</textarea>
+					<textarea name="note_content"></textarea>
 				</td>
 			</tr>
 			<tr>
