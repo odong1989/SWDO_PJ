@@ -262,13 +262,23 @@ public class DocumentController {
 	//그룹멤버확인 초대코드아이디로 보낼때
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
-	public String selectGJM(String memberCheck) {
-		
+	public String selectGJM(String memberCheck, HttpSession session) {
+		//from 수환
+		//이 메서드(selectGJM) 파라메타로 그룹번호 받을 수 있게 처리바람.
 		String memberCheck2 = groupMemberDao.selectGroupJoinMemberOne(memberCheck);
 		logger.info("selectGJM {}",memberCheck2);
 		String chk = null;
+		//memberCheck 유저의 존재여부에 따라 분기처리
 		if (memberCheck2 != null) {
 			chk = "true";
+			//System메시지 전송
+			String member_id = (String)session.getAttribute("loginId");
+			//여기에 전달될 상세내용 구현예정
+			Note note = new Note();
+			note.setMember_id("system");
+			note.setNote_receiver(memberCheck);
+			note.setNote_title(member_id + "님의 초대 메시지입니다.");
+			note.setNote_content("코드가 여기에 입려될 예정");
 		} else {
 			chk = "false";
 		}
@@ -326,7 +336,6 @@ public class DocumentController {
 	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
 	@ResponseBody
 	public String insertCaution(Document vo, String caution, HttpSession session, int gno) {
-		
 		logger.info("insertCaution {}",caution);
 		String member_id = (String) session.getAttribute("loginId");
 		vo.setMember_id(member_id);
@@ -335,6 +344,10 @@ public class DocumentController {
 		int chkdel = documentDao.deleteCaution(gno);
 		logger.info("insertCaution - deleteCaution {}",chkdel);
 		
+		
+		//from 수환
+		//공지사항 여부를 확인하는 컬럼에 1이 담기지 않고 있음
+		//수정바람
 		int chknum = documentDao.insertCaution(vo);
 		
 		String chk = null;
