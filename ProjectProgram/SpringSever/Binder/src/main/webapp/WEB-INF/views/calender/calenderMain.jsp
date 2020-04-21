@@ -77,50 +77,32 @@ function groupMgr(pk) {
 					</div>
 					<div class="menu-group-button-right">
 						<c:if test="${glist.MEMBER_LEVEL == 1 }">
-							<div id="app1">
-							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
-							<modal v-if="showModal" @close="closeModal">
-								 	<template slot="header"><h3>회원목록</h3></template>
-								 	<template slot="body">
-										<table>
-											<c:forEach var="gjoin" items="${gjoin}">
-												<tr>
-												<td class='center'>${gjoin.member_id }</td>
-												<td class='center'><c:if test="${gjoin.member_level == 1 }">
-													관리자
-												</c:if> <c:if test="${gjoin.member_level == 2 }">
-													부관리자
-												</c:if> <c:if test="${gjoin.member_level == 3 }">
-													일반회원
-												</c:if>
-												</td>
-												<td>
-												</td>
-												<c:if test="loginid"></c:if>									
-													<td width="30px">
-													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
-													 @click="subManager('${gjoin.member_id }')">
-													 </td>
-													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
-													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
-													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
-													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
-												
-												</tr>
-												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
-												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
-											</c:forEach>
-										</table>
-								 	</template>
-								 	<template slot="footer">
-								 		<button @click="closeModal">닫기</button>
-								 	</template>
-								  </modal>
-							</div>
 							<img src="<c:url value='/img/crown_gold.png' />">
 						</c:if>
 						<c:if test="${glist.MEMBER_LEVEL == 2 }">
-							<div id="app1">
+							<img src="<c:url value='/img/crown_silver.png' />">
+						</c:if>
+					</div>
+					<div class="menu-group-button-clear"></div>
+				</div>
+			</c:forEach>
+		</div>
+		
+
+		<div id="right-body">
+			<table id="document-body">
+				<tr><td><input type="hidden" id='groupNumber' value="${groupNumber}"></td></tr>
+				<tr height="40px">
+					<td width="21%">
+						<a href="javascript:invite(${group_no})">
+							<img src="<c:url value='/img/invite.png' />" title="초대코드생성">
+						</a>
+						<a href="javascript:write(${group_no})">
+							<img src="<c:url value='/img/pencil.png' />" title="글쓰기"> 
+						</a>
+						<c:if test="${glist.MEMBER_LEVEL != 3 }">
+						<!-- 회원관리 -->
+						<div id="app1">
 							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
 							<modal v-if="showModal" @close="closeModal">
 								 	<template slot="header"><h3>회원목록</h3></template>
@@ -160,27 +142,8 @@ function groupMgr(pk) {
 								 	</template>
 								  </modal>
 							</div>
-							<img src="<c:url value='/img/crown_silver.png' />">
-						</c:if>
-					</div>
-					<div class="menu-group-button-clear"></div>
-				</div>
-			</c:forEach>
-		</div>
-		
-
-		<div id="right-body">
-			<table id="document-body">
-				<tr><td><input type="hidden" id='groupNumber' value="${groupNumber}"></td></tr>
-				<tr height="40px">
-					<td width="21%">
-						<a href="javascript:invite(${group_no})">
-							<img src="<c:url value='/img/invite.png' />" title="초대코드생성">
-						</a>
-						<a href="javascript:write(${group_no})">
-							<img src="<c:url value='/img/pencil.png' />" title="글쓰기"> 
-						</a>
-											<!-- invite start -->
+							</c:if>
+						<!-- invite start -->
 						<div class="Management">
 							<div id="app2">
 									<img src= "<c:url value='/img/InviteMember.png'/>" title="초대코드보내기" id="show-modal2" @click="openModal">

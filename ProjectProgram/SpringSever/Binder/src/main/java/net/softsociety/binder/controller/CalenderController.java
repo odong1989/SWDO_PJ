@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.GroupJoinDAO;
+import net.softsociety.binder.dao.GroupMemberDAO;
 import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
@@ -33,10 +34,11 @@ public class CalenderController {
 	@Autowired NoteDAO 	    noteDao;
 	@Autowired DocumentDAO documentDao;
 	@Autowired GroupJoinDAO groupJoinDao;
+	@Autowired GroupMemberDAO groupMemberDao;
 	private static final Logger logger = LoggerFactory.getLogger(CalenderController.class);
 
 	@RequestMapping(value="calenderMain", method=RequestMethod.GET)
-	public String calenderMain(String group_no ,HttpSession session, int no , Model model){
+	public String calenderMain(String group_no ,HttpSession session, int no , Model model, GroupJoin vo){
 		
 		logger.info("calenderMain 이동");
 		//모든 페이지에 있어야 하는 출력데이터
@@ -50,11 +52,19 @@ public class CalenderController {
 		
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
-		//공통 데이터 종료		
-				
+		//공통 데이터 종료
+		Document caution = documentDao.selectCaution(no);
+		logger.info("-공지사항 : {}", caution);
+		model.addAttribute("caution", caution);
+		//공지사항 가져오는 코드		
 		model.addAttribute("groupNumber", no); 
 		//캘린더의 일정을 뽑아오기 위해 pk값(소속그룹번호)를 넘기고 있습니다.
-
+		vo.setGroup_no(no);
+		logger.info("groupMemberMgr {}",vo);
+		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
+		logger.info("groupMemberMgr {}",join);
+		model.addAttribute("gjoin",join);
+		//그룹 멤버현황 가져오기 위한 코드
 				
 		return "/calender/calenderMain";
 	}
