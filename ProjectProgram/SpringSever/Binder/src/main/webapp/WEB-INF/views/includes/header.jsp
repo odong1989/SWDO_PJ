@@ -64,7 +64,7 @@ function Withdrawal(){
 			<img src="<c:url value='/img/logo.png' />"></a>
 		</span> <span id="gaibu-top-middle"> </span> <span id="gaibu-top-right">
 
-            <img src="<c:url value='/img/bell.png' />">
+<%--             <img src="<c:url value='/img/bell.png' />"> --%>
 			<c:if test="${newNoteCheck eq 'nashi' }">
 				<a href="javascript:noteList()"><img src="<c:url value='/img/mail.png' />"></a>
 			</c:if>

@@ -3,6 +3,7 @@
 
 <mapper namespace="net.softsociety.binder.dao.NoteMapper">
 
+
 	<select id="newNoteCheck" parameterType="note" resultType="note">
 	select
 		note_content
@@ -15,6 +16,7 @@
 	and
  		note_read = 0
 	</select>
+	<!-- 아직 읽지 않은 쪽지는 note_read 값이 0이다 -->
 	
 	<select id="selectNote" parameterType="string" resultType="note">
 	select

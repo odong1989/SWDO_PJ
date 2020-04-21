@@ -70,6 +70,24 @@ insert into bnd_member(
     , '20-03-29'
 );
 
+insert into bnd_member(
+    member_id
+    , member_pw
+    , member_name
+    , member_mail
+    , member_photo
+    , member_birthday
+    , member_lastlogin
+) values (
+    'system'
+    , 123123
+    , 'System'
+    , 'jsh4646@naver.com'
+    , '/dahyun.png'
+    , '91-11-22'
+    , '20-03-20'
+);
+
 insert into bnd_group(
     group_no
     , group_category

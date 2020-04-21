@@ -82,6 +82,9 @@ a:visited{
 		border-collapse: separate;
 		border-spacing: 1px;
 	}
+	.tr12 {
+		height: 1.6em;
+	}
 	.tdtop {
 		height: 1.5em;
 		background-color: lightblue;
@@ -119,29 +122,29 @@ a:visited{
 <body>
 	쪽지함</br>
 	<table id="notetable">
-		<tr>
+		<tr class="tr12">
 			<th class="tdtop tdno">번호</th>
 			<th class="tdtop">제목</th>
-			<th class="tdtop tddate">날짜</th>
 			<th class="tdtop tdsender">보낸이</th>
+			<th class="tdtop tddate">날짜</th>
 		</tr>
 		<c:forEach var="nlist" items="${nlist}" varStatus="status">
-			<c:if test="${nlist.note_read == 0 }">
-				<tr>
-					<td class="tdmid">${noteCnt - status.index}</td>
+			<tr class="tr12">
+				<td class="tdmid">${noteCnt - status.index}</td>
+				<c:if test="${nlist.note_read == 0 }">
 					<td class="tdmid" style="font-weight:bold;"><a href="javascript:read('${nlist.note_no }')">${nlist.note_title }</a></td>
-					<td class="tdmid tddate">${fn:substring(nlist.note_date, 2, 11) }</td>
-					<td class="tdmid"><a href="javascript:send('${nlist.member_id }')">${nlist.member_id }</a></td>
-				</tr>
-			</c:if>
-			<c:if test="${nlist.note_read == 1 }">
-				<tr>
-					<td class="tdmid">${noteCnt - status.index}</td>
+				</c:if>
+				<c:if test="${nlist.note_read == 1 }">
 					<td class="tdmid"><a href="javascript:read('${nlist.note_no }')">${nlist.note_title }</a></td>
-					<td class="tdmid tddate">${fn:substring(nlist.note_date, 2, 11) }</td>
+				</c:if>
+				<c:if test="${!nlist.member_id.equals('system') }">
 					<td class="tdmid"><a href="javascript:send('${nlist.member_id }')">${nlist.member_id }</a></td>
-				</tr>
-			</c:if>
+				</c:if>
+				<c:if test="${nlist.member_id.equals('system') }">
+					<td class="tdmid" style="font-weight:bold;">System</td>
+				</c:if>
+				<td class="tdmid tddate">${fn:substring(nlist.note_date, 2, 11) }</td>
+			</tr>
 		</c:forEach>
 		<tr><td colspan="4"></td></tr>
 		<tr>
