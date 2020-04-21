@@ -110,4 +110,18 @@
 		    bnd_document.document_content = #{document_content}
 	</select> 
 
+	<update id="updateDocument" parameterType="document">
+	update
+		bnd_document
+	set
+		bnd_document.document_content=#{document_content}
+		,bnd_document.document_regdate=#{document_regdate}
+		,bnd_document.document_finalday=#{document_finalday}
+		,bnd_document.document_destination=#{document_destination}
+	where
+		bnd_document.group_no = #{group_no}
+	and
+		bnd_document.member_id=#{member_id}
+	</update>
+
 </mapper>

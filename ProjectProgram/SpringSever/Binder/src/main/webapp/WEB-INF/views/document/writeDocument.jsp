@@ -11,8 +11,24 @@
 <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 
 <style>
-	.wirteDocForm td{text-align: center;}
+	.wirteDocForm {
+	margin:50px;
+	} 
 	
+	.wirteDocForm  table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  	}
+  	
+	.wirteDocForm td{padding:10px;}
+  
+	/* 
+    .wirteDocForm th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+  	}
+  	*/
 </style>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -44,8 +60,35 @@
  		function write(pk) {
 			location.href="<c:url value='/document/writeDocument' />?no="+pk;
 		}
- 		
- 		
+
+  //유효성체크 시작------------------------------------------------------------------
+		function documentInsertCheck(){
+			var content = document.getElementById("content");						//컨텐츠 유효성 검사
+			var startDate = document.getElementById("startDate").value; // 시작일, 날짜 유효성 검사
+		    var endDate = document.getElementById("endDate").value;     // 종료일, 날짜 유효성 검사
+
+			//alert("startDate : " + startDate );
+			//alert("endDate   : " + endDate );
+		   //textarea의 내용이 없다면 다시 작성하도록 flase실시.
+			if(content.value.length==0){
+				alert("여행의 추억을 기록해주세요");
+				return false;
+			}
+		
+			if(startDate > endDate){
+	            alert("시작일이 종료일보다 이 후 일수는 없습니다.\n다시 선택하여 주시기 바랍니다.");
+				return false;
+			}
+       	 	
+       	 	else if(endDate < startDate){
+	            alert("종료일이 시작일보다 이 전 일수는 없습니다.\n다시 선택하여 주시기 바랍니다.");
+				return false;
+       	 	} 
+	        
+			return true;
+		}
+
+ //유효성체크 종료------------------------------------------------------------------
     </script>
 
 </head>
@@ -82,40 +125,40 @@
 				</div>
 			</c:forEach>
 		</div>
+		
 		<div id="right-body">
-		 <form action="documentInsert" method="POST" enctype="multipart/form-data"> 
-		 	<!--그룹번호를 같이보내줍니다 -->		
+		 <form action="documentInsert" onsubmit="return documentInsertCheck();" method="POST" enctype="multipart/form-data"> 
 			<table class="wirteDocForm">		
+				<!--그룹번호를 같이보내줍니다 -->		
 			 	<tr><td><input type="hidden" name='group_no' value="${writeDocumentGroup_no}"></td></tr>
 			     	<tr>
-			     	    <td> <p> 오늘의 날짜 : </p> </td>
-				        <td> <p id='currentDate' style="display:inline;"></p> </td>
+				     	<!--<td>오늘의 날짜 : </td>-->
+			     	    <td colspan="2"> <p id='currentDate' style="display:inline;"></p> </td>
 				    </tr>
-				    <tr>
+				    <tr style="border-bottom: 1px solid #444444;">
+						<!-- <td>여행 일정</td>-->
 				        <td> <input type='date' id='startDate' name='document_regdate'  style="display:inline;"/> 부터  </td>
 				   		<td> <input type='date' id='endDate' name='document_finalday'  style="display:inline;"/> 까지   </td>
 					</tr>
-				        
 				    <tr>
-						<td>
-       					    <img id="previewImg" src="<c:url value='/img/preViewImage.png' />" width="200" height="200" alt="첨부사진 미리보기" >
-					        <input type='file' id="imgInp" name="upload" />
-				        </td>
-				    	<td>
-				    		<textarea rows="14" width="300" style="resize: none" id='content' name="document_content"></textarea> 
-				    	</td> 
+ 						<!-- <td rowspan="3" style="text-align:center;vertical-align:middle;">사진등록<br>
+							&기록하기</td>-->
+						<td> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />"
+						      width="250" height="250" alt="첨부사진 미리보기" ></td>
+				    	<td> <textarea rows="14" width="300" style="resize: none" id="content" name="document_content"></textarea> </td> 
 				   	</tr>     
+					<tr>
+						<td><input type='file' id="imgInp" name="upload" value="등록사진"/></td>
+						<td> <input type="text" placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
+					</tr>
 				   	<tr>	
-				   		<td width=25%> <input type="text" placeholder="장소" id='place' name="document_destination" > </td>
-				   		<td colspan="2" border="0"> 
-				   			<input type="text" placeholder="#해시태그를 입력해주세요" style="width:200px;"> 
-				   		</td>
+				   		<td colspan="2"> <input type="text" placeholder="#해시태그를 입력해주세요" style="width:430px;"> </td>
 				   	</tr>       
-           			<tr>
-           				<td>
+				    <tr style="border-top: 1px solid #444444;">
+           				<td colspan="3">
 				            <div style="text-align: center;">
-							<input type="submit" value="등록">
-					   		<input type="button" value="취소">
+							<input type="submit" value="글 등록하기" >
+					   		<input type="button" value="취소" onclick="history.back(-1);">
 				   			</div>
 						</td>
 					</tr>

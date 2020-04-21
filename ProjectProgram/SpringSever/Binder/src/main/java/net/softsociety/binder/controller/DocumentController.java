@@ -162,31 +162,42 @@ public class DocumentController {
 	     }
 		//게시글(Document) insert 코드 종료.아래에는 사진추가 메소드가 실시.---------------------------------------------------
 	     
-	    //게시글 추가시 사진첨부여부를 따진다.
-        if(!upload.isEmpty()) { //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
-            //2.업로드된 파일의 경로(파일명)을 photoVO에게 설정(set)
-        	//이외에도 도큐먼트번호, 그룹번호도 같이 부여한다.
-        	photo.setGroup_no(writeDocument.getGroup_no());
-            //글이 DB에 등록된 다음에 확정되는 글의 번호까지 추가해야한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
-        	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));
+
+        if(upload.isEmpty()) {//case1. 첨부사진이 없는 경우 : 기본사진으로 설정.
+
+        	//1.도큐먼트번호, 그룹번호도 같이 부여한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
+        	photo.setGroup_no(writeDocument.getGroup_no());//그룹번호 부여
+	    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
+
+	    	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
+	        photo.setPhoto_savedfile("noImageforBinderBasicImage.png"); //DB가 사용한 파일의 별명
+	        photo.setPhoto_originfile("noImageforBinderBasicImage.png");//원본 파일명
         	
-        	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
-            photo.setPhoto_savedfile(savedfile); //DB가 사용한 파일의 별명
-            photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
-            
-            // logger.info("photoVO의 정보 : {}",photo); 
-            
-            // 3.photoVO를 DB에 INSERT            
-            int count2 = photoDao.photoInsert(photo);
-            logger.info("3.VO를 DB에 INSERT count : {}",count);
-            if(count2 ==0) {
-                   logger.info("사진을 HDD저장&사진정보 DB등록 실패");
-            }
-            else if(count2 ==1) {
-                logger.info("사진을 HDD저장&사진정보 DB등록 성공");
-            }
-            
+        
         }
+        else {//case2. 본인이 첨부한 사진을 로컬저장&DB에 저장
+
+        	//1.도큐먼트번호, 그룹번호도 같이 부여한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
+        	photo.setGroup_no(writeDocument.getGroup_no());//그룹번호 부여
+	    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
+
+            //2.업로드된 파일의 경로(파일명)을 photoVO에게 설정(set)
+	    	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
+	        photo.setPhoto_savedfile(savedfile); //DB가 사용한 파일의 별명
+	        photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
+        }
+        // logger.info("photoVO의 정보 : {}",photo); 
+        
+        // 3.photoVO를 DB에 INSERT            
+        int count2 = photoDao.photoInsert(photo);
+        logger.info("3.VO를 DB에 INSERT count : {}",count);
+        if(count2 ==0) {
+               logger.info("사진을 HDD저장&사진정보 DB등록 실패");
+        }
+        else if(count2 ==1) {
+            logger.info("사진을 HDD저장&사진정보 DB등록 성공");
+        }
+
 
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
@@ -202,7 +213,6 @@ public class DocumentController {
 		//공통 데이터 종료
 		
 		return "/document/mainDocument";
-		//return "/document/readDocument";//readDocument이동시 가입한 그룹들이 출력되지 않음.
 	}
 	
 	//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
