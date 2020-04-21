@@ -15,6 +15,7 @@
 		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd') document_regdate
 		    , bnd_document.document_destination document_destination
 		    , bnd_photo.photo_savedfile photo_savedfile
+		    , bnd_document.document_no document_no
 		from
 		    bnd_document, bnd_photo
 		where
@@ -34,6 +35,24 @@
 		    bnd_document.document_notice = 1
 	</select> 
 	
+	<!-- readDocument.jsp로 글을 보내기 위해 실시. -->
+	<select id="selectDocumentOne" parameterType="Document" resultType="document">
+	 	select
+		     bnd_document.document_content 							title
+		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd')  start
+		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd') end
+		    , bnd_document.document_destinataion 					destinataion
+			, bnd_photo.photo_savedfile 							photo_savedfile
+		from
+		    bnd_document, bnd_photo
+		where
+		    bnd_document.group_no = #{group_no}
+		and
+			bnd_document.document_no = #{document_no}
+		and
+		    bnd_document.document_no = bnd_photo.document_no
+	</select> 
+
 	<select id="selectDocumentsForCalendar" parameterType="int" resultType="hashmap">
 	 	select
 	 		(select '사나' from dual)									"username"

@@ -243,7 +243,7 @@ public class DocumentController {
 	
 	}
 	
-	
+	/*불필요로 추정되는코드. 
 	@RequestMapping(value="editDocument", method=RequestMethod.GET)
 	public String editDocument(HttpSession session, Model model, int no)
 	{	
@@ -257,8 +257,8 @@ public class DocumentController {
 		model.addAttribute("doc", map);
 		
 		return "/document/editDocument";
-		
-	}
+	}*/
+	
 	//그룹멤버확인 초대코드아이디로 보낼때
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
@@ -362,10 +362,20 @@ public class DocumentController {
 	}
 	
 	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
-	public String readContentDocument(HttpSession session, int no , Model model) {
+	public String readContentDocument(HttpSession session, int no , Model model, int group_no) {
 		logger.info("readContent {}", no);
-		
 		String member_id = (String) session.getAttribute("loginId");
+		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
+		Document caution=null;
+		//선택한 글의 정보만을 갖고 오기위한 구별할 값인 계정, 그룹번호, 글번호를 할당. 
+		caution.setMember_id(member_id);
+		caution.setGroup_no(group_no);
+		caution.setDocument_no(no); 
+		caution = documentDao.selectDocumentOne(caution);
+		model.addAttribute("Document", caution);
+		
+		//사용자가 작성한 글 1개만 로드 종료-----------------------------------------------
+		
 		
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
 		if (memoCheck.size() == 0){
