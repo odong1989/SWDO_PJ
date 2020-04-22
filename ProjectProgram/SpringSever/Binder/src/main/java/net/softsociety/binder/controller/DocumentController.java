@@ -192,7 +192,7 @@ public class DocumentController {
         int count2 = photoDao.photoInsert(photo);
         logger.info("3.VO를 DB에 INSERT count : {}",count);
         if(count2 ==0) {
-               logger.info("사진을 HDD저장&사진정보 DB등록 실패");
+               logger.info("첨부사진없음/기본제공인 noImage로 대체");
         }
         else if(count2 ==1) {
             logger.info("사진을 HDD저장&사진정보 DB등록 성공");
@@ -218,7 +218,8 @@ public class DocumentController {
 	//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
 	//uploadPath는 "/uploadFile"으로 설정되어있다.;
 	@RequestMapping(value="documentInsertTemp", method=RequestMethod.GET)
-	public void documentInsertTemp(HttpSession session, Document writeDocument)
+	@ResponseBody
+	public void documentInsertTemp(HttpSession session, Document writeDocument,MultipartFile upload)
 	{	
 		logger.info("documentInsertTemp메소드 시작.");
 		logger.info("documentInsertTemp메소드 세션계정 : {}",session.getAttribute("loginId"));
@@ -238,7 +239,26 @@ public class DocumentController {
 	            logger.info("글(document) 등록성공");
 	     }
 		//게시글(Document) insert 코드 종료.아래에는 사진추가 메소드가 실시.---------------------------------------------------
-	
+
+	     //1.도큐먼트번호, 그룹번호도 같이 부여한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
+	        	photo.setGroup_no(writeDocument.getGroup_no());//그룹번호 부여
+		    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
+
+		    	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
+		        photo.setPhoto_savedfile("noImageforBinderBasicImage.png"); //DB가 사용한 파일의 별명
+		        photo.setPhoto_originfile("noImageforBinderBasicImage.png");//원본 파일명
+	        		        
+	        
+	        // 3.photoVO를 DB에 INSERT            
+	        int count2 = photoDao.photoInsert(photo);
+	        logger.info("3.VO를 DB에 INSERT count : {}",count);
+	        if(count2 ==0) {
+	               logger.info("첨부사진없음/기본제공인 noImage로 대체함.");
+	        }
+	        else if(count2 ==1) {
+	            logger.info("사진을 HDD저장&사진정보 DB등록 성공");
+	        }
+	        
 		logger.info("documentInsertTemp메소드 종료.");
 	
 	}
