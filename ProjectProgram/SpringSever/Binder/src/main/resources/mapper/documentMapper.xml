@@ -105,7 +105,7 @@
 		,bnd_document_no_seq.nextval
 		,#{member_id}
 		,#{document_content}
-		,#{document_notice}
+		,1
 		,#{document_destination}
 		)
 	</insert>

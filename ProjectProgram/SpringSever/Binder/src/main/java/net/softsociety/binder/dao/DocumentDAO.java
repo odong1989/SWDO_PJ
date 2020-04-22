@@ -66,7 +66,7 @@ public class DocumentDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		logger.info("DocumentDAO.java - insertCaution 메소드 종료");
+		logger.info("DocumentDAO.java - insertCaution 메소드 종료 ({})", cau);
 		return cau;
 	}
 	
