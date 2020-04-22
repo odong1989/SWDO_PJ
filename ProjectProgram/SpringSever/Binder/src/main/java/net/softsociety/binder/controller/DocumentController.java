@@ -263,21 +263,17 @@ public class DocumentController {
 	
 	}
 	
-	/*불필요로 추정되는코드. 
+	//글 내용 수정 메소드로 활용하기로 결정.(글 변경페이지는 readContentDocument메소드를 참고하십시오)
 	@RequestMapping(value="editDocument", method=RequestMethod.GET)
-	public String editDocument(HttpSession session, Model model, int no)
+	public String editDocument(HttpSession session, Document originalDocument)
 	{	
+		logger.info("editDocument-기존 글(Document) 수정 작업시작");
+		logger.info("editDocument-변경할 글의 원래 정보 : {}", originalDocument);
 		String member_id = (String) session.getAttribute("loginId");
-		logger.info("editDocument 이동, {}",member_id);
-				
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		model.addAttribute("groupJoinList", groupJoinList);
-		
-		ArrayList<HashMap<String, Object>> map = documentDao.selectDocuments(no);
-		model.addAttribute("doc", map);
-		
+
+						
 		return "/document/editDocument";
-	}*/
+	}
 	
 	//그룹멤버확인 초대코드아이디로 보낼때
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)

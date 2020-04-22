@@ -90,17 +90,7 @@ var newEvent = function (start, end, eventType) {
         	document_finalday : eventData.end,	 		 //마지막일
         	document_destination : eventData.description //장소
         };
-        //alert("eventSaveData.group_no : "+eventSaveData.group_no);
-        //alert("eventSaveData.document_regdate : "+ eventSaveData.document_regdate);
-        //alert("eventSaveData.document_finalday : "+ eventSaveData.document_finalday);
-        //alert("eventSaveData.document_destination : "+eventSaveData.document_destination);
-        
 
-        /*data: {"group_no":$("eventSaveData.group_no").val(),
- 	   "document_regdate":$("eventSaveData.document_regdate").val(),
- 	   "document_finalday":$("eventSaveData.document_finalday").val(),
-   	   "document_destination":$("eventSaveData.document_destination").val()   
- },*/
         //새로운 일정 저장
         $.ajax({
             url: "../document/documentInsertTemp",
