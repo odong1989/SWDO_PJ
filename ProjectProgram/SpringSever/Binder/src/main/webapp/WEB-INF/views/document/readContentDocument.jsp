@@ -24,20 +24,24 @@
 $(function(){
 	$("#btn").click(function(){
 		var reply_content = $('#reply_content').val();
-		var vo = $('#reply').serialize();
+		var formData = $('#replyForm').serialize();
 		if(reply_content ==""){
 			alert("내용을입력해주세요")
 			return;
 		}
-		$("#reply_content").val("");
-
 		$.ajax({
 			type:"post",
-			url: "getReply",
-			data: vo,
-			dataType : json,
+			url: "writeReply",
+			data: formData,
+			dataType : "json",
 			success : function(result) {
+				if(result){
 					alert("성공")
+					$("#reply_content").val("");
+					}
+					else{
+					alert("실패")
+					}
 				},
 			error: function(error) {
 					alert("실패")
@@ -51,19 +55,20 @@ $(function(){
 		<div id="right-body">
 			<table id="document-body">
 				<table class="DocData">		
-				<!--그룹번호를 같이보내줍니다 -->		
-			 	<tr><td><input type="hidden" name='group_no' value="${writeDocumentGroup_no}"></td></tr>
+					<tr>	
+						<td>${document.document_no }번 글</td>
+					</tr>	
 			     	<tr>
-				     	<td style="text-align:center;vertical-align:middle;"> 작성일 </td>
+				     	<td style="text-align:center;vertical-align:middle;"> 장소 : ${document.document_destination } </td>
 			     	    <td colspan="2"> <p id='currentDate' style="display:inline;"></p> </td>
 				    </tr>
 				    <tr style="border-bottom: 1px solid #444444;">
 						<td style="text-align:center;vertical-align:middle;">여행 일정</td>
-				        <td> <p id='startDate' style="display:inline;"/></p> 부터  </td>
-				   		<td> <p id='endDate'  style="display:inline;"/></p> 까지   </td>
+				        <td> <p id='startDate' style="display:inline;"/></p> ${document.document_regdate }부터  </td>
+				   		<td> <p id='endDate'  style="display:inline;"/></p> ${document.document_finalday }까지   </td>
 					</tr>
 				    <tr>
- 						<td rowspan="3" style="text-align:center;vertical-align:middle;">contents</td>
+ 						<td rowspan="3" style="text-align:center;vertical-align:middle;">${document.document_content }</td>
 						<td rowspan="2" style="vertical-align:middle;"> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />"
 						      width="250" height="250" alt="첨부사진 미리보기" ></td>
 				    	<td> <p id="content" style="display:inline;"/> </p> </td> 
@@ -76,39 +81,36 @@ $(function(){
 				   	</tr>       
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
-				            <div style="text-align: center;">
 							<input type="submit" value="글 수정하기" >
 					   		<input type="button" value="이전페이지 가기" onclick="history.back(-1);">
-				   			</div>
 						</td>
 					</tr>
-          		</table>
-			
-			
-			
-			
-			<!-- 영수씨의 기존 댓글 소스코드 -->
-				<tr height="40px">
-					<td width="21%">
-						${documentno }번 글입니다.
-					</td>
-				</tr>
+					<tr>
+						<td>
+						<h>Reply</h>
+							<form id="replyForm">
+								<input type="hidden" id="document_no" value="${document_no }">
+								<input type="text" id="member_id" value="${loginId }">
+								<input type="text" id="reply_content">
+								<button type="button" id="btn">입력</button>
+							</form>
+							
+						</td>
+					</tr>
+			<div id="replyList">
+			<c:forEach var="replyList" items ="${replyList }">
 				<tr>
 					<td>
-					reply
-						<form id="reply" modelAttribute="Reply" method="post">
-							<input type="hidden" id="no" value="${document_no }">
-							<input type="text" id="member_id" value="${loginId }">
-							<input type="text" id="reply_content">
-						</form>
-						<button type="button" id="btn">입력</button>
+					${replyList.member_id } : ${replyList.reply_content }
+					<button type="button" id="btn1">수정</button>
+					<button type="button" id="btn2">삭제</button>
 					</td>
-				</tr>
-				<tr>
-					<td>
-						<div id="replyList"></div>
-					</td>
-				</tr>
+				</tr>	
+			</c:forEach>
+			 </table>
+          </table>
+	</div>
 		</div>
+	
 </body>
 </html>
