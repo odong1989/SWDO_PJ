@@ -89,5 +89,27 @@ public class CalenderController {
 		logger.info("getUserSchedule 메소드 - documentList : {}",documentList);
 		return documentList;	
 	
-	}	
+	}
+	
+	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
+	@ResponseBody
+	public String insertCautionC(Document vo, String caution, HttpSession session, int gno) {
+		logger.info("insertCautionC {}",caution);
+		String member_id = (String) session.getAttribute("loginId");
+		vo.setMember_id(member_id);
+		vo.setGroup_no(gno);
+		vo.setDocument_content(caution);
+		int chkdel = documentDao.deleteCaution(gno);
+		logger.info("insertCautionC- deleteCaution {}",chkdel);
+		
+		int chknum = documentDao.insertCaution(vo);
+		
+		String chk = null;
+		if (chknum != 0) {
+			chk = "true";
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
 }
