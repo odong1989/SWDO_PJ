@@ -391,17 +391,14 @@ public class DocumentController {
 	}
 	
 	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
-	public String readContentDocument(HttpSession session, int no , Model model, int group_no) {
+	public String readContentDocument(HttpSession session, int no , Model model) {
 		logger.info("readContent {}", no);
 		String member_id = (String) session.getAttribute("loginId");
 		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
 		Document caution=null;
-		//선택한 글의 정보만을 갖고 오기위한 구별할 값인 계정, 그룹번호, 글번호를 할당. 
-		caution.setMember_id(member_id);
-		caution.setGroup_no(group_no);
-		caution.setDocument_no(no); 
-		caution = documentDao.selectDocumentOne(caution);
-		model.addAttribute("Document", caution);
+		//Document내의 1개의 글만 읽어오면 되는거라 Document번호만 알고있으면 그 것을 가져올수가있네요  수정 버튼은 session으로 아이디 검사해서 수정가능하게하면될것같습니다
+		caution = documentDao.selectDocumentOne(no);
+		model.addAttribute("document", caution);
 		
 		//사용자가 작성한 글 1개만 로드 종료-----------------------------------------------
 		
@@ -425,15 +422,19 @@ public class DocumentController {
 		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
 		logger.info("-해시태그");
 		model.addAttribute("hashTagList", hashTagList);
-		
-		model.addAttribute("Reply", new Reply());
+		ArrayList<Reply> replyList = replyDao.selectReply(no);
+		model.addAttribute("replyList", replyList);
 	
 		return "document/readContentDocument";
 	}
 	
 	@RequestMapping(value="writeReply", method=RequestMethod.POST)
 	@ResponseBody
-	public String writeReply(Reply vo) {
+	public String writeReply(int document_no, String member_id, String reply_content) {
+		Reply vo = null;
+		vo.setDocument_no(document_no);
+		vo.setMember_id(member_id);
+		vo.setReply_content(reply_content);
 		logger.info("writeReply 시작{}", vo);
 		int replychk = replyDao.insertReply(vo);
 		String chk;

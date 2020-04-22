@@ -10,8 +10,8 @@
 	from
 		bnd_reply
 	where
-		board_no = #{board_no}
-	order by reply_indate desc
+		document_no = #{document_no}
+	order by reply_regdate desc
 </select>
 
 <insert id="insertReply" parameterType="reply">

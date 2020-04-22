@@ -35,7 +35,7 @@ function noteList() {
 function edit(pk) {
 	location.href="<c:url value='/document/editDocument' />?no="+pk;
 }
-function readContent(pk) {
+function readContent(pk,pk2) {
 	location.href="<c:url value='/document/readContentDocument' />?no="+pk;
 }
 function write(pk) {
