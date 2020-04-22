@@ -34,6 +34,25 @@
 	order by
 		note_no desc
 	</select>
+	
+	<select id="selectSystemMsg" parameterType="hashmap" resultType="note">
+	select
+		note_no
+		, note_title
+		, note_content
+		, member_id
+		, note_receiver
+ 		, note_read
+ 		, note_date
+	from
+		bnd_note
+	where
+		note_receiver = #{member_id}
+	and
+		member_id = 'system'
+	order by
+		note_no desc
+	</select>
 
 	<insert id="insertNote" parameterType="note">
 		insert into	bnd_note(
