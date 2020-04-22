@@ -102,13 +102,15 @@
 							 	</template>
 							 	<template slot="footer">
 							 		<div><input v-model="message"><button @click="doSend">제출</button></div>
-							 		<input type = "hidden" id="gno" value="${group_no }">
+							 		<input type = "hidden" id="gno" value="${groupNumber }">
 							 	</template>
 							  </modal>
 						</div>
 				<!-- groupcautionend -->
 						<img src="<c:url value='/img/f5.png' />">
-						<img src="<c:url value='/img/cal.png' />" id="btn1" title="캘린더화면으로전환">
+						<a href="javascript:selectGroup(${groupNumber})">
+						<img src="<c:url value='/img/cal.png' />" title="목록으로전환">
+						</a>
 					</td>
 				</tr>
 			</table>
@@ -218,7 +220,7 @@
         </div><!-- /.modal -->
 
   
-  		<!-- 패널부분을 삭제하면 풀캘린더에 일정이 나오지 않더라. 아직은 아래의 패널쪽 div들은 지우지 말것. -->
+  		<!-- 패널부분을 삭제하면 풀 캘린더에 일정이 나오지 않더라. 아직은 아래의 패널쪽 div들은 지우지 말것. -->
         <div class="panel panel-default" style="display:none;">
             <div class="panel-heading">
                 <h3 class="panel-title">필터</h3>
