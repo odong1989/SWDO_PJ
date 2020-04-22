@@ -7,6 +7,7 @@
 <%@ include file="../includes/header.jsp" %>
 		
 		<div id="right-body">
+			<div id="right-body-menuWrap"><!-- right-body내의 2개의 테이블이 각자의 div내에 포함된다.-->
 			<table id="document-body">
 				<tr><td><input type="hidden" id='groupNumber' value="${groupNumber}"></td></tr>
 				<tr height="40px">
@@ -110,13 +111,14 @@
 						<img src="<c:url value='/img/cal.png' />" id="btn1" title="캘린더화면으로전환">
 					</td>
 				</tr>
-					<td colspan="3">
-						<div id="wrapper">
-				            <div id="loading"></div>
-				            <div id="calendar"></div>
-				        </div>
-        			</td>
 			</table>
+			</div>
+			<!-- Fullcalendar 위한 별도의 div -->
+			<div id="right-body-FullcalendarWrap" style="background-color:white; padding:30px;"><!-- right-body내의 2개의 테이블이 각자의 div내에 포함된다.-->
+				<div id="wrapper">
+		            <div id="loading"></div>
+		            <div id="calendar"></div>
+		        </div>
 		</div>
 	</div>
 	
