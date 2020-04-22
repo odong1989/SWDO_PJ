@@ -106,11 +106,12 @@ var newEvent = function (start, end, eventType) {
             url: "../document/documentInsertTemp",
         	type: "GET",
             data: eventSaveData,
-        	success: function () {
-            		alert("dz");
+        	success: function (eventSaveData) {
+            		alert("일정이저장되었습니다");
             },
-            error:function () {
-            	alert("DB저장이 되지 않았습니다.");
+            error:function(request, error) {
+            	alert("에러가 발생하였습니다.");
+            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         });
     });
