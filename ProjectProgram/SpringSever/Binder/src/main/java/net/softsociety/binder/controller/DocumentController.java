@@ -452,7 +452,7 @@ public class DocumentController {
 	@RequestMapping(value="writeReply", method=RequestMethod.POST)
 	@ResponseBody
 	public String writeReply(int document_no, String member_id, String reply_content) {
-		Reply vo = null;
+		Reply vo = new Reply();
 		vo.setDocument_no(document_no);
 		vo.setMember_id(member_id);
 		vo.setReply_content(reply_content);
