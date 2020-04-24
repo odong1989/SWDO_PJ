@@ -4,6 +4,7 @@
 <mapper namespace="net.softsociety.binder.dao.ReplyMapper">
 <select id="selectReply" parameterType="int" resultType="reply">
 	select 
+		reply_no,
 		reply_content,
 		member_id,
 		reply_regdate

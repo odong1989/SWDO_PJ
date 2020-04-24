@@ -21,10 +21,24 @@
 
 
 <script>
+function replyUpdate(pk){
+	alert('수정')
+}
+
+function replyDelete(pk){
+	alert('삭제')
+}
 $(function(){
+        
 	$("#btn").click(function(){
 		var reply_content = $('#reply_content').val();
-		var formData = $('#replyForm').serialize();
+		var document_no = $('#document_no').val();
+		var member_id = $('#member_id').val();
+		var formData = {
+					reply_content : reply_content,
+					document_no : document_no,
+					member_id : member_id
+				};
 		if(reply_content ==""){
 			alert("내용을입력해주세요")
 			return;
@@ -38,7 +52,7 @@ $(function(){
 				if(result){
 					alert("성공")
 					$("#reply_content").val("");
-					}
+					}	
 					else{
 					alert("실패")
 					}
@@ -89,10 +103,10 @@ $(function(){
 						<td>
 						<h>Reply</h>
 							<form id="replyForm">
-								<input type="hidden" id="document_no" value="${document_no }">
+								<input type="hidden" id="document_no" value="${document.document_no }">
 								<input type="text" id="member_id" value="${loginId }">
 								<input type="text" id="reply_content">
-								<button type="button" id="btn">입력</button>
+								<button type="button" id="btn">댓글등록</button>
 							</form>
 							
 						</td>
@@ -102,14 +116,13 @@ $(function(){
 				<tr>
 					<td>
 					${replyList.member_id } : ${replyList.reply_content }
-					<button type="button" id="btn1">수정</button>
-					<button type="button" id="btn2">삭제</button>
 					</td>
 				</tr>	
 			</c:forEach>
+			</div>
 			 </table>
           </table>
-	</div>
+	
 		</div>
 	
 </body>
