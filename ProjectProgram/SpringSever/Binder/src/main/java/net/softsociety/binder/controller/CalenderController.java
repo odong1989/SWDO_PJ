@@ -69,13 +69,14 @@ public class CalenderController {
 		return "/calender/calenderMain";
 	}
 	
+	/*오라클DB로부터 일정데이터를 수신(일정추가/삭제/수정은 모두 DocumentController.java에서 실시.)
+	  getUserSchedule은 오로지 일정을 받아오기만 실시한다.*/
 	@RequestMapping(value="getUserSchedule", method=RequestMethod.POST)
 	@ResponseBody
 	public ArrayList<HashMap<String,Object>> getUserSchedule(String group_no ,HttpSession session)
 	{	
 		logger.info("calenderMain-getUserSchedule 메소드 시작");
 		//스텝1 : 정상적으로 값 수신되었는지 확인.
-
 		//스텝2 :	DocumentDAO에서 아래의 메소드를 활용한다.
 		GroupJoin groupCal = new GroupJoin();
 		
@@ -88,8 +89,8 @@ public class CalenderController {
 		
 		logger.info("getUserSchedule 메소드 - documentList : {}",documentList);
 		return documentList;	
-	
 	}
+	
 	
 	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
 	@ResponseBody

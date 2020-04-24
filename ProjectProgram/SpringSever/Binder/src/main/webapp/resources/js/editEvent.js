@@ -2,10 +2,23 @@
  *  일정 편집
  * ************** */
 var editEvent = function (event, element, view) {
+	console.log(event);
+    //삭제메소드가 실행되기 위해서 전송할 데이터를 정의&값 할당으로 추정.
+	$('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
+	
+	$('#deleteEvent').data('document_no', event.document_no);
+	$('#deleteEvent').data('document_content',event.title);
+	$('#deleteEvent').data('document_regdate',event.start._i);
 
-    $('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
+	if (event.end == null){
+		$('#deleteEvent').data('document_finalday',event.start._i);		
+	}
+	else{ $('#deleteEvent').data('document_finalday',event.end);}
+	
+	$('#deleteEvent').data('document_destination',event.description);	
 
-    $('.popover.fade.top').remove();
+	
+	$('.popover.fade.top').remove();
     $(element).popover("hide");
 
     if (event.allDay === true) {
@@ -92,7 +105,6 @@ var editEvent = function (event, element, view) {
                 alert('수정되었습니다.')
             }
         });
-
     });
 };
 
@@ -103,16 +115,30 @@ var editEvent = function (event, element, view) {
     $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
     eventModal.modal('hide');
 
+
+	//DB에 저장하기 위한 변수
+    var eventSaveData = {
+    	group_no : group_no,   									//그룹번호
+    	document_no : $(this).data('document_no'),  	//컨텐츠
+    	document_content : $(this).data('document_content'),  	//컨텐츠
+    	document_regdate : $(this).data('document_regdate'),	//시작일
+    	document_finalday : $(this).data('document_finalday'), 	//마지막일
+    	document_destination : $(this).data('document_destination') //장소
+    };
+    
     //삭제시
     $.ajax({
         type: "get",
-        url: "",
-        data: {
-            //...
-        },
-        success: function (response) {
+        url: "../document/deleteDocument",
+        data : eventSaveData,
+        success: function (eventSaveData) {
             alert('삭제되었습니다.');
+        },
+        error:function(request, error) {
+        	alert("에러가 발생하였습니다.");
+        	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
         }
     });
 
 });
+   

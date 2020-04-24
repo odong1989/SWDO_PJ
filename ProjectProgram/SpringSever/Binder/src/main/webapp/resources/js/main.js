@@ -109,19 +109,7 @@ var calendar = $('#calendar').fullCalendar({
         'background': event.backgroundColor,
         'color': event.textColor
       }),
-      //아래의 컨텐츠는 일정위에 커서 올리면 뜨는 설명창의 내용입니다.
-      /*
-      content: $('<div />', {
-          class: 'popoverInfoCalendar'
-        }).append('<p><strong>동록자는 죽었어:</strong> ' + event.username + '</p>')
-        .append('<p><strong>구분:</strong> ' + event.type + '</p>')
-        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
-        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
-      delay: {
-        show: "800",
-        hide: "50"
-      },
-      */
+
       trigger: 'hover',
       placement: 'top',
       html: true,

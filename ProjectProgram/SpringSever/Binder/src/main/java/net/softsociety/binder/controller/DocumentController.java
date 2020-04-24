@@ -136,16 +136,16 @@ public class DocumentController {
 		model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
 		
 		return "/document/writeDocument";
-	}
-	
-	
-	//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
-	//uploadPath는 "/uploadFile"으로 설정되어있다.;
+	}	
+
+	//신규글을 DB에 추가하는 2개의 메소드 중 1개입니다.(writeDocument.jsp 전용입니다.)
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
 	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model)
 	{	
 		logger.info("documentInsert 실행");
-
+		//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
+		//uploadPath는 "/uploadFile"으로 설정되어있다.;
+		
 		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
 		Photo photo = new Photo();
 		writeDocument.setMember_id((String)session.getAttribute("loginId"));
@@ -214,13 +214,16 @@ public class DocumentController {
 		
 		return "/document/mainDocument";
 	}
-	
-	//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
-	//uploadPath는 "/uploadFile"으로 설정되어있다.;
+
+
+	//신규글을 DB에 추가하는 2개의 메소드 중 나머지 1개입니다.(calenderMain.jsp 전용입니다.)
 	@RequestMapping(value="documentInsertTemp", method=RequestMethod.GET)
 	@ResponseBody
 	public void documentInsertTemp(HttpSession session, Document writeDocument,MultipartFile upload)
 	{	
+		//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
+		//uploadPath는 "/uploadFile"으로 설정되어있다.;
+
 		logger.info("documentInsertTemp메소드 시작.");
 		logger.info("documentInsertTemp메소드 세션계정 : {}",session.getAttribute("loginId"));
 
@@ -260,19 +263,35 @@ public class DocumentController {
 	        }
 	        
 		logger.info("documentInsertTemp메소드 종료.");
-	
 	}
+	
+	
+	@RequestMapping(value="deleteDocument",method=RequestMethod.GET)
+	@ResponseBody
+	public void deleteDocument(HttpSession session, Document deletelDocument)
+	{
+		logger.info("editDocument-기존 글(Document) 삭제 작업시작합니다.");
+		logger.info("editDocument-현 로그인 계정 : {}",session.getAttribute("loginId"));
+
+		String member_id = (String) session.getAttribute("loginId");
+		deletelDocument.setMember_id(member_id);
+		logger.info("editDocument-삭제할 글의 정보 : {}",deletelDocument);
+		
+		documentDao.deleteDocumentOne(deletelDocument); //글 삭제 메소드 실시.
+
+	}
+	
 	
 	//글 내용 수정 메소드로 활용하기로 결정.(글 변경페이지는 readContentDocument메소드를 참고하십시오)
 	@RequestMapping(value="editDocument", method=RequestMethod.GET)
-	public String editDocument(HttpSession session, Document originalDocument)
+	public void editDocument(HttpSession session, Document originalDocument)
 	{	
 		logger.info("editDocument-기존 글(Document) 수정 작업시작");
 		logger.info("editDocument-변경할 글의 원래 정보 : {}", originalDocument);
 		String member_id = (String) session.getAttribute("loginId");
-
-						
-		return "/document/editDocument";
+		
+		
+		
 	}
 	
 	//그룹멤버확인 초대코드아이디로 보낼때
@@ -300,6 +319,7 @@ public class DocumentController {
 		}
 		return chk;
 	}
+	
 	//그룹회원 부매니저로 전환
 	@RequestMapping(value="updateGJMS", method=RequestMethod.GET)
 	@ResponseBody
@@ -316,6 +336,7 @@ public class DocumentController {
 		}
 		return chk;
 	}
+	
 	//그룹회원 일반회원 전환
 	@RequestMapping(value="updateGJMC", method=RequestMethod.GET)
 	@ResponseBody

@@ -127,4 +127,20 @@ public class DocumentDAO {
 		logger.info("DocumentDAO.java - selectDocumentNoOne 메소드 종료");
 		return docNumber;
 	}
+	
+	//1개의 글을 삭제하기 위해 실시.
+	public void deleteDocumentOne(Document deletelDocument){
+		logger.info("DocumentDAO.java - deleteDocumentOne 메소드 시작");
+		logger.info("DocumentDAO.java - deleteDocumentOne 삭제할 글 정보 : {}", deletelDocument); 
+		//그룹번호,작성자계정,작성한컨텐츠 이 3가지를 조건으로 리턴
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+		    mapper.deleteDocumentOne(deletelDocument);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		logger.info("DocumentDAO.java - deleteDocumentOne(1개의 글 삭제) 메소드  종료");
+		
+	}
 }
