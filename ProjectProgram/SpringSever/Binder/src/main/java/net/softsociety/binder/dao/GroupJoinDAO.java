@@ -24,9 +24,9 @@ public class GroupJoinDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public ArrayList<GroupJoin> selectGroupJoinMember(GroupJoin vo){
+	public ArrayList<HashMap<String, Object>> selectGroupJoinMember(GroupJoin vo){
 	logger.info("GroupJoinDAO.java - selectGroupJoinMember 메소드 시작");	
-	ArrayList<GroupJoin> groupJoinList = null;
+	ArrayList<HashMap<String, Object>> groupJoinList = null;
 	try {
 		GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
 		groupJoinList = mapper.selectGroupJoinMember(vo);

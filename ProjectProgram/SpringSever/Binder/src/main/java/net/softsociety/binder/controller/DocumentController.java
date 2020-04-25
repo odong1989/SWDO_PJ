@@ -102,7 +102,7 @@ public class DocumentController {
 		vo.setGroup_no(no);
 		vo.setMember_id(member_id);
 		logger.info("groupMemberMgr {}",vo);
-		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
+		ArrayList<HashMap<String, Object>> join = groupMemberDao.selectGroupJoinMember(vo);
 		logger.info("groupMemberMgr {}",join);
 		GroupJoin memberjoin = groupMemberDao.selectGroupJoinChkId(vo);
 		model.addAttribute("memberJoin", memberjoin);
@@ -302,11 +302,12 @@ public class DocumentController {
 	//그룹멤버확인 초대코드아이디로 보낼때
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
-	public String selectGJM(String memberCheck, HttpSession session) {
+	public String selectGJM(String memberCheck, HttpSession session, int no) {
 		//from 수환
 		//이 메서드(selectGJM) 파라메타로 그룹번호 받을 수 있게 처리바람.
 		String memberCheck2 = groupMemberDao.selectGroupJoinMemberOne(memberCheck);
 		logger.info("selectGJM {}",memberCheck2);
+		logger.info("selectGJM {}",no);
 		String chk = null;
 		//memberCheck 유저의 존재여부에 따라 분기처리
 		if (memberCheck2 != null) {
@@ -424,6 +425,7 @@ public class DocumentController {
 		}
 		return chk;
 	}
+	
 	//초대코드 이메일로 보내기
 	@RequestMapping(value="sendEmail", method=RequestMethod.GET)
 	@ResponseBody
@@ -439,7 +441,7 @@ public class DocumentController {
 		}
 		return chk;
 	}
-	
+	//댓글기능
 	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
 	public String readContentDocument(HttpSession session, int no , Model model) {
 		logger.info("readContent {}", no);

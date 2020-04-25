@@ -60,8 +60,11 @@ public class CalenderController {
 		model.addAttribute("groupNumber", no); 
 		//캘린더의 일정을 뽑아오기 위해 pk값(소속그룹번호)를 넘기고 있습니다.
 		vo.setGroup_no(no);
+		vo.setMember_id(member_id);
+		GroupJoin memberjoin = groupMemberDao.selectGroupJoinChkId(vo);
+		model.addAttribute("memberJoin", memberjoin);
 		logger.info("groupMemberMgr {}",vo);
-		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
+		ArrayList<HashMap<String, Object>> join = groupMemberDao.selectGroupJoinMember(vo);
 		logger.info("groupMemberMgr {}",join);
 		model.addAttribute("gjoin",join);
 		//그룹 멤버현황 가져오기 위한 코드

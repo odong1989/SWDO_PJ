@@ -1,6 +1,7 @@
 package net.softsociety.binder.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ public class GroupMemberDAO {
 		
 	}
 	
-	public ArrayList<GroupJoin> selectGroupJoinMember(GroupJoin vo) {
+	public ArrayList<HashMap<String, Object>> selectGroupJoinMember(GroupJoin vo) {
 		log.info("selectGroupJoinMember 파라미터 : {}",vo);
 		
-		ArrayList<GroupJoin> list = null;
+		ArrayList<HashMap<String, Object>> list = null;
 		try {
 			GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
 			list = mapper.selectGroupJoinMember(vo);

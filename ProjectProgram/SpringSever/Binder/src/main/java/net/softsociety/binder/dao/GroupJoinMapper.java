@@ -1,13 +1,14 @@
 package net.softsociety.binder.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.softsociety.binder.vo.GroupJoin;
 
 
 
 public interface GroupJoinMapper {
-	public ArrayList<GroupJoin> selectGroupJoinMember(GroupJoin vo);
+	public ArrayList<HashMap<String, Object>> selectGroupJoinMember(GroupJoin vo);
 	
 	public String selectGroupJoinMemberOne(String memberCheck);
 	

@@ -11,12 +11,13 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 우선 파라미터로 받은 회원의 ID로 소속된 그룹의 번호 정보를 확인한다.
 다음으로 해당 번호와 동일한 그룸의 데이터를 받는다.
  -->
-	<select id="selectGroupJoinMember" parameterType="groupjoin" resultType="groupjoin">
+	<select id="selectGroupJoinMember" parameterType="groupjoin" resultType="hashmap">
  	select
-   		 bnd_groupjoin.group_no,
-   		 bnd_groupjoin.member_id, 
- 		 bnd_groupjoin.member_level,
- 		 bnd_groupjoin.group_joindate
+   		 bnd_groupjoin.group_no group_no,
+   		 bnd_groupjoin.member_id member_id,
+   		 bnd_member.member_name member_name, 
+ 		 bnd_groupjoin.member_level member_level,
+ 		 bnd_groupjoin.group_joindate group_joindate
 	from 
 	     bnd_member, bnd_groupjoin
 	where 
