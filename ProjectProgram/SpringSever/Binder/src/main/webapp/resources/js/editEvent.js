@@ -11,12 +11,15 @@ var editEvent = function (event, element, view) {
 	$('#deleteEvent').data('document_regdate',event.start._i);
 
 	if (event.end == null){
-		$('#deleteEvent').data('document_finalday',event.start._i);		
+		$('#deleteEvent').data('document_finalday',event.start);		
+		event.end=event.start;
 	}
-	else{ $('#deleteEvent').data('document_finalday',event.end);}
+	else{ 
+		$('#deleteEvent').data('document_finalday',event.end);
+	}
 	
 	$('#deleteEvent').data('document_destination',event.description);	
-
+	//---------------------------------------------------------------------
 	
 	$('.popover.fade.top').remove();
     $(element).popover("hide");
@@ -93,16 +96,28 @@ var editEvent = function (event, element, view) {
         event.description = editDesc.val();
 
         $("#calendar").fullCalendar('updateEvent', event);
-
+    
+        //DB에 저장하기 위한 변수. 계정정보는 http세션통해 전송.
+        var eventSaveData = {
+        	group_no : group_no,   						//그룹번호
+        	document_no : event.document_no,  			//글의 번호
+        	document_content : event.title,		  		//컨텐츠
+        	document_regdate : event.start,				//시작일
+        	document_finalday : event.end, 				//마지막일
+        	document_destination : event.description 	//장소
+        };
+        
         //일정 업데이트
         $.ajax({
             type: "get",
-            url: "",
-            data: {
-                //...
+            url: "../document/editDocument",
+            data : eventSaveData,
+            success: function (eventSaveData) {
+                alert('삭제되었습니다.');
             },
-            success: function (response) {
-                alert('수정되었습니다.')
+            error:function(request, error) {
+            	alert("에러가 발생하였습니다.");
+            	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         });
     });
@@ -116,10 +131,10 @@ var editEvent = function (event, element, view) {
     eventModal.modal('hide');
 
 
-	//DB에 저장하기 위한 변수
+	//DB에 저장하기 위한 변수. 계정정보는 http세션통해 전송.
     var eventSaveData = {
     	group_no : group_no,   									//그룹번호
-    	document_no : $(this).data('document_no'),  	//컨텐츠
+    	document_no : $(this).data('document_no'),  			//글의 번호
     	document_content : $(this).data('document_content'),  	//컨텐츠
     	document_regdate : $(this).data('document_regdate'),	//시작일
     	document_finalday : $(this).data('document_finalday'), 	//마지막일

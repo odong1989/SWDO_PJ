@@ -141,6 +141,20 @@ public class DocumentDAO {
 			e.printStackTrace();
 		}
 		logger.info("DocumentDAO.java - deleteDocumentOne(1개의 글 삭제) 메소드  종료");
-		
 	}
+	
+	public void updateDocumentOne(Document originalDocument) {
+		logger.info("DocumentDAO.java - updateDocumentOne 메소드 시작");
+		logger.info("DocumentDAO.java - updateDocumentOne 삭제할 글 정보 : {}", originalDocument); 
+		//그룹번호,작성자계정,작성한컨텐츠 이 3가지를 조건으로 리턴
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+		    mapper.updateDocumentOne(originalDocument);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		logger.info("DocumentDAO.java - updateDocumentOne(1개의 글 수정) 메소드  종료");
+	}
+	
 }

@@ -99,7 +99,7 @@
 							 	</template>
 							 	<template slot="footer">
 							 		<div><input v-model="message"><button @click="doSend">제출</button></div>
-							 		<input type = "hidden" id="gno" value="${group_no }">
+							 		<input type = "hidden" id="gno" value="${group_no}">
 							 	</template>
 							  </modal>
 						</div>

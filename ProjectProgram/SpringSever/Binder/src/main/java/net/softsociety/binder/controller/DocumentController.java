@@ -287,10 +287,12 @@ public class DocumentController {
 	public void editDocument(HttpSession session, Document originalDocument)
 	{	
 		logger.info("editDocument-기존 글(Document) 수정 작업시작");
-		logger.info("editDocument-변경할 글의 원래 정보 : {}", originalDocument);
 		String member_id = (String) session.getAttribute("loginId");
+		originalDocument.setMember_id(member_id);
 		
+		logger.info("editDocument-변경할 글의  정보 : {}", originalDocument);
 		
+		documentDao.updateDocumentOne(originalDocument);
 		
 	}
 	
