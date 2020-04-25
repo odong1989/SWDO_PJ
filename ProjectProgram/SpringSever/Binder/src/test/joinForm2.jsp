@@ -9,8 +9,10 @@
 <link href="<c:url value='/css/joinform.css' />" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+	//참/거짓 값. 각 텍스트 입력창에서 입력받은 값이 참이 아닌 경우 전송버튼의 유효성검사에서 걸리도록실시.
 	var idbool = false;
 	var pwbool = false;
+	var mailbool = false;
 	var nickbool = false;
 	
 	$(function()
@@ -118,75 +120,103 @@
 		});
 
 		//이메일 형식여부만 체크하는 제이쿼리
-		//이메일 체크
+
+		//이메일의 포맷인지 체크하는 함수
 		function checkEmail(str) {
     		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     		if (regExp.test(str)) return true;
     		else return false;
 		}
-		
+
+		//본격 이메일을 체크하는 확인문
 		$("#mmail").keyup(function(event) {
 			var inputVal = $(this).val();
 			if (inputVal.length != 0){
 				if(!(checkEmail(inputVal))) {
 					$("#mmail_div").html("<font color='red'>이메일 형식에 맞지않습니다.</font>");
-					pwbool = false;
+					mailbool = false;
 				} else {	
 					$("#mmail_div").html("<font color='blue'>정상적인 이메일 주소입니다.</font>");
-					pwbool = true;
+					mailbool = true;
 				}
 			}
 			//입력이 안된경우
 			else {
 				$("#mmail_div").html("<font color='red'>이메일을 입력해주세요.</font>");
-				pwbool = false;
+				mailbool = false;
 			}
 		});
 
-		
 
 		//생일, 결혼일의 날짜 형식 체크하는데 사용하는 함수.
 		function isDateFormCheck(date)
 		{
-		    var formYYYYMMDD = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/;
+		    var formYYYYMMDD = /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]1[0-9]|3[0-1])/;
 		    //                     yyyy -       MM      -       dd     
 		    return formYYYYMMDD.test(date);
 		}
 		
+		//생일의 입력일자 맞는지 등을 체크한다.
 		$("#member_birthday").keyup( function(event) {
 			var inputVal = $(this).val();
-			if (inputVal.length < 10) 
+			var checkDate = new Date();			//유효성검사 추가부분 - 년,월,일 입력정보 엉터리로 넣는 경우 체크 
+			var inputValYear = inputVal.substring(0,4);
+			var inputValMonth = inputVal.substring(5,7);
+			var inputValDay = inputVal.substring(8,10);
+
+			//체크1. 입력값이 충분치 않거나 입력형태 미준수 경우 불허처리.
+			if (inputVal.length < 10 ) 
 			{
-				$("#birthday_div").html("<font color='red'>YYYY-MM-DD형식으로 입력해주세요! (예 : 2000-01-01)</font>");
-			} else {
-				if(!(isDateFormCheck(inputVal.value))){
+				$("#birthday_div").html(
+				"<font color='red'>YYYY-MM-DD형식으로 입력해주세요 (예 : 2000-01-01)</font>");
+				birthbool = false;				
+			}
+			
+			else if( inputValYear < 1900 || inputValYear > checkDate.getFullYear() 
+					 /* || inputValMonth < 1 || inputValMonth > 12 ||
+					 || inputValDay < 1 || inputValDay > 31 */	){		
 						$("#birthday_div").html(
-						"<font color='blue'>올바르게 입력되었습니다.</font>");
-						pwbool = true;
-					} else {
-						$("#birthday_div").html(
-						"<font color='red'>YYYY-MM-DD형식으로 입력해주세요! (예 : 2000-01-01)</font>");
-					pwbool = false;
-				 	}
-				}
+						"<font color='red'>YYYY-MM-DD형식으로 입력해주세요 (예 : 2000-01-01)</font>");
+						birthbool = false;				
+			}
+            else if(!(isDateFormCheck(inputVal.value))){
+				$("#birthday_div").html(
+                "<font color='blue'>올바르게 입력되었습니다.</font>");
+				birthbool = true;
+            }
 		});
 
 		$("#member_weddingday").keyup( function(event) {
 			var inputVal = $(this).val();
+			var checkDate = new Date();			//유효성검사 추가부분 - 년,월,일 입력정보 엉터리로 넣는 경우 체크 
+			var inputValYear = inputVal.substring(0,4);
+			var inputValMonth = inputVal.substring(5,7);
+			var inputValDay = inputVal.substring(8,10);
+				
 			if (inputVal.length < 10) 
 			{
 				$("#weddingday_div").html("<font color='red'>YYYY-MM-DD형식으로 입력해주세요! (예 : 2000-01-01)</font>");
-			} else {
-				if(!(isDateFormCheck(inputVal.value))){
-						$("#weddingday_div").html(
-						"<font color='blue'>올바르게 입력되었습니다.</font>");
-						pwbool = true;
-					} else {
-						$("#weddingday_div").html(
-						"<font color='red'>YYYY-MM-DD형식으로 입력해주세요! (예 : 2000-01-01)</font>");
-					pwbool = false;
-				 	}
-				}
+			}
+			else if( inputValYear < 1900 || inputValYear > checkDate.getFullYear() ){
+				$("#weddingday_div").html(
+				"<font color='red'>년도를 확인해주세요.</font>");
+				birthbool = false;				
+			}
+			else if( inputValMonth < 1 || inputValMonth > 12 ){
+				$("#weddingday_div").html(
+				"<font color='red'>월을 확인해주세요.</font>");
+				birthbool = false;				
+			}
+			else if( inputValDay < 1 || inputValDay > 31 ){
+				$("#weddingday_div").html(
+				"<font color='red'>일을 확인해주세요.</font>");
+				birthbool = false;				
+			}
+			else{
+				$("#weddingday_div").html(
+				"<font color='blue'>올바르게 입력되었습니다.</font>");
+				weddingbool = true;
+			}
 		});
 
 		

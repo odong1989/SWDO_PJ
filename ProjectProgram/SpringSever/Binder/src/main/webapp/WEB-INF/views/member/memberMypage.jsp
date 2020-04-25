@@ -5,7 +5,7 @@
 <%@ include file="../includes/header.jsp" %>
 
         <div id="right-body">
-            <!-- 
+<!-- 
 INFO : net.softsociety.binder.dao.MemberDAO - BoardDAO.java - memberSelectOne 
 리턴 member값 : Member(member_id=jsh4646, member_pw=123123, member_name=정수환, 
 member_mail=jsh4646@naver.com, member_photo=/dahyun.png, member_phone=null, 

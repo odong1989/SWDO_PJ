@@ -54,10 +54,10 @@ function Withdrawal(){
     }
 }
 </script>
-
     <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 </head>
 <body>
+
 	<div id="gaibu-top">
 		<span id="gaibu-top-left"> 
 			<a href="<c:url value='/document/mainDocument' />">
@@ -71,12 +71,27 @@ function Withdrawal(){
 			<c:if test="${newNoteCheck eq 'ari' }">
 				<a href="javascript:noteList()"><img src="<c:url value='/img/newmail.png' />"></a>
 			</c:if>
-			<a href="<c:url value='/member/memberMypage' />"><img src="<c:url value='/img/human.png' />" id="usericon">
+
+			<!-- 사용자가 가입시 등록한 사진이 있다면 이를 로드하여 프로필 사진으로 띄우도록 한다. -->
+
+			<c:choose>
+				<c:when test="${ LoginPhoto != null}">
+					<a href="<c:url value='/member/memberMypage' />">
+					<img src=${loginPhoto} id="usericon"></a>					
+			</c:when>
+				<c:otherwise>
+					<a href="<c:url value='/member/memberMypage' />">
+					<img src="<c:url value='/img/human.png' />" 
+					id="usericon"></a>
+				</c:otherwise>
+			</c:choose> 
+			
 			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>
 		</span>
 	</div>
 	<div id="gaibu">
 		<div id="menu">
+				
 			<c:forEach var="glist" items="${groupJoinList }">
 				<div class="menu-group-button">
 					<div class="menu-group-button-left">

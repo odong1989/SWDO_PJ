@@ -33,15 +33,9 @@
 	<beans:bean id="loginInterceptor" class="net.softsociety.binder.interceptor.LoginInterceptor"></beans:bean>	
 	
 	<interceptors>
-		<interceptor>
-			<mapping path="/board/boardList"/>
-			<!-- 보드쪽 인터셉터 -->
-			<mapping path="/board/boardWriteForm"/>
-			<mapping path="/board/boardWrite"/>
-			<mapping path="/board/boardDelete"/>			
-			<mapping path="/board/boardUpdateForm"/>				
+		<interceptor>				
 			
-			<mapping path="/member/memberMypage"/>
+			<mapping path="/member/memberMypage/**"/>
 			
 			<beans:ref bean="loginInterceptor"/><!--내가 적용하고픈 인터셉터 파일의 id명  -->
 		</interceptor>

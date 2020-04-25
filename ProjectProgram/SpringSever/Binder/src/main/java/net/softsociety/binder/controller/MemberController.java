@@ -146,6 +146,10 @@ public class MemberController {
 				session.setAttribute("loginId", member.getMember_id());
 				logger.info("-성공. 세션 설정 session : {}",session.getAttribute("loginId"));
 				logger.info("-메인페이지로 이동");
+				String loginPhoto = "uploadFile"+"/"+newMember.getMember_photo();
+				model.addAttribute("loginPhoto",loginPhoto);
+				logger.info("로그인하면서 전송하는 loginPhoto : {}",loginPhoto);
+				logger.info("model 값 : {}",model);
 				return "redirect:/document/mainDocument";
 			} 
 			//비밀번호 불일치
