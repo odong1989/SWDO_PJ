@@ -75,7 +75,7 @@
 		    , bnd_document.document_content 					    "allDay"
 		    , bnd_document.document_no								"document_no"								
 		    , bnd_photo.photo_savedfile								"photo_savedfile"								
-		    , bnd_photo.photo_originfile								"photo_originfile"								
+		    , bnd_photo.photo_originfile							"photo_originfile"								
 		from
 		    bnd_document, bnd_photo
 		where
@@ -136,7 +136,7 @@
 		where
 		    bnd_document.member_id = #{member_id}
 	    and
-		    bnd_document.document_no = bnd_photo.document_no 
+		    bnd_document.document_no = #{document_no} 
 	<!-- and
 		    bnd_document.document_no = bnd_photo.document_no  -->
 	</update> 

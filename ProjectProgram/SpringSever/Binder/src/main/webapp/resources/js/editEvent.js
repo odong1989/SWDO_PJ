@@ -7,9 +7,10 @@ var editEvent = function (event, element, view) {
 	$('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
 	
 	$('#deleteEvent').data('document_no', event.document_no);
-	$('#deleteEvent').data('document_content',event.title);
+	$('#deleteEvent').data('document_content',event.titleSS);
 	$('#deleteEvent').data('document_regdate',event.start._i);
-
+	$('#deleteEvent').data('photo_originfile',event.photo_originfile);
+	
 	if (event.end == null){
 		$('#deleteEvent').data('document_finalday',event.start);		
 		event.end=event.start;
@@ -104,7 +105,8 @@ var editEvent = function (event, element, view) {
         	document_content : event.title,		  		//컨텐츠
         	document_regdate : event.start,				//시작일
         	document_finalday : event.end, 				//마지막일
-        	document_destination : event.description 	//장소
+        	document_destination : event.description, 	//장소
+        	photo_originfile : event.photo_originfile
         };
         
         //일정 업데이트
@@ -113,7 +115,7 @@ var editEvent = function (event, element, view) {
             url: "../document/editDocument",
             data : eventSaveData,
             success: function (eventSaveData) {
-                alert('삭제되었습니다.');
+                alert('수정되었습니다.');
             },
             error:function(request, error) {
             	alert("에러가 발생하였습니다.");
