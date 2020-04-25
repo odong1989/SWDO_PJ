@@ -45,4 +45,30 @@ public class ReplyDAO {
 		}
 		return chk;
 	}
+
+	public int updateReply(Reply vo) {
+		// TODO Auto-generated method stub
+		int chk = 0;
+		try {
+			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+			chk = mapper.updateReply(vo);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return chk;
+	}
+
+	public int deleteReply(Reply vo) {
+		// TODO Auto-generated method stub
+		int chk = 0;
+		try {
+			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+			chk = mapper.deleteReply(vo);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return chk;
+	}
 }

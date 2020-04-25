@@ -25,5 +25,21 @@
 		)
 </insert>
 
+<update id="updateReply" parameterType="reply">
+	update bnd_reply
+	set
+		reply_content = #{reply_content}
+	where
+		reply_no = #{reply_no}
+
+</update>
+
+<delete id="deleteReply" parameterType="reply">
+	delete from bnd_reply
+	where
+	reply_no = #{reply_no}
+
+</delete>
+
 
 </mapper>

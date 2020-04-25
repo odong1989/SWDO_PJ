@@ -21,15 +21,105 @@
 
 
 <script>
-function replyUpdate(pk){
-	alert('수정')
+function editReply(reply_no, reply_content){
+	var htmls = "";
+	htmls += '<a href="javascript:void(0)" onclick="replyUpdate(' + reply_no  + ', \'' + reply_content + '\')" style="padding-right:5px">저장</a>';
+
+	htmls += '<a href="javascript:void(0)" onClick="showReplyList()">취소<a>';
+
+	htmls += '<textarea name="editContent" id="editContent">';
+
+	htmls += reply_content;
+
+	$('#rid' + reply_no).replaceWith(htmls);
+
+	$('#rid' + reply_no + ' #editContent').focus();
+
 }
 
-function replyDelete(pk){
-	alert('삭제')
+function replyUpdate(reply_no, reply_content){
+		var reply_content = $('#editContent').val();
+
+		$.ajax({
+			type:"post",
+			url: "updateReply",
+			data: {
+				reply_no : reply_no,
+				reply_content : reply_content
+				},
+			dataType : "json",
+			success : function(result) {
+				if(result){
+					alert("성공")
+					showReplyList();
+					}	
+					else{
+					alert("실패")
+					}
+				}
+	})
 }
+
+
+function deleteReply(pk){
+	$.ajax({
+		type:"post",
+		url: "deleteReply",
+		data: {
+			reply_no : pk,
+			},
+		dataType : "json",
+		success : function(result) {
+			if(result){
+				alert("성공")
+				showReplyList();
+				}	
+				else{
+				alert("실패")
+				}
+			}
+})
+}
+
+function showReplyList(){
+	var document_no = $('#document_no').val();
+
+	$.ajax({
+			type: "post",
+			url: "getReply",
+			data: {document_no : document_no},
+			dataType : "json",
+			success : function(result){
+				var htmls ="";
+				if(result.length < 1){
+						html.push("등록된댓글이 없습니다.")
+				}else {
+					$(result).each(function(){
+						htmls += '<tr>';
+						htmls += '<td id="rid';
+						htmls += this.reply_no;
+						htmls += '">';
+						htmls += '<div style="padding-right:5px">';
+						htmls += this.member_id;
+						htmls += '<a href="javascript:void(0)" onclick="javascript:editReply(' + this.reply_no  + ', \'' + this.reply_content + '\')" style="padding-right:5px">수정</a>';
+						htmls += '<a href="javascript:void(0)" onClick="javascript:deleteReply('+ this.reply_no + ')">삭제<a>';
+						htmls += '</div>';
+						htmls += '<div>';
+						htmls += this.reply_content;
+						htmls += '</div>';
+						htmls += '</td>';
+						htmls += '</tr>';
+					})
+				}
+				$("#replyTable").html(htmls);
+			}
+			
+		})
+}
+
 $(function(){
-        
+	showReplyList();
+	
 	$("#btn").click(function(){
 		var reply_content = $('#reply_content').val();
 		var document_no = $('#document_no').val();
@@ -52,6 +142,7 @@ $(function(){
 				if(result){
 					alert("성공")
 					$("#reply_content").val("");
+					showReplyList();
 					}	
 					else{
 					alert("실패")
@@ -111,19 +202,12 @@ $(function(){
 							
 						</td>
 					</tr>
-			<div id="replyList">
-			<c:forEach var="replyList" items ="${replyList }">
-				<tr>
-					<td>
-					${replyList.member_id } : ${replyList.reply_content }
-					</td>
-				</tr>	
-			</c:forEach>
-			</div>
 			 </table>
           </table>
-	
+          		<table id = "replyTable">
+			 </table>
 		</div>
+
 	
 </body>
 </html>

@@ -469,11 +469,46 @@ public class DocumentController {
 		}
 		return chk;
 	}
+	
+	@RequestMapping(value="updateReply", method=RequestMethod.POST)
+	@ResponseBody
+	public String updateReply(int reply_no, String reply_content) {
+		Reply vo = new Reply();
+		vo.setReply_no(reply_no);
+		vo.setReply_content(reply_content);
+		logger.info("updateReply 시작{}", vo);
+		int replychk = replyDao.updateReply(vo);
+		String chk;
+		if(replychk == 1) {
+			logger.info("updateReply 성공 {}", replychk);
+			chk ="true";
+		}else {
+			chk="false";
+		}
+		return chk;
+	}
+	@RequestMapping(value="deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteReply(int reply_no) {
+		Reply vo = new Reply();
+		vo.setReply_no(reply_no);
+		logger.info("deleteReply 시작{}", vo);
+		int replychk = replyDao.deleteReply(vo);
+		String chk;
+		if(replychk == 1) {
+			logger.info("deleteReply 성공 {}", replychk);
+			chk ="true";
+		}else {
+			chk="false";
+		}
+		return chk;
+	}
 	@RequestMapping(value="getReply", method=RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<Reply> getReply(int no){
-		logger.info("getReply 시작 {}", no);
-		ArrayList<Reply> replyList = replyDao.selectReply(no);
+	public ArrayList<Reply> getReply(int document_no){
+		logger.info("no {}" , document_no);
+		logger.info("getReply 시작 {}", document_no);
+		ArrayList<Reply> replyList = replyDao.selectReply(document_no);
 		logger.info("getReply 확인 {}", replyList);
 		return replyList;
 	}
