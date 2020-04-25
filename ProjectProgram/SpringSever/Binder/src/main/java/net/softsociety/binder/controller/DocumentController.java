@@ -270,30 +270,30 @@ public class DocumentController {
 	@ResponseBody
 	public void deleteDocument(HttpSession session, Document deletelDocument)
 	{
-		logger.info("editDocument-기존 글(Document) 삭제 작업시작합니다.");
-		logger.info("editDocument-현 로그인 계정 : {}",session.getAttribute("loginId"));
+		logger.info("deleteDocument-기존 글(Document) 삭제 작업시작합니다.");
+		logger.info("deleteDocument-현 로그인 계정 : {}",session.getAttribute("loginId"));
 
 		String member_id = (String) session.getAttribute("loginId");
 		deletelDocument.setMember_id(member_id);
-		logger.info("editDocument-삭제할 글의 정보 : {}",deletelDocument);
+		logger.info("deleteDocument-삭제할 글의 정보 : {}",deletelDocument);
 		
 		documentDao.deleteDocumentOne(deletelDocument); //글 삭제 메소드 실시.
-
 	}
 	
 	
 	//글 내용 수정 메소드로 활용하기로 결정.(글 변경페이지는 readContentDocument메소드를 참고하십시오)
-	@RequestMapping(value="editDocument", method=RequestMethod.GET)
+	@RequestMapping(value="updateDocument", method=RequestMethod.GET)
+	@ResponseBody
 	public void editDocument(HttpSession session, Document originalDocument)
 	{	
-		logger.info("editDocument-기존 글(Document) 수정 작업시작");
+		logger.info("updateDocument-기존 글(Document) 수정 작업시작");
 		String member_id = (String) session.getAttribute("loginId");
 		originalDocument.setMember_id(member_id);
 		
-		logger.info("editDocument-변경할 글의  정보 : {}", originalDocument);
+		logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
 		
 		documentDao.updateDocumentOne(originalDocument);
-		
+		logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
 	}
 	
 	//그룹멤버확인 초대코드아이디로 보낼때

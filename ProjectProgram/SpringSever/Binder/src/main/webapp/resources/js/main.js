@@ -245,17 +245,25 @@ var calendar = $('#calendar').fullCalendar({
     // 드랍시 수정된 날짜반영
     var newDates = calDateWhenDragnDrop(event);
 
+  //DB에 저장하기 위한 변수
+    var eventSaveData = {
+    	group_no : group_no,   						//그룹번호
+    	document_no : event.document_no,			//글번호
+    	document_content : 	event.title,			//컨텐츠
+    	document_regdate : newDates.startDate,		//시작일
+    	document_finalday : newDates.endDate, 		//마지막일
+    	document_destination : event.description  	//장소
+    };
+    
     //드롭한 일정 업데이트
     $.ajax({
-      type: "get",
-      url: "",
-      data: {
-        //...
-      },
-      success: function (response) {
-        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
-      }
-    });
+        type: "get",
+        url: "../document/updateDocument",
+        data: eventSaveData,
+        success: function (eventSaveData) {
+          alert('날짜수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+        }
+      });
 
   },
 

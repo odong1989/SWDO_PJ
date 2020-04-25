@@ -112,10 +112,10 @@ var editEvent = function (event, element, view) {
         //일정 업데이트
         $.ajax({
             type: "get",
-            url: "../document/editDocument",
+            url: "../document/updateDocument",
             data : eventSaveData,
             success: function (eventSaveData) {
-                alert('수정되었습니다.');
+                alert('일정이 수정되었습니다.');
             },
             error:function(request, error) {
             	alert("에러가 발생하였습니다.");
