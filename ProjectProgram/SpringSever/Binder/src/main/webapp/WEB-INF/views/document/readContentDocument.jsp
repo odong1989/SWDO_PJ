@@ -23,13 +23,16 @@
 <script>
 function editReply(reply_no, reply_content){
 	var htmls = "";
+
+
+	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
+	
 	htmls += '<a href="javascript:void(0)" onclick="replyUpdate(' + reply_no  + ', \'' + reply_content + '\')" style="padding-right:5px">저장</a>';
 
 	htmls += '<a href="javascript:void(0)" onClick="showReplyList()">취소<a>';
 
-	htmls += '<textarea name="editContent" id="editContent">';
 
-	htmls += reply_content;
+
 
 	$('#rid' + reply_no).replaceWith(htmls);
 
@@ -50,7 +53,6 @@ function replyUpdate(reply_no, reply_content){
 			dataType : "json",
 			success : function(result) {
 				if(result){
-					alert("성공")
 					showReplyList();
 					}	
 					else{
@@ -71,7 +73,6 @@ function deleteReply(pk){
 		dataType : "json",
 		success : function(result) {
 			if(result){
-				alert("성공")
 				showReplyList();
 				}	
 				else{
@@ -140,7 +141,6 @@ $(function(){
 			dataType : "json",
 			success : function(result) {
 				if(result){
-					alert("성공")
 					$("#reply_content").val("");
 					showReplyList();
 					}	
@@ -195,7 +195,7 @@ $(function(){
 						<h>Reply</h>
 							<form id="replyForm">
 								<input type="hidden" id="document_no" value="${document.document_no }">
-								<input type="text" id="member_id" value="${loginId }">
+								<input type="hidden" id="member_id" value="${loginId }" >
 								<input type="text" id="reply_content">
 								<button type="button" id="btn">댓글등록</button>
 							</form>

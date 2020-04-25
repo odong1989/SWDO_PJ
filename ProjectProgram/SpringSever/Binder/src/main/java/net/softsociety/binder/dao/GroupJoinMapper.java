@@ -13,9 +13,9 @@ public interface GroupJoinMapper {
 	
 	public int updateGroupMember(GroupJoin vo);
 	
-	public int updateGroupMember2(GroupJoin vo);
-	
 	public int deleteGMember(GroupJoin vo);
 	
 	public int insertGroupJoinMaster(GroupJoin vo);
+
+	public GroupJoin selectGroupJoinChkId(GroupJoin vo2);
 }

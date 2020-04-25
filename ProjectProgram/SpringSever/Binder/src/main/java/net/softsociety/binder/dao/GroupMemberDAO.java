@@ -19,8 +19,15 @@ public class GroupMemberDAO {
 	private SqlSession session;
 	
 	public String selectGroupJoinMemberOne(String memberCheck) {
+		String chk = null;
+		try {
 		GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
-		return mapper.selectGroupJoinMemberOne(memberCheck);
+			chk = mapper.selectGroupJoinMemberOne(memberCheck);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return chk;
 		
 	}
 	
@@ -50,18 +57,7 @@ public class GroupMemberDAO {
 		}
 		return chk;
 	}
-	public int updateGroupMember2(GroupJoin vo) {
-		// TODO Auto-generated method stub
-		int chk= 0;
-		try {
-			GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
-			chk=mapper.updateGroupMember2(vo);
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return chk;
-	}
+
 
 	public int deleteGMember(GroupJoin vo) {
 		// TODO Auto-generated method stub
@@ -81,10 +77,23 @@ public class GroupMemberDAO {
 		int result = 0;
 		try {
 			GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
-			result=mapper.insertGroupJoinMaster(vo);
+			result = mapper.insertGroupJoinMaster(vo);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public GroupJoin selectGroupJoinChkId(GroupJoin vo2) {
+		// TODO Auto-generated method stub
+		GroupJoin vo  = null;
+		try {
+			GroupJoinMapper mapper = session.getMapper(GroupJoinMapper.class);
+			vo = mapper.selectGroupJoinChkId(vo2);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return vo;
 	}
 }

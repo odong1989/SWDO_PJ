@@ -100,9 +100,12 @@ public class DocumentController {
 		model.addAttribute("hashTagList", hashTagList);
 		model.addAttribute("group_no", no);
 		vo.setGroup_no(no);
+		vo.setMember_id(member_id);
 		logger.info("groupMemberMgr {}",vo);
 		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
 		logger.info("groupMemberMgr {}",join);
+		GroupJoin memberjoin = groupMemberDao.selectGroupJoinChkId(vo);
+		model.addAttribute("memberJoin", memberjoin);
 		model.addAttribute("gjoin",join);
 		return "/document/readDocument";
 	}
@@ -321,13 +324,36 @@ public class DocumentController {
 		}
 		return chk;
 	}
-	
+	//그룹회원 매니저권한 부여
+	@RequestMapping(value="updateGJMM", method=RequestMethod.GET)
+	@ResponseBody
+	public String memberUpdateM(GroupJoin vo, String memberid, int groupno, HttpSession session) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		vo.setMember_level(1);
+		logger.info("updateGJMM {}",vo);
+		int memberUpdate = groupMemberDao.updateGroupMember(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+			String login_id = (String)session.getAttribute("loginId");
+			vo.setMember_id(login_id);
+			vo.setGroup_no(groupno);
+			vo.setMember_level(2);
+			int memberU = groupMemberDao.updateGroupMember(vo);
+			
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
 	//그룹회원 부매니저로 전환
 	@RequestMapping(value="updateGJMS", method=RequestMethod.GET)
 	@ResponseBody
 	public String memberUpdate(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
+		vo.setMember_level(2);
 		logger.info("updateGJMS {}",vo);
 		int memberUpdate = groupMemberDao.updateGroupMember(vo);
 		String chk = null;
@@ -345,8 +371,9 @@ public class DocumentController {
 	public String memberUpdate2(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
+		vo.setMember_level(3);
 		logger.info("updateGJMC {}",vo);
-		int memberUpdate = groupMemberDao.updateGroupMember2(vo);
+		int memberUpdate = groupMemberDao.updateGroupMember(vo);
 		String chk = null;
 		if (memberUpdate == 1) {
 			chk = "true";

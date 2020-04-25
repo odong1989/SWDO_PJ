@@ -12,7 +12,7 @@
 		bnd_reply
 	where
 		document_no = #{document_no}
-	order by reply_regdate desc
+	order by reply_regdate
 </select>
 
 <insert id="insertReply" parameterType="reply">

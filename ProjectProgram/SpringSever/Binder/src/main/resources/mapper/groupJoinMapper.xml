@@ -26,6 +26,17 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 	 order by bnd_groupjoin.member_level
 	</select>
 
+	<select id="selectGroupJoinChkId" parameterType="groupjoin" resultType="groupjoin">
+ 	select
+		bnd_groupjoin.member_level
+	from
+		bnd_groupjoin
+	where
+		member_id = #{member_id}
+		and
+		group_no = #{group_no}
+	</select>
+
 	<select id="selectGroupJoinMemberOne" parameterType="string" resultType="string">
  	select
    		 bnd_member.member_id
@@ -39,19 +50,7 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 	update
 			bnd_groupjoin
 		set
-			bnd_groupjoin.member_level = 2
-		where
-			bnd_groupjoin.group_no = #{group_no}
-			and
-			bnd_groupjoin.member_id = #{member_id}
-	
-	
-	</update>
-	<update id="updateGroupMember2" parameterType="groupjoin">
-	update
-			bnd_groupjoin
-		set
-			bnd_groupjoin.member_level = 3
+			bnd_groupjoin.member_level = #{member_level}
 		where
 			bnd_groupjoin.group_no = #{group_no}
 			and

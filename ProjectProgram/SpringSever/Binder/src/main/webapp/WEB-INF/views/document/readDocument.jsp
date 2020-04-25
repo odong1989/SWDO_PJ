@@ -15,9 +15,10 @@
 							<img src="<c:url value='/img/pencil.png' />" title="글쓰기"> 
 						</a>
 						
-						<c:if test="${glist.MEMBER_LEVEL != 3 }">
+						<c:if test="${memberJoin.member_level < 3 }">
 						<!-- 회원관리 -->
 						<div id="app1">
+							<c:if test=""></c:if>
 							<img src="<c:url value='/img/ShowMember.png' />" title="멤버목록" @click="openModal">
 							<modal v-if="showModal" @close="closeModal">
 								 	<template slot="header"><h3>회원목록</h3></template>
@@ -25,7 +26,14 @@
 										<table>
 											<c:forEach var="gjoin" items="${gjoin }">
 												<tr>
+												<c:choose>
+												<c:when test ="${!gjoin.member_id.equals(sessionScope.loginId)}">
 												<td class='center'>${gjoin.member_id }</td>
+												</c:when>
+												<c:when test="${gjoin.member_id.equals(sessionScope.loginId)}">
+												<td class='center'>${gjoin.member_id }(나)</td>
+												</c:when>
+												</c:choose>
 												<td class='center'><c:if test="${gjoin.member_level == 1 }">
 													관리자
 												</c:if> <c:if test="${gjoin.member_level == 2 }">
@@ -33,19 +41,32 @@
 												</c:if> <c:if test="${gjoin.member_level == 3 }">
 													일반회원
 												</c:if>
-												</td>
-												<td>
-												</td>
-												<c:if test="loginid"></c:if>									
+												</td>						
 													<td width="30px">
-													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
-													 @click="subManager('${gjoin.member_id }')">
-													 </td>
-													<td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
+													<c:if test="${!gjoin.member_id.equals(sessionScope.loginId)}">
+													<c:choose>
+													<c:when test="${gjoin.member_level == 1}">
+													</c:when>
+													<c:when test="${gjoin.member_level == 2 && memberJoin.member_level == 1}">
+													<img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="관리자로 변경"
+													 @click="manager('${gjoin.member_id }')">
+													 <td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
 													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
 													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
 													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
-												
+													 </c:when>
+													 <c:when test="${gjoin.member_level == 3}">
+													 <img src="<c:url value='/img/subManager.png' />" id ="subManagerIcon" title="부매니저로 변경"
+													 @click="subManager('${gjoin.member_id }')">
+													 <td width="30px"><img src="<c:url value='/img/commonMember.png' />" id="commonMemberIcon" 
+													title="일반회원으로 변경" @click="commonMember('${gjoin.member_id }')"></td>
+													<td width="30px"><img src="<c:url value='/img/deleteMember.png' />" id="deleteMemberIcon"
+													 title="회원삭제" @click="deleteMember('${gjoin.member_id }')"></td>
+													 </c:when>
+													 </c:choose>
+													 </c:if>
+													 </td>
+													
 												</tr>
 												<input type="hidden" id="memberidh" value="${gjoin.member_id}">
 												<input type="hidden" id="groupnoh" value="${gjoin.group_no}">
@@ -64,17 +85,21 @@
 									<img src= "<c:url value='/img/InviteMember.png'/>" title="초대코드보내기" id="show-modal2" @click="openModal">
 								  
 								  <modal v-if="showModal2" @close="closeModal">
-								<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->
+								<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 
+								modal.css
+								-->
 								 	<template slot="header"><h3>초대코드 보내기</h3></template>
 								 	<template slot="body">
 								 	<div>초대코드를 보낼 아이디를 입력해주세요</div>
 								 	<div><input v-model="memberid"></div>
 								 	<button  @click="showMember">멤버확인</button>
+								 	<br>
+								 	<div>초대코드를 보낼 이메일을 입력해주세요</div>
+								 	<div><input v-model="message"></div>
+								 	<button @click="doSend">제출</button>
 								 	</template>
 								 	<template slot="footer">
-								 		<div>초대코드를 보낼 이메일을 입력해주세요</div>
-								 		<div><input v-model="message"></div>
-								 		<button @click="doSend">제출</button>
+								 		<button @click="closeModal">닫기</button>
 								 	</template>
 								  </modal>
 							</div>
@@ -236,6 +261,24 @@
 	  			groupnoh = document.getElementById("groupnoh").value;
 				$.ajax({
 					url:"updateGJMC",
+					type:"get",
+					data:{"memberid" : memberidh,
+						 "groupno" : groupnoh},
+					success:
+						function(result){
+						if(result == "true"){
+							alert("성공")
+							history.go(0);
+						}else {
+							alert("실패")
+						}
+					}
+				})
+			},
+			manager(memberidh){
+				groupnoh = document.getElementById("groupnoh").value;
+				$.ajax({
+					url:"updateGJMM",
 					type:"get",
 					data:{"memberid" : memberidh,
 						 "groupno" : groupnoh},
