@@ -100,9 +100,12 @@ public class DocumentController {
 		model.addAttribute("hashTagList", hashTagList);
 		model.addAttribute("group_no", no);
 		vo.setGroup_no(no);
+		vo.setMember_id(member_id);
 		logger.info("groupMemberMgr {}",vo);
-		ArrayList<GroupJoin> join = groupMemberDao.selectGroupJoinMember(vo);
+		ArrayList<HashMap<String, Object>> join = groupMemberDao.selectGroupJoinMember(vo);
 		logger.info("groupMemberMgr {}",join);
+		GroupJoin memberjoin = groupMemberDao.selectGroupJoinChkId(vo);
+		model.addAttribute("memberJoin", memberjoin);
 		model.addAttribute("gjoin",join);
 		return "/document/readDocument";
 	}
@@ -299,11 +302,12 @@ public class DocumentController {
 	//그룹멤버확인 초대코드아이디로 보낼때
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
-	public String selectGJM(String memberCheck, HttpSession session) {
+	public String selectGJM(String memberCheck, HttpSession session, int no) {
 		//from 수환
 		//이 메서드(selectGJM) 파라메타로 그룹번호 받을 수 있게 처리바람.
 		String memberCheck2 = groupMemberDao.selectGroupJoinMemberOne(memberCheck);
 		logger.info("selectGJM {}",memberCheck2);
+		logger.info("selectGJM {}",no);
 		String chk = null;
 		//memberCheck 유저의 존재여부에 따라 분기처리
 		if (memberCheck2 != null) {
@@ -321,13 +325,36 @@ public class DocumentController {
 		}
 		return chk;
 	}
-	
+	//그룹회원 매니저권한 부여
+	@RequestMapping(value="updateGJMM", method=RequestMethod.GET)
+	@ResponseBody
+	public String memberUpdateM(GroupJoin vo, String memberid, int groupno, HttpSession session) {
+		vo.setMember_id(memberid);
+		vo.setGroup_no(groupno);
+		vo.setMember_level(1);
+		logger.info("updateGJMM {}",vo);
+		int memberUpdate = groupMemberDao.updateGroupMember(vo);
+		String chk = null;
+		if (memberUpdate == 1) {
+			chk = "true";
+			String login_id = (String)session.getAttribute("loginId");
+			vo.setMember_id(login_id);
+			vo.setGroup_no(groupno);
+			vo.setMember_level(2);
+			int memberU = groupMemberDao.updateGroupMember(vo);
+			
+		} else {
+			chk = "false";
+		}
+		return chk;
+	}
 	//그룹회원 부매니저로 전환
 	@RequestMapping(value="updateGJMS", method=RequestMethod.GET)
 	@ResponseBody
 	public String memberUpdate(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
+		vo.setMember_level(2);
 		logger.info("updateGJMS {}",vo);
 		int memberUpdate = groupMemberDao.updateGroupMember(vo);
 		String chk = null;
@@ -345,8 +372,9 @@ public class DocumentController {
 	public String memberUpdate2(GroupJoin vo, String memberid, int groupno) {
 		vo.setMember_id(memberid);
 		vo.setGroup_no(groupno);
+		vo.setMember_level(3);
 		logger.info("updateGJMC {}",vo);
-		int memberUpdate = groupMemberDao.updateGroupMember2(vo);
+		int memberUpdate = groupMemberDao.updateGroupMember(vo);
 		String chk = null;
 		if (memberUpdate == 1) {
 			chk = "true";
@@ -397,6 +425,7 @@ public class DocumentController {
 		}
 		return chk;
 	}
+	
 	//초대코드 이메일로 보내기
 	@RequestMapping(value="sendEmail", method=RequestMethod.GET)
 	@ResponseBody
@@ -412,7 +441,7 @@ public class DocumentController {
 		}
 		return chk;
 	}
-	
+	//댓글기능
 	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
 	public String readContentDocument(HttpSession session, int no , Model model) {
 		logger.info("readContent {}", no);

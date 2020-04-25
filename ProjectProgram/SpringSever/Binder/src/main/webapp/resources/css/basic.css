@@ -215,4 +215,49 @@ body {
 }
 #btn2:hover {
 	cursor: pointer;	
-} 
+}
+.reply {
+	padding : 25px;
+    background-color: white;
+    width:100%;
+    border-top: 1px dotted black;
+}
+#replyTable {
+	margin-top:15px;
+}
+.replyContent{
+	margin: 5px 10;
+	padding : 10px;
+	width: auto;
+	height:3em;
+	background-color: #dcdcdc;
+	color: black;
+	
+}
+a.replyUpdate{
+	margin-left: 5px;
+	margin-right: 5px;
+	color:blue;
+}
+a.replyUpdate:link {
+	color:blue;
+	}
+a.replyDelete:link {
+	color:blue;
+	}
+a.replyDelete {
+	margin-left: 5px;
+	margin-right: 5px;
+	color:blue;
+	}
+.replyMemberId{
+	margin : 5px;
+	padding :2px;
+	width: auto;
+	height : auto;
+}
+h6{
+	font-size : x-large;
+	color:#1DD1AD;
+	margin: 5px;
+}

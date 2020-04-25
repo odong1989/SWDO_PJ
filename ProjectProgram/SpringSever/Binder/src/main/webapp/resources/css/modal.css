@@ -16,7 +16,7 @@
 }
 
 .modal-container {
-  width: 300px;
+  width: 450px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -31,12 +31,45 @@
   color: #42b983;
 }
 
+.modal-header h4 {
+	text-align : left;
+	color: #42b983;
+}
+
 .modal-body {
-  margin: 20px 0;
+  margin: 7px 0 0 0;
 }
 
 .modal-default-button {
   float: right;
+}
+.memberName {
+	width: 10em;
+	height: 35px;
+}
+.memberLevel {
+	text-align : center;
+	padding-right : 5px;
+	width: 5em;
+	height: 35px;
+}
+.membericon {
+	text-align : center;
+	padding-left : 15px;
+	width: 10px;
+	height: 35px;
+}
+.divSend {
+	margin : 3px 3 3 3;
+}
+
+#cautionWrite {
+	width : 340px;
+	height : 2.5em;
+}
+
+#cautionDiv {
+	text-align : center;
 }
 
 /*

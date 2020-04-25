@@ -8,7 +8,8 @@
 <meta name="viewport" contents="width=device-width, initial-scale=1.0">
 <title>${group_name}</title>
 
-	<link href="<c:url value='/css/basic.css' />" rel="stylesheet">
+	<link href="<c:url value='/css/basic.css?sfadgf=2' />" rel="stylesheet">
+    <link href="<c:url value='/css/modal.css?sfsfaf=2' />" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
@@ -16,7 +17,6 @@
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/css/main.css'/>" >
-    <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
     <link href="<c:url value='/css/readDocuStyle.css' />" rel="stylesheet">
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
