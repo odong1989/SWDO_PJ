@@ -105,8 +105,8 @@ create sequence bnd_hash_no_seq;
 
 create table bnd_note(
     note_no             number          primary key
-    , note_title      varchar2(50)   not null
-    , note_content      varchar2(100)   not null
+    , note_title      varchar2(100)   not null
+    , note_content      varchar2(500)   not null
     , member_id         varchar2(30)    not null
     , note_receiver     varchar2(30)    not null
     , note_date     date    default sysdate
