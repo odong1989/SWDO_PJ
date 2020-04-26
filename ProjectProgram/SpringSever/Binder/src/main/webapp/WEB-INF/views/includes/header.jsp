@@ -73,7 +73,7 @@ function Withdrawal(){
 			</c:if>
 
 				<c:choose>
-					<c:when test="${empty member.member_photo}">
+					<c:when test="${empty Member.member_photo}">
 						<td>
 							<a href="<c:url value='/member/memberMypage' />">
 							<img src="<c:url value='/img/human.png' />" 
@@ -84,7 +84,7 @@ function Withdrawal(){
 					<c:otherwise>
 						<td>
 							<a href="<c:url value='/member/memberMypage' />">
-							<img src="<c:url value='/profile/${member.member_photo}' />" 
+							<img src="<c:url value='/profile/${Member.member_photo}' />" 
 										 	 style="width:30px; height: 30px;"/>
 							</a>
 						</td>

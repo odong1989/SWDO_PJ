@@ -148,9 +148,8 @@ public class MemberController {
 				String member_photo = newMember.getMember_photo();
 				member.setMember_photo(member_photo);
 				model.addAttribute("member",member);
-				logger.info("model 값 : {}",model);
 				return "redirect:/document/mainDocument";
-				
+			//	return "/document/mainDocument"; //로그인시 프사를 로딩하기 위해 리다이렉트 파트 삭제
 			} 
 			//비밀번호 불일치
 			else {
@@ -203,6 +202,7 @@ public class MemberController {
 		ArrayList<Group> groupJoinList = groupdao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
+		
 		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);
 		return "member/memberMypage";

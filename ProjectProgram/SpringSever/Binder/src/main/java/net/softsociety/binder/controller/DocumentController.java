@@ -20,6 +20,7 @@ import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.GroupMemberDAO;
 import net.softsociety.binder.dao.HashTagDAO;
+import net.softsociety.binder.dao.MemberDAO;
 import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.dao.PhotoDAO;
 import net.softsociety.binder.dao.ReplyDAO;
@@ -28,6 +29,7 @@ import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.GroupJoin;
 import net.softsociety.binder.vo.HashTag;
+import net.softsociety.binder.vo.Member;
 import net.softsociety.binder.vo.Note;
 import net.softsociety.binder.vo.Photo;
 import net.softsociety.binder.vo.Reply;
@@ -38,6 +40,7 @@ import net.softsociety.binder.vo.Reply;
 public class DocumentController {
 
 	//0.dao선언
+	@Autowired MemberDAO memdao;
 	@Autowired GroupDAO 	groupDao;
 	@Autowired DocumentDAO  documentDao;
 	@Autowired HashTagDAO   hashTagDao;
@@ -56,16 +59,21 @@ public class DocumentController {
 		logger.info("mainDocument 이동");
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
+		
 		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
 		if (memoCheck.size() == 0){
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
-		}
-		
+		}		
+
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
+		
+		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
+		model.addAttribute("MemberData", MemberData);
+		logger.info("model 값 : {}",model);		
 		
 		return "/document/mainDocument";
 		
