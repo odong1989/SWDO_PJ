@@ -131,19 +131,19 @@ a:visited{
 		<c:forEach var="nlist" items="${nlist}" varStatus="status">
 			<tr class="tr12">
 				<td class="tdmid">${noteCnt - status.index}</td>
-				<c:if test="${nlist.note_read == 0 }">
-					<td class="tdmid" style="font-weight:bold;"><a href="javascript:read('${nlist.note_no }')">${nlist.note_title }</a></td>
+				<c:if test="${nlist.NOTE_READ == 0 }">
+					<td class="tdmid" style="font-weight:bold;"><a href="javascript:read('${nlist.NOTE_NO }')">${nlist.NOTE_TITLE }</a></td>
 				</c:if>
-				<c:if test="${nlist.note_read == 1 }">
-					<td class="tdmid"><a href="javascript:read('${nlist.note_no }')">${nlist.note_title }</a></td>
+				<c:if test="${nlist.NOTE_READ == 1 }">
+					<td class="tdmid"><a href="javascript:read('${nlist.NOTE_NO }')">${nlist.NOTE_TITLE }</a></td>
 				</c:if>
-				<c:if test="${!nlist.member_id.equals('system') }">
-					<td class="tdmid"><a href="javascript:send('${nlist.member_id }')">${nlist.member_id }</a></td>
+				<c:if test="${!nlist.MEMBER_ID.equals('system') }">
+					<td class="tdmid"><a href="javascript:send('${nlist.MEMBER_ID }')">${nlist.MEMBER_NAME }</a></td>
 				</c:if>
-				<c:if test="${nlist.member_id.equals('system') }">
+				<c:if test="${nlist.MEMBER_ID.equals('system') }">
 					<td class="tdmid" style="font-weight:bold;">System</td>
 				</c:if>
-				<td class="tdmid tddate">${fn:substring(nlist.note_date, 2, 11) }</td>
+				<td class="tdmid tddate">${fn:substring(nlist.NOTE_DATE, 2, 11) }</td>
 			</tr>
 		</c:forEach>
 		<tr><td colspan="4"></td></tr>

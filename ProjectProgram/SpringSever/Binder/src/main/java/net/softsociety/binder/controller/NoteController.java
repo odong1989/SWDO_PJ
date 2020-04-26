@@ -1,6 +1,7 @@
 package net.softsociety.binder.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,7 +35,7 @@ public class NoteController {
 	public String noteList(HttpSession session, Model model)
 	{
 		String member_id = (String) session.getAttribute("loginId");
-		ArrayList<Note> list = noteDao.selectNote(member_id);
+		ArrayList<HashMap<String,Object>> list = noteDao.selectNote(member_id);
 		int cnt = list.size();
 		model.addAttribute("nlist", list);
 		model.addAttribute("noteCnt", cnt);
