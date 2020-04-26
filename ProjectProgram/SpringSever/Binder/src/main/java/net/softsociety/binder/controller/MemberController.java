@@ -143,13 +143,12 @@ public class MemberController {
 			//비밀번호 일치
 			if(member.getMember_pw().equals(newMember.getMember_pw())) {
 				session.setAttribute("loginId", member.getMember_id());
+				session.setAttribute("profilePhoto", newMember.getMember_photo());
 				logger.info("-성공. 세션 설정 session : {}",session.getAttribute("loginId"));
+				logger.info("로그인 계정의 사진값 : {}",session.getAttribute("profilePhoto"));
 				logger.info("-메인페이지로 이동");
-				String member_photo = newMember.getMember_photo();
-				member.setMember_photo(member_photo);
-				model.addAttribute("member",member);
 				return "redirect:/document/mainDocument";
-			//	return "/document/mainDocument"; //로그인시 프사를 로딩하기 위해 리다이렉트 파트 삭제
+
 			} 
 			//비밀번호 불일치
 			else {

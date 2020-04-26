@@ -73,18 +73,18 @@ function Withdrawal(){
 			</c:if>
 
 				<c:choose>
-					<c:when test="${empty Member.member_photo}">
+					<c:when test="${empty sessionScope.profilePhoto}">
 						<td>
 							<a href="<c:url value='/member/memberMypage' />">
-							<img src="<c:url value='/img/human.png' />" 
+							<img id="usericon" src="<c:url value='/img/human.png' />" 
 								 style="width:30px; height: 30px;" />
 							</a> 
 						</td>
 					</c:when>
 					<c:otherwise>
-						<td>
+					<td >
 							<a href="<c:url value='/member/memberMypage' />">
-							<img src="<c:url value='/profile/${Member.member_photo}' />" 
+							<img id="usericon" src="<c:url value='/profile/${sessionScope.profilePhoto}' />" 
 										 	 style="width:30px; height: 30px;"/>
 							</a>
 						</td>
