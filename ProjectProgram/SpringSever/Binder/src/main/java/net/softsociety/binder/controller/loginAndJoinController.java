@@ -64,7 +64,7 @@ public class loginAndJoinController {
 	}
 	
 	//1.3[실행] 회원가입ID중복확인 실시
-	@RequestMapping(value="/memberIdCheck", method=RequestMethod.POST)
+	@RequestMapping(value="memberIdCheck", method=RequestMethod.POST)
 	@ResponseBody
 	public boolean memberIdCheck(@RequestBody Member member, Model model) {
 		logger.info("중복체크 : {}",member);

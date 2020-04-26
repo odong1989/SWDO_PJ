@@ -17,14 +17,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		logger.info("LoginInterceptor 시작");
 
 		HttpSession session = request.getSession();
-		logger.info("session: {}", session.toString());
 	
 		String loginId = (String)session.getAttribute("loginId"); 
-		logger.info("loginId : {}",loginId);
-		
 
 		if(loginId == null) {
-			response.sendRedirect(request.getContextPath() + "/binder/");
+			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}
 		
