@@ -9,7 +9,7 @@ import net.softsociety.binder.vo.Note;
 
 public interface NoteMapper {
 
-	public ArrayList<Note> selectNote(String member_id);
+	public ArrayList<HashMap<String,Object>> selectNote(String member_id);
 	
 	public int insertNote(Note note);
 
