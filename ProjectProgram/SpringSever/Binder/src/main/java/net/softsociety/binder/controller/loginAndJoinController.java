@@ -133,15 +133,15 @@ public class loginAndJoinController {
 		if(resultMemberData != null)
 		{
 			logger.info("memberFindId-존재확인&리턴될 resultMemberData정보 : {}",resultMemberData);
-			model.addAttribute("resultMemberData", resultMemberData);
-	      	return "redirect:/loginAndJoin/memberFind";		
+			model.addAttribute("resultMemberData", resultMemberData.getMember_id() );//id만 리턴한다.
+	      	return "/loginAndJoin/memberFind";		
 		}
 		else
 		{
 			logger.info("memberFindId-없는 것으로 확인됨. forgetMemberID정보 : {}",forgetMemberID);
 			errMsg="등록되지 않은 ID입니다.";
 			model.addAttribute("errMsg", errMsg);
-	      	return "redirect:/loginAndJoin/memberFind";		
+		    return "/loginAndJoin/memberFind";		
 		}	
 	}
 	
@@ -207,16 +207,16 @@ public class loginAndJoinController {
 					mailSender.send(preparator);
 
 					logger.info("메일전송완료");
-					errMsg="메일이발송되었습니다.";
+					errMsg="메일이 발송되었습니다.메일에 첨부된 임시번호를 확인하세요";
 			      	model.addAttribute("errMsg", errMsg);
 					logger.info("message : {}",model);
-			      	return "redirect:/";			
+			      	return "index";			
 			}
 		else
 			{
-				errMsg="이름과ID를확인해주세요.";
+				errMsg="일치하는 계정이 없습니다.이름과 ID를확인해주세요.";
 				model.addAttribute("errMsg", errMsg);
-		      	return "redirect:/loginAndJoin/memberFind";
+		      	return "/loginAndJoin/memberFind";
 			}
 		}
 	

@@ -12,13 +12,15 @@
 		$(function(){			
 			var err = "${errMsg}";
 			var findMemberData = "${resultMemberData}";
-			
-			console.log("err:"+err);
-			console.log("${errMsg}");
-			
-		if (err.length != 0) {
+						
+			if (err.length != 0) {
 				alert("알림 : "+err);
 			}
+			
+			if (findMemberData.length != 0) {
+				alert("가입하신 ID : "+findMemberData);
+			}
+			
 		});
 	</script>
 	<style>
