@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 import net.softsociety.binder.dao.GroupDAO;
@@ -66,13 +67,13 @@ public class NoteController {
 	}
 	
 	@RequestMapping(value="noteRead", method=RequestMethod.GET)
-	public String noteRead(HttpSession session, int no, Model model)
+	@ResponseBody
+	public Note noteRead(HttpSession session, int no, Model model)
 	{
 		log.info("쪽지 읽기 {}", no);
 		Note note = noteDao.selectNoteOne(no);
-		model.addAttribute("note", note);
 		noteDao.noteReadDone(no);
-		return "note/noteRead";
+		return note;
 	}
 	
 	//이 메서드를 호출하여 사용할 일은 없지만 쪽지 수신확인을 위한 코드는 여기서 가져갈 것
