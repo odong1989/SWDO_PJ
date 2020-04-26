@@ -18,7 +18,7 @@
 			if ($("#loginCheckHidden").val().length != 0) {
 				$(location).attr("href","<c:url value='/document/mainDocument' />");
 			}
-		})
+		});
 	</script>
 	<style>
 	body, html {
@@ -95,6 +95,10 @@
 	<div id="loginWrap">	
 		<div id="loginDiv">
 		<!-- 로그인폼--->
+			<!--
+			<c:if test="${not empty message}">
+			</c:if>
+			-->
 			<c:if test="${sessionScope.loginId == null }">
 			<form action="<c:url value='/member/memberLoginExe' />" method="post">
 			<table class="loginForm">

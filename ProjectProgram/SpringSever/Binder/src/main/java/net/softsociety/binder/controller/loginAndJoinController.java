@@ -134,14 +134,14 @@ public class loginAndJoinController {
 		{
 			logger.info("memberFindId-존재확인&리턴될 resultMemberData정보 : {}",resultMemberData);
 			model.addAttribute("resultMemberData", resultMemberData);
-			return "loginAndJoin/memberFindResultId";			
+	      	return "redirect:/loginAndJoin/memberFind";		
 		}
 		else
 		{
 			logger.info("memberFindId-없는 것으로 확인됨. forgetMemberID정보 : {}",forgetMemberID);
 			errMsg="등록되지 않은 ID입니다.";
 			model.addAttribute("errMsg", errMsg);
-			return "loginAndJoin/memberFindResultId";			
+	      	return "redirect:/loginAndJoin/memberFind";		
 		}	
 	}
 	
@@ -151,8 +151,7 @@ public class loginAndJoinController {
 		//forgetMemberPW : 비밀번호를 잊은 고객이 비번수정을 위해 자신의 이름,계정을 입력한 것.
 		logger.info("memberFindPassword 메소드 실시");
 		logger.info("memberFindId-사용자가 PW찾기 위해 입력한 정보 forgetMember : {}",forgetMember);
-		String errMsg = "";   //입력된 정보가 틀릴시 에러안내문구(에러메시지 출력위한 변수.)
-		String introMsg ="가입하신 이메일로 비밀번호가 전송되었습니다."; //정상실행시 리턴
+		String errMsg = "";   //실행결과또는 에러를 알리기위한 메시지 변수
 		StringBuffer temp = new StringBuffer();
 		
 		Member updateMemberData = dao.memberSelectOne3(forgetMember);
@@ -206,15 +205,18 @@ public class loginAndJoinController {
 						}
 					};
 					mailSender.send(preparator);
+
 					logger.info("메일전송완료");
-					
-				return "redirect:/";			
+					errMsg="메일이발송되었습니다.";
+			      	model.addAttribute("errMsg", errMsg);
+					logger.info("message : {}",model);
+			      	return "redirect:/";			
 			}
 		else
 			{
-				errMsg="등록되지 않은 ID입니다.";
-				model.addAttribute("introMsg",introMsg);
-				return "loginAndJoin/memberFindMyIDorPW";
+				errMsg="이름과ID를확인해주세요.";
+				model.addAttribute("errMsg", errMsg);
+		      	return "redirect:/loginAndJoin/memberFind";
 			}
 		}
 	

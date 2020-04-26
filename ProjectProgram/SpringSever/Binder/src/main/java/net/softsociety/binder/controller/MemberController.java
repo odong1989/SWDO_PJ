@@ -103,7 +103,6 @@ public class MemberController {
 		logger.info("memberJoin메소드입니다");
 		logger.info("회원가입 자료 전달");
 		logger.info("member : {}",member);
-		member.setMember_birthday("20-04-03");
 		memdao.memeberJoin(member);
 		
 		return "redirect:/";

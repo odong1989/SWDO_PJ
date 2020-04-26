@@ -258,9 +258,9 @@ input[type=text], input[type=password], input[type=email]{
 	padding: 20px 0 20px 10px;
 	border-radius: 4%; }
 </style>
-	
+
 	<!-- ---------------------------------------------------------------------------------- -->
-	<div id="right-body" style="background-color: white-space; height: 650px;">
+	<div id="right-body" style="background-color: white-space; height: 900px;">
 		<form id="memberUpdateForm" action="<c:url value='/member/memberUpdateExe' />" method="post" enctype="multipart/form-data">
 		<table>	
 			<!-- 1.이름수정 -->
