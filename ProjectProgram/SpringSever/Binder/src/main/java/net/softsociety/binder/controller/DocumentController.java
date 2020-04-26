@@ -311,6 +311,8 @@ public class DocumentController {
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
 	public String selectGJM(String memberCheck, HttpSession session, int no) {
+		//from 수환
+		//이 메서드(selectGJM) 파라메타로 그룹번호 받을 수 있게 처리바람.
 		String memberCheck2 = groupMemberDao.selectGroupJoinMemberOne(memberCheck);
 		logger.info("selectGJM {}",memberCheck2);
 		logger.info("selectGJM {}",no);
@@ -325,7 +327,7 @@ public class DocumentController {
 			note.setMember_id("system");
 			note.setNote_receiver(memberCheck);
 			note.setNote_title(member_id + "님의 초대 메시지입니다.");
-			note.setNote_content("초대코드가 삽입되는 위치");
+			note.setNote_content("코드가 여기에 입려될 예정");
 		} else {
 			chk = "false";
 		}
