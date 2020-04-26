@@ -42,7 +42,7 @@ td, th {
 }
 
 </style>
-	<div id="right-body">
+	<div id="right-body" style="background-color: white-space; height: 600px;">
 		<table>
 			<tr>
 				<td id="dataTitle">아이디 </td>

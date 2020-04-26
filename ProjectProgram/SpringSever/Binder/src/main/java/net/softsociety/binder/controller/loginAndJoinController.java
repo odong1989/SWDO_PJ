@@ -50,7 +50,7 @@ public class loginAndJoinController {
 	public String memberJoinForm(HttpServletRequest request, Model model)
 	{	
 		logger.info("memberJoinForm폼 이동 ");
-		return "member/joinForm";
+		return "loginAndJoin/joinForm";
 		
 	}
 	

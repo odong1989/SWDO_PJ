@@ -307,10 +307,14 @@
         }
     }
 //이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트 종료.----------------------------
-	
 </script>
-	<style>
-	#btntd{text-align: center;}
+<style>
+body{
+	padding : 30px;	
+}
+#btntd{
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -373,12 +377,11 @@
 				</td>
 			</tr>		
 			
-			<!-- -----------------기존에 정수환 반장이 만들고 튜닝한 부분------------------- -->
 			<tr>
 				<td class="lefttd">프로필 사진</td>
 				<td class="righttd">
  				    <input type='file' id="imgInp" name="upload" />		       						  
-				  <!--<img id="previewImg" src="#" width="250" height="250" alt="프사 미리보기" /> -->   	 
+				    <img id="previewImg" src="#" width="250" height="250" alt="프사 미리보기" /> 	 
 				</td>
 			</tr>
 			<tr><!-- 첨부사진 미리보기 가능하게 -->

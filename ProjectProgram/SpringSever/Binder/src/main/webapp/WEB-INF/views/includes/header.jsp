@@ -71,7 +71,7 @@ function Withdrawal(){
 			<c:if test="${newNoteCheck eq 'ari' }">
 				<a href="javascript:noteList()"><img src="<c:url value='/img/newmail.png' />"></a>
 			</c:if>
-			${member.member_photo}
+
 				<c:choose>
 					<c:when test="${empty member.member_photo}">
 						<td>
