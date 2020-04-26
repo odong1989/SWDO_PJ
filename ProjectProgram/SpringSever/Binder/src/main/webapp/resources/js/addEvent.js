@@ -90,7 +90,7 @@ var newEvent = function (start, end, eventType) {
         	document_finalday : eventData.end,	 		 //마지막일
         	document_destination : eventData.description //장소
         };
-
+        
         //새로운 일정 저장
         $.ajax({
             url: "../document/documentInsertTemp",

@@ -71,21 +71,25 @@ function Withdrawal(){
 			<c:if test="${newNoteCheck eq 'ari' }">
 				<a href="javascript:noteList()"><img src="<c:url value='/img/newmail.png' />"></a>
 			</c:if>
-
-			<!-- 사용자가 가입시 등록한 사진이 있다면 이를 로드하여 프로필 사진으로 띄우도록 한다. -->
-
-			<c:choose>
-				<c:when test="${ LoginPhoto != null}">
-					<a href="<c:url value='/member/memberMypage' />">
-					<img src=${loginPhoto} id="usericon"></a>					
-			</c:when>
-				<c:otherwise>
-					<a href="<c:url value='/member/memberMypage' />">
-					<img src="<c:url value='/img/human.png' />" 
-					id="usericon"></a>
-				</c:otherwise>
-			</c:choose> 
-			
+			${member.member_photo}
+				<c:choose>
+					<c:when test="${empty member.member_photo}">
+						<td>
+							<a href="<c:url value='/member/memberMypage' />">
+							<img src="<c:url value='/img/human.png' />" 
+								 style="width:30px; height: 30px;" />
+							</a> 
+						</td>
+					</c:when>
+					<c:otherwise>
+						<td>
+							<a href="<c:url value='/member/memberMypage' />">
+							<img src="<c:url value='/profile/${member.member_photo}' />" 
+										 	 style="width:30px; height: 30px;"/>
+							</a>
+						</td>
+					</c:otherwise>
+				</c:choose>
 			<a href="<c:url value='/member/memberLogout' />"><img src="<c:url value='/img/logout.png' />"></a>
 		</span>
 	</div>

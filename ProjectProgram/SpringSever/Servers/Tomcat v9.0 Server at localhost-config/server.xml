@@ -150,6 +150,10 @@
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
       <Context docBase="Binder" path="/binder" reloadable="true" source="org.eclipse.jst.jee.server:Binder"/></Host>
+
+	<!-- c:\uploadFile\ 경로에 저장된 사진을 로드하도록 경로설정. -->
+	<!--<Context docBase="c:\uploadFile\" path="/uploadFile" reloadable="true">
+	     </Context>-->	
     </Engine>
   </Service>
 </Server>

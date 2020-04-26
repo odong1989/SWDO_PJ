@@ -41,6 +41,8 @@
 		,document_content
 		,document_notice
 		,document_destination
+		,document_regdate
+		,document_finalday
 		) values
 		(
 		#{group_no}
@@ -49,6 +51,8 @@
 		,#{document_content}
 		,1
 		,#{document_destination}
+		,to_date(#{document_regdate}, 'yyyy-mm-dd')
+		,to_date(#{document_finalday}, 'yyyy-mm-dd')
 		)
 	</insert>
 	
@@ -116,11 +120,11 @@
 	<!-- 4. 글 1개를 삭제위한 메소드입니다. -->
 	<delete id="deleteDocumentOne" parameterType="document">
 		delete from
-		bnd_document
+			bnd_document
 		where 
-		bnd_document.document_no = #{document_no}
+			bnd_document.document_no = #{document_no}
 		and
-		bnd_document.member_id = #{member_id}
+			bnd_document.member_id = #{member_id}
 	</delete>
 
 
