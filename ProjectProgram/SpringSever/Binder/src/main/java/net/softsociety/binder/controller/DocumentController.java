@@ -386,7 +386,8 @@ public class DocumentController {
 			}
 			StringBuffer content = new StringBuffer(); 
 			content.append("아래 링크를 클릭하면 가입 안내 페이지로 이동합니다.</br>");
-			content.append("<p class='codeOpen'>" + addr + "/group/groupjoin?code=" + code + "</p>");
+			content.append("<p class='codeOpen'>" + addr + "/group/groupjoin?code=" + code + "</p></br>");
+			content.append("<font color='red'>유효기간 : ~" + date7 + "</font>");
 			
 			note.setNote_content(content.toString());
 			
