@@ -18,19 +18,22 @@
 	</select>
 	<!-- 아직 읽지 않은 쪽지는 note_read 값이 0이다 -->
 	
-	<select id="selectNote" parameterType="string" resultType="note">
+	<select id="selectNote" parameterType="string" resultType="hashmap">
 	select
-		note_no
-		, note_title
-		, note_content
-		, member_id
-		, note_receiver
- 		, note_read
- 		, note_date
+		n.note_no			note_no
+		, m.member_name		member_name
+		, n.note_title		note_title
+		, n.note_content	note_content
+		, n.member_id		member_id
+		, n.note_receiver	note_receiver
+ 		, n.note_read		note_read
+ 		, n.note_date		note_date
 	from
-		bnd_note
+		bnd_note n, bnd_member m
 	where
-		note_receiver = #{member_id}
+		n.note_receiver = #{member_id}
+	and
+		n.member_id = m.member_id
 	order by
 		note_no desc
 	</select>

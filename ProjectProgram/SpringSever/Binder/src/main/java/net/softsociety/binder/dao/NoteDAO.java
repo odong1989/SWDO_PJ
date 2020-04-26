@@ -1,6 +1,7 @@
 package net.softsociety.binder.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -20,8 +21,8 @@ public class NoteDAO {
 	@Autowired
 	private SqlSession session;
 
-	public ArrayList<Note> selectNote(String member_id) {
-		ArrayList<Note> result = null;
+	public ArrayList<HashMap<String,Object>> selectNote(String member_id) {
+		ArrayList<HashMap<String,Object>> result = null;
 		try {
 			log.info("쪽지 불러오기 : {}",member_id);
 			NoteMapper mapper = session.getMapper(NoteMapper.class);
