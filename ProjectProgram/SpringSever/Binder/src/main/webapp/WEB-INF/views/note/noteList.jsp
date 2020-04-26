@@ -75,6 +75,10 @@ a:visited{
     text-decoration: none;
     color:inherit;
 }
+	.clickTitle:hover{
+    	cursor:pointer;
+	}
+
 	table#notetable {
 		width:550px;
 		text-align:center;
@@ -107,6 +111,7 @@ a:visited{
 		padding-top: 10px;
 	}
 </style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	function send(pk) {
 		location.href="<c:url value='/note/noteWrite' />?id="+pk;
@@ -117,6 +122,37 @@ a:visited{
 	function directsend() {
 		location.href="<c:url value='/note/noteWrite' />";
 	}
+	
+	$(function() {
+		$(document).on('click', '.clickTitle', function() {
+			//글번호 가져옴
+			tempNote = '';
+			noteCon = '';
+			tempNo = $(this).parent().children('.tempNo').val();
+			tempTarget = $(this);
+			$.ajax({
+				url : "noteRead",
+				type : "get",
+				data : {"no":tempNo},
+				success: function(item) {
+						tempNote = item.note_content;
+						//열려있는 글 닫기
+						$('.tempRead').remove();
+						//새 글 열기
+						noteCon += '<tr class="tempRead"><td colspan="4" style="text-align:right;  border-top:1px black dashed; padding:0.8em 2em 0 0;"><img src="';
+						noteCon += "<c:url value='/img/close.png' />";
+						noteCon += '" id="closeNote"></td></tr>';
+						noteCon += '<tr class="tempRead"><td colspan="4" style="border-bottom:1px black dashed; padding-bottom:1.5em;">' + tempNote + '</td></tr>'
+						tempTarget.parent().parent().after(noteCon);
+					},
+				error: function() { alert("다시 시도해 주십시오."); }	
+			});
+		});
+
+		$(document).on('click', '#closeNote', function() {
+			$('.tempRead').remove();
+		});
+	});
 </script>
 </head>
 <body>
@@ -129,20 +165,34 @@ a:visited{
 			<th class="tdtop tddate">날짜</th>
 		</tr>
 		<c:forEach var="nlist" items="${nlist}" varStatus="status">
-			<tr class="tr12">
+			<tr class="tr12" style="background-color:
+				<c:choose>
+					<c:when test="${status.index % 2 == 1}">
+						#f5f5f5
+					</c:when>
+					<c:otherwise>
+						white
+					</c:otherwise>
+				</c:choose>
+				;">
 				<td class="tdmid">${noteCnt - status.index}</td>
+				
+				<!-- 기독 여부 확인 -->
 				<c:if test="${nlist.NOTE_READ == 0 }">
-					<td class="tdmid" style="font-weight:bold;"><a href="javascript:read('${nlist.NOTE_NO }')">${nlist.NOTE_TITLE }</a></td>
+					<td class="tdmid" style="font-weight:bold;"><p class="clickTitle">${nlist.NOTE_TITLE }</p><input type="hidden" class="tempNo" value="${nlist.NOTE_NO }"></td>
 				</c:if>
 				<c:if test="${nlist.NOTE_READ == 1 }">
-					<td class="tdmid"><a href="javascript:read('${nlist.NOTE_NO }')">${nlist.NOTE_TITLE }</a></td>
+					<td class="tdmid"><p class="clickTitle">${nlist.NOTE_TITLE }</p><input type="hidden" class="tempNo" value="${nlist.NOTE_NO }"></td>
 				</c:if>
+				
+				<!-- 시스템 메시지 여부 확인 -->
 				<c:if test="${!nlist.MEMBER_ID.equals('system') }">
 					<td class="tdmid"><a href="javascript:send('${nlist.MEMBER_ID }')">${nlist.MEMBER_NAME }</a></td>
 				</c:if>
 				<c:if test="${nlist.MEMBER_ID.equals('system') }">
 					<td class="tdmid" style="font-weight:bold;">System</td>
 				</c:if>
+				
 				<td class="tdmid tddate">${fn:substring(nlist.NOTE_DATE, 2, 11) }</td>
 			</tr>
 		</c:forEach>
