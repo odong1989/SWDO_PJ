@@ -41,5 +41,15 @@
 
 </delete>
 
+<select id="totalCount" parameterType="int" resultType="int">
+select
+	count(reply_no)
+from
+	bnd_reply
+where
+	document_no = #{document_no}
+
+</select>
+
 
 </mapper>
