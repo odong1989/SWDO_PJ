@@ -110,6 +110,12 @@ a:visited{
 		height: 2em;
 		padding-top: 10px;
 	}
+	.codeOpen {
+		text-decoration: underline;
+	}
+	.codeOpen:hover {
+		cursor: pointer;
+	}
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
@@ -124,6 +130,8 @@ a:visited{
 	}
 	
 	$(function() {
+
+		//쪽지 열기
 		$(document).on('click', '.clickTitle', function() {
 			//글번호 가져옴
 			tempNote = '';
@@ -149,9 +157,19 @@ a:visited{
 			});
 		});
 
+		//열린 쪽지 닫기
 		$(document).on('click', '#closeNote', function() {
 			$('.tempRead').remove();
 		});
+
+		//링크 실행
+		$(document).on('click', '.codeOpen', function() {
+			link = $('.codeOpen').text();
+			console.log(link);
+			window.opener.location.href = link;
+			//window.parent.location.href = link; 
+			//window.open(link, "_parent");
+		})
 	});
 </script>
 </head>

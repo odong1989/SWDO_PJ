@@ -1,0 +1,26 @@
+#gaibu {
+    display:flex;
+    padding:0 100px;
+    margin: 0 auto;
+    height:inherit;
+}
+
+#gaibu-top-left{
+    margin-top:10px;
+    margin-left:100px;
+    height:50px;
+}
+
+#gaibu-top-right{
+    text-align:right;
+    margin-top:15px;
+    margin-right:100px;
+    height:50px;
+    width:100%;
+}
+
+#document-body {
+    width:97%;
+    height:inherit;
+    margin: 0 10px 20px 10px
+}

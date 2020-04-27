@@ -2,12 +2,16 @@ package net.softsociety.binder.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -313,29 +317,91 @@ public class DocumentController {
 	//그룹멤버확인 초대코드아이디로 보낼때
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
 	@ResponseBody
-	public String selectGJM(String memberCheck, HttpSession session, int no) {
-		//from 수환
-		//이 메서드(selectGJM) 파라메타로 그룹번호 받을 수 있게 처리바람.
+	public String selectGJM(String memberCheck, HttpSession session, int no, HttpServletRequest request, Model model) {
 		String memberCheck2 = groupMemberDao.selectGroupJoinMemberOne(memberCheck);
 		logger.info("selectGJM {}",memberCheck2);
 		logger.info("selectGJM {}",no);
 		String chk = null;
+		
 		//memberCheck 유저의 존재여부에 따라 분기처리
 		if (memberCheck2 != null) {
 			chk = "true";
+			
 			//System메시지 전송
 			String member_id = (String)session.getAttribute("loginId");
-			//여기에 전달될 상세내용 구현예정
+			//전달될 내용
 			Note note = new Note();
+			String code = null;
+			String date7 = null;
 			note.setMember_id("system");
 			note.setNote_receiver(memberCheck);
 			note.setNote_title(member_id + "님의 초대 메시지입니다.");
-			note.setNote_content("코드가 여기에 입려될 예정");
+
+			//도메인 및 포트 가져오기
+			String addr = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort() + request.getContextPath();
+			
+			//코드 생성 or 코드 가져오기
+			Group group = new Group();
+			group.setGroup_no(no);
+			HashMap<String, Object> oldgroup = groupDao.selectCode(group);
+			
+			//기존 코드가 존재
+			if (oldgroup != null) {
+				logger.info("이미 코드가 존재 {},{}", oldgroup);
+				code = (String) oldgroup.get("GROUP_CODE");
+				date7 = (String) oldgroup.get("GROUP_CODEDATE7");
+			} else {
+				//코드를 새로 생성
+				logger.info("코드를 새로 생성");
+				StringBuffer temp = new StringBuffer();
+				Random rnd = new Random();
+				for (int i = 0; i < 5; i++) {
+				    int rIndex = rnd.nextInt(3);
+				    switch (rIndex) {
+				    case 0:
+				        // a-z
+				        temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+				        break;
+				    case 1:
+				        // A-Z
+				        temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+				        break;
+				    case 2:
+				        // 0-9
+				        temp.append((rnd.nextInt(10)));
+				        break;
+				    }
+				}
+				logger.info("코드 생성완료 {}", temp);
+				Group updategroup = new Group();
+				updategroup.setGroup_code(temp.toString());
+				updategroup.setGroup_no(no);
+				int result = groupDao.updateCode(updategroup);
+				updategroup.setGroup_code(null);
+				if (result != 0) {
+					logger.info("코드 업데이트 성공");
+					oldgroup = groupDao.selectCode(updategroup);
+					code = (String) oldgroup.get("GROUP_CODE");
+					date7 = (String) oldgroup.get("GROUP_CODEDATE7");
+				} else {
+					logger.info("코드 업데이트 실패");
+				}
+			}
+			StringBuffer content = new StringBuffer(); 
+			content.append("아래 링크를 클릭하면 가입 안내 페이지로 이동합니다.</br>");
+			content.append("<p class='codeOpen'>" + addr + "/group/groupjoin?code=" + code + "</p></br>");
+			content.append("<font color='red'>유효기간 : ~" + date7 + "</font>");
+			
+			note.setNote_content(content.toString());
+			
+			//쪽지 전송
+			noteDao.insertNote(note);
 		} else {
 			chk = "false";
 		}
 		return chk;
 	}
+	
 	//그룹회원 매니저권한 부여
 	@RequestMapping(value="updateGJMM", method=RequestMethod.GET)
 	@ResponseBody
