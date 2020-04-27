@@ -240,8 +240,9 @@ $(function(){
 					</tr>
 				    <tr>
  
-						<td rowspan="3" style="vertical-align:middle;"> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />"
-						      width="250" height="250" alt="첨부사진 미리보기" >
+						<td rowspan="3" style="vertical-align:middle;"> 
+						<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
+						      width="250" height="250"  >
 						      <p>장소 : ${document.document_destination }</p>
 						</td>
 				    	<td rowspan="3">

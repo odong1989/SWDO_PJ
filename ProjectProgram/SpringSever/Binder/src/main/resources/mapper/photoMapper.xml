@@ -20,4 +20,19 @@
 					,bnd_photo_no_seq.nextval
 			)
 	</insert>
+	
+	
+	<!-- 3.  readDocument.jsp로 사진을 보내는등에 사용합니다. -->
+	<select id="selectPhotoOne" parameterType="int" resultType="photo">
+	 	select
+	   		 bnd_photo.photo_savedfile          photo_savedfile			
+		from
+		    bnd_document, bnd_photo
+		where
+			bnd_document.document_no = #{document_no}
+		and
+		    bnd_photo.document_no  =  #{document_no}
+	</select> 
+	
+	
 </mapper>

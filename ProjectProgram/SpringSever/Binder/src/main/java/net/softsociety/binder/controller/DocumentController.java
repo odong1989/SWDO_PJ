@@ -128,14 +128,6 @@ public class DocumentController {
 		return "/document/readDocument";
 	}
 	
-	@RequestMapping(value="boardTemp", method=RequestMethod.GET)
-	public String boardTemp(HttpSession session )
-	{
-		logger.info("boardTemp 실행");		
-		return "/document/boardTemp";
-	}	
-	
-	
 	//신규 게시판글(documents) 작성하는 jsp페이지로 이동
 	//[*글 및 사진을 DB에 추가하는  "documentInsert"에서 실시합니다.]
 	@RequestMapping(value="writeDocument", method=RequestMethod.GET)
@@ -286,6 +278,51 @@ public class DocumentController {
 	        }
 	        
 		logger.info("documentInsertTemp메소드 종료.");
+	}
+	
+	
+	//댓글기능
+	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
+	public String readContentDocument(HttpSession session, int no , Model model) {
+		logger.info("readContent {}", no);
+		String member_id = (String) session.getAttribute("loginId");
+		
+		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
+		Document caution=null;
+		caution = documentDao.selectDocumentOne(no); 
+		model.addAttribute("document", caution);
+		logger.info("readContentDocument - 출력될 글 정보 : {}",caution);
+		//사용자가 작성한 글 1개만 로드 종료-----------------------------------------------
+
+		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 시작.----------------------------
+		//도큐먼트(Document caution)는 사진정보를 담을 수 있는 칼럼이 없기 때문이다.
+		Photo cautionPhoto =null;
+		cautionPhoto = photoDao.selectPhotoOne(no);
+		model.addAttribute("cautionPhoto", cautionPhoto);
+		logger.info("readContentDocument - 출력할 사진  : {}", cautionPhoto);
+		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 종료.----------------------------		
+
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
+		model.addAttribute("documentno", no);
+		model.addAttribute("loginId", member_id);
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
+		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
+		model.addAttribute("documentList", documentList);
+		
+		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
+		logger.info("-해시태그");
+		model.addAttribute("hashTagList", hashTagList);
+	
+		return "document/readContentDocument";
 	}
 	
 	
@@ -522,42 +559,6 @@ public class DocumentController {
 			chk = "false";
 		}
 		return chk;
-	}
-	//댓글기능
-	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
-	public String readContentDocument(HttpSession session, int no , Model model) {
-		logger.info("readContent {}", no);
-		String member_id = (String) session.getAttribute("loginId");
-		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
-		Document caution=null;
-		//Document내의 1개의 글만 읽어오면 되는거라 Document번호만 알고있으면 그 것을 가져올수가있네요  수정 버튼은 session으로 아이디 검사해서 수정가능하게하면될것같습니다
-		caution = documentDao.selectDocumentOne(no);
-		model.addAttribute("document", caution);
-		
-		//사용자가 작성한 글 1개만 로드 종료-----------------------------------------------
-		
-		
-		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
-		if (memoCheck.size() == 0){
-			model.addAttribute("newNoteCheck", "nashi");
-		} else {
-			model.addAttribute("newNoteCheck", "ari");
-		}
-		
-		model.addAttribute("documentno", no);
-		model.addAttribute("loginId", member_id);
-		
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		model.addAttribute("groupJoinList", groupJoinList);
-		
-		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
-		model.addAttribute("documentList", documentList);
-		
-		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
-		logger.info("-해시태그");
-		model.addAttribute("hashTagList", hashTagList);
-	
-		return "document/readContentDocument";
 	}
 	
 	@RequestMapping(value="writeReply", method=RequestMethod.POST)

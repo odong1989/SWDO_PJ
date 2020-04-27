@@ -71,13 +71,15 @@
 	<select id="selectDocumentsForCalendar" parameterType="int" resultType="hashmap">
 	 	select
 	 		(select '사나' from dual)									"username"
+            , (select 'true' from dual)                                "allDay"
+<!-- 			, bnd_document.document_content							"allDay"		 -->
 		    , bnd_document.document_content 						"title"
 		    , to_char(bnd_document.document_regdate,  'yyyy-mm-dd hh:mi')  "start"
 		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd hh:mi')  "end"
 		    , bnd_document.document_no								"document_no"								
 			, bnd_photo.photo_savedfile								"photo_savedfile" 						
 			, bnd_photo.photo_originfile							"photo_originfile"	
-			, bnd_document.document_content                         "backgroundColor"					
+			, bnd_document.document_content                         "backgroundColor"			
 		from
 		    bnd_document , bnd_photo
 		where
@@ -98,21 +100,22 @@
 
 
 	<!-- 3.  readDocument.jsp로 글을 보내기 위해 실시. -->
+	<!-- document 객체는 사진정보(photo_savedfile)를 저장할 수 없기에  
+		  사진을 갖고와야 하는 경우에는 selectPhotoOne 메소드를 사용합시다.-->
 	<select id="selectDocumentOne" parameterType="int" resultType="document">
 	 	select
-	 		bnd_document.document_no
-		    , bnd_document.document_content
-		    , bnd_document.member_id 							
+	 		bnd_document.document_no                                      document_no
+		    , bnd_document.document_content                               document_content
+		    , bnd_document.member_id 					                  member_id		
 		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd hh:mi')  document_regdate
 		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd hh:mi') document_finalday
-		    , bnd_document.document_destination 					
-			, bnd_photo.photo_savedfile 							
+		    , bnd_document.document_destination 		                  document_destination			
 		from
 		    bnd_document, bnd_photo
 		where
 			bnd_document.document_no = #{document_no}
 		and
-		    bnd_document.document_no = bnd_photo.document_no
+		    bnd_photo.document_no  =  #{document_no}
 	</select> 
 
 	<!-- 4. 글 1개를 삭제위한 메소드입니다. -->

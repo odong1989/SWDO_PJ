@@ -30,6 +30,18 @@ public class PhotoDAO {
                //파일을 삭제(물리적) -인셉션이 발생하면 실시.
         }
         return count;
-		
+	}
+	
+	public Photo selectPhotoOne(int	document_no) {
+	//1개의 글과 문서번호가 같은 사진을 가져올 때 사용합니다.
+        Photo photo =null;
+        try {
+               PhotoMapper mapper = session.getMapper(PhotoMapper.class);
+               photo = mapper.selectPhotoOne(document_no);
+        }catch(Exception e) {
+               e.printStackTrace();
+               //파일을 삭제(물리적) -인셉션이 발생하면 실시.
+        }
+        return photo;
 	}
 }
