@@ -1,0 +1,99 @@
+.reply {
+	padding : 25px;
+    background-color: white;
+    width:100%;
+    border-top: 1px dotted black;
+}
+#replyTable {
+	margin-top:15px;
+}
+.replyContent{
+    height: 3em;
+    background-color: #dcdcdc;
+    color: black;
+    width: 70%;
+    border-radius: 25px;
+    padding-left: 1em;
+    vertical-align: bottom;
+    padding-top: 14px;
+	
+}
+#replyInput:focus {
+	outline : none;
+}
+
+a.replyUpdate{
+	margin-left: 5px;
+	margin-right: 5px;
+	color:blue;
+}
+a.replyUpdate:link {
+	color:blue;
+	}
+a.replyDelete:link {
+	color:blue;
+	}
+a.replyDelete {
+	margin-left: 5px;
+	margin-right: 5px;
+	color:blue;
+	}
+.replyMemberId{
+	margin : 5px;
+	padding :2px;
+	width: auto;
+	height : auto;
+}
+
+#replyP{
+	font-size : 70%;
+	color : gray;
+}
+#replyInput{
+    width: 450px;
+    border-radius: 20px;
+    height: 2em;
+    padding-left: 1em;
+}
+.replyId{
+	font-size: 130%;
+}
+.pagingDiv{
+	text-align : center;
+    margin-top: 1em;
+    font-size: 120%;
+}
+.replyNowPage{
+	font-weight: bold;
+}
+.replyPageAtag{
+	font-size : 90%;
+	color : #eee;
+}
+#editContent{
+	width: 70%;
+    border-radius: 25px;
+    height: 3em;
+    margin-top : 8px;
+    background-color : #dcdcdc;
+    border-radius: 25px;
+    padding-left: 1em;
+    vertical-align: middle;
+    padding-top: 0px;
+  
+
+    
+    
+}
+#editContent:focus{
+	outline : none;
+}
+#replyEditId{
+	font-size: 130%;
+}
+
+#replyTitle{
+	font-size : x-large;
+	color:#1DD1AD;
+	margin: 5px;
+}
