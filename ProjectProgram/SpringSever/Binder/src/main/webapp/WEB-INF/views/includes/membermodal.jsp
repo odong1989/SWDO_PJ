@@ -80,7 +80,7 @@
 								 	<template slot="body">
 								 	<div class="inputMessage"><input v-model="memberid" placeholder="아이디를 입력해주세요"> 
 								 	<input type = "hidden" id="gno" value="${group_no}">
-								 	<button  @click="showMember">멤버확인</button></div>
+								 	<button  @click="showMember">보내기</button></div>
 								 	<br>
 								 	<div class="inputMessage"><input v-model="message" placeholder="이메일을 입력해주세요"> <button @click="doSend">제출</button></div>
 								 	

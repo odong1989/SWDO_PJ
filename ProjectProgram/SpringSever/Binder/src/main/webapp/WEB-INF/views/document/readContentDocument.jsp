@@ -21,6 +21,13 @@
 
 
 <script>
+function paging(pag){
+	var pagingForm = document.getElementById("pagingForm");
+	var currentPage = document.getElementById("currentPage")
+	currentPage.value = pag;
+	pagingForm.submit();
+}
+
 function editReply(reply_no, reply_content, member_id){
 	var htmls = "";
 
@@ -87,21 +94,29 @@ function deleteReply(reply_no){
 })
 }
 
-function showReplyList(){
+function showReplyList(currentPage){
 	var document_no = $('#document_no').val();
 
 	$.ajax({
 			type: "post",
 			url: "getReply",
-			data: {document_no : document_no},
+			data: {
+				document_no : document_no,
+				currentPage : currentPage
+			},
 			dataType : "json",
 			success : function(result){
 				var htmls ="";
 				var loginId = $('#loginId').val();
-				if(result.length < 1){
+				var list = result.list;
+				var totalCount = result.totalCount;
+				var page = result.page;
+				var cnt = 0;
+				if(list.length < 1){
 						html.push("등록된댓글이 없습니다.")
 				}else {
-					$(result).each(function(){
+					$(list).each(function(){
+						htmls += '(' + totalCount + '-' + cnt + ')' + '-('+ page.currentPage + '-' + 1 +') *' + page.countPerPage '
 						htmls += '<div id="rid';
 						htmls += this.reply_no;
 						htmls += '">';
@@ -116,12 +131,19 @@ function showReplyList(){
 						htmls += this.reply_content;
 						htmls += '</div>';
 						htmls += '</div>';
+						cnt++;						
 					})
+					pageLoad(result);
 				}
 				$("#replyTable").html(htmls);
 			}
 			
 		})
+}
+
+function pageLoad(currentPage){
+	
+	
 }
 
 function writeRpy(){
@@ -223,8 +245,8 @@ $(function(){
 						<input type="text" id="reply_content">
 						<input type="button" id="btn" value="댓글등록">
 					
-          	 	<div id = "replyTable">
-          	 	</div>
+          	 	<div id = "replyTable"></div>
+          	 	<div id="replyPage"></div>
           	 </div>
        </div>
 	
