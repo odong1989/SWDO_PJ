@@ -40,7 +40,7 @@ var editEvent = function (event, element, view) {
       editEnd.val(moment(event.end).subtract(1, 'days').format('YYYY-MM-DD HH:mm'));
     } else {
         editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
-    }
+    }   
 
     modalTitle.html('일정 수정');
     editTitle.val(event.title);

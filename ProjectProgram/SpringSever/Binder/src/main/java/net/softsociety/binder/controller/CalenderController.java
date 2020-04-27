@@ -99,32 +99,54 @@ public class CalenderController {
 		//오늘을 기준으로 과거의 일정들이면 회색, 미래의 일정이면 초록색식으로 색을 구분하여 지정한다.
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");	
 		Date toDay = new Date (); // 오늘 날짜를 받기 위한 형식.
-		logger.info("getUserSchedule 메소드 - toDay : {}",toDay);
 		Date compareDay = null;
-		logger.info("getUserSchedule 메소드 - compareDay : {}",compareDay);
-		String from=null;
-		logger.info("getUserSchedule 메소드 - from : {}",from);
+		String toDayStr =null;
 		
 		//배경색 넣기 조건문
 		for(int i = 0; i < documentList.size(); i++) {
 			//글 등록일과 오늘 날짜 비교
 				dateFormat.format(toDay);
-				from = (String) documentList.get(i).get("end");
-				logger.info("getUserSchedule 메소드 - from {} : {}",i,from);
+				toDayStr = (String) documentList.get(i).get("end");
 				try {
-					compareDay = dateFormat.parse(from);
+					compareDay = dateFormat.parse(toDayStr);
 				} catch (java.text.ParseException e) {
 					e.printStackTrace();
 				}
 			int compare = compareDay.compareTo(toDay);
 			if ( compare < 0 ) { //현재일자보다 과거인 경우(오늘보다 db날짜값이 같거나 작음)
 				documentList.get(i).put("backgroundColor", "#919090");//회색계열
-				logger.info("getUserSchedule 메소드 - from {} is #eee",i);
 			}
 			else {//현재일자보다 과거인 경우(오늘보다 db날짜값이 더 큼) 
 				documentList.get(i).put("backgroundColor", "#462ae8");//하늘색계열
-
 			}
+		}
+
+		//풀캘린더의 allday(하루종일)여부  확인 조건문--------------------------------------------------
+		//SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");	
+
+		String start = null;
+		String end = null;
+		Date startDay =  new Date ();
+		Date endDay =  new Date ();
+		
+		for(int cell = 0; cell < documentList.size(); cell++) {
+			start = (String) documentList.get(cell).get("start");
+			end = (String) documentList.get(cell).get("end");
+			
+			try {
+				startDay = dateFormat.parse(start);	
+				endDay = dateFormat.parse(end);		
+			} catch (java.text.ParseException e) {
+					e.printStackTrace();
+				}
+	//		int compareAllday = startDay.compareTo(endDay);
+	//		if ( compareAllday > 1 ) { //2일 이상이 아님을 확인하고 false 설정.
+	//			documentList.get(cell).put("allDay", "true");//회색계열
+	//		}
+	//		else {
+//				documentList.get(cell).put("allDay", "false");//하늘색계열
+	//		}
+			logger.info("getUserSchedule 메소드 - 바탕색 조건문 실시한 {}번째 documentList : {}",cell ,documentList.get(cell).get("allday"));
 		}
 		logger.info("getUserSchedule 메소드 - 바탕색 조건문 실시한 documentList : {}",documentList);
 	

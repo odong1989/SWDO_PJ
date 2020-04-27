@@ -209,7 +209,6 @@ function writeRpy(){
 				alert("실패")
 			}
 	})
-		
 }
 
 
@@ -220,7 +219,6 @@ $(function(){
 	$('#replyInput').keyup(function(event) {
 		if (event.keyCode == 13) {
 			writeRpy();
-
 		}
 	})
 	
@@ -260,11 +258,13 @@ $(function(){
 				   	</tr>       
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
-							<input type="submit" value="글 수정하기" >
+						<a href="javascript:edit(${document.document_no })">
+							<input type="button" value="글 수정하기" >
+						</a>
 					   		<input type="button" value="이전페이지 가기" onclick="history.back(-1);">
 						</td>
 					</tr>
-			 </table>
+			 </table>	
           </table>
 	
 		<div class = "reply">

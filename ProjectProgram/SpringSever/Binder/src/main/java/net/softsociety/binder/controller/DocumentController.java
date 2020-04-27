@@ -58,7 +58,7 @@ public class DocumentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
-    private final String noUploadPath = "/img"; ///img/noImage.png
+    private final String noUploadPath = "/img"; // /img/noImage.png를 불러오기 위한 용도. 
     private int countPerPage = 10;
     private int pagePerGroup = 10;
 
@@ -342,18 +342,45 @@ public class DocumentController {
 	
 	
 	//글 내용 수정 메소드로 활용하기로 결정.(글 변경페이지는 readContentDocument메소드를 참고하십시오)
-	@RequestMapping(value="updateDocument", method=RequestMethod.GET)
-	@ResponseBody
-	public void editDocument(HttpSession session, Document originalDocument)
+	@RequestMapping(value="editDocument", method=RequestMethod.GET)
+	public String editDocument(HttpSession session, int no, Model model)
 	{	
-		logger.info("updateDocument-기존 글(Document) 수정 작업시작");
+		logger.info("editDocument 메소드 시작.");
+		logger.info("읽을 문서번호 : {}", no);
+		
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
-		originalDocument.setMember_id(member_id);
 		
-		logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}		
+
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		
-		documentDao.updateDocumentOne(originalDocument);
-		logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
+		
+		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
+		Document caution=null;
+		caution = documentDao.selectDocumentOne(no); 
+		model.addAttribute("document", caution);
+		logger.info("readContentDocument - 출력될 글 정보 document : {}",caution);
+		//사용자가 작성한 글 1개만 로드 종료-----------------------------------------------
+
+		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 시작.----------------------------
+		//도큐먼트(Document caution)는 사진정보를 담을 수 있는 칼럼이 없기 때문이다.
+		Photo cautionPhoto =null;
+		cautionPhoto = photoDao.selectPhotoOne(no);
+		model.addAttribute("cautionPhoto", cautionPhoto);
+		logger.info("readContentDocument - 출력할 사진  cautionPhoto : {}", cautionPhoto);
+		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 종료.----------------------------		
+		
+		
+		logger.info("editDocument 메소드 종료 & editDocument.jsp로 이동");
+		return "/document/editDocument";
 	}
 	
 	//그룹멤버확인 초대코드아이디로 보낼때

@@ -40,7 +40,7 @@ function filtering(event) {
   return show_username && show_type;
 }
 
-
+/*삭제예정
 function calDateWhenResize(event) {
 
   var newDates = {
@@ -58,6 +58,7 @@ function calDateWhenResize(event) {
 
   return newDates;
 }
+*/
 
 function calDateWhenDragnDrop(event) {
   // 드랍시 수정된 날짜반영
@@ -96,7 +97,7 @@ function calDateWhenDragnDrop(event) {
 var calendar = $('#calendar').fullCalendar({
 	//  resources: "getUserSchedule",
   eventRender: function (event, element, view) {
-    //일정에 hover시 요약
+    //일정에 hover시(마우스 커서를 올렸을 때) 커서우측하단에 안내내용
     element.popover({
       title: $('<div />', {
         class: 'popoverTitleCalendar',
@@ -105,15 +106,12 @@ var calendar = $('#calendar').fullCalendar({
         'background': event.backgroundColor,
         'color': event.textColor
       }),
-
       trigger: 'hover',
       placement: 'top',
       html: true,
       container: 'body'
     });
-
     return filtering(event);
-
   },
 
   //주말 숨기기 & 보이기 버튼
@@ -165,8 +163,8 @@ var calendar = $('#calendar').fullCalendar({
       	console.log(arrCalender);
       	
       	var fixedDate = arrCalender.map(function (array) {
-         // if (array.allDay && array.start !== array.end) {
-          if (array.start !== array.end) {
+          if (array.allDay) { 
+ //        if (array.allDay && array.start !== array.end) {.
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
             array.end = moment(array.end).add(1, 'days');
           }
@@ -185,28 +183,6 @@ var calendar = $('#calendar').fullCalendar({
     }
   },
 
-  //일정 리사이즈
-  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
-    $('.popover.fade.top').remove();
-
-    /** 리사이즈시 수정된 날짜반영
-     * 하루를 빼야 정상적으로 반영됨. */
-    var newDates = calDateWhenResize(event);
-
-    //리사이즈한 일정 업데이트
-    $.ajax({
-      type: "get",
-      url: "",
-      data: {
-        //id: event._id,
-        //....
-      },
-      success: function (response) {
-        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
-      }
-    });
-
-  },
 
   eventDragStart: function (event, jsEvent, ui, view) {
     draggedEventIsAllDay = event.allDay;
@@ -215,7 +191,7 @@ var calendar = $('#calendar').fullCalendar({
   //일정 드래그앤드롭
   eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
     $('.popover.fade.top').remove();
-
+    
     //주,일 view일때 종일 <-> 시간 변경불가
     if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
       if (draggedEventIsAllDay !== event.allDay) {
@@ -224,6 +200,7 @@ var calendar = $('#calendar').fullCalendar({
         return false;
       }
     }
+    
 
     // 드랍시 수정된 날짜반영
     var newDates = calDateWhenDragnDrop(event);

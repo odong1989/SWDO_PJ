@@ -125,19 +125,27 @@
 				    </tr>
 				    <tr style="border-bottom: 1px solid #444444;">
 						<!-- <td>여행 일정</td>-->
-				        <td> <input type='date' id='startDate' name='document_regdate'  style="display:inline;"/> 부터  </td>
-				   		<td> <input type='date' id='endDate' name='document_finalday'  style="display:inline;"/> 까지   </td>
+				        <td> <input type='date' id='start_day' name='document_regdate'  style="display:inline;" value="${document.document_regdate}"/> 부터  </td>
+				   		<td> <input type='date' id='start_time' name='document_finalday'  style="display:inline;" /> 까지   </td>
 					</tr>
 				    <tr>
  						<!-- <td rowspan="3" style="text-align:center;vertical-align:middle;">사진등록<br>
 							&기록하기</td>-->
-						<td> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />"
-						      width="250" height="250" alt="첨부사진 미리보기" ></td>
-				    	<td> <textarea rows="14" width="300" style="resize: none" id="content" name="document_content"></textarea> </td> 
+						<c:choose>
+							<c:when test="${empty cautionPhoto.photo_savedfile}">
+								<td> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />
+		 									  width="250" height="250" alt="첨부사진 미리보기" ></td>
+							</c:when>
+							<c:otherwise>		        							
+								<td> <img id="previewImg" src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />" 
+			  								  width="250" height="250" alt="첨부사진 미리보기" /> </td>
+							</c:otherwise>
+						</c:choose>
+					    	<td> <textarea rows="14" width="300" style="resize: none" id="content" name="document_content"></textarea> </td> 
 				   	</tr>     
 					<tr>
 						<td><input type='file' id="imgInp" name="upload" value="등록사진"/></td>
-						<td> <input type="text" placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
+						<td> <input type="text" value="${caution.document_destination}" placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
 					</tr>
 				   	<tr>	
 				   		<td colspan="2"> <input type="text" placeholder="#해시태그를 입력해주세요" style="width:430px;"> </td>
@@ -145,7 +153,7 @@
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
 				            <div style="text-align: center;">
-							<input type="submit" value="글 등록하기" >
+							<input type="submit" value="수정하기" >
 					   		<input type="button" value="취소" onclick="history.back(-1);">
 				   			</div>
 						</td>
