@@ -220,13 +220,11 @@ public class MemberController {
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
-		
 		logger.info("memberUpdateExe- 현 로그인 인물 (session세션)",session.getAttribute("loginId"));
 		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);
 		return "member/mypageUpdateProfile";
 	}	
-	
 		
 	@RequestMapping(value="memberUpdateExe", method=RequestMethod.POST)
 	public String memberUpdateExe(Member updateMemberData, HttpSession session, Model model) {
@@ -236,7 +234,6 @@ public class MemberController {
 		
 		updateMemberData.setMember_id((String)session.getAttribute("loginId"));
 		logger.info("memberUpdateExe-업데이트할 계정 정보 :{}",updateMemberData);
-		
 		
 		memdao.memberUpdate(updateMemberData);
 		logger.info("memberUpdateExe-업데이트결과 계정 정보 :{}",memdao.memberSelectOne((String)session.getAttribute("loginId")));

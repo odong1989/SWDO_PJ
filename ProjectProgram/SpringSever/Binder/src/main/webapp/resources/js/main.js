@@ -166,7 +166,7 @@ var calendar = $('#calendar').fullCalendar({
 	  success: function (arrCalender) {
       	console.log(arrCalender);
       	
-      	var fixedDate = arrCalender.map(function (array) {   
+      	var fixedDate = arrCalender.map(function (array) {     
       	/*
       	switch(colorCNT){    
     	  case 0 : array.backgroundColor = "#D25565"; colorCNT=1; array.allDay=true; break;
