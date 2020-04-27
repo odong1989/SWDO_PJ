@@ -22,10 +22,7 @@
 
 <script>
 function paging(pag){
-	var pagingForm = document.getElementById("pagingForm");
-	var currentPage = document.getElementById("currentPage")
-	currentPage.value = pag;
-	pagingForm.submit();
+	showReplyList(pag);
 }
 
 function editReply(reply_no, reply_content, member_id){
@@ -117,7 +114,6 @@ function showReplyList(currentPage){
 				}else {
 					$(list).each(function(){
 						
-						htmls += '(' + totalCount + '-' + cnt + ')' + '-('+ page.currentPage + '-' + 1 +') *' + page.countPerPage;
 						htmls += '<div id="rid';
 						htmls += this.reply_no;
 						htmls += '">';
@@ -143,9 +139,29 @@ function showReplyList(currentPage){
 		})
 }
 
-function pageLoad(currentPage){
-	
-	
+function pageLoad(result){
+	var pageHtmls ="";
+	var page = result.page;
+
+	if (page.currentPage != 1) {
+		pageHtmls += '<a href="javascript:paging('+ (page.currentPage - 1) + ')" class="pageAtag">◁</a>';
+	}
+
+	for (var i = page.startPageGroup ; i < page.endPageGroup ; i++){
+			if( i == page.currentPage){
+				pageHtmls += '<b class = "nowPage">'+i+'<b>';
+			}
+			if( i != page.currentPage){
+				pageHtmls += '<a href="javascript:paging('+ i +')"class="pageAtag">'+i+'</a>';
+			}
+		}
+
+	if (page.currentPage != page.totalPageCount) {
+		pageHtmls += '<a href="javascript:paging('+ (page.currentPage + 1) +')"class="pageAtag">▷</a>';
+
+	}
+
+	$("#replyPage").html(pageHtmls);
 }
 
 function writeRpy(){
