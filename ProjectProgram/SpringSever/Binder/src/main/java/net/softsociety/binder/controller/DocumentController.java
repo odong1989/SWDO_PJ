@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +30,8 @@ import net.softsociety.binder.dao.NoteDAO;
 import net.softsociety.binder.dao.PhotoDAO;
 import net.softsociety.binder.dao.ReplyDAO;
 import net.softsociety.binder.util.FileService;
+import net.softsociety.binder.util.PageNavigator;
+import net.softsociety.binder.util.ReplyPage;
 import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.GroupJoin;
@@ -56,6 +59,8 @@ public class DocumentController {
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
     private final String noUploadPath = "/img"; ///img/noImage.png
+    private int countPerPage = 10;
+    private int pagePerGroup = 5;
 
     @RequestMapping(value="mainDocument", method=RequestMethod.GET)
 	public String mainDocument(HttpSession session, //Model modelGroupJoinList, Model modelDocumentList, Model modelHashTagList)
@@ -551,8 +556,6 @@ public class DocumentController {
 		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
 		logger.info("-해시태그");
 		model.addAttribute("hashTagList", hashTagList);
-		ArrayList<Reply> replyList = replyDao.selectReply(no);
-		model.addAttribute("replyList", replyList);
 	
 		return "document/readContentDocument";
 	}
@@ -611,11 +614,16 @@ public class DocumentController {
 	}
 	@RequestMapping(value="getReply", method=RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<Reply> getReply(int document_no){
+	public ReplyPage getReply(int document_no, @RequestParam(value="currentPage",defaultValue="1")int currentPage){
 		logger.info("no {}" , document_no);
+		logger.info("page {}",currentPage);
 		logger.info("getReply 시작 {}", document_no);
-		ArrayList<Reply> replyList = replyDao.selectReply(document_no);
+		int totalCount = replyDao.totalCount(document_no);
+		PageNavigator page = new PageNavigator(countPerPage, pagePerGroup, currentPage, totalCount);
+		ArrayList<Reply> replyList = replyDao.selectReply(document_no, page.getStartRecord(), countPerPage);
 		logger.info("getReply 확인 {}", replyList);
-		return replyList;
+		ReplyPage rpage = new ReplyPage(totalCount, replyList, page);
+		logger.info("ReplyPage 값 {}",rpage);
+		return rpage;
 	}
 }

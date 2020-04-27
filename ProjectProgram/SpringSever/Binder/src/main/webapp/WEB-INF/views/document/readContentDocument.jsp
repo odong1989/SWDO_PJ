@@ -116,10 +116,12 @@ function showReplyList(currentPage){
 						html.push("등록된댓글이 없습니다.")
 				}else {
 					$(list).each(function(){
-						htmls += '(' + totalCount + '-' + cnt + ')' + '-('+ page.currentPage + '-' + 1 +') *' + page.countPerPage '
+						
+						htmls += '(' + totalCount + '-' + cnt + ')' + '-('+ page.currentPage + '-' + 1 +') *' + page.countPerPage;
 						htmls += '<div id="rid';
 						htmls += this.reply_no;
 						htmls += '">';
+						
 						htmls += '<div class = "replyMemberId">'
 						htmls += this.member_id;
 						if(this.member_id == loginId){
