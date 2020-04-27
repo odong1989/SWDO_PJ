@@ -58,7 +58,7 @@ public class DocumentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
-    private final String noUploadPath = "/img"; ///img/noImage.png
+    private final String noUploadPath = "/img"; //img/noImage.png
     private int countPerPage = 10;
     private int pagePerGroup = 10;
 
@@ -113,9 +113,6 @@ public class DocumentController {
 		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
 		model.addAttribute("documentList", documentList);
 		
-		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
-		logger.info("-해시태그");
-		model.addAttribute("hashTagList", hashTagList);
 		model.addAttribute("group_no", no);
 		vo.setGroup_no(no);
 		vo.setMember_id(member_id);
@@ -153,34 +150,39 @@ public class DocumentController {
 
 	//신규글을 DB에 추가하는 2개의 메소드 중 1개입니다.(writeDocument.jsp 전용입니다.)
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
-	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model)
+	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model, String[] hashtag)
 	{	
-		logger.info("documentInsert 실행");
+		logger.info("documentInsert 실행 {}",writeDocument);
 		//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
 		//uploadPath는 "/uploadFile"으로 설정되어있다.;
 		
 		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
 		Photo photo = new Photo();
 		writeDocument.setMember_id((String)session.getAttribute("loginId"));
-		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
 
-        //
-	     int count = documentDao.insertCaution(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
-	     logger.info("3.VO를 DB에 INSERT count : {}",count);
-	     if(count ==0) {
+		
+		int count = documentDao.insertDocument(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
+		if(count ==0) {
 	            logger.info("글(document) 등록실패");
-	     }
-	     else if(count ==1) {
+	    }
+	    else if(count ==1) {
 	            logger.info("글(document) 등록성공");
-	     }
-		//게시글(Document) insert 코드 종료.아래에는 사진추가 메소드가 실시.---------------------------------------------------
+	    }
+	    //게시글(Document) insert 코드 종료.
+	    
+	    //writeDocument.getDocument_no()에 방금 작성한 글 번호가 담겨있음
+	    for(int i = 0; i < hashtag.length; i++) {
+	    	System.out.println(hashtag[i]);
+	    }
 	     
-
+	    //아래에는 사진추가 메소드가 실시.---------------------------------------------------
+	    
+	    
         if(upload.isEmpty()) {//case1. 첨부사진이 없는 경우 : 기본사진으로 설정.
 
         	//1.도큐먼트번호, 그룹번호도 같이 부여한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
         	photo.setGroup_no(writeDocument.getGroup_no());//그룹번호 부여
-	    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
+	    	photo.setDocument_no(writeDocument.getDocument_no());//도큐먼트번호 부여
 
 	    	
 	    	String savedfile = FileService.saveFile(upload, noUploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
@@ -227,7 +229,7 @@ public class DocumentController {
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
-		return "/document/mainDocument";
+		return "redirect:/document/group?no=" + writeDocument.getGroup_no();
 	}
 
 
