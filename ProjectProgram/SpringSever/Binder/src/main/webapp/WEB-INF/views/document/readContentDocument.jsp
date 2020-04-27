@@ -28,7 +28,7 @@ function paging(pag){
 function editReply(reply_no, reply_content, member_id){
 	var htmls = "";
 
-	htmls += '<span id="replyEditId">';
+	htmls += '<div class = "editDiv"><span id="replyEditId" >';
 
 	htmls += member_id;
 	
@@ -38,15 +38,14 @@ function editReply(reply_no, reply_content, member_id){
 
 	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소</a>';
 
-	htmls += '<div>';
+	htmls += '</div><div>';
 		
-	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
+	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'" autofocus>';
+
+	htmls += '<p id = "editPtag">글을 수정하시려면 저장을 눌러주세요</p>';
 
 	htmls += '</div>';
 	
-
-
-
 
 	$('#rid' + reply_no).replaceWith(htmls);
 
