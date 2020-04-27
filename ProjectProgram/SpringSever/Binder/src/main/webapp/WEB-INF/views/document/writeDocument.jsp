@@ -140,7 +140,18 @@
 						<td> <input type="text" placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
 					</tr>
 				   	<tr>	
-				   		<td colspan="2"> <input type="text" placeholder="#해시태그를 입력해주세요" style="width:430px;"> </td>
+				   		<td colspan="2">
+				   			<div id="hashbox">
+				   				<input type="text" name="hashtag" placeholder="#hash" style="width:100px;">&nbsp;
+				   			</div>
+				   			<div id="hashbox2">
+				   			</div>
+				   			<div id="hashman">
+				   				<span id="addHash">[+]</span>
+				   			</div>
+				   			<div id="hashclear">
+				   			</div>
+				   		</td>
 				   	</tr>       
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
