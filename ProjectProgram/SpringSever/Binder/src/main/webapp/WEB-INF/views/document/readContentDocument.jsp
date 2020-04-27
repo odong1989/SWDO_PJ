@@ -118,13 +118,15 @@ function showReplyList(currentPage){
 						htmls += this.reply_no;
 						htmls += '">';
 						
-						htmls += '<div class = "replyMemberId">'
+						htmls += '<div class = "replyMemberId">';
+						htmls += '<span class ="replyId">';
 						htmls += this.member_id;
+						htmls += '</span>';
 						if(this.member_id == loginId){
 						htmls += '<a href="javascript:editReply('+ this.reply_no  + ', \'' + this.reply_content + '\', \'' + this.member_id  + '\')" class = "replyUpdate">수정</a>';
 						htmls += '<a href="javascript:deleteReply(' + this.reply_no + '\)" class = "replyDelete">삭제</a>';
 						}
-						htmls += '</div>'
+						htmls += '</div>';
 						htmls += '<div class = "replyContent">';
 						htmls += this.reply_content;
 						htmls += '</div>';
@@ -142,30 +144,41 @@ function showReplyList(currentPage){
 function pageLoad(result){
 	var pageHtmls ="";
 	var page = result.page;
-
+	pageHtmls += '<div class = "pagingDiv">';
+	if(page.currentPage > page.pagePerGroup) {
+		pageHtmls += '<a href="javascript:paging('+ (page.currentPage - page.pagePerGroup) + ')" class="atag">◀</a>'
+	}
 	if (page.currentPage != 1) {
-		pageHtmls += '<a href="javascript:paging('+ (page.currentPage - 1) + ')" class="pageAtag">◁</a>';
+		pageHtmls += '<a href="javascript:paging('+ (page.currentPage - 1) + ')">◁</a>';
 	}
 
-	for (var i = page.startPageGroup ; i < page.endPageGroup ; i++){
+	for (var i = page.startPageGroup ; i <= page.endPageGroup ; i++){
 			if( i == page.currentPage){
-				pageHtmls += '<b class = "nowPage">'+i+'<b>';
+				pageHtmls += '<b class = "replyNowPage">'+i+'</b>';
 			}
 			if( i != page.currentPage){
-				pageHtmls += '<a href="javascript:paging('+ i +')"class="pageAtag">'+i+'</a>';
+				pageHtmls += '<a href="javascript:paging('+ i +')"class="replyPageAtag">'+i+'</a>';
 			}
 		}
 
 	if (page.currentPage != page.totalPageCount) {
-		pageHtmls += '<a href="javascript:paging('+ (page.currentPage + 1) +')"class="pageAtag">▷</a>';
+		pageHtmls += '<a href="javascript:paging('+ (page.currentPage + 1) +')">▷</a>';
 
 	}
+	if(page.currentPage < (
+			page.totalPageCount - (page.totalPageCount % page.pagePerGroup == 0 ?
+					  page.pagePerGroup : page.totalPageCount%page.pagePerGroup)
+					  + 1)) {
+		pageHtmls += '<a href="javascript:paging('+ (page.currentPage + page.pagePerGroup) + ')" class="atag">▶</a>'
+	}
+
+	pageHtmls += '</div>';
 
 	$("#replyPage").html(pageHtmls);
 }
 
 function writeRpy(){
-	var reply_content = $('#reply_content').val();
+	var reply_content = $('#replyInput').val();
 	var document_no = $('#document_no').val();
 	var member_id = $('#member_id').val();
 	var formData = {
@@ -184,8 +197,9 @@ function writeRpy(){
 		dataType : "json",
 		success : function(result) {
 			if(result){
-				$("#reply_content").val("");
+				$("#replyInput").val("");
 				showReplyList();
+				alert("입력성공");
 				}	
 				else{
 				alert("실패")
@@ -199,19 +213,17 @@ function writeRpy(){
 }
 
 
-
 $(function(){
 	
 	showReplyList();
 	
-
-	
-	$("#reply_content").keyup(function(event) {
+	$('#replyInput').keyup(function(event) {
 		if (event.keyCode == 13) {
 			writeRpy();
 
 		}
 	})
+	
 	$("#btn").click(function(){
 			writeRpy();
 		})	
@@ -221,24 +233,24 @@ $(function(){
 		<div id="right-body">
 			<table id="document-body">
 				<table class="DocData">		
-					<tr>	
-						<td>${document.document_no }번 글</td>
-					</tr>	
-			     	<tr>
-				     	<td style="text-align:center;vertical-align:middle;"> 장소 : ${document.document_destination } </td>
-			     	    <td colspan="2"> <p id='currentDate' style="display:inline;"></p> </td>
-				    </tr>
 				    <tr style="border-bottom: 1px solid #444444;">
 						<td style="text-align:center;vertical-align:middle;">여행 일정</td>
 				        <td> <p id='startDate' style="display:inline;"/></p> ${document.document_regdate }부터  </td>
 				   		<td> <p id='endDate'  style="display:inline;"/></p> ${document.document_finalday }까지   </td>
 					</tr>
 				    <tr>
- 						<td rowspan="3" style="text-align:center;vertical-align:middle;">${document.document_content }</td>
-						<td rowspan="2" style="vertical-align:middle;"> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />"
-						      width="250" height="250" alt="첨부사진 미리보기" ></td>
-				    	<td> <p id="content" style="display:inline;"/> </p> </td> 
+ 
+						<td rowspan="3" style="vertical-align:middle;"> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />"
+						      width="250" height="250" alt="첨부사진 미리보기" >
+						      <p>장소 : ${document.document_destination }</p>
+						</td>
+				    	<td rowspan="3">
+				   				${document.document_content }
+				   	</td> 
 				   	</tr>     
+				   	<tr>
+				   	
+				   	</tr>
 					<tr>
 						<td> <p id='place' style="display:inline;"/></p></td>
 					</tr>
@@ -260,12 +272,12 @@ $(function(){
 						<input type="hidden" id="loginId" value="${sessionScope.loginId}">
 						<input type="hidden" id="document_no" name = "document_no" value="${document.document_no }">
 						<input type="hidden" id="member_id" value="${loginId }" >
-						<input type="text" id="reply_content">
-						<input type="button" id="btn" value="댓글등록">
+						<input type="text" id="replyInput">
+						<p id="replyP">댓글을 작성하시려면 Enter를 눌러주세요</p>
 					
           	 	<div id = "replyTable"></div>
           	 	<div id="replyPage"></div>
-          	 </div>
+          </div>
        </div>
 	
 </body>
