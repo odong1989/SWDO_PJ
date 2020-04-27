@@ -24,7 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 
 		if(loginId == null) {
-			response.sendRedirect(request.getContextPath() + "/");
+			response.sendRedirect(request.getContextPath() + "/binder/");
 			return false;
 		}
 		

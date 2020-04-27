@@ -12,7 +12,6 @@ public interface DocumentMapper {
 
 	public ArrayList<HashMap<String, Object>> selectDocuments(int group_no);
 	
-	public int insertDocument(Document caution);
 	public int insertCaution(Document caution);
 	public int deleteCaution(int group_no);
 	public Document selectCaution(int group_no);

@@ -39,7 +39,7 @@
 						<td colspan="2" class="document-one">
 							<div class="document-content">
 								<p>${dlist.DOCUMENT_REGDATE }</p>
-								<p class="p-hash">${dlist.HASH_TAG }</p>
+								<p class="p-hash">#해시 table join 점검하세요</p>
 							</div>
 						</td>
 					</tr>

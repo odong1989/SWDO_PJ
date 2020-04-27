@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -62,30 +60,6 @@ function Withdrawal(){
         alert("회원탈퇴가 취소되었습니다.");
     }
 }
-
-//jQuery 시작
-	$(function() {
-		
-		//해시태그 추가하기
-		$(document).on('click','#addHash',function() {
-			//추가된 input이 없을 때만 실행
-			if ($('#hashbox2 input').size() == 0) {
-				minusbtn = '<span id="removeHash">[-]</span>';
-				$('#hashman').append(minusbtn);
-			}
-			box = '<input type="text" name="hashtag" placeholder="#hash" style="width:100px;"> ';
-			$('#hashbox2').append(box);
-		});
-		//해시태그 제거하기
-		$(document).on('click','#removeHash',function() {
-			//input이 하나 남았을 때는 -버튼도 같이 제거
-			if ($('#hashbox2 input').size() == 1) {
-				$('#removeHash').remove();
-			}
-			//끝에서부터 input 제거
-			$('#hashbox2 input')[$('#hashbox2 input').size()-1].remove()
-		});
-	});
 </script>
     <link href="<c:url value='/css/basic.css' />" rel="stylesheet">
 </head>

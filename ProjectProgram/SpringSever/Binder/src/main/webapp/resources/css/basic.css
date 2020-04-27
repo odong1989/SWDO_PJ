@@ -274,22 +274,4 @@ h6{
 	font-size : 90%;
 	color : #eee;
 }
-
-div#hashbox {
-	float:left;
-}
-div#hashbox2 {
-	float:left;
-}
-div#hashman {
-	float:left;
-}
-div#hashclear {
-	clear: both;
-}
-#addHash:hover {
-	cursor: pointer;
-}
-#removeHash:hover {
-	cursor: pointer;
 }

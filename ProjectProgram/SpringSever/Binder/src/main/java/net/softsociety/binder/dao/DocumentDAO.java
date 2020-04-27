@@ -55,19 +55,7 @@ public class DocumentDAO {
 		return documentList;	
 	}
 
-	//글작성
-	public int insertDocument(Document document) {
-		int cau = 0;
-		try {
-			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
-			cau = mapper.insertDocument(document);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return cau;
-	}
 	
-	//공지작성
 	public int insertCaution(Document caution) {
 		logger.info("DocumentDAO.java - insertCaution({})", caution);
 		int cau = 0;
@@ -75,6 +63,7 @@ public class DocumentDAO {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
 			cau = mapper.insertCaution(caution);
 		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 		logger.info("DocumentDAO.java - insertCaution 메소드 종료 ({})", cau);
