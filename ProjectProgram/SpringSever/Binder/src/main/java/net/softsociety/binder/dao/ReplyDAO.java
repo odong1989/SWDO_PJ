@@ -2,6 +2,7 @@ package net.softsociety.binder.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import org.slf4j.Logger;
@@ -21,12 +22,14 @@ public class ReplyDAO {
 	@Autowired
 	private SqlSession session;
 	
-	public ArrayList<Reply> selectReply(int no) {
+	public ArrayList<Reply> selectReply(int no, int startRecord, int countPerPage) {
 		logger.info("댓글기능 불러오기 {}", no);
+		
 		ArrayList<Reply> rep = null;
 		try {
+			RowBounds rb = new RowBounds(startRecord, countPerPage);
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
-			rep = mapper.selectReply(no);
+			rep = mapper.selectReply(no,rb);
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -70,5 +73,17 @@ public class ReplyDAO {
 			e.printStackTrace();
 		}
 		return chk;
+	}
+
+	public int totalCount(int document_no) {
+		int cnt = 0;
+		try {
+			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+			cnt = mapper.totalCount(document_no);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return cnt;
 	}
 }
