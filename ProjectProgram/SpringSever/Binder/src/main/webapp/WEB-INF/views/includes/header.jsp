@@ -16,7 +16,7 @@
 	<link href="<c:url value='/css/max1080.css' />" rel="stylesheet" media="screen and (min-width:950px) and (max-width:1080px)">
 	<link href="<c:url value='/css/max950.css' />" rel="stylesheet" media="screen and (max-width:950px)">
     <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
-    <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
+    <link href="<c:url value='/css/reply.css' />" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >

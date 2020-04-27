@@ -28,17 +28,22 @@ function paging(pag){
 function editReply(reply_no, reply_content, member_id){
 	var htmls = "";
 
-	htmls += '<div>';
+	htmls += '<span id="replyEditId">';
 
 	htmls += member_id;
 	
-	htmls += '</div>';
-		
-	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
+	htmls += '</span>';
 	
 	htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
 
-	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소<a>';
+	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소</a>';
+
+	htmls += '<div>';
+		
+	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
+
+	htmls += '</div>';
+	
 
 
 
@@ -268,7 +273,7 @@ $(function(){
           </table>
 	
 		<div class = "reply">
-          	 	<h6>Reply</h6>
+          	 	<h6 id="replyTitle">Reply</h6>
 					
 						<input type="hidden" id="loginId" value="${sessionScope.loginId}">
 						<input type="hidden" id="document_no" name = "document_no" value="${document.document_no }">
