@@ -70,7 +70,7 @@
 											<!-- invite start -->
 						<div class="Management">
 							<div id="app2">
-									<img src= "<c:url value='/img/InviteMember.png'/>" title="초대코드보내기" id="show-modal2" @click="openModal">
+									<img src= "<c:url value='/img/invite.png'/>" title="초대코드보내기" id="show-modal2" @click="openModal">
 								  
 								  <modal v-if="showModal2" @close="closeModal">
 								<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 

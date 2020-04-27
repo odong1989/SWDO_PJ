@@ -78,12 +78,7 @@ body {
     background-color:#EEE;
     padding-top: 50px;
 }
-#gaibu {
-    display:flex;
-    padding:0 400px;
-    margin: 0 auto;
-    height:inherit;
-}
+
 
 #gaibu-top {
     position: fixed;
@@ -97,21 +92,11 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-#gaibu-top-left{
-    margin-top:10px;
-    margin-left:400px;
-    height:50px;
-}
+
 #gaibu-top-middle{
     color:black;
 }
-#gaibu-top-right{
-    text-align:right;
-    margin-top:15px;
-    margin-right:400px;
-    height:50px;
-    width:100%;
-}
+
 
 #menu{
     margin: 20px 20px 0 0;
@@ -132,6 +117,7 @@ body {
     background-color: white;
     padding: 10px;
     margin: 20px;
+    width: 153px;
 }
 .menu-group-button-left {
     background-color: inherit;
@@ -156,11 +142,7 @@ body {
     float:right;
     vertical-align: bottom;
 } */
-#document-body {
-    width:97%;
-    height:inherit;
-    margin: 0 10px 20px 10px
-}
+
 #right-body {
     margin-top:5px;
     float:left;

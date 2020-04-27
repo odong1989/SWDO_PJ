@@ -8,8 +8,15 @@
 <meta name="viewport" contents="width=device-width, initial-scale=1.0">
 <title>${group_name}</title>
 
-	<link href="<c:url value='/css/basic.css?sfadgf=2' />" rel="stylesheet">
-    <link href="<c:url value='/css/modal.css?sfsfaf=2' />" rel="stylesheet">
+	<link href="<c:url value='/css/basic.css' />" rel="stylesheet">
+	<link href="<c:url value='/css/min1660.css' />" rel="stylesheet" media="screen and (min-width:1660px)">
+	<link href="<c:url value='/css/max1660.css' />" rel="stylesheet" media="screen and (min-width:1385px) and (max-width:1660px)">
+	<link href="<c:url value='/css/max1385.css' />" rel="stylesheet" media="screen and (min-width:1225px) and (max-width:1385px)">
+	<link href="<c:url value='/css/max1225.css' />" rel="stylesheet" media="screen and (min-width:1080px) and (max-width:1225px)">
+	<link href="<c:url value='/css/max1080.css' />" rel="stylesheet" media="screen and (min-width:950px) and (max-width:1080px)">
+	<link href="<c:url value='/css/max950.css' />" rel="stylesheet" media="screen and (max-width:950px)">
+    <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
+    <link href="<c:url value='/css/modal.css' />" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value='/vendor/css/fullcalendar.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/select2.min.css'/>" >
     <link rel="stylesheet" href="<c:url value='/vendor/css/bootstrap-datetimepicker.min.css'/>" >
