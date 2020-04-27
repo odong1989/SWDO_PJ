@@ -15,7 +15,7 @@
 				alert(err);
 			}
 
-			if ($("#loginCheckHidden").val() != null) {
+			if ($("#loginCheckHidden").val().length != 0) {
 				$(location).attr("href","<c:url value='/document/mainDocument' />");
 			}
 		});

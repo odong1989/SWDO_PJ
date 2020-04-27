@@ -35,11 +35,7 @@
 	<interceptors>
 		<interceptor>				
 			
-			<mapping path="/**"/>
-			<exclude-mapping path="/"/>
-			<exclude-mapping path="/img/**"/>
-			<exclude-mapping path="/member/memberLoginExe"/>
-			<exclude-mapping path="/loginAndJoin/**"/>
+			<mapping path="/member/memberMypage/**"/>
 			
 			<beans:ref bean="loginInterceptor"/><!--내가 적용하고픈 인터셉터 파일의 id명  -->
 		</interceptor>
