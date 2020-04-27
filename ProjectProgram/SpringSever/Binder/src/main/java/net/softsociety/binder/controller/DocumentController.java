@@ -60,7 +60,7 @@ public class DocumentController {
     private final String uploadPath = "/uploadFile";
     private final String noUploadPath = "/img"; ///img/noImage.png
     private int countPerPage = 10;
-    private int pagePerGroup = 5;
+    private int pagePerGroup = 10;
 
     @RequestMapping(value="mainDocument", method=RequestMethod.GET)
 	public String mainDocument(HttpSession session, //Model modelGroupJoinList, Model modelDocumentList, Model modelHashTagList)

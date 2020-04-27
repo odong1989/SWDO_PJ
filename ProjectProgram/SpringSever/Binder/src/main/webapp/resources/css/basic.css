@@ -208,14 +208,20 @@ body {
 	margin-top:15px;
 }
 .replyContent{
-	margin: 5px 10;
-	padding : 10px;
-	width: auto;
-	height:3em;
-	background-color: #dcdcdc;
-	color: black;
+    height: 3em;
+    background-color: #dcdcdc;
+    color: black;
+    width: 70%;
+    border-radius: 25px;
+    padding-left: 1em;
+    vertical-align: bottom;
+    padding-top: 14px;
 	
 }
+#replyInput:focus {
+	outline : none;
+}
+
 a.replyUpdate{
 	margin-left: 5px;
 	margin-right: 5px;
@@ -242,4 +248,30 @@ h6{
 	font-size : x-large;
 	color:#1DD1AD;
 	margin: 5px;
+}
+#replyP{
+	font-size : 70%;
+	color : gray;
+}
+#replyInput{
+    width: 450px;
+    border-radius: 20px;
+    height: 2em;
+    padding-left: 1em;
+}
+.replyId{
+	font-size: 130%;
+}
+.pagingDiv{
+	text-align : center;
+    margin-top: 1em;
+    font-size: 120%;
+}
+.replyNowPage{
+	font-weight: bold;
+}
+.replyPageAtag{
+	font-size : 90%;
+	color : #eee;
+}
 }
