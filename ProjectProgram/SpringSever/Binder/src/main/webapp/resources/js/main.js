@@ -2,9 +2,7 @@ var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 
 var groupNum =groupNumber.value;
-var colorCNT=0;
-//alert("groupNum : "+ groupNum); //개인적 확인용
-//console.log(groupNum);
+var colorCNT=0;						//로드된 데이터들이 각자의 컬러값을 갖도록 설정.
 
 function getDisplayEventDate(event) {
 
@@ -20,6 +18,7 @@ function getDisplayEventDate(event) {
 
   return displayEventDate;
 }
+
 
 function filtering(event) {
   var show_username = true;
@@ -42,6 +41,7 @@ function filtering(event) {
 
   return show_username && show_type;
 }
+
 
 function calDateWhenResize(event) {
 
@@ -87,12 +87,10 @@ function calDateWhenDragnDrop(event) {
 
   //all day가 아님
   else if (!event.allDay) {
-    //newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-    //newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD');
+    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
+    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
   }
-
+  
   return newDates;
 }
 
@@ -167,8 +165,10 @@ var calendar = $('#calendar').fullCalendar({
 	  dataType:"json",
 	  success: function (arrCalender) {
       	console.log(arrCalender);
-      var fixedDate = arrCalender.map(function (array) {   
-    	  switch(colorCNT){    
+      	
+      	var fixedDate = arrCalender.map(function (array) {   
+      	/*
+      	switch(colorCNT){    
     	  case 0 : array.backgroundColor = "#D25565"; colorCNT=1; array.allDay=true; break;
     	  case 1 : array.backgroundColor = "#9775fa"; colorCNT=2; array.allDay=true; break;
     	  case 2 : array.backgroundColor = "#ffa94d"; colorCNT=3; array.allDay=true; break;
@@ -180,14 +180,12 @@ var calendar = $('#calendar').fullCalendar({
     	  case 8 : array.backgroundColor = "#ffa94d"; colorCNT=9; array.allDay=true; break;
     	  case 9 : array.backgroundColor = "#495057"; colorCNT=0; array.allDay=true; break;
     	  }
-          
+        */
           if (array.allDay && array.start !== array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
             array.end = moment(array.end).add(1, 'days');
-
           }
-        //  alert("회원님의 일정을 로딩하고 있습니다.");
-         // alert("fixedDate"+fixedDate);
+
           return array;
         })
         callback(fixedDate);
@@ -289,21 +287,18 @@ var calendar = $('#calendar').fullCalendar({
         hours: today.hours(),
         minute: today.minutes()
       });
-    //startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
-      startDate = moment(startDate).format('YYYY-MM-DD');
+      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+
       endDate = moment(endDate).subtract(1, 'days');
 
       endDate.set({
         hours: today.hours() + 1,
         minute: today.minutes()
       });
-   //endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
-     endDate = moment(endDate).format('YYYY-MM-DD');
+    endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
     } else {
-    //startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
-    //endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
-      startDate = moment(startDate).format('YYYY-MM-DD');
-      endDate = moment(endDate).format('YYYY-MM-DD');
+    startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+    endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
     }
 
     //날짜 클릭시 카테고리 선택메뉴
@@ -350,13 +345,12 @@ var calendar = $('#calendar').fullCalendar({
   },
   eventLimitClick: 'week', //popover
   navLinks: true,
-  //defaultDate: moment('2019-05'), //실제 사용시 삭제
-  //timeFormat: 'HH:mm',
+  timeFormat: 'HH:mm',
   defaultTimedEventDuration: '01:00:00',
   editable: true,
   minTime: '00:00:00',
   maxTime: '24:00:00',
-  //slotLabelFormat: 'HH:mm',
+  slotLabelFormat: 'HH:mm',
   weekends: true,
   nowIndicator: true,
   dayPopoverFormat: 'MM/DD dddd',

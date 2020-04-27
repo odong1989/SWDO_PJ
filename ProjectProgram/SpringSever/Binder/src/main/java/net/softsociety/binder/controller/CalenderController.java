@@ -1,6 +1,8 @@
 package net.softsociety.binder.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import net.softsociety.binder.dao.DocumentDAO;
 import net.softsociety.binder.dao.GroupDAO;
@@ -88,8 +92,34 @@ public class CalenderController {
 		logger.info("calenderMain -GroupJoin groupCal : {}",groupCal);
 		
 		ArrayList<HashMap<String,Object>> documentList = null;
-		documentList = documentDao.selectDocumentsForCalendar(groupCal);		
+		documentList = documentDao.selectDocumentsForCalendar(groupCal);
+
+		/*
+		//오늘을 기준으로 과거의 일정들이면 회색, 미래의 일정이면 초록색식으로 색을 구분하여 지정한다.
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd hh24:mi");	
+		Date toDay = new Date (); // 오늘 날짜를 받기 위한 형식.
+		Date compareDay = null;
+		String from=null;
 		
+		//배경색 넣기 조건문
+		for(int i = 0; i < documentList.size(); i++) {
+			//글 등록일과 오늘 날짜 비교
+				dateFormat.format(toDay);
+				from = (String) documentList.get(i).get("end");
+				try {
+					compareDay = dateFormat.parse(from);
+				} catch (java.text.ParseException e) {
+					e.printStackTrace();
+				}
+			int compare = compareDay.compareTo(toDay);
+			if ( compare > 0 ) { //현재일자보다 과거인 경우(오늘보다 db날짜값이 같거나 작음)
+				documentList.get(i).put("backgroundColor", "#eee");//회색계열
+			}
+			else {//현재일자보다 과거인 경우(오늘보다 db날짜값이 더 큼) 
+				documentList.get(i).put("backgroundColor", "#aae");//하늘색계열
+			}
+		}
+		*/
 		logger.info("getUserSchedule 메소드 - documentList : {}",documentList);
 		return documentList;	
 	}
@@ -98,7 +128,7 @@ public class CalenderController {
 	@RequestMapping(value="insertCaution", method=RequestMethod.GET)
 	@ResponseBody
 	public String insertCautionC(Document vo, String caution, HttpSession session, int gno) {
-		logger.info("insertCautionC {}",caution);
+		logger.info("insertCaution {}",caution);
 		String member_id = (String) session.getAttribute("loginId");
 		vo.setMember_id(member_id);
 		vo.setGroup_no(gno);

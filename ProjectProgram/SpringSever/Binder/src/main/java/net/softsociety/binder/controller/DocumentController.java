@@ -51,8 +51,9 @@ public class DocumentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
-	
-	@RequestMapping(value="mainDocument", method=RequestMethod.GET)
+    private final String noUploadPath = "/img"; ///img/noImage.png
+
+    @RequestMapping(value="mainDocument", method=RequestMethod.GET)
 	public String mainDocument(HttpSession session, //Model modelGroupJoinList, Model modelDocumentList, Model modelHashTagList)
 			Model model)
 	{	
@@ -180,9 +181,11 @@ public class DocumentController {
         	photo.setGroup_no(writeDocument.getGroup_no());//그룹번호 부여
 	    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
 
-	    	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
-	        photo.setPhoto_savedfile("noImageforBinderBasicImage.png"); //DB가 사용한 파일의 별명
-	        photo.setPhoto_originfile("noImageforBinderBasicImage.png");//원본 파일명
+	    	
+	    	String savedfile = FileService.saveFile(upload, noUploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
+	    										 //	   	              저장경로,														
+	    	photo.setPhoto_savedfile("noImage.png"); //DB가 사용한 파일의 별명
+	        photo.setPhoto_originfile("noImage.png");//원본 파일명
         	
         
         }

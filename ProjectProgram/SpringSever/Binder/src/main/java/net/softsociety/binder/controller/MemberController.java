@@ -33,13 +33,9 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	//0.dao선언
-	@Autowired
-	MemberDAO memdao;
-	@Autowired
-	GroupDAO groupdao;
-	@Autowired
-	NoteDAO noteDao;
-	
+	@Autowired MemberDAO memdao;
+	@Autowired NoteDAO noteDao;
+	@Autowired GroupDAO groupDao;
 	//1.회원가입================================================================================
 	//1.1[이동] 회원가입폼으로 이동.
 	@RequestMapping(value="memberJoinForm", method=RequestMethod.GET)
@@ -198,7 +194,7 @@ public class MemberController {
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
 		}
-		ArrayList<Group> groupJoinList = groupdao.selectGroupJoin(member_id);
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
@@ -210,6 +206,21 @@ public class MemberController {
 	@RequestMapping(value="mypageUpdateProfile", method=RequestMethod.GET)
 	public String mypageUpdateProfile(HttpSession session,Model model) {
 		logger.info("회원정보 수정페이지로 이동");
+		
+		//모든 페이지에 있어야 하는 출력데이터
+		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
+		
+		
 		logger.info("memberUpdateExe- 현 로그인 인물 (session세션)",session.getAttribute("loginId"));
 		Member MemberData = memdao.memberSelectOne((String)session.getAttribute("loginId"));
 		model.addAttribute("MemberData", MemberData);

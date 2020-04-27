@@ -135,30 +135,9 @@
   
   		<!-- 패널부분을 삭제하면 풀 캘린더에 일정이 나오지 않더라. 아직은 아래의 패널쪽 div들은 지우지 말것. -->
         <div class="panel panel-default" style="display:none;">
-            <div class="panel-heading">
-                <h3 class="panel-title">필터</h3>
-            </div>
-            <div class="panel-body">
-                <div class="col-lg-6">
-                    <label for="calendar_view">등록자별</label>
-                    <div class="input-group">
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="정연"
-                                checked>정연</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="다현"
-                                checked>다현</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나"
-                                checked>사나</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="나연"
-                                checked>나연</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="지효"
-                                checked>지효</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.filter panel -->
-    </div>
-    <!-- /.container -->
+          <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나" checked>사나</label>
+		</div>
+	    <!-- /.container -->
     
     <script src="<c:url value='/vendor/js/moment.min.js' />"></script>
     <script src="<c:url value='/vendor/js/jquery.min.js' />"></script>

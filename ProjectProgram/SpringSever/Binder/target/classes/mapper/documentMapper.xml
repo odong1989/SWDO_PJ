@@ -51,8 +51,8 @@
 		,#{document_content}
 		,1
 		,#{document_destination}
-		,to_date(#{document_regdate}, 'yyyy-mm-dd')
-		,to_date(#{document_finalday}, 'yyyy-mm-dd')
+		,to_date(#{document_regdate}, 'yyyy-mm-dd hh24:mi')
+		,to_date(#{document_finalday}, 'yyyy-mm-dd hh24:mi')
 		)
 	</insert>
 	
@@ -71,20 +71,17 @@
 	<select id="selectDocumentsForCalendar" parameterType="int" resultType="hashmap">
 	 	select
 	 		(select '사나' from dual)									"username"
-	 		, (select 'true' from dual)								"allDay"
 		    , bnd_document.document_content 						"title"
-		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd')  "start"
-		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd') "end"
-		    , bnd_document.document_content 					    "backgroundColor"
-		    , bnd_document.document_content 					    "allDay"
+		    , to_char(bnd_document.document_regdate,  'yyyy-mm-dd hh:mi')  "start"
+		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd hh:mi')  "end"
 		    , bnd_document.document_no								"document_no"								
-		    , bnd_photo.photo_savedfile								"photo_savedfile"								
-		    , bnd_photo.photo_originfile							"photo_originfile"								
+			, bnd_photo.photo_savedfile								"photo_savedfile" 						
+			, bnd_photo.photo_originfile							"photo_originfile"						
 		from
-		    bnd_document, bnd_photo
+		    bnd_document , bnd_photo
 		where
 		    bnd_document.group_no = #{group_no}
-		and
+	 	and
 		    bnd_document.document_no = bnd_photo.document_no
 	</select> 
 
@@ -105,8 +102,8 @@
 	 		bnd_document.document_no
 		    , bnd_document.document_content
 		    , bnd_document.member_id 							
-		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd')  document_regdate
-		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd') document_finalday
+		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd hh:mi')  document_regdate
+		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd hh:mi') document_finalday
 		    , bnd_document.document_destination 					
 			, bnd_photo.photo_savedfile 							
 		from
