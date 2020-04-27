@@ -76,7 +76,8 @@
 		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd hh:mi')  "end"
 		    , bnd_document.document_no								"document_no"								
 			, bnd_photo.photo_savedfile								"photo_savedfile" 						
-			, bnd_photo.photo_originfile							"photo_originfile"						
+			, bnd_photo.photo_originfile							"photo_originfile"	
+			, bnd_document.document_content                         "backgroundColor"					
 		from
 		    bnd_document , bnd_photo
 		where

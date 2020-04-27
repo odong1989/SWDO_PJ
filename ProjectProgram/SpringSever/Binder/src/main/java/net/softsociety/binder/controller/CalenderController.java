@@ -93,7 +93,8 @@ public class CalenderController {
 		
 		ArrayList<HashMap<String,Object>> documentList = null;
 		documentList = documentDao.selectDocumentsForCalendar(groupCal);
-
+		logger.info("getUserSchedule 메소드 - documentList : {}",documentList);
+		
 		/*
 		//오늘을 기준으로 과거의 일정들이면 회색, 미래의 일정이면 초록색식으로 색을 구분하여 지정한다.
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd hh24:mi");	
@@ -102,10 +103,10 @@ public class CalenderController {
 		String from=null;
 		
 		//배경색 넣기 조건문
-		for(int i = 0; i < documentList.size(); i++) {
+		for(int cnt = 0; cnt < documentList.size(); cnt++) {
 			//글 등록일과 오늘 날짜 비교
 				dateFormat.format(toDay);
-				from = (String) documentList.get(i).get("end");
+				from = (String) documentList.get(cnt).get("end");
 				try {
 					compareDay = dateFormat.parse(from);
 				} catch (java.text.ParseException e) {
@@ -113,14 +114,15 @@ public class CalenderController {
 				}
 			int compare = compareDay.compareTo(toDay);
 			if ( compare > 0 ) { //현재일자보다 과거인 경우(오늘보다 db날짜값이 같거나 작음)
-				documentList.get(i).put("backgroundColor", "#eee");//회색계열
+				documentList.get(cnt).put("backgroundColor", "#eee");//회색계열
 			}
 			else {//현재일자보다 과거인 경우(오늘보다 db날짜값이 더 큼) 
-				documentList.get(i).put("backgroundColor", "#aae");//하늘색계열
+				documentList.get(cnt).put("backgroundColor", "#aae");//하늘색계열
 			}
 		}
+		logger.info("getUserSchedule 메소드 - 바탕색 조건문 실시한 documentList : {}",documentList);
 		*/
-		logger.info("getUserSchedule 메소드 - documentList : {}",documentList);
+		
 		return documentList;	
 	}
 	
