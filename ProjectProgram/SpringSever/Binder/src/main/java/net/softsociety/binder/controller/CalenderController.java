@@ -118,7 +118,7 @@ public class CalenderController {
 				}
 			int compare = compareDay.compareTo(toDay);
 			if ( compare < 0 ) { //현재일자보다 과거인 경우(오늘보다 db날짜값이 같거나 작음)
-				documentList.get(i).put("backgroundColor", "#eee");//회색계열
+				documentList.get(i).put("backgroundColor", "#919090");//회색계열
 				logger.info("getUserSchedule 메소드 - from {} is #eee",i);
 			}
 			else {//현재일자보다 과거인 경우(오늘보다 db날짜값이 더 큼) 

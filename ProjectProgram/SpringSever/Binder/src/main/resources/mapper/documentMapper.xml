@@ -132,8 +132,8 @@
 		    bnd_document
 		set
     	    bnd_document.document_content = #{document_content}
-    	   ,bnd_document.document_regdate = #{document_regdate}
-    	   ,bnd_document.document_finalday = #{document_finalday}
+    	   ,bnd_document.document_regdate = to_date(#{document_regdate}, 'yyyy-mm-dd hh24:mi')
+    	   ,bnd_document.document_finalday = to_date(#{document_finalday}, 'yyyy-mm-dd hh24:mi')
       	   ,bnd_document.document_destination = #{document_destination}
 		where
 		    bnd_document.member_id = #{member_id}

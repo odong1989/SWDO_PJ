@@ -1,8 +1,6 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
-
 var groupNum =groupNumber.value;
-var colorCNT=0;						//로드된 데이터들이 각자의 컬러값을 갖도록 설정.
 
 function getDisplayEventDate(event) {
 
@@ -166,22 +164,9 @@ var calendar = $('#calendar').fullCalendar({
 	  success: function (arrCalender) {
       	console.log(arrCalender);
       	
-      	var fixedDate = arrCalender.map(function (array) {     
-      	/*
-      	switch(colorCNT){    
-    	  case 0 : array.backgroundColor = "#D25565"; colorCNT=1; array.allDay=true; break;
-    	  case 1 : array.backgroundColor = "#9775fa"; colorCNT=2; array.allDay=true; break;
-    	  case 2 : array.backgroundColor = "#ffa94d"; colorCNT=3; array.allDay=true; break;
-    	  case 3 : array.backgroundColor = "#74c0fc"; colorCNT=4; array.allDay=true; break;
-    	  case 4 : array.backgroundColor = "#f06595"; colorCNT=5; array.allDay=true; break;
-    	  case 5 : array.backgroundColor = "#63e6be"; colorCNT=6; array.allDay=true; break;
-    	  case 6 : array.backgroundColor = "#a9e34b"; colorCNT=7; array.allDay=true; break;
-    	  case 7 : array.backgroundColor = "#4d638c"; colorCNT=8; array.allDay=true; break;
-    	  case 8 : array.backgroundColor = "#ffa94d"; colorCNT=9; array.allDay=true; break;
-    	  case 9 : array.backgroundColor = "#495057"; colorCNT=0; array.allDay=true; break;
-    	  }
-        */
-          if (array.allDay && array.start !== array.end) {
+      	var fixedDate = arrCalender.map(function (array) {
+         // if (array.allDay && array.start !== array.end) {
+          if (array.start !== array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
             array.end = moment(array.end).add(1, 'days');
           }
