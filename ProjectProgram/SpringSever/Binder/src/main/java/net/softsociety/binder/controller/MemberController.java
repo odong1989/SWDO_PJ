@@ -17,13 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import net.softsociety.binder.dao.GroupDAO;
 import net.softsociety.binder.dao.MemberDAO;
 import net.softsociety.binder.dao.NoteDAO;
+import net.softsociety.binder.util.FileService;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.Member;
 import net.softsociety.binder.vo.Note;
+import net.softsociety.binder.vo.Photo;
 
 //@선언
 @Controller
@@ -31,7 +34,8 @@ import net.softsociety.binder.vo.Note;
 public class MemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+	private final String uploadPath = "/uploadFile";
+	  
 	//0.dao선언
 	@Autowired MemberDAO memdao;
 	@Autowired NoteDAO noteDao;
@@ -173,6 +177,12 @@ public class MemberController {
 	public String memberLogout(HttpSession session) {
 	//세션에 로그읺 할 때 저장했던 값을 지우는 일.	
 		logger.info("로그아웃 프로세스 시작");
+		
+		
+		String member_id = (String)session.getAttribute("loginId");
+		memdao.memberLastLoginTime(member_id);
+		logger.info("마지막로그인시간기록");
+		
 		session.removeAttribute("loginId");
 		logger.info("로그아웃 프로세스 - session의 loginId : {}",session.getAttribute("loginId"));
 		return "redirect:/";
@@ -227,19 +237,35 @@ public class MemberController {
 	}	
 		
 	@RequestMapping(value="memberUpdateExe", method=RequestMethod.POST)
-	public String memberUpdateExe(Member updateMemberData, HttpSession session, Model model) {
+	public String memberUpdateExe(Member updateMemberData, HttpSession session, MultipartFile upload) {
 		logger.info("memberUpdateExe 업데이트 실시");
-		logger.info("memberUpdateExe- 현 로그인 인물 (session세션) : {} ",session.getAttribute("loginId"));
-		String errMsg = "";//에러메시지 출력위한 변수.
+		//logger.info("memberUpdateExe- 현 로그인 session : {} ",session.getAttribute("loginId"));
+		//logger.info("form을 통해 기입된 첨부사진(upload) 정보 : {}",upload);
 		
-		updateMemberData.setMember_id((String)session.getAttribute("loginId"));
-		logger.info("memberUpdateExe-업데이트할 계정 정보 :{}",updateMemberData);
-		
-		memdao.memberUpdate(updateMemberData);
-		logger.info("memberUpdateExe-업데이트결과 계정 정보 :{}",memdao.memberSelectOne((String)session.getAttribute("loginId")));
-		
-		logger.info("-메인페이지로 이동");
-		return "redirect:/document/mainDocument";
-	}
+		 updateMemberData.setMember_id((String)session.getAttribute("loginId"));
+		 logger.info("form을 통해 기입된 업데이트할  정보 : {}",updateMemberData);
+	
+		 //1.파일업로드 체크 / .isEmpty() : 객체가 비었냐(=파일없냐?)
+			Photo photo = new Photo();
+			logger.info("memberJoin메소드-프로필 사진 업로드 시작");		
+	        if(!upload.isEmpty()) { 
+	            //2.업로드된 파일의 경로(파일명)을 VO에게 설정(set)
+	            String savedfile = FileService.saveFile(upload, uploadPath, "profile", 0, 0);            
+	            
+	            photo.setPhoto_savedfile(savedfile);//DB가 사용한 파일의 별명
+	            photo.setPhoto_originfile(upload.getOriginalFilename());//원본 파일명
+	            
+	            updateMemberData.setMember_photo(photo.getPhoto_savedfile());            
+	    		logger.info("member의 사진 정보(최종) : {}",updateMemberData.getMember_photo());
+	        }
+	        
+	        
+			memdao.memberUpdate(updateMemberData); //개인정보 session수정실시
+			
+			session.setAttribute("profilePhoto", photo.getPhoto_savedfile());//프로필 사진변경처리	
 
+			logger.info("memberUpdateExe-업데이트결과 : {}",memdao.memberSelectOne((String)session.getAttribute("loginId")));
+	        logger.info("-메인페이지로 이동");
+			return "redirect:/document/mainDocument";	
+	}
 }
