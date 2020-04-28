@@ -771,4 +771,13 @@ public class DocumentController {
 		logger.info("ReplyPage 값 {}",rpage);
 		return rpage;
 	}
+	
+	@RequestMapping(value="hashSearch", method=RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<String> hashSearch(String hash) {
+		logger.info("해시태그 : {}",hash);
+		ArrayList<String> list = null;
+		list = documentDao.hashSearch(hash);
+		return list;
+	}
 }

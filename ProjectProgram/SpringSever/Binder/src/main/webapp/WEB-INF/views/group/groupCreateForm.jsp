@@ -110,6 +110,7 @@
 									break;
 								}
 							}
+							
 							$("#subcat_result").css("border","1px solid gray");
 							$("#subcat_result").html(osusume);
 							},

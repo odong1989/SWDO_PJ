@@ -168,4 +168,12 @@
 		    bnd_document.document_no = bnd_photo.document_no  -->
 	</update> 
 
+	<select id="hashSearch" parameterType="String" resultType="String">
+		select distinct
+			hash_tag
+		from
+			bnd_hashtag
+		where
+			hash_tag like '%' || #{hash} || '%'
+	</select>
 </mapper>

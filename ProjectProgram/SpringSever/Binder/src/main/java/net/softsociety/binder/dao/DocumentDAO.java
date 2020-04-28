@@ -167,6 +167,19 @@ public class DocumentDAO {
 		}
 		logger.info("DocumentDAO.java - updateDocumentOne(1개의 글 수정) 메소드  종료");
 	}
+	
+	public ArrayList<String> hashSearch(String hash) {
+		ArrayList<String> result = null;
+		logger.info("hash : {}", hash);
+		try {
+			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+			result = mapper.hashSearch(hash);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	
 }
