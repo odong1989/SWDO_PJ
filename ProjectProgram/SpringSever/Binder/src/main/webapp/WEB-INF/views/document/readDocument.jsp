@@ -19,7 +19,6 @@
 						
 				<%@ include file="../includes/membermodal.jsp" %>
 
-				<img src="<c:url value='/img/f5.png' />">
 						<a href="javascript:calender(${group_no})">
 							<img src="<c:url value='/img/cal.png' />" id="" title="캘린더화면으로전환"> 
 						</a>
