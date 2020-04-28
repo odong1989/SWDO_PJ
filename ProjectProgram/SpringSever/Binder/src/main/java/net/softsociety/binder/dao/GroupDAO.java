@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import net.softsociety.binder.vo.Group;
+import net.softsociety.binder.vo.GroupJoin;
 
 //import com.sun.media.jfxmedia.logging.Logger;
 
@@ -114,6 +115,19 @@ public class GroupDAO {
 		try {
 			GroupMapper mapper = session.getMapper(GroupMapper.class);
 			result = mapper.selectGroupName(group_no);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int joinTrue(GroupJoin gjoin) {
+		int result = 0;
+		logger.info("gjoin : {}", gjoin);
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			result = mapper.joinTrue(gjoin);
 		}
 		catch(Exception e){
 			e.printStackTrace();

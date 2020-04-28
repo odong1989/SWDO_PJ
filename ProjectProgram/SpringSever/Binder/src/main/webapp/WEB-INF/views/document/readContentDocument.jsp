@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- 헤더부분을 대체하는 include -->
 <%@ include file="../includes/header.jsp" %>
@@ -21,35 +22,31 @@
 
 <script>
 function editDocument(pk){
-	location.href="<c:url value='/document/editDocument' />?no="+pk;
+    location.href="<c:url value='/document/editDocument' />?no="+pk;
 }
 function paging(pag){
 	showReplyList(pag);
 }
 function editReply(reply_no, reply_content, member_id){
 	var htmls = "";
-	htmls += '<div>';
-	htmls += member_id;
 
-	htmls += '</span>';
-	
-	htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
+    htmls += '<div class = "editDiv"><span id="replyEditId" >';
 
-	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소</a>';
+    htmls += member_id;
+    
+    htmls += '</span>';
+    
+    htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
 
-	htmls += '</div><div>';
+    htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소</a>';
+
+    htmls += '</div><div>';
+        
+    htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'" >';
+
+    htmls += '<p id = "editPtag">글을 수정하시려면 저장을 눌러주세요</p>';
+
 		
-	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
-
-	htmls += '<p id = "editPtag">글을 수정하시려면 저장을 눌러주세요</p>';
-
-
-	htmls += '</div>';
-		
-	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
-	
-	htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
-	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소<a>';
 	$('#rid' + reply_no).replaceWith(htmls);
 	
 
@@ -206,6 +203,9 @@ function writeRpy(){
 			}
 	})
 }
+function editDocument(pk){
+	location.href="<c:url value='/document/editDocument' />?no="+pk;
+}
 $(function(){
 	
 	showReplyList();
@@ -262,7 +262,7 @@ $(function(){
           </table>
 	
 		<div class = "reply">
-          	 	<h6>Reply</h6>
+          	 	<h6 id="replyTitle">Reply</h6>
 					
 						<input type="hidden" id="loginId" value="${sessionScope.loginId}">
 						<input type="hidden" id="document_no" name = "document_no" value="${document.document_no }">

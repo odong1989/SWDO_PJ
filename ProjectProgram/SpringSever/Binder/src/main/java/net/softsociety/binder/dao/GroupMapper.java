@@ -22,4 +22,6 @@ public interface GroupMapper {
 	public int selectGroupNo(String group_name);
 	
 	public String selectGroupName(int group_no);
+	
+	public int joinTrue(GroupJoin gjoin);
 }
