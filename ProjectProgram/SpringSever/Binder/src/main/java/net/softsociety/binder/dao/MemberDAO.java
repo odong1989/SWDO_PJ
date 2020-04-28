@@ -102,6 +102,7 @@ public class MemberDAO {
 		logger.info("MemberDAO-memberUpdate 실시");
 		logger.info("MemberDAO-수신된 업데이트할 정보 : {}", updateMemberData);
 		try {
+			
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			mapper.memberUpdate(updateMemberData);
 		}catch(Exception e) {
