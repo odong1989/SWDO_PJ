@@ -93,7 +93,7 @@
 	 	select
 	 		(select '사나' from dual)									"username"
             , (select 'true' from dual)                                "allDay"
-<!-- 			, bnd_document.document_content							"allDay"		 -->
+		    , bnd_document.document_destination 		            "description"			
 		    , bnd_document.document_content 						"title"
 		    , to_char(bnd_document.document_regdate,  'yyyy-mm-dd hh:mi')  "start"
 		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd hh:mi')  "end"
