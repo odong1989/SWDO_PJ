@@ -398,7 +398,7 @@ public class DocumentController {
 		
 		
 		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
-		Document caution=null;
+		Document caution = null;
 		caution = documentDao.selectDocumentOne(no); 
 		model.addAttribute("document", caution);
 		logger.info("readContentDocument - 출력될 글 정보 document : {}",caution);
@@ -406,7 +406,7 @@ public class DocumentController {
 
 		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 시작.----------------------------
 		//도큐먼트(Document caution)는 사진정보를 담을 수 있는 칼럼이 없기 때문이다.
-		Photo cautionPhoto =null;
+		Photo cautionPhoto = null;
 		cautionPhoto = photoDao.selectPhotoOne(no);
 		model.addAttribute("cautionPhoto", cautionPhoto);
 		logger.info("readContentDocument - 출력할 사진  cautionPhoto : {}", cautionPhoto);
