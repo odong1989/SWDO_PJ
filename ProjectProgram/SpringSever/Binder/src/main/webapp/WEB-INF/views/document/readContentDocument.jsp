@@ -8,79 +8,14 @@
 
 
 <script>
-function editDocument(pk){
-    location.href="<c:url value='/document/editDocument' />?no="+pk;
-}
+
 function paging(pag){
 	showReplyList(pag);
 }
-function editReply(reply_no, reply_content, member_id){
-	var htmls = "";
 
-    htmls += '<div class = "editDiv"><span id="replyEditId" >';
-
-    htmls += member_id;
-    
-    htmls += '</span>';
-    
-    htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
-
-    htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소</a>';
-
-    htmls += '</div><div>';
-        
-    htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'" >';
-
-    htmls += '<p id = "editPtag">글을 수정하시려면 저장을 눌러주세요</p>';
-
-		
-	$('#rid' + reply_no).replaceWith(htmls);
-	
-
-	$('#editContent').focus();
-
-
-}
-function replyUpdate(reply_no, reply_content){
-		var reply_content = $('#editContent').val();
-		$.ajax({
-			type:"post",
-			url: "updateReply",
-			data: {
-				reply_no : reply_no,
-				reply_content : reply_content
-				},
-			dataType : "json",
-			success : function(result) {
-				if(result){
-					showReplyList();
-					}	
-					else{
-					alert("실패")
-					}
-				}
-	})
-}
-function deleteReply(reply_no){
-	$.ajax({
-		type:"post",
-		url: "deleteReply",
-		data: {
-			reply_no : reply_no,
-			},
-		dataType : "json",
-		success : function(result) {
-			if(result){
-				showReplyList();
-				}	
-				else{
-				alert("실패")
-				}
-			}
-})
-}
 function showReplyList(currentPage){
 	var document_no = $('#document_no').val();
+	var cnt = 0;
 	$.ajax({
 			type: "post",
 			url: "getReply",
@@ -104,22 +39,19 @@ function showReplyList(currentPage){
 						htmls += '<div id="rid';
 						htmls += this.reply_no;
 						htmls += '">';
-						
-						htmls += '<div class = "replyMemberId">';
 						htmls += '<span class ="replyId">';
 						htmls += this.member_id;
 						htmls += '</span>';
 						if(this.member_id == loginId){
-						htmls += '<'
-						htmls += '<a href="javascript:editReply('+ this.reply_no  + ', \'' + this.reply_content + '\', \'' + this.member_id  + '\')" class = "replyUpdate">수정</a>';
-						htmls += '<a href="javascript:deleteReply(' + this.reply_no + '\)" class = "replyDelete">삭제</a>';
+						htmls += '<span class = "replyUpdate">수정</span>&nbsp;';
+						htmls += '<span class = "replyDelete">삭제</span>';
 						}
+						htmls += '<div></div>'						
+						htmls += '<input type = "text"   class = "replyContent" value ="'+ this.reply_content +'" readonly>';
+						htmls += '<input type = "hidden" class = "replyNoHidden" value ="'+ this.reply_no +'">';
+						htmls += '<input type = "hidden" class = "pagingC" value ="'+ page.currentPage +'">';
 						htmls += '</div>';
-						htmls += '<div class = "replyContent">';
-						htmls += this.reply_content;
-						htmls += '</div>';
-						htmls += '</div>';
-						cnt++;						
+						
 					})
 					pageLoad(result);
 				}
@@ -128,6 +60,7 @@ function showReplyList(currentPage){
 			
 		})
 }
+
 function pageLoad(result){
 	var pageHtmls ="";
 	var page = result.page;
@@ -196,7 +129,8 @@ function editDocument(pk){
 $(function(){
 	
 	showReplyList();
-	
+	var temp;
+		
 	$('#replyInput').keyup(function(event) {
 		if (event.keyCode == 13) {
 			writeRpy();
@@ -205,7 +139,88 @@ $(function(){
 	
 	$("#btn").click(function(){
 			writeRpy();
-		})	
+		})
+
+	$(document).on('click','.replyUpdate',function() {
+         temp = $(this).parent().children('.replyContent').val();
+         $(this).parent().children('.replyContent').prop('readonly', false);
+         $(this).text('저장');
+         //$(this)의 클래스를 btn2 바꿔준다
+         $(this).addClass('editReply');
+         $(this).removeClass('replyUpdate');
+         
+         $(this).parent().children('.replyDelete').text('취소');
+         $(this).parent().children('.replyDelete').addClass('cancleReply');
+         $(this).parent().children('.replyDelete').removeClass('replyDelete');
+      })
+      
+       $(document).on('click','.replyDelete',function() {
+		 var reply_no = $(this).parent().children('.replyNoHidden').val();
+		 var page = $(this).parent().children('.pagingC').val();
+
+			$.ajax({
+				type:"post",
+				url: "deleteReply",
+				data: {
+					reply_no : reply_no,
+					},
+				dataType : "json",
+				success : function(result) {
+					if(result){
+						showReplyList(page);
+						}	
+						else{
+						alert("실패")
+						}
+					}
+			})
+       })
+      
+
+      $(document).on('click','.cancleReply',function(){
+    	  $(this).parent().children('.replyContent').val(temp);
+          $(this).text('삭제');
+          $(this).addClass('replyDelete');
+          $(this).removeClass('cancleReply');
+          $(this).parent().children('.editReply').text('수정');
+          $(this).parent().children('.editReply').addClass('replyUpdate');
+          $(this).parent().children('.editReply').removeClass('editReply');
+          $(this).parent().children('.replyContent').prop('readonly', true);  
+       })
+       
+      $(document).on('click','.editReply',function() {
+    	  var reply_content = $(this).parent().children('.replyContent').val();
+    	  var reply_no = $(this).parent().children('.replyNoHidden').val();
+    	  var page = $(this).parent().children('.pagingC').val();
+          $(this).text('수정');
+         $(this).addClass('replyUpdate');
+         $(this).removeClass('editReply');
+         $(this).parent().children('.cancleReply').text('삭제');
+         $(this).parent().children('.cancleReply').addClass('replyDelete');
+         $(this).parent().children('.cancleReply').removeClass('cancleReply');
+         //ajax이용해서 서버와 통신
+       
+         $.ajax({
+			type:"post",
+			url: "updateReply",
+			data: {
+				reply_no : reply_no,
+				reply_content : reply_content
+				},
+			dataType : "json",
+			success : function(result) {
+				if(result){
+			        //통신이 완료되면 다시 readonly를 준다
+			        $(this).parent().children('.replyContent').prop('readonly', true);
+					showReplyList(page);
+					$(this).parent().children('.replyContent').focus();
+					}	
+					else{
+					alert("실패")
+					}
+				}
+      })
+	})
 })
 </script>
 
@@ -273,7 +288,7 @@ $(function(){
 			</div>	
 			<div class="main_editarea"> <!-- 본인시 수정버튼 구현 -->
 			<c:if test="${sessionScope.loginId == document.member_id}">
-				<a href="<c:url value='/document/editDocument' />"><input type="button" value="글 수정하기"></a>
+				<a href="<c:url value='/editDocument'/>"><input type="button" value="글 수정하기"></a>
 			</c:if>
 			</div>				
 			<div class="main_photo"> <!-- 사진배치 -->
