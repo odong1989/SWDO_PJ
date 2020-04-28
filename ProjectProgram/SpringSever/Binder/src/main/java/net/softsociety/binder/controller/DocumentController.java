@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +40,7 @@ import net.softsociety.binder.vo.Document;
 import net.softsociety.binder.vo.Group;
 import net.softsociety.binder.vo.GroupJoin;
 import net.softsociety.binder.vo.HashTag;
+import net.softsociety.binder.vo.MailVO;
 import net.softsociety.binder.vo.Member;
 import net.softsociety.binder.vo.Note;
 import net.softsociety.binder.vo.Photo;
@@ -62,6 +67,9 @@ public class DocumentController {
     private int countPerPage = 10;
     private int pagePerGroup = 10;
 
+    @Autowired
+	private JavaMailSenderImpl mailSender;
+    
     @RequestMapping(value="mainDocument", method=RequestMethod.GET)
 	public String mainDocument(HttpSession session, //Model modelGroupJoinList, Model modelDocumentList, Model modelHashTagList)
 			Model model)
@@ -110,6 +118,9 @@ public class DocumentController {
 		logger.info("-공지사항 : {}", caution);
 		model.addAttribute("caution", caution);
 		
+		//그룹이름 가져오기
+		String gname = groupDao.selectGroupName(no);
+		
 		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
 		model.addAttribute("documentList", documentList);
 		
@@ -122,6 +133,7 @@ public class DocumentController {
 		GroupJoin memberjoin = groupMemberDao.selectGroupJoinChkId(vo);
 		model.addAttribute("memberJoin", memberjoin);
 		model.addAttribute("gjoin",join);
+		model.addAttribute("ganme",gname);
 		return "/document/readDocument";
 	}
 	
@@ -150,8 +162,8 @@ public class DocumentController {
 
 	//신규글을 DB에 추가하는 2개의 메소드 중 1개입니다.(writeDocument.jsp 전용입니다.)
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
-	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model, String[] hashtag)
-	{	
+	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model, HttpServletRequest request, String[] hashtag)
+	{
 		logger.info("documentInsert 실행 {}",writeDocument);
 		//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
 		//uploadPath는 "/uploadFile"으로 설정되어있다.;
@@ -171,9 +183,23 @@ public class DocumentController {
 	    //게시글(Document) insert 코드 종료.
 	    
 	    //writeDocument.getDocument_no()에 방금 작성한 글 번호가 담겨있음
-	    for(int i = 0; i < hashtag.length; i++) {
-	    	System.out.println(hashtag[i]);
-	    }
+		//해시태그 추가
+		HashTag hash = new HashTag();
+		int document_no = writeDocument.getDocument_no();
+		hash.setDocument_no(document_no);
+		hash.setGroup_no(writeDocument.getGroup_no());
+		for (int i = 0; i < hashtag.length; i++) {
+			//입력이 이루어졌을 경우에만 실행
+			if (hashtag[i].length() != 0) {
+				//#으로 시작하지 않을 경우 #을 붙임
+				if(hashtag[i].charAt(0) != '#') {
+					String temp = "#";
+					hashtag[i] = temp + hashtag[i];
+				}
+				hash.setHash_tag(hashtag[i]);
+				int cnt = hashTagDao.insertHash(hash);
+			}
+		}
 	     
 	    //아래에는 사진추가 메소드가 실시.---------------------------------------------------
 	    
@@ -250,7 +276,7 @@ public class DocumentController {
 		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
 
         //
-	     int count = documentDao.insertCaution(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
+	     int count = documentDao.insertDocument(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
 	     logger.info("3.VO를 DB에 INSERT count : {}",count);
 	     if(count ==0) {
 	            logger.info("글(document) 등록실패");
@@ -432,7 +458,7 @@ public class DocumentController {
 				}
 			}
 			StringBuffer content = new StringBuffer(); 
-			content.append("아래 링크를 클릭하면 가입 안내 페이지로 이동합니다.</br>");
+			content.append("아래 링크를 클릭하시면 가입 안내 페이지로 이동합니다.</br>");
 			content.append("<p class='codeOpen'>" + addr + "/group/groupjoin?code=" + code + "</p></br>");
 			content.append("<font color='red'>유효기간 : ~" + date7 + "</font>");
 			
@@ -550,12 +576,95 @@ public class DocumentController {
 	//초대코드 이메일로 보내기
 	@RequestMapping(value="sendEmail", method=RequestMethod.GET)
 	@ResponseBody
-	public String sendEmail(String email) {
+	public String sendEmail(String email, int no, HttpServletRequest request, HttpSession session) {
 		logger.info("email {}",email);
-		
 		
 		String chk = null;
 		if (email != null) {
+			//도메인 및 포트 가져오기
+			String addr = request.getScheme() + "://" + request.getServerName()+":"+request.getServerPort() + request.getContextPath();
+			
+			//보내는 사람 이름 가져오기
+			String member_id = (String)session.getAttribute("loginId");
+			Member member = memdao.memberSelectOne(member_id);
+			String member_name = member.getMember_name();
+			
+			
+			
+			//코드 생성 or 코드 가져오기
+			String code = null;
+			String date7 = null;
+			
+			Group group = new Group();
+			group.setGroup_no(no);
+			HashMap<String, Object> oldgroup = groupDao.selectCode(group);
+			
+			//기존 코드가 존재
+			if (oldgroup != null) {
+				logger.info("이미 코드가 존재 {},{}", oldgroup);
+				code = (String) oldgroup.get("GROUP_CODE");
+				date7 = (String) oldgroup.get("GROUP_CODEDATE7");
+			} else {
+				//코드를 새로 생성
+				logger.info("코드를 새로 생성");
+				StringBuffer temp = new StringBuffer();
+				Random rnd = new Random();
+				for (int i = 0; i < 5; i++) {
+				    int rIndex = rnd.nextInt(3);
+				    switch (rIndex) {
+				    case 0:
+				        // a-z
+				        temp.append((char) ((int) (rnd.nextInt(26)) + 97));
+				        break;
+				    case 1:
+				        // A-Z
+				        temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+				        break;
+				    case 2:
+				        // 0-9
+				        temp.append((rnd.nextInt(10)));
+				        break;
+				    }
+				}
+				logger.info("코드 생성완료 {}", temp);
+				Group updategroup = new Group();
+				updategroup.setGroup_code(temp.toString());
+				updategroup.setGroup_no(no);
+				int result = groupDao.updateCode(updategroup);
+				updategroup.setGroup_code(null);
+				if (result != 0) {
+					logger.info("코드 업데이트 성공");
+					oldgroup = groupDao.selectCode(updategroup);
+					code = (String) oldgroup.get("GROUP_CODE");
+					date7 = (String) oldgroup.get("GROUP_CODEDATE7");
+				} else {
+					logger.info("코드 업데이트 실패");
+				}
+			}
+			
+			//메일 준비
+			MailVO vo = new MailVO();
+//			vo.setTo("사용자의 이메일");
+			vo.setTo(email);
+			vo.setSubject(member_name + "님의 초대 메시지입니다. - Binder\r\n");
+			String contents = "<p>아래 링크를 클릭하시면 가입 안내 페이지로 이동합니다.</p>"; 
+			contents += "<p><a href='" + addr + "/group/groupjoin?code=" + code + "' target='_blank'>" + addr + "/group/groupjoin?code=" + code + "</a></p>";
+			contents += "<p><font color='red'>유효기간 : ~" + date7 + "</font></p>";
+			vo.setContents(contents);
+			vo.setFrom("Binder");
+			final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+				@Override
+				public void prepare(MimeMessage mimeMessage) throws Exception {
+					final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					helper.setFrom(vo.getFrom());
+					helper.setTo(vo.getTo());
+					helper.setSubject(vo.getSubject());
+					helper.setText(vo.getContents(), true);
+				}
+			};
+			mailSender.send(preparator);
+
+			logger.info("메일전송완료");
 			chk = "true";
 		} else {
 			chk = "false";

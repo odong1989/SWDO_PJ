@@ -29,6 +29,21 @@ and bnd_member.member_id ='jsh4646';
 		where bnd_hashtag.document_no = bnd_document.document_no
 		and bnd_member.member_id =#{member_id}
 	</select>
+	
+	<insert id="insertHash" parameterType="hashtag">
+		insert into bnd_hashtag(
+			hash_no
+			, hash_tag
+			, document_no
+			, group_no
+		) values (
+			bnd_hash_no_seq.nextval
+			, #{hash_tag}
+			, #{document_no}
+			, #{group_no}
+		)
+			
+	</insert>
 
 
 </mapper>

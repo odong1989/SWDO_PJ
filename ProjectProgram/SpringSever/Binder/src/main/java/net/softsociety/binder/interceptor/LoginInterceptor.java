@@ -14,14 +14,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) 
 			throws Exception {
-		logger.info("LoginInterceptor 시작");
+		logger.debug("LoginInterceptor 시작");
 
 		HttpSession session = request.getSession();
-		logger.info("session: {}", session.toString());
 	
 		String loginId = (String)session.getAttribute("loginId"); 
-		logger.info("loginId : {}",loginId);
-		
+		logger.debug("loginId : {}",loginId);
 
 		if(loginId == null) {
 			response.sendRedirect(request.getContextPath() + "/");

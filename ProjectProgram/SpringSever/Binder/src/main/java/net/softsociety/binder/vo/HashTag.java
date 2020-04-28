@@ -19,5 +19,7 @@ create sequence bnd_hash_no_seq;
 	private int hash_no;
 	private String hash_tag;
 	private int document_no;
+	private int group_no;
+	private String hash_date;
 
 }

@@ -116,8 +116,8 @@
 		</table>
 		</div>
 			<div id="right-body-wirteDocWrap" style="background-color:white; padding:10px 10px 30px 20px;"><!-- right-body내의 2개의 테이블이 각자의 div내에 포함된다.-->
-			<table class="wirteDocForm">		
-				<form action="documentInsert" onsubmit="return documentInsertCheck();" method="POST" enctype="multipart/form-data">
+			<form id="writeForm" action="documentInsert" onsubmit="return documentInsertCheck();" method="POST" enctype="multipart/form-data">			
+				<table class="wirteDocForm">		
 			     	<tr>
 			     	    <td> 오늘 날짜 : <p id='currentDate' style="display:inline;"></p> </td>
 						<!--그룹번호를 같이보내줍니다 -->		
@@ -161,8 +161,8 @@
 				   			</div>
 						</td>
 					</tr>
-        			   </form>
-          		</table>
+	          		</table>
+				</form>
 				</div>
 
       </div>
@@ -252,9 +252,15 @@
 	       	 	else if(endDate < startDate){
 		            alert("종료일이 시작일보다 이 전 일수는 없습니다.\n다시 선택하여 주시기 바랍니다.");
 					return false;
-	       	 	} 
+	       	 	}
+				//var hasharray = 
+				var okform = document.getElementById("writeForm"); 
+
+				okform.hashtag = document.getElementsByName("hashtag");
+				
+				okform.submit();
 		        
-				return true;
+				return false;
 			}
 	
 	 //유효성체크 종료------------------------------------------------------------------

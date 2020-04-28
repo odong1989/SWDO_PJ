@@ -22,19 +22,26 @@ public class HashTagDAO {
 	private SqlSession session;
 	
 	public ArrayList<HashTag> selectHashTags(String member_id){
-		logger.info("HashTagDAO.java - selectHashTags 메소드 시작");	
 		ArrayList<HashTag> hashTagList = null;
 		try {
 			HashTagMapper mapper = session.getMapper(HashTagMapper.class);
 			hashTagList = mapper.selectHashTags(member_id);
-			logger.info("HashTagDAO.java - hashTagList의 수신값 : {}",hashTagList);			
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		logger.info("HashTagDAO.java - 최종 리턴되는 hashTagList : {}",hashTagList);			
-		logger.info("HashTagDAO.java - selectHashTags 메소드 종료");	
 		return hashTagList;
+	}
 	
+	public int insertHash(HashTag hashtag) {
+		int result = 0;
+		try {
+			HashTagMapper mapper = session.getMapper(HashTagMapper.class);
+			result = mapper.insertHash(hashtag);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

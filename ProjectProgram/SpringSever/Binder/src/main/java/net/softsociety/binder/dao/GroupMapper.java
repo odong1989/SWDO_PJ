@@ -20,4 +20,6 @@ public interface GroupMapper {
 	public int insertGroup(Group group);
 	
 	public int selectGroupNo(String group_name);
+	
+	public String selectGroupName(int group_no);
 }

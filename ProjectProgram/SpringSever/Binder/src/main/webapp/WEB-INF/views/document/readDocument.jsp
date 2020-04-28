@@ -48,5 +48,11 @@
 		</div>
 	</div>
 	<%@ include file="../includes/vuemodal.jsp" %>
+	<script>
+	$(function() {
+		$(document).find("title").text(${gname});
+	})
+	
+	</script>
 </body>
 </html>
