@@ -141,7 +141,7 @@ $(function(){
 			writeRpy();
 		})
 
-	$(document).on('click','.replyUpdate',function() {
+	$(document).on('click','.replyUpdate',function() {	
          temp = $(this).parent().children('.replyContent').val();
          $(this).parent().children('.replyContent').prop('readonly', false);
          $(this).text('저장');
@@ -229,7 +229,7 @@ $(function(){
 
 .main_container {
 	background-color:white;
-	width:90%; height:90%;
+	width:90%; height:270px;
 	margin :20px;
 /*	background-color: yellow; */
 }
@@ -248,57 +248,71 @@ $(function(){
 /*	background-color:orange; */
 }
 
-.main_editarea {
+.main_edit {
 	float:left;
 	text-align:center;
 	width:20%; height:10%;
 /*	background-color:green; */
 }
-
+div#submain-clear {
+	clear:both;
+}
 .main_photo {
-	padding : 3%;
 	float:left;
-	width:100%; height:300px;
+	width:50%; height:300px;
 	text-align: center;
 /*	background-color:purple; */
-
 }
-
 .main_contents {
+	padding-top: 50px;
 	float:left;
-	width:100%; height:30%;
-<!--	background-color:green;
+	width:50%; height:300px;
+/*-	background-color:green; */ 
+}
+div#contentPart-clear {
+	clear: both;
 }
 </style>
 
 	<div id="right-body">
 		
 		<div class="main_container" >
-			<div class="main_destination"> <!-- 장소 -->
-				<p>${document.document_destination }</p>
+			<div class="submain">
+				<div class="main_destination"> <!-- 장소 -->
+					<p>${document.document_destination }</p>
+				</div>
+				
+				<div class="main_days"> <!-- 기간 -->
+					여행기간 :
+			        <p id='startDate' style="display:inline;"/></p>
+					${fn:substring(document.document_regdate,0,11)}
+					~
+					<p id='endDate'  style="display:inline;"/></p> 
+		   			${fn:substring(document.document_finalday,0,11)}					
+				</div>	
+	            <div class="main_edit"> <!-- 작성자만 수정버튼이 표시됨. -->
+	                <a href="javascript:edit(${document.document_no})">
+	                    <input type="button" value="글 수정하기">                
+	                </a>
+				</div>
+				<div id="submain-clear"></div>	
 			</div>
+			<!-- submain 여기까지 -->
+						
+						
+			<div id="contentPart">
+				<div class="main_photo"> <!-- 사진배치 -->
+					<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
+					width="250px" height="250px"  >
+				</div>				
+				<div class="main_contents"> <!--  글 배치-->
+	          	 	<h6 id="replyTitle" style="margin:10px;">Contents</h6>
+					&nbsp; &nbsp; ${document.document_content }			
+				</div>
+				<div id="contentPart-clear"></div>				
+			</div>
+			<!-- contentPart 끝 -->
 			
-			<div class="main_days"> <!-- 기간 -->
-				여행기간 :
-		        <p id='startDate' style="display:inline;"/></p>
-				${fn:substring(document.document_regdate,0,11)}
-				~
-				<p id='endDate'  style="display:inline;"/></p> 
-	   			${fn:substring(document.document_finalday,0,11)}					
-			</div>	
-			<div class="main_editarea"> <!-- 본인시 수정버튼 구현 -->
-			<c:if test="${sessionScope.loginId == document.member_id}">
-				<a href="<c:url value='/editDocument'/>"><input type="button" value="글 수정하기"></a>
-			</c:if>
-			</div>				
-			<div class="main_photo"> <!-- 사진배치 -->
-				<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
-				width="250px" height="250px"  >
-			</div>				
-			<div class="main_contents"> <!--  글 배치-->
-          	 	<h6 id="replyTitle" style="margin:10px;">Contents</h6>
-				&nbsp; &nbsp; ${document.document_content }			
-			</div>				
 		</div>
 			 	
 		<!-- 댓글 코드시작 -->	 	
