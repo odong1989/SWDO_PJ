@@ -10,7 +10,7 @@
 		    , to_char(d.document_regdate, 'yyyy-mm-dd') document_regdate
 		    , d.document_destination document_destination
 		    , p.photo_savedfile photo_savedfile
-		    , (select listagg(hash_tag, ',') within group (order by hash_no) from bnd_hashtag where document_no = d.document_no) hash_tag
+		    , (select listagg(hash_tag, ' ') within group (order by hash_no) from bnd_hashtag where document_no = d.document_no) hash_tag
 		from
 		    bnd_document d , bnd_photo p
 		where
@@ -131,7 +131,7 @@
 		    , to_char(d.document_regdate, 'yyyy-mm-dd hh:mi')  document_regdate
 		    , to_char(d.document_finalday, 'yyyy-mm-dd hh:mi') document_finalday
 		    , d.document_destination 		                  document_destination
-		    , (select listagg(hash_tag, ',') within group (order by hash_no) from bnd_hashtag where document_no = d.document_no) hash_tag			
+		    , (select listagg(hash_tag, ' ') within group (order by hash_no) from bnd_hashtag where document_no = d.document_no) hash_tag			
 		from
 		    bnd_document d, bnd_photo p
 		where
