@@ -103,14 +103,14 @@ public class CalenderController {
 		Date compareDay = null;
 		logger.info("getUserSchedule 메소드 - compareDay : {}",compareDay);
 		String from=null;
-		logger.info("getUserSchedule 메소드 - from : {}",from);
+		//logger.info("getUserSchedule 메소드 - from : {}",from);
 		
 		//배경색 넣기 조건문
 		for(int i = 0; i < documentList.size(); i++) {
 			//글 등록일과 오늘 날짜 비교
 				dateFormat.format(toDay);
 				from = (String) documentList.get(i).get("end");
-				logger.info("getUserSchedule 메소드 - from {} : {}",i,from);
+			//	logger.info("getUserSchedule 메소드 - from {} : {}",i,from);
 				try {
 					compareDay = dateFormat.parse(from);
 				} catch (java.text.ParseException e) {
@@ -119,14 +119,14 @@ public class CalenderController {
 			int compare = compareDay.compareTo(toDay);
 			if ( compare < 0 ) { //현재일자보다 과거인 경우(오늘보다 db날짜값이 같거나 작음)
 				documentList.get(i).put("backgroundColor", "#919090");//회색계열
-				logger.info("getUserSchedule 메소드 - from {} is #eee",i);
+		//		logger.info("getUserSchedule 메소드 - from {} is #eee",i);
 			}
 			else {//현재일자보다 과거인 경우(오늘보다 db날짜값이 더 큼) 
 				documentList.get(i).put("backgroundColor", "#462ae8");//하늘색계열
 
 			}
 		}
-		logger.info("getUserSchedule 메소드 - 바탕색 조건문 실시한 documentList : {}",documentList);
+	//	logger.info("getUserSchedule 메소드 - 바탕색 조건문 실시한 documentList : {}",documentList);
 	
 		return documentList;	
 	}
@@ -153,4 +153,6 @@ public class CalenderController {
 		}
 		return chk;
 	}
+	
+	
 }

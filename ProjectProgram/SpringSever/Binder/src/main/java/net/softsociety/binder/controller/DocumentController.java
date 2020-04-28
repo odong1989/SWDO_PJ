@@ -780,4 +780,19 @@ public class DocumentController {
 		list = documentDao.hashSearch(hash);
 		return list;
 	}
+	
+	//지우지마세요! 풀캘린더의 일정변경시 필요함!!
+			@RequestMapping(value="updateDocument", method=RequestMethod.GET)
+			@ResponseBody
+			public void editDocument(HttpSession session, Document originalDocument)
+			{	
+				logger.info("updateDocument-기존 글(Document) 수정 작업시작");
+				String member_id = (String) session.getAttribute("loginId");
+				originalDocument.setMember_id(member_id);
+				
+				logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
+				
+				documentDao.updateDocumentOne(originalDocument);
+				logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
+			}
 }
