@@ -40,7 +40,7 @@ function editReply(reply_no, reply_content, member_id){
 
 	htmls += '</div><div>';
 		
-	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'" autofocus>';
+	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
 
 	htmls += '<p id = "editPtag">글을 수정하시려면 저장을 눌러주세요</p>';
 
@@ -49,7 +49,7 @@ function editReply(reply_no, reply_content, member_id){
 
 	$('#rid' + reply_no).replaceWith(htmls);
 
-	$('#rid' + reply_no + ' #editContent').focus();
+	$('#editContent').focus();
 
 }
 
@@ -127,6 +127,7 @@ function showReplyList(currentPage){
 						htmls += this.member_id;
 						htmls += '</span>';
 						if(this.member_id == loginId){
+						htmls += '<'
 						htmls += '<a href="javascript:editReply('+ this.reply_no  + ', \'' + this.reply_content + '\', \'' + this.member_id  + '\')" class = "replyUpdate">수정</a>';
 						htmls += '<a href="javascript:deleteReply(' + this.reply_no + '\)" class = "replyDelete">삭제</a>';
 						}
@@ -203,7 +204,6 @@ function writeRpy(){
 			if(result){
 				$("#replyInput").val("");
 				showReplyList();
-				alert("입력성공");
 				}	
 				else{
 				alert("실패")
@@ -264,7 +264,7 @@ $(function(){
 				   	</tr>       
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
-							<input type="submit" value="글 수정하기" >
+							<input type="button" value="글 수정하기" onclick="javascript:editDocument('${document.document_no}')">
 					   		<input type="button" value="이전페이지 가기" onclick="history.back(-1);">
 						</td>
 					</tr>
