@@ -109,4 +109,15 @@ public class GroupDAO {
 		logger.info("insertGroup 종료");
 		return result;
 	}
+	public String selectGroupName(int group_no) {
+		String result = null;
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			result = mapper.selectGroupName(group_no);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
