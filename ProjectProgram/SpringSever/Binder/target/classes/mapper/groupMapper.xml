@@ -88,4 +88,13 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 		where
 			group_name = #{group_name}			
 	</select>
+	
+	<select id="selectGroupName" parameterType="int" resultType="String">
+		select
+			group_name
+		from
+			bnd_group
+		where
+			group_no = #{group_no}
+	</select>
 </mapper>

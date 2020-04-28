@@ -8,4 +8,6 @@ import net.softsociety.binder.vo.HashTag;
 public interface HashTagMapper {
 
 	public ArrayList<HashTag> selectHashTags(String member_id);
+	
+	public int insertHash(HashTag hashtag);
 }

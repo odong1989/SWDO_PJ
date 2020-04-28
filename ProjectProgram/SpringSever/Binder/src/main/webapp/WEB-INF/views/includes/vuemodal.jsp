@@ -143,7 +143,7 @@
 						success:
 							function(result){
 							if(result == "true"){
-								alert("메세지전송에 성공하였습니다")
+								alert("메시지전송에 성공하였습니다")
 							}else {
 								alert("아이디를 찾을수 없습니다.")
 							}
@@ -175,10 +175,13 @@
 						
 						if (chkEmail(str)) {
 				// 		이메일로 보내기
+						groupnoh = document.getElementById("gno").value;
 						$.ajax({
 						url:"sendEmail",
 						type:"get",
-						data:{"email" : this.message},
+						data:{"email" : this.message
+							,"no" : groupnoh
+							},
 						success:
 							function(result){
 							if(result == "true"){

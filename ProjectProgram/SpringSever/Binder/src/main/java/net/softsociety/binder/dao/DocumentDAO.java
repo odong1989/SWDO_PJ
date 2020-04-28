@@ -56,11 +56,11 @@ public class DocumentDAO {
 	}
 
 	//글작성
-	public int insertDocument(Document document) {
+	public int insertDocument(Document writeDocument) {
 		int cau = 0;
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
-			cau = mapper.insertDocument(document);
+			cau = mapper.insertDocument(writeDocument);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -167,6 +167,7 @@ public class DocumentDAO {
 		}
 		logger.info("DocumentDAO.java - updateDocumentOne(1개의 글 수정) 메소드  종료");
 	}
+
 	
 }
 
