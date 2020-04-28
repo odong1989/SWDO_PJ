@@ -286,10 +286,10 @@ $(function(){
 				<p id='endDate'  style="display:inline;"/></p> 
 	   			${fn:substring(document.document_finalday,0,11)}					
 			</div>	
-			<div class="main_editarea"> <!-- 본인시 수정버튼 구현 -->
-			<c:if test="${sessionScope.loginId == document.member_id}">
-				<a href="<c:url value='/editDocument'/>"><input type="button" value="글 수정하기"></a>
-			</c:if>
+            <div class="main_edit"> <!-- 작성자만 수정버튼이 표시됨. -->
+                <a href="javascript:edit(${document.document_no})">
+                    <input type="button" value="글 수정하기">                
+                </a>
 			</div>				
 			<div class="main_photo"> <!-- 사진배치 -->
 				<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
