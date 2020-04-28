@@ -123,9 +123,7 @@ function writeRpy(){
 			}
 	})
 }
-function editDocument(pk){
-	location.href="<c:url value='/document/editDocument' />?no="+pk;
-}
+
 $(function(){
 	
 	showReplyList();
