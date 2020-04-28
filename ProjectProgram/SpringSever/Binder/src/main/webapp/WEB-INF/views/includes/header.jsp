@@ -77,7 +77,7 @@ function Withdrawal(){
 				minusbtn = '<span id="removeHash">[-]</span>';
 				$('#hashman').append(minusbtn);
 			}
-			box = '<input type="text" name="hashtag" placeholder="#hash" style="width:100px;"> ';
+			box = '<input type="text" name="hashtag" placeholder="#hash" style="width:100px;" autocomplete="off"> ';
 			$('#hashbox2').append(box);
 		});
 		//해시태그 제거하기

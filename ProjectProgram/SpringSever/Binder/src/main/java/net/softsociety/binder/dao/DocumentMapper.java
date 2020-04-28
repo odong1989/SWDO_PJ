@@ -24,4 +24,8 @@ public interface DocumentMapper {
 	public void deleteDocumentOne(Document deletelDocument);//1개의 글을 삭제하기 위해 실시. 
 	public void updateDocumentOne(Document originalDocument);		
 	// 글수정 버튼,풀캘린더내의 변경버튼, 풀캘린더의 드래그&드롭 총 3가지 경우에 작동하도록 수정.
+	
+	//수환 작성
+	//해시태그 검색기
+	public ArrayList<String> hashSearch(String hash);
 }
