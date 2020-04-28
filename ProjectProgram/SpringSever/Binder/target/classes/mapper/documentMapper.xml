@@ -168,4 +168,39 @@
 		    bnd_document.document_no = bnd_photo.document_no  -->
 	</update> 
 
+	<select id="hashSearch" parameterType="String" resultType="String">
+		select distinct
+			hash_tag
+		from
+			bnd_hashtag
+		where
+			hash_tag like '%' || #{hash} || '%'
+	</select>
+	
+	<select id="sightsSearch" parameterType="String" resultType="String">
+        select
+            document_destination
+        from
+            (select
+                document_destination
+                , count(*) rank
+            from
+                (select
+                    d.document_destination
+                    , g.group_subcategory
+                from
+                    bnd_document d, bnd_group g
+                where
+                    d.group_no = g.group_no
+                and
+                    d.document_regdate > sysdate-30)
+            where
+                group_subcategory = #{sights}
+            group by
+                document_destination
+            order by
+                rank desc)
+        where
+            rownum = 1
+    </select>
 </mapper>

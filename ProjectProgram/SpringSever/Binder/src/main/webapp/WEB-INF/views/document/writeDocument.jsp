@@ -32,7 +32,7 @@
 				   	</tr>     
 					<tr>
 						<td><input type='file' id="imgInp" name="upload" value="등록사진"/></td>
-						<td> <input type="text" placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
+						<td> <input type="text" placeholder="장소" id='place' name="document_destination" style="width:160px;"><div id="sights"></div></td>
 					</tr>
 				   	<tr>	
 				   		<td colspan="2">
@@ -52,7 +52,7 @@
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
 				            <div style="text-align: center;">
-							<input type="submit" value="글 등록하기" >
+							<input type="submit" value="글 등록하기" style="margin-right:300px;">
 					   		<input type="button" value="취소" onclick="history.back(-1);">
 				   			</div>
 						</td>
@@ -60,7 +60,7 @@
 	          		</table>
 				</form>
 				</div>
-
+			<input type="hidden" id="subcat" value="${subcat }">
       </div>
      <script>
   	        document.getElementById('currentDate').innerHTML = new Date().toISOString().substring(0, 10);
@@ -70,8 +70,9 @@
 
 	<style>
 	
-	.wirteDocForm  table {
-    width: 100%;
+	table.wirteDocForm {
+    /*width: 100%;*/
+    margin-left: 100px;
     border-top: 1px solid #444444;
     border-collapse: collapse;
   	}
@@ -89,8 +90,36 @@
 		background-color:white;
 		position:absolute;
 	}
+	div#sights{
+		padding:15px;
+		border-radius:10px;
+		background-color:white;
+	}
 	span.exam{
-		margin:2pz 0;
+		margin:2px 0;
+		cursor:pointer;
+	}
+	p#p-1line{
+		fone-size:1.5em;
+	}
+	span#span-weight{
+		font-weight: bold;
+		cursor:pointer;
+	}
+	p#p-3line{
+		font-size:1.2em;
+		cursor:pointer;
+		text-align:center;
+		margin-top:5px;
+	}
+	p#p-close{
+		text-align:right;
+	}
+	input#closeBtn{
+	    background-color: lavender;
+	    border: 1px solid;
+	    padding: 5px 10px;
+	    color: black;
 	}
 	
 	
@@ -178,8 +207,60 @@
 	    				}
 	    			}//해시태그 검색 완료
 	    		});//name=hashtag 키입력 이벤트 종료
+
+
+	    		//추천명소 검색
+	    		//장소 좌표 가져오기
+	    		var placeLeft = $('#place').offset().left;
+	    		var placeTop = $('#place').offset().top;
+	    		var placeWidth = $('#place').width();
+
+	    		//div위치 설정
+	    		$('#sights').css('position', 'absolute');
+				$('#sights').css('left', placeLeft + placeWidth + 10);
+				$('#sights').css('top', placeTop);
 	    		
-	        });
+				//서브카테고리 가져오기
+	    		var subcat = $('#subcat').val();
+	    		//검색 시작
+	    		$.ajax({
+					url : "sightsSearch",
+					type : "post",
+					data : {"subcat" : subcat},
+					success : function(result) {
+							//받아온 데이터가 있다면
+							if(result != null && result.length != 0) {
+								//해시태그 박스에 테두리 입력
+								$("#sights").css("border","1px solid gray");
+								$("#sights").css("background-color","white");
+								var osusume2 = '';
+								osusume2 += '<p id="p-2line">최근 <span id="span-weight">' + subcat + '</span> 카테고리에서<br/>'
+								osusume2 += '가장 많이 방문한 곳입니다.<br/></p><p id="p-3line">';
+								osusume2 += result;
+								osusume2 += '</p>';
+								osusume2 += '<p id="p-close"><input type="button" id="closeBtn" value="닫기"></p>';
+								$("#sights").html(osusume2);
+							//없다면
+							} else {
+								$('#sights').remove();
+							}
+						},
+					error : function() {
+						console.log("통신 에러");
+					}
+				})
+				//추천명소 검색 끝
+
+				$(document).on('click','#closeBtn',function(){
+					$('#sights').remove();
+				})
+				$(document).on('click','#p-3line',function(){
+					$('#place').val($(this).text());
+					$('#sights').remove();
+				})
+				
+			
+	        });//onload 끝
 	        function readURL(input) {
 	            if (input.files && input.files[0]) {
 	            var reader = new FileReader();

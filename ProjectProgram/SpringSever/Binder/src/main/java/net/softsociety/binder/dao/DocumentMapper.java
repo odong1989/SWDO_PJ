@@ -28,4 +28,6 @@ public interface DocumentMapper {
 	//수환 작성
 	//해시태그 검색기
 	public ArrayList<String> hashSearch(String hash);
+	//추천명소 검색기
+    public String sightsSearch(String sights);
 }

@@ -157,7 +157,7 @@ function Withdrawal(){
 						<p>가입된 그룹이<br/>없습니다.</p>
 					</div>
 					<div class="menu-group-button-right">
-						<input type="button" value="그룹 생성" id="gCreateBtn" style="background-color:black; color:white;">
+						<input type="button" value="그룹 생성" id="gCreateBtn" style="background-color:black;color:white;border: none;margin:5px 0 5px 22px;padding: 4px 8px;border-radius: 5px;">
 					</div>
 					<div class="menu-group-button-clear"></div>
 				</div>

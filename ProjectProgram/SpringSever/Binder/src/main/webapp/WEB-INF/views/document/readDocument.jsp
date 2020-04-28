@@ -24,6 +24,19 @@
 						</a>
 					</td>
 				</tr>
+				<c:if test="${documentList.size() == 0 }">
+					<tr><td colspan="3" align="center">
+					<table style="border:1px solid gray; margin-top:100px;">
+					<tr><td>
+						<img src="<c:url value='/img/pen_note.png'/>" width="300">
+					</td>
+					<td>
+						<p>아직 등록된 글이 없습니다.</p>
+					</td>
+					</tr>
+					</table>
+					</td></tr>
+				</c:if>
 				<c:forEach var="dlist" items="${documentList }">
 					<tr>
 						<td class="document-one">

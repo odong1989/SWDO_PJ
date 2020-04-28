@@ -155,12 +155,18 @@ public class DocumentController {
 			model.addAttribute("newNoteCheck", "ari");
 		}
 		
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		model.addAttribute("groupJoinList", groupJoinList);
-		//공통 데이터 종료
-		model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
-		
-		return "/document/writeDocument";
+		//그룹 sub카테고리 불러옴
+        Group group = null;
+        group = groupDao.selectGroupOne(no);
+        String subcat = group.getGroup_subcategory();
+        
+        ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+        model.addAttribute("groupJoinList", groupJoinList);
+        //공통 데이터 종료
+        model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
+        
+        model.addAttribute("subcat",subcat);
+        return "/document/writeDocument";
 	}	
 
 	//신규글을 DB에 추가하는 2개의 메소드 중 1개입니다.(writeDocument.jsp 전용입니다.)
@@ -261,7 +267,7 @@ public class DocumentController {
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
-		return "/document/mainDocument";
+		return "redirect:/document/group?no="+writeDocument.getGroup_no();
 	}
 
 
@@ -795,4 +801,15 @@ public class DocumentController {
 				documentDao.updateDocumentOne(originalDocument);
 				logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
 			}
+			
+		@RequestMapping(value="sightsSearch", method=RequestMethod.POST
+	            ,produces = "application/text; charset=utf8")
+	    @ResponseBody
+	    public String sightsSearch(String subcat) {
+	        logger.info("명소추천 : {}",subcat);
+	        String result = null;
+	        result = documentDao.sightsSearch(subcat);
+	        logger.info(result);
+	        return result;
+	    }
 }

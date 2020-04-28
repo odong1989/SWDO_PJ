@@ -181,6 +181,17 @@ public class DocumentDAO {
 		return result;
 	}
 
-	
+	public String sightsSearch(String sights) {
+        String result = null;
+        try {
+            DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+            result = mapper.sightsSearch(sights);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
 
