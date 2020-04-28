@@ -39,7 +39,7 @@
 			<tr>
 				<td class="lefttd">세부 카테고리</td>
 				<td class="righttd"><input type="text" id="subcat" name="group_subcategory"
-					placeholder="세부적인 분류를 입력해주십시오." maxlength="12"></td>
+					placeholder="세부적인 분류를 입력해주십시오." maxlength="12" autocomplete="off"></td>
 				<td class="chktd">
 					<div id="subcat_div"></div>
 				</td>

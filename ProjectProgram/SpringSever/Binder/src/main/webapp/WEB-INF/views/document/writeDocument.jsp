@@ -37,7 +37,7 @@
 				   	<tr>	
 				   		<td colspan="2">
 				   			<div id="hashbox">
-				   				<input type="text" name="hashtag" placeholder="#hash" style="width:100px;">&nbsp;
+				   				<input type="text" name="hashtag" placeholder="#hash" style="width:100px;" autocomplete="off">&nbsp;
 				   			</div>
 				   			<div id="hashbox2">
 				   			</div>
@@ -85,8 +85,12 @@
     width:100%;
     height:100%;
 	}
-	div##hash_result{
+	div#hash_result{
 		background-color:white;
+		position:absolute;
+	}
+	span.exam{
+		margin:2pz 0;
 	}
 	
 	
@@ -133,7 +137,7 @@
 					var divY = $(this).offset().top;
 					var divW = $(this).width();
 					selector = $(this);
-					$('#hash_result').css('position', 'absolute');
+					//$('#hash_result').css('position', 'absolute');
 					$('#hash_result').css('width', divW);
 					$('#hash_result').css('left', divX);
 					$('#hash_result').css('top', divY+30);
