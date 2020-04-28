@@ -61,8 +61,8 @@ public class CalenderController {
 		logger.info("-공지사항 : {}", caution);
 		model.addAttribute("caution", caution);
 		//공지사항 가져오는 코드		
-		model.addAttribute("groupNumber", no); 
-		//캘린더의 일정을 뽑아오기 위해 pk값(소속그룹번호)를 넘기고 있습니다.
+		model.addAttribute("groupNumber", no); //캘린더의 일정을 뽑아오기 위해 pk값(소속그룹번호)를 넘기고 있습니다.
+		
 		vo.setGroup_no(no);
 		vo.setMember_id(member_id);
 		GroupJoin memberjoin = groupMemberDao.selectGroupJoinChkId(vo);
