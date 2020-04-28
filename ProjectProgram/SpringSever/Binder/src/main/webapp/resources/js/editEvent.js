@@ -63,7 +63,7 @@ var editEvent = function (event, element, view) {
         }
 
         if (editTitle.val() === '') {
-            alert('일정명은 필수입니다.')
+            console.log('일정명은 필수입니다.');
             return false;
         }
 

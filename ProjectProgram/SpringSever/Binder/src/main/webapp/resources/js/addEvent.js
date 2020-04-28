@@ -61,7 +61,7 @@ var newEvent = function (start, end, eventType) {
         }
 
         if (eventData.title == '') {
-            alert('일정명은 필수입니다.');
+          console.log('일정명은 필수입니다.');
             return false;
         }
 

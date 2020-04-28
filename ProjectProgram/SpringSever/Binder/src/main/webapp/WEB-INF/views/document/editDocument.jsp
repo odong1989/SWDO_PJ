@@ -131,14 +131,12 @@
 			  								  width="250" height="250" alt="첨부사진 미리보기" /> </td>
 							</c:otherwise>
 						</c:choose>
-                            <td> <textarea rows="14" width="300" style="resize: none" 
-                                            id="content" name="document_content"
-                                            value=document.document_content>
-                                </textarea> </td> 
+                            <td> <textarea rows="14" style="resize: none" id="content" name="document_content" placeholder="하고싶은 말을 적어주세요"></textarea> 
+                            </td> 
 				   	</tr>     
 					<tr>
 						<td><input type='file' id="imgInp" name="upload" value="등록사진"/></td>
-                        <td> <input type="text" value=${document.document_destination} placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
+                        <td> <input type="text" placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
 					</tr>							  
 				   	<tr>	
 				   		<td colspan="2"> <input type="text" placeholder="#해시태그를 입력해주세요" style="width:500px;"> </td>
