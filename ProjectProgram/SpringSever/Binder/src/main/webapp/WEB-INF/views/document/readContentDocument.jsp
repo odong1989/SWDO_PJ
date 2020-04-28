@@ -14,7 +14,6 @@
     border-top: 1px solid #444444;
     border-collapse: collapse;
   	}
-
 	.DocData td{padding:10px;}
   
 </style>
@@ -24,38 +23,22 @@
 function paging(pag){
 	showReplyList(pag);
 }
-
 function editReply(reply_no, reply_content, member_id){
 	var htmls = "";
-
-	htmls += '<div class = "editDiv"><span id="replyEditId" >';
-
+	htmls += '<div>';
 	htmls += member_id;
 	
-	htmls += '</span>';
+	htmls += '</div>';
+		
+	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
 	
 	htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
-
-	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소</a>';
-
-	htmls += '</div><div>';
-		
-	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'" autofocus>';
-
-	htmls += '<p id = "editPtag">글을 수정하시려면 저장을 눌러주세요</p>';
-
-	htmls += '</div>';
-	
-
+	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소<a>';
 	$('#rid' + reply_no).replaceWith(htmls);
-
 	$('#rid' + reply_no + ' #editContent').focus();
-
 }
-
 function replyUpdate(reply_no, reply_content){
 		var reply_content = $('#editContent').val();
-
 		$.ajax({
 			type:"post",
 			url: "updateReply",
@@ -74,8 +57,6 @@ function replyUpdate(reply_no, reply_content){
 				}
 	})
 }
-
-
 function deleteReply(reply_no){
 	$.ajax({
 		type:"post",
@@ -94,10 +75,8 @@ function deleteReply(reply_no){
 			}
 })
 }
-
 function showReplyList(currentPage){
 	var document_no = $('#document_no').val();
-
 	$.ajax({
 			type: "post",
 			url: "getReply",
@@ -144,7 +123,6 @@ function showReplyList(currentPage){
 			
 		})
 }
-
 function pageLoad(result){
 	var pageHtmls ="";
 	var page = result.page;
@@ -155,7 +133,6 @@ function pageLoad(result){
 	if (page.currentPage != 1) {
 		pageHtmls += '<a href="javascript:paging('+ (page.currentPage - 1) + ')">◁</a>';
 	}
-
 	for (var i = page.startPageGroup ; i <= page.endPageGroup ; i++){
 			if( i == page.currentPage){
 				pageHtmls += '<b class = "replyNowPage">'+i+'</b>';
@@ -164,10 +141,8 @@ function pageLoad(result){
 				pageHtmls += '<a href="javascript:paging('+ i +')"class="replyPageAtag">'+i+'</a>';
 			}
 		}
-
 	if (page.currentPage != page.totalPageCount) {
 		pageHtmls += '<a href="javascript:paging('+ (page.currentPage + 1) +')">▷</a>';
-
 	}
 	if(page.currentPage < (
 			page.totalPageCount - (page.totalPageCount % page.pagePerGroup == 0 ?
@@ -175,12 +150,9 @@ function pageLoad(result){
 					  + 1)) {
 		pageHtmls += '<a href="javascript:paging('+ (page.currentPage + page.pagePerGroup) + ')" class="atag">▶</a>'
 	}
-
 	pageHtmls += '</div>';
-
 	$("#replyPage").html(pageHtmls);
 }
-
 function writeRpy(){
 	var reply_content = $('#replyInput').val();
 	var document_no = $('#document_no').val();
@@ -213,10 +185,7 @@ function writeRpy(){
 				alert("실패")
 			}
 	})
-		
 }
-
-
 $(function(){
 	
 	showReplyList();
@@ -224,7 +193,6 @@ $(function(){
 	$('#replyInput').keyup(function(event) {
 		if (event.keyCode == 13) {
 			writeRpy();
-
 		}
 	})
 	
@@ -264,15 +232,17 @@ $(function(){
 				   	</tr>       
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
-							<input type="submit" value="글 수정하기" >
+						<a href="javascript:edit(${document.document_no })">
+							<input type="button" value="글 수정하기" >
+						</a>
 					   		<input type="button" value="이전페이지 가기" onclick="history.back(-1);">
 						</td>
 					</tr>
-			 </table>
+			 </table>	
           </table>
 	
 		<div class = "reply">
-          	 	<h6 id="replyTitle">Reply</h6>
+          	 	<h6>Reply</h6>
 					
 						<input type="hidden" id="loginId" value="${sessionScope.loginId}">
 						<input type="hidden" id="document_no" name = "document_no" value="${document.document_no }">

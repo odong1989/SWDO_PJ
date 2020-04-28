@@ -58,7 +58,7 @@ public class DocumentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
     private final String uploadPath = "/uploadFile";
-    private final String noUploadPath = "/img"; //img/noImage.png
+    private final String noUploadPath = "/img"; // /img/noImage.png를 불러오기 위한 용도. 
     private int countPerPage = 10;
     private int pagePerGroup = 10;
 
@@ -113,6 +113,9 @@ public class DocumentController {
 		ArrayList<HashMap<String, Object>> documentList = documentDao.selectDocuments(no);
 		model.addAttribute("documentList", documentList);
 		
+		ArrayList<HashTag> hashTagList = hashTagDao.selectHashTags(member_id); 
+		logger.info("-해시태그");
+		model.addAttribute("hashTagList", hashTagList);
 		model.addAttribute("group_no", no);
 		vo.setGroup_no(no);
 		vo.setMember_id(member_id);
@@ -150,39 +153,34 @@ public class DocumentController {
 
 	//신규글을 DB에 추가하는 2개의 메소드 중 1개입니다.(writeDocument.jsp 전용입니다.)
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
-	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model, String[] hashtag)
+	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model)
 	{	
-		logger.info("documentInsert 실행 {}",writeDocument);
+		logger.info("documentInsert 실행");
 		//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
 		//uploadPath는 "/uploadFile"으로 설정되어있다.;
 		
 		String ErrMsg=""; //만약 업로드 에러 발생시 리턴하여 사용자에게 출력하도록 한다.
 		Photo photo = new Photo();
 		writeDocument.setMember_id((String)session.getAttribute("loginId"));
+		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
 
-		
-		int count = documentDao.insertDocument(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
-		if(count ==0) {
+        //
+	     int count = documentDao.insertCaution(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
+	     logger.info("3.VO를 DB에 INSERT count : {}",count);
+	     if(count ==0) {
 	            logger.info("글(document) 등록실패");
-	    }
-	    else if(count ==1) {
+	     }
+	     else if(count ==1) {
 	            logger.info("글(document) 등록성공");
-	    }
-	    //게시글(Document) insert 코드 종료.
-	    
-	    //writeDocument.getDocument_no()에 방금 작성한 글 번호가 담겨있음
-	    for(int i = 0; i < hashtag.length; i++) {
-	    	System.out.println(hashtag[i]);
-	    }
+	     }
+		//게시글(Document) insert 코드 종료.아래에는 사진추가 메소드가 실시.---------------------------------------------------
 	     
-	    //아래에는 사진추가 메소드가 실시.---------------------------------------------------
-	    
-	    
+
         if(upload.isEmpty()) {//case1. 첨부사진이 없는 경우 : 기본사진으로 설정.
 
         	//1.도큐먼트번호, 그룹번호도 같이 부여한다. 이를 않으면 readDocument.jsp에서 등록한 글 출력않됨.
         	photo.setGroup_no(writeDocument.getGroup_no());//그룹번호 부여
-	    	photo.setDocument_no(writeDocument.getDocument_no());//도큐먼트번호 부여
+	    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
 
 	    	
 	    	String savedfile = FileService.saveFile(upload, noUploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
@@ -229,7 +227,7 @@ public class DocumentController {
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
-		return "redirect:/document/group?no=" + writeDocument.getGroup_no();
+		return "/document/mainDocument";
 	}
 
 
@@ -344,18 +342,45 @@ public class DocumentController {
 	
 	
 	//글 내용 수정 메소드로 활용하기로 결정.(글 변경페이지는 readContentDocument메소드를 참고하십시오)
-	@RequestMapping(value="updateDocument", method=RequestMethod.GET)
-	@ResponseBody
-	public void editDocument(HttpSession session, Document originalDocument)
+	@RequestMapping(value="editDocument", method=RequestMethod.GET)
+	public String editDocument(HttpSession session, int no, Model model)
 	{	
-		logger.info("updateDocument-기존 글(Document) 수정 작업시작");
+		logger.info("editDocument 메소드 시작.");
+		logger.info("읽을 문서번호 : {}", no);
+		
+		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
-		originalDocument.setMember_id(member_id);
 		
-		logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}		
+
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
 		
-		documentDao.updateDocumentOne(originalDocument);
-		logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
+		
+		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
+		Document caution=null;
+		caution = documentDao.selectDocumentOne(no); 
+		model.addAttribute("document", caution);
+		logger.info("readContentDocument - 출력될 글 정보 document : {}",caution);
+		//사용자가 작성한 글 1개만 로드 종료-----------------------------------------------
+
+		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 시작.----------------------------
+		//도큐먼트(Document caution)는 사진정보를 담을 수 있는 칼럼이 없기 때문이다.
+		Photo cautionPhoto =null;
+		cautionPhoto = photoDao.selectPhotoOne(no);
+		model.addAttribute("cautionPhoto", cautionPhoto);
+		logger.info("readContentDocument - 출력할 사진  cautionPhoto : {}", cautionPhoto);
+		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 종료.----------------------------		
+		
+		
+		logger.info("editDocument 메소드 종료 & editDocument.jsp로 이동");
+		return "/document/editDocument";
 	}
 	
 	//그룹멤버확인 초대코드아이디로 보낼때
