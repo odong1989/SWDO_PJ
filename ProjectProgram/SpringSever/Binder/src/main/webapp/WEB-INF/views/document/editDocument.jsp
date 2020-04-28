@@ -6,6 +6,16 @@
 <!-- 헤더부분을 대체하는 include -->
 <%@ include file="../includes/header.jsp" %>
 
+<style type="text/css">
+	#buttonStyle{
+		background-color: cornflowerblue;
+	    color: white;
+	    border: none;
+	    padding: 5px;
+	    margin: 10px;
+    }
+</style>
+
 		<div id="right-body" >
 			<div id="right-body-menuWrap"><!-- right-body내의 2개의 테이블이 각자의 div내에 포함된다.-->
 		</div>
@@ -13,18 +23,15 @@
 			<table class="wirteDocForm">		
 				<form action="documentInsert" onsubmit="return documentInsertCheck();" method="POST" enctype="multipart/form-data">
 			     	<tr>
-			     	    <td> 오늘 날짜 : <p id='currentDate' style="display:inline;"></p> </td>
 						<!--그룹번호를 같이보내줍니다 -->		
 					    <td><input type="hidden" name='group_no' value="${writeDocumentGroup_no}"></td>
 				    </tr>
 				    <tr style="border-bottom: 1px solid #444444;">
 						<!-- <td>여행 일정</td>-->
-				        <td> <input type='date' id='start_day' name='document_regdate'  style="display:inline;" value="${document.DOCUMENT_REGDATE}"/> 부터  </td>
-				   		<td> <input type='date' id='start_time' name='document_finalday'  style="display:inline;" /> 까지   </td>
+				        <td> <input type='date' id='start_day' name='document_regdate'  style="display:inline;" value=${document.document_regdate}/> 부터  </td>
+				   		<td> <input type='date' id='start_time' name='document_finalday'  style="display:inline;" value=${fn:substring(document.document_regdate,0,11)}/> 까지   </td>
 					</tr>
 				    <tr>
- 						<!-- <td rowspan="3" style="text-align:center;vertical-align:middle;">사진등록<br>
-							&기록하기</td>-->
 						<c:choose>
 							<c:when test="${empty cautionPhoto.photo_savedfile}">
 								<td> <img id="previewImg" src="<c:url value='/img/preViewImage.png' />
@@ -35,11 +42,14 @@
 			  								  width="250" height="250" alt="첨부사진 미리보기" /> </td>
 							</c:otherwise>
 						</c:choose>
-					    	<td> <textarea rows="14" width="300" style="resize: none" id="content" name="document_content"></textarea> </td> 
+					    	<td> <textarea rows="14" width="300" style="resize: none" 
+					    				    id="content" name="document_content"
+					    				    value=document.document_content>
+					    		</textarea> </td> 
 				   	</tr>     
 					<tr>
 						<td><input type='file' id="imgInp" name="upload" value="등록사진"/></td>
-						<td> <input type="text" value="${caution.document_destination}" placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
+						<td> <input type="text" value=${document.document_destination} placeholder="장소" id='place' name="document_destination" style="width:160px;"></td>
 					</tr>
 				   	<tr>	
 				   		<td colspan="2"> <input type="text" placeholder="#해시태그를 입력해주세요" style="width:430px;"> </td>
@@ -47,10 +57,13 @@
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
 				            <div style="text-align: center;">
-							<input type="submit" value="수정하기">
-							<a href="<c:url value='/document/deleteDocument' />"><input type="button" value="삭제 하기"></a>
-					  		<input type="button" value="삭제하기" onclick="/document/deleteDocument(caution);">
-					   		<input type="button" value="취소" onclick="history.back(-1);">
+							<input id="buttonStyle" type="submit" value="수정">
+							
+							<a href="<c:url value='/document/deleteDocument' />">
+							<input id="buttonStyle" type="button" value="삭제">
+							</a>
+					 
+					   		<input id="buttonStyle" type="button" value="취소" onclick="history.back(-1);">
 				   			</div>
 						</td>
 					</tr>

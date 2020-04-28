@@ -82,9 +82,9 @@ public class DocumentDAO {
 	}
 	
 	//1개의 글을 로드하는데 소속그룹과 글번호필요하여 작성함.
-	public Document selectDocumentOne(int no) {
+	public HashMap<String, Object> selectDocumentOne(int no) {
 		logger.info("DocumentDAO.java - selectDocumentOne메소드 파라미터 데이터 : ({})", no);
-		Document resultDocument=null;
+		HashMap<String, Object> resultDocument=null;
 		try {
 			DocumentMapper mapper = session.getMapper(DocumentMapper.class);
 			resultDocument = mapper.selectDocumentOne(no);

@@ -179,7 +179,7 @@ public class DocumentController {
 		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
 
         //
-	     int count = documentDao.insertCaution(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
+	     int count = documentDao.insertDocument(writeDocument); //insertDocument : Document를 추가하는 메소드입니다.
 	     logger.info("3.VO를 DB에 INSERT count : {}",count);
 	     if(count ==0) {
 	            logger.info("글(document) 등록실패");
@@ -282,7 +282,7 @@ public class DocumentController {
 		logger.info("documentInsert메소드 기입된 Document 값 : {}",writeDocument);
 
         //
-	     int count = documentDao.insertDocument(writeDocument); //insertCaution : Document를 추가하는 메소드입니다.
+	     int count = documentDao.insertDocument(writeDocument); //insertDocument : Document를 추가하는 메소드입니다.
 	     logger.info("3.VO를 DB에 INSERT count : {}",count);
 	     if(count ==0) {
 	            logger.info("글(document) 등록실패");
@@ -322,7 +322,7 @@ public class DocumentController {
 		String member_id = (String) session.getAttribute("loginId");
 		
 		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
-		Document caution=null;
+		HashMap<String, Object> caution = null;
 		caution = documentDao.selectDocumentOne(no); 
 		model.addAttribute("document", caution);
 		logger.info("readContentDocument - 출력될 글 정보 : {}",caution);
@@ -398,7 +398,7 @@ public class DocumentController {
 		
 		
 		//사용자가 작성한 글 1개만 로드 시작-----------------------------------------------
-		Document caution = null;
+		HashMap<String, Object> caution = null;
 		caution = documentDao.selectDocumentOne(no); 
 		model.addAttribute("document", caution);
 		logger.info("readContentDocument - 출력될 글 정보 document : {}",caution);
