@@ -45,12 +45,13 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<input type="hidden" id="group_name_title" value="${ganme}">
 		</div>
 	</div>
 	<%@ include file="../includes/vuemodal.jsp" %>
 	<script>
 	$(function() {
-		$(document).find("title").text(${gname});
+		$(document).find("title").text($('#group_name_title').val());
 	})
 	
 	</script>

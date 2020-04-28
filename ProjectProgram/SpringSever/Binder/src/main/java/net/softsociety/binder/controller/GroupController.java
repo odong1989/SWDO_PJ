@@ -135,6 +135,7 @@ public class GroupController {
 			Group codeMemberChk = groupDao.codeMemberChk(code, member_id);
 			model.addAttribute("codebool", "ari");
 			model.addAttribute("code", oldgroup);
+			model.addAttribute("groupno",codeMemberChk.getGroup_no());
 			return "group/groupjoin";
 		} else {
 			//유효하지 않은 코드
@@ -172,5 +173,29 @@ public class GroupController {
 		
 		return "redirect:/document/mainDocument";
 	}
-	
+
+	@RequestMapping(value="/group/joinTrue", method=RequestMethod.GET)
+	public String joinTrue(int gno, HttpSession session, Model model) {
+		logger.info("gno : " + gno);
+		//모든 페이지에 있어야 하는 출력데이터
+		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		//공통 데이터 종료
+		
+		GroupJoin gjoin = new GroupJoin();
+		gjoin.setGroup_no(gno);
+		gjoin.setMember_id(member_id);
+		int result = groupDao.joinTrue(gjoin);
+		
+		//그룹 가입 후 그룹리스트 갱신
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		
+		return "redirect:/document/group?no=" + gno;
+	}
 }

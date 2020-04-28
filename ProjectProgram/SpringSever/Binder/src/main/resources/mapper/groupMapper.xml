@@ -97,4 +97,16 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 		where
 			group_no = #{group_no}
 	</select>
+	
+	<insert id="joinTrue" parameterType="groupjoin">
+		insert into bnd_groupjoin(
+			group_no
+			, member_id
+			, member_level
+		) values (
+			#{group_no}
+			, #{member_id}
+			, 3
+		)
+	</insert>
 </mapper>
