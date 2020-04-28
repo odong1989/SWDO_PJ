@@ -8,7 +8,7 @@
 	margin-top:15px;
 }
 .replyContent{
-	height: 3em;
+	height: 2.3em;
     background-color: #dcdcdc;
     color: black;
     width: 70%;
@@ -17,6 +17,12 @@
     vertical-align: middle;
     border:1px solid #dcdcdc;
 	
+}
+.replyDiv{
+	margin-top : 10px;
+}
+.replyDivEnd{
+	margin-bottom : 10px;
 }
 .replyContent:focus{
 	outline : none;

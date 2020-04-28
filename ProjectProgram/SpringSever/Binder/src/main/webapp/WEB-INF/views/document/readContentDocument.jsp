@@ -35,7 +35,8 @@ function showReplyList(currentPage){
 						html.push("등록된댓글이 없습니다.")
 				}else {
 					$(list).each(function(){
-						
+						htmls += '<div class="replyDiv">';
+						htmls += '</div>';
 						htmls += '<div id="rid';
 						htmls += this.reply_no;
 						htmls += '">';
@@ -51,7 +52,7 @@ function showReplyList(currentPage){
 						htmls += '<input type = "hidden" class = "replyNoHidden" value ="'+ this.reply_no +'">';
 						htmls += '<input type = "hidden" class = "pagingC" value ="'+ page.currentPage +'">';
 						htmls += '</div>';
-						
+						htmls == '<div class="replyDivEnd"></div>';
 					})
 					pageLoad(result);
 				}
