@@ -167,6 +167,7 @@ a:visited{
 			link = $('.codeOpen').text();
 			console.log(link);
 			window.opener.location.href = link;
+			window.close();
 			//window.parent.location.href = link; 
 			//window.open(link, "_parent");
 		})

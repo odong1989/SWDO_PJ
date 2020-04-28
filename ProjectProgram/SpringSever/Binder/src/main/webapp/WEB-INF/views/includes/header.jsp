@@ -39,7 +39,7 @@ function invite(pk) {
 	location.href="<c:url value='/group/groupcode' />?no="+pk;
 }
 function noteList() {
-	window.open("<c:url value='/note/noteList' />", "_blank", "width=600, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=no" );  
+	window.open("<c:url value='/note/noteList' />", "note", "width=600, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=no" );  
 }    
 function edit(pk) {
 	location.href="<c:url value='/document/editDocument' />?no="+pk;

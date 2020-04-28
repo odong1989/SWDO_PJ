@@ -8,7 +8,12 @@
 <title>쪽지보내기</title>
 <style>
 	table {
-		text-align:center;
+	    background-color: lightblue;
+	    margin-left: 50px;
+	    text-align: center;
+	}
+	tr td {
+    	border-bottom: 1px solid white;
 	}
 	textarea {
 		height: 20em;
@@ -27,7 +32,6 @@
 		width:7em;
 	}
 </style>
-<link href="<c:url value='/css/basic.css?id=2' />" rel="stylesheet">
 </head>
 <body>
 쪽지보내기
