@@ -245,6 +245,7 @@ var calendar = $('#calendar').fullCalendar({
         data: eventSaveData,
         success: function (eventSaveData) {
           alert('날짜수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+  		location.reload();
         }
       });
 

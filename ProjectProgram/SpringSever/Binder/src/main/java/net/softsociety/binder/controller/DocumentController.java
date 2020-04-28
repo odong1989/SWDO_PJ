@@ -784,7 +784,7 @@ public class DocumentController {
 	//지우지마세요! 풀캘린더의 일정변경시 필요함!!
 			@RequestMapping(value="updateDocument", method=RequestMethod.GET)
 			@ResponseBody
-			public void editDocument(HttpSession session, Document originalDocument)
+			public void updateDocument(HttpSession session, Document originalDocument)
 			{	
 				logger.info("updateDocument-기존 글(Document) 수정 작업시작");
 				String member_id = (String) session.getAttribute("loginId");
