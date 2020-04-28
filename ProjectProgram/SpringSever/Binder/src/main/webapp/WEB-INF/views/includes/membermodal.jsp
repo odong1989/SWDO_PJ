@@ -101,7 +101,9 @@
 					<td width="21%" align="right">
 						<!-- groupcaution -->
 						<div id="app3">
-							<img src="<c:url value='/img/CautionWrite.png' />" title="공지사항수정" id="show-modal3" @click="openModal">
+							<c:if test="${memberJoin.member_level < 3 }">
+								<img src="<c:url value='/img/CautionWrite.png' />" title="공지사항수정" id="show-modal3" @click="openModal">
+							</c:if>
 							  
 							 <modal v-if="showModal3" @close="closeModal">
 							<!-- 	여기는 모달 화면을 커스텀할수있습니다. template와 slot을 활용하여 커스텀하면 됩니다 -->

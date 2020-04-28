@@ -11,11 +11,11 @@
 	<script type="text/javascript">
 		$(function() {
 			var err = $("#errMsg").val();
-			if (err != null && err.length != 0) {
+			if (err.length != 0) {
 				alert(err);
 			}
 
-			if ($("#loginCheckHidden").val() != null) {
+			if ($("#loginCheckHidden").val().length != 0) {
 				$(location).attr("href","<c:url value='/document/mainDocument' />");
 			}
 		});
@@ -100,8 +100,12 @@
 			</c:if>
 			-->
 			<c:if test="${sessionScope.loginId == null }">
-			<form action="<c:url value='/member/memberLoginExe' />" method="post">
+			<form action="<c:url value='/member/memberLoginExe2' />" method="post">
 			<table class="loginForm">
+				<tr>
+					<td colspan="2">
+						로그인이 필요한 <br/> 페이지입니다
+					</td>
 				<tr>
 					<td id="loginForm1">ID</td>
 					<td id="loginForm2"><input type="text" name="member_id" ></td>

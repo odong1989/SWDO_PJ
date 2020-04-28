@@ -24,4 +24,6 @@ public interface GroupMapper {
 	public String selectGroupName(int group_no);
 	
 	public int joinTrue(GroupJoin gjoin);
+	
+	public ArrayList<String> subcatSearch(String subcat);
 }

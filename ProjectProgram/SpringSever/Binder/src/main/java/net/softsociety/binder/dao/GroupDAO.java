@@ -134,4 +134,17 @@ public class GroupDAO {
 		}
 		return result;
 	}
+	
+	public ArrayList<String> subcatSearch(String subcat) {
+		ArrayList<String> result = null;
+		logger.info("subcat : {}", subcat);
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			result = mapper.subcatSearch(subcat);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

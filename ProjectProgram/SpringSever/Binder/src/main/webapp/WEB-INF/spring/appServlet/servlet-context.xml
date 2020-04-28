@@ -37,7 +37,10 @@
             <mapping path="/**"/>
             <exclude-mapping path="/"/>
             <exclude-mapping path="/img/**"/>
+            <exclude-mapping path="/css/**"/>
+            <exclude-mapping path="/js/**"/>
             <exclude-mapping path="/member/memberLoginExe"/>
+            <exclude-mapping path="/member/memberLoginExe2"/>
             <exclude-mapping path="/loginAndJoin/**"/>
 			
 			<beans:ref bean="loginInterceptor"/><!--내가 적용하고픈 인터셉터 파일의 id명  -->

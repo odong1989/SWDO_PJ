@@ -144,7 +144,22 @@ public class GroupController {
 		}
 		return "group/groupjoin";
 	}
-	
+	@RequestMapping(value="/group/groupCreateForm", method=RequestMethod.GET)
+	public void groupCreateForm(HttpSession session, Model model) {
+		//모든 페이지에 있어야 하는 출력데이터
+		String member_id = (String) session.getAttribute("loginId");
+		ArrayList<Note> memoCheck = noteDao.newNoteCheck(member_id);
+		if (memoCheck.size() == 0){
+			model.addAttribute("newNoteCheck", "nashi");
+		} else {
+			model.addAttribute("newNoteCheck", "ari");
+		}
+		
+		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+		model.addAttribute("groupJoinList", groupJoinList);
+		//공통 데이터 종료
+		return;
+	}
 	
 	@RequestMapping(value="/group/groupCreate", method=RequestMethod.GET)
 	public String groupCreate(HttpSession session, Group group, Model model)
@@ -164,7 +179,7 @@ public class GroupController {
 		
 		logger.info("그룹생성 : {}", group);
 		groupDao.insertGroup(group);
-		int group_no = groupDao.selectGroupNo(group.getGroup_name());
+		int group_no = group.getGroup_no();
 		GroupJoin gjoin = new GroupJoin();
 		gjoin.setGroup_no(group_no);
 		gjoin.setMember_id(member_id);
@@ -198,4 +213,13 @@ public class GroupController {
 		
 		return "redirect:/document/group?no=" + gno;
 	}
+	
+	@RequestMapping(value="/group/subcatSearch", method=RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<String> subcatSearch(String subcat) {
+		logger.info("보조 고양이 찾기 : {}",subcat);
+		ArrayList<String> result = groupDao.subcatSearch(subcat);
+		return result;
+	}
+	
 }

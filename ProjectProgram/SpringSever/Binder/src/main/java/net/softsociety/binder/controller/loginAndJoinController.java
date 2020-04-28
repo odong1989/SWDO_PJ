@@ -220,4 +220,10 @@ public class loginAndJoinController {
 			}
 		}
 	
-	}	
+	@RequestMapping(value="needLogin", method=RequestMethod.GET)
+	public String neddLogin()
+	{	
+		return "needLogin";
+		
+	}
+}	

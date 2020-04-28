@@ -68,15 +68,20 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 			group_code=#{group_code}
 	</select>
 	
-	<insert id="insertGroup" parameterType="group">
+	<insert id="insertGroup" parameterType="group" useGeneratedKeys="true">
+		<selectKey resultType="int" keyProperty="group_no" order="BEFORE">
+			select bnd_group_no_seq.nextval from dual
+		</selectKey>
 		insert into bnd_group(
-			group_name
+			group_no
+			, group_name
 			, group_category
 			, group_subcategory	
 		) values(
-			#{group_name}
-			, group_category
-			, group_subcategory		
+			#{group_no}
+			, #{group_name}
+			, #{group_category}
+			, #{group_subcategory}		
 		)
 	</insert>
 	
@@ -109,4 +114,12 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 			, 3
 		)
 	</insert>
+	<select id="subcatSearch" parameterType="String" resultType="String">
+		select distinct
+			group_subcategory
+		from
+			bnd_group
+		where
+			group_subcategory like #{subcat} || '%'
+	</select>
 </mapper>

@@ -18,11 +18,25 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		HttpSession session = request.getSession();
 	
+		//URL 확보
+		String uri = request.getRequestURI();
+		//쿼리스트링 확보
+		String qrString = request.getQueryString();
+		
+		String movePage = "";
+		
 		String loginId = (String)session.getAttribute("loginId"); 
 		logger.debug("loginId : {}",loginId);
 
 		if(loginId == null) {
-			response.sendRedirect(request.getContextPath() + "/");
+			if(qrString != null) {
+				movePage += uri + "?" +qrString;
+			} else {
+				movePage += uri;
+			}
+			session.setAttribute("movePage", movePage);
+			response.sendRedirect(request.getContextPath() + "/loginAndJoin/needLogin");
+			
 			return false;
 		}
 		

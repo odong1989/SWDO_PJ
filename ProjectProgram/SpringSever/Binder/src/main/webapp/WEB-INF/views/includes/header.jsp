@@ -65,6 +65,10 @@ function Withdrawal(){
 
 //jQuery 시작
 	$(function() {
+		//그룹생성
+		$(document).on('click','#gCreateBtn',function() {
+			$(location).attr('href','<c:url value="/group/groupCreateForm" />')
+		})
 		
 		//해시태그 추가하기
 		$(document).on('click','#addHash',function() {
@@ -147,4 +151,25 @@ function Withdrawal(){
 					<div class="menu-group-button-clear"></div>
 				</div>
 			</c:forEach>
+			<c:if test="${groupJoinList.size() == 0 }">
+				<div class="menu-group-button">
+					<div class="menu-group-button-left">
+						<p>가입된 그룹이<br/>없습니다.</p>
+					</div>
+					<div class="menu-group-button-right">
+						<input type="button" value="그룹 생성" id="gCreateBtn" style="background-color:black; color:white;">
+					</div>
+					<div class="menu-group-button-clear"></div>
+				</div>
+			</c:if>
+			<c:if test="${groupJoinList.size() != 0 }">
+				<div class="menu-group-button">
+					<div class="menu-group-button-left">
+						<input type="button" value="그룹 생성" id="gCreateBtn" style="background-color:black; color:white; margin:5px 0 5px 22px;">
+					</div>
+					<div class="menu-group-button-right">
+					</div>
+					<div class="menu-group-button-clear"></div>
+				</div>
+			</c:if>
 		</div>

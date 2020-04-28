@@ -1,0 +1,8 @@
+
+#cate1:hover, #cate2:hover {
+	cursor:pointer;
+}
+
+.exam:hover {
+	cursor:pointer;
+}
