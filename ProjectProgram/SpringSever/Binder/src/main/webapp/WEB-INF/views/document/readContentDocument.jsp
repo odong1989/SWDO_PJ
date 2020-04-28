@@ -27,9 +27,7 @@ function editReply(reply_no, reply_content, member_id){
 	var htmls = "";
 	htmls += '<div>';
 	htmls += member_id;
-	
-<<<<<<< HEAD
-=======
+
 	htmls += '</span>';
 	
 	htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
@@ -42,7 +40,7 @@ function editReply(reply_no, reply_content, member_id){
 
 	htmls += '<p id = "editPtag">글을 수정하시려면 저장을 눌러주세요</p>';
 
->>>>>>> master
+
 	htmls += '</div>';
 		
 	htmls += '<input text name="editContent" id="editContent" value = "'+ reply_content +'">';
@@ -50,13 +48,11 @@ function editReply(reply_no, reply_content, member_id){
 	htmls += '<a href="javascript:replyUpdate(' + reply_no  + ', \'' + reply_content + '\' )" class = "replyUpdate">저장</a>';
 	htmls += '<a href="javascript:showReplyList()"class = "replyDelete">취소<a>';
 	$('#rid' + reply_no).replaceWith(htmls);
-<<<<<<< HEAD
-	$('#rid' + reply_no + ' #editContent').focus();
-=======
+	
 
 	$('#editContent').focus();
 
->>>>>>> master
+
 }
 function replyUpdate(reply_no, reply_content){
 		var reply_content = $('#editContent').val();
@@ -253,13 +249,9 @@ $(function(){
 				   	</tr>       
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
-<<<<<<< HEAD
-						<a href="javascript:edit(${document.document_no })">
-							<input type="button" value="글 수정하기" >
-						</a>
-=======
+
 							<input type="button" value="글 수정하기" onclick="javascript:editDocument('${document.document_no}')">
->>>>>>> master
+
 					   		<input type="button" value="이전페이지 가기" onclick="history.back(-1);">
 						</td>
 					</tr>

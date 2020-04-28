@@ -165,15 +165,11 @@ public class DocumentController {
 
 	//신규글을 DB에 추가하는 2개의 메소드 중 1개입니다.(writeDocument.jsp 전용입니다.)
 	@RequestMapping(value="documentInsert", method=RequestMethod.POST)
-<<<<<<< HEAD
-	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model)
-	{	
-		logger.info("documentInsert 실행");
-=======
+
 	public String documentInsert(HttpSession session, Document writeDocument,MultipartFile upload, Model model, HttpServletRequest request, String[] hashtag)
 	{
 		logger.info("documentInsert 실행 {}",writeDocument);
->>>>>>> master
+
 		//신규 게시판글(documents)과 첨부사진을 uploadPath에 저장된 경로에 따라 저장한다.
 		//uploadPath는 "/uploadFile"으로 설정되어있다.;
 		
@@ -190,10 +186,7 @@ public class DocumentController {
 	     }
 	     else if(count ==1) {
 	            logger.info("글(document) 등록성공");
-<<<<<<< HEAD
-	     }
-		//게시글(Document) insert 코드 종료.아래에는 사진추가 메소드가 실시.---------------------------------------------------
-=======
+
 	    }
 	    //게시글(Document) insert 코드 종료.
 	    
@@ -215,7 +208,6 @@ public class DocumentController {
 				int cnt = hashTagDao.insertHash(hash);
 			}
 		}
->>>>>>> master
 	     
 
         if(upload.isEmpty()) {//case1. 첨부사진이 없는 경우 : 기본사진으로 설정.
