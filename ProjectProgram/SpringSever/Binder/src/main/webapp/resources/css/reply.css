@@ -8,15 +8,18 @@
 	margin-top:15px;
 }
 .replyContent{
-    height: 3em;
+	height: 3em;
     background-color: #dcdcdc;
     color: black;
     width: 70%;
     border-radius: 25px;
     padding-left: 1em;
-    vertical-align: bottom;
-    padding-top: 15px;
+    vertical-align: middle;
+    border:1px solid #dcdcdc;
 	
+}
+.replyContent:focus{
+	outline : none;
 }
 #replyInput:focus {
 	outline : none;
@@ -71,23 +74,7 @@ a.replyDelete {
 	font-size : 90%;
 	color : #eee;
 }
-#editContent{
-	width: 70%;
-    border-radius: 25px;
-    height: 3em;
-    margin-top : 8px;
-    background-color : #dcdcdc;
-    padding-left: 1em;
-    vertical-align: middle;
-    padding-top: 0px;
-    box-shadow: none !important;
-    border:1px solid #dcdcdc;
-}
 
-#editContent:focus{
-	outline : none;
-	
-}
 #replyEditId{
 	
 	font-size: 130%;
@@ -107,4 +94,23 @@ a.replyDelete {
     color: gray;
     padding-left: 1em;
     
+}
+
+.replyUpdate{
+	margin-left: 10px;
+    cursor: pointer;
+    color: blue;
+}
+.editReply{
+	margin-left: 10px;
+    cursor: pointer;
+    color: blue;
+}
+.replyDelete{
+    cursor: pointer;
+    color: blue;
+}
+.cancleReply{
+    cursor: pointer;
+    color: blue;
 }
