@@ -208,69 +208,85 @@ $(function(){
 		})	
 })
 </script>
-<style>
-#wrap{
-	width:800; height: 400;
-	background-color: red;
-	margin:20px;
-}
-#wrap{
-	width:900; height: 400;
-	background-color: red;
+
+
+<style type="text/css">
+
+.main_container {
+	background-color:white;
+	width:90%; height:90%;
+	margin :20px;
+/*	background-color: yellow; */
 }
 
+.main_destination {/*장소출력*/
+	float:left;
+	text-align:center;
+	width:25%; height:10%;
+/*	background-color: red; */
+}
+
+.main_days {
+	float:left;
+	text-align:center;
+	width:55%; height:10%;
+/*	background-color:orange; */
+}
+
+.main_editarea {
+	float:left;
+	text-align:center;
+	width:20%; height:10%;
+/*	background-color:green; */
+}
+
+.main_photo {
+	padding : 3%;
+	float:left;
+	width:100%; height:300px;
+	text-align: center;
+/*	background-color:purple; */
+
+}
+
+.main_contents {
+	float:left;
+	width:100%; height:30%;
+<!--	background-color:green;
+}
 </style>
 
-		<div id="right-body">
-			<div id="wrap">
-				<div id="destination">
-					<p>장소 : ${document.document_destination }</p>						
-				</div>
-				
-				
-			</div>	
+	<div id="right-body">
 		
-				<div class="DocData">		
-					<tr rowspan="2">
-						<td  style="text-align:center;vertical-align:middle;">
-
-						</td>
-					</tr>
-				    <tr style="border-bottom: 1px solid #444444;">
-				        <td> 
-				        	<p id='startDate' style="display:inline;"/></p>
-							${fn:substring(document.document_regdate,0,11) }
-						</td>
-				   		<td> <p id='endDate'  style="display:inline;"/></p> 
-				   			${fn:substring(document.document_finalday,0,11) }
-				   		</td>
-					</tr>
-					
-				    <tr>
-						<td rowspan="3" style="vertical-align:middle;"> 
-						<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
-						      width="250" height="250"  >
-						      
-						</td>
-				    	<td rowspan="3">
-				   				${document.document_content }
-				   	</td> 
-				   	</tr>     
-				
-					<tr>
-						<td> <p id='place' style="display:inline;"/></p></td>
-					</tr>
-				   	<tr>	
-				   		<td colspan="2"> <p id='hashtag' style="display:inline;"/></p></td>
-				   	</tr>       
-				    <tr style="border-top: 1px solid #444444;">
-           				<td colspan="3">
-							<a href="<c:url value='/document/editDocument(document.document_no)' />"><input type="button" value="글 수정하기"></a>
-					   		<input type="button" value="이전페이지 가기" onclick="history.back(-1);">
-						</td>
-					</tr>
-			 
-	
+		<div class="main_container" >
+			<div class="main_destination"> <!-- 장소 -->
+				<p>${document.document_destination }</p>
+			</div>
+			
+			<div class="main_days"> <!-- 기간 -->
+				여행기간 :
+		        <p id='startDate' style="display:inline;"/></p>
+				${fn:substring(document.document_regdate,0,11)}
+				~
+				<p id='endDate'  style="display:inline;"/></p> 
+	   			${fn:substring(document.document_finalday,0,11)}					
+			</div>	
+			<div class="main_editarea"> <!-- 본인시 수정버튼 구현 -->
+			<c:if test="${sessionScope.loginId == document.member_id}">
+				<a href="<c:url value='/document/editDocument' />"><input type="button" value="글 수정하기"></a>
+			</c:if>
+			</div>				
+			<div class="main_photo"> <!-- 사진배치 -->
+				<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
+				width="250px" height="250px"  >
+			</div>				
+			<div class="main_contents"> <!--  글 배치-->
+          	 	<h6 id="replyTitle" style="margin:10px;">Contents</h6>
+				&nbsp; &nbsp; ${document.document_content }			
+			</div>				
+		</div>
+			 	
+		<!-- 댓글 코드시작 -->	 	
 		<div class = "reply">
           	 	<h6 id="replyTitle">Reply</h6>
 					
