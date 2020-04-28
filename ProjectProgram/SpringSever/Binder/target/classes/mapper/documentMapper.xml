@@ -10,7 +10,7 @@
 		    , to_char(d.document_regdate, 'yyyy-mm-dd') document_regdate
 		    , d.document_destination document_destination
 		    , p.photo_savedfile photo_savedfile
-		    , (select listagg(hash_tag, ',') within group (order by hash_no) from bnd_hashtag where document_no = d.document_no) hash_tag
+		    , (select listagg(hash_tag, ' ') within group (order by hash_no) from bnd_hashtag where document_no = d.document_no) hash_tag
 		from
 		    bnd_document d , bnd_photo p
 		where
@@ -123,20 +123,21 @@
 	<!-- 3.  readDocument.jsp로 글을 보내기 위해 실시. -->
 	<!-- document 객체는 사진정보(photo_savedfile)를 저장할 수 없기에  
 		  사진을 갖고와야 하는 경우에는 selectPhotoOne 메소드를 사용합시다.-->
-	<select id="selectDocumentOne" parameterType="int" resultType="document">
+	<select id="selectDocumentOne" parameterType="int" resultType="hashmap">
 	 	select
-	 		bnd_document.document_no                                      document_no
-		    , bnd_document.document_content                               document_content
-		    , bnd_document.member_id 					                  member_id		
-		    , to_char(bnd_document.document_regdate, 'yyyy-mm-dd hh:mi')  document_regdate
-		    , to_char(bnd_document.document_finalday, 'yyyy-mm-dd hh:mi') document_finalday
-		    , bnd_document.document_destination 		                  document_destination			
+	 		d.document_no                                      document_no
+		    , d.document_content                               document_content
+		    , d.member_id 					                  member_id		
+		    , to_char(d.document_regdate, 'yyyy-mm-dd hh:mi')  document_regdate
+		    , to_char(d.document_finalday, 'yyyy-mm-dd hh:mi') document_finalday
+		    , d.document_destination 		                  document_destination
+		    , (select listagg(hash_tag, ' ') within group (order by hash_no) from bnd_hashtag where document_no = d.document_no) hash_tag			
 		from
-		    bnd_document, bnd_photo
+		    bnd_document d, bnd_photo p
 		where
-			bnd_document.document_no = #{document_no}
+			d.document_no = #{document_no}
 		and
-		    bnd_photo.document_no  =  #{document_no}
+		    p.document_no  =  #{document_no}
 	</select> 
 
 	<!-- 4. 글 1개를 삭제위한 메소드입니다. -->
