@@ -297,8 +297,8 @@ public class DocumentController {
 		    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
 
 		    	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
-		        photo.setPhoto_savedfile("noImageforBinderBasicImage.png"); //DB가 사용한 파일의 별명
-		        photo.setPhoto_originfile("noImageforBinderBasicImage.png");//원본 파일명
+		        photo.setPhoto_savedfile("noImage.png"); //DB가 사용한 파일의 별명
+		        photo.setPhoto_originfile("noImage.png");//원본 파일명
 	        		        
 	        
 	        // 3.photoVO를 DB에 INSERT            
