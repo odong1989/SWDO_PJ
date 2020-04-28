@@ -98,6 +98,7 @@ var newEvent = function (start, end, eventType) {
             data: eventSaveData,
         	success: function (eventSaveData) {
             		alert("일정이저장되었습니다");
+            		location.reload();
             },
             error:function(request, error) {
             	alert("에러가 발생하였습니다.");

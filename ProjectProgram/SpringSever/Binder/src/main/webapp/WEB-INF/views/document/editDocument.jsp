@@ -47,7 +47,8 @@
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
 				            <div style="text-align: center;">
-							<input type="submit" value="수정하기" >
+							<input type="submit" value="수정하기">
+							<a href="<c:url value='/document/deleteDocument' />"><input type="button" value="삭제 하기"></a>
 					  		<input type="button" value="삭제하기" onclick="/document/deleteDocument(caution);">
 					   		<input type="button" value="취소" onclick="history.back(-1);">
 				   			</div>

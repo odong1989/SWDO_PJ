@@ -1,23 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!-- 헤더부분을 대체하는 include -->
 <%@ include file="../includes/header.jsp" %>
-
-<style>
-	.DocData {
-	margin:50px;
-	} 
-	
-	.DocData  table {
-    width: 100%;
-    border-top: 1px solid #444444;
-    border-collapse: collapse;
-  	}
-	.DocData td{padding:10px;}
-  
-</style>
 
 
 <script>
@@ -221,29 +208,55 @@ $(function(){
 		})	
 })
 </script>
+<style>
+#wrap{
+	width:800; height: 400;
+	background-color: red;
+	margin:20px;
+}
+#wrap{
+	width:900; height: 400;
+	background-color: red;
+}
+
+</style>
 
 		<div id="right-body">
-			<table id="document-body">
-				<table class="DocData">		
-				    <tr style="border-bottom: 1px solid #444444;">
-						<td style="text-align:center;vertical-align:middle;">여행 일정</td>
-				        <td> <p id='startDate' style="display:inline;"/></p> ${document.document_regdate }부터  </td>
-				   		<td> <p id='endDate'  style="display:inline;"/></p> ${document.document_finalday }까지   </td>
+			<div id="wrap">
+				<div id="destination">
+					<p>장소 : ${document.document_destination }</p>						
+				</div>
+				
+				
+			</div>	
+		
+				<div class="DocData">		
+					<tr rowspan="2">
+						<td  style="text-align:center;vertical-align:middle;">
+
+						</td>
 					</tr>
+				    <tr style="border-bottom: 1px solid #444444;">
+				        <td> 
+				        	<p id='startDate' style="display:inline;"/></p>
+							${fn:substring(document.document_regdate,0,11) }
+						</td>
+				   		<td> <p id='endDate'  style="display:inline;"/></p> 
+				   			${fn:substring(document.document_finalday,0,11) }
+				   		</td>
+					</tr>
+					
 				    <tr>
- 
 						<td rowspan="3" style="vertical-align:middle;"> 
 						<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
 						      width="250" height="250"  >
-						      <p>장소 : ${document.document_destination }</p>
+						      
 						</td>
 				    	<td rowspan="3">
 				   				${document.document_content }
 				   	</td> 
 				   	</tr>     
-				   	<tr>
-				   	
-				   	</tr>
+				
 					<tr>
 						<td> <p id='place' style="display:inline;"/></p></td>
 					</tr>
@@ -252,14 +265,11 @@ $(function(){
 				   	</tr>       
 				    <tr style="border-top: 1px solid #444444;">
            				<td colspan="3">
-
-							<input type="button" value="글 수정하기" onclick="javascript:editDocument('${document.document_no}')">
-
+							<a href="<c:url value='/document/editDocument(document.document_no)' />"><input type="button" value="글 수정하기"></a>
 					   		<input type="button" value="이전페이지 가기" onclick="history.back(-1);">
 						</td>
 					</tr>
-			 </table>	
-          </table>
+			 
 	
 		<div class = "reply">
           	 	<h6 id="replyTitle">Reply</h6>
