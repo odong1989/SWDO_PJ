@@ -232,24 +232,16 @@ $(function(){
 /*	background-color: yellow; */
 }
 
-.main_destination {/*장소출력*/
-	float:left;
-	text-align:center;
-	width:25%; height:10%;
-/*	background-color: red; */
-}
 
 .main_days {
-	float:left;
-	text-align:center;
-	width:55%; height:10%;
-/*	background-color:orange; */
+	float: left;
+    text-align: center;
+    padding-left: 5em;
 }
 
 .main_edit {
-	float:left;
-	text-align:center;
-	width:20%; height:10%;
+	float: right;
+    text-align: center;
 /*	background-color:green; */
 }
 div#submain-clear {
@@ -261,36 +253,49 @@ div#submain-clear {
 	text-align: center;
 /*	background-color:purple; */
 }
-.main_contents {
-	padding-top: 50px;
+
+.contents_Parents {
 	float:left;
 	width:50%; height:300px;
-/*-	background-color:green; */ 
+}
+.main_destination {/*장소출력*/
+	text-align:left;
+}
+.main_contents {
+	padding-top: 20px;
 }
 div#contentPart-clear {
 	clear: both;
 }
+input#editBtn {
+	background-color: cornflowerblue;
+    color: white;
+    border: none;
+    padding: 5px;
+}
+textarea#content_Area {
+	border: none;
+    width: 100%;
+    resize: none;
+    height: 120px;
+}
+
 </style>
 
 	<div id="right-body">
 		
 		<div class="main_container" >
 			<div class="submain">
-				<div class="main_destination"> <!-- 장소 -->
-					<p>${document.document_destination }</p>
-				</div>
-				
 				<div class="main_days"> <!-- 기간 -->
-					여행기간 :
 			        <p id='startDate' style="display:inline;"/></p>
-					${fn:substring(document.document_regdate,0,11)}
+					${fn:substring(document.DOCUMENT_REGDATE,0,11)}
 					~
 					<p id='endDate'  style="display:inline;"/></p> 
-		   			${fn:substring(document.document_finalday,0,11)}					
+		   			${fn:substring(document.DOCUMENT_FINALDAY,0,11)}					
 				</div>	
 	            <div class="main_edit"> <!-- 작성자만 수정버튼이 표시됨. -->
-	                <a href="javascript:edit(${document.document_no})">
-	                    <input type="button" value="글 수정하기">                
+	                <a href="javascript:edit(${document.DOCUMENT_NO})">
+	                    <input type="button" id="editBtn" value="수정">                
 	                </a>
 				</div>
 				<div id="submain-clear"></div>	
@@ -302,10 +307,19 @@ div#contentPart-clear {
 				<div class="main_photo"> <!-- 사진배치 -->
 					<img src="<c:url value='/profile/${cautionPhoto.photo_savedfile}' />"
 					width="250px" height="250px"  >
-				</div>				
-				<div class="main_contents"> <!--  글 배치-->
-	          	 	<h6 id="replyTitle" style="margin:10px;">Contents</h6>
-					&nbsp; &nbsp; ${document.document_content }			
+				</div>
+				<div class="contents_Parents">
+					<div class="main_destination"> <!-- 장소 -->
+						<h6 id="replyTitle" style="margin:10px;">Where</h6>
+						<p>${document.DOCUMENT_DESTINATION }</p>
+					</div>				
+					<div class="main_contents"> <!--  글 배치-->
+		          	 	<h6 id="replyTitle" style="margin:10px;">Contents</h6>
+		          	 	<textarea id="content_Area" readonly="readonly">${document.DOCUMENT_CONTENT }</textarea>			
+					</div>
+					<div class="p-hash">
+						${document.HASH_TAG }
+					</div>
 				</div>
 				<div id="contentPart-clear"></div>				
 			</div>
@@ -318,7 +332,7 @@ div#contentPart-clear {
           	 	<h6 id="replyTitle">Reply</h6>
 					
 						<input type="hidden" id="loginId" value="${sessionScope.loginId}">
-						<input type="hidden" id="document_no" name = "document_no" value="${document.document_no }">
+						<input type="hidden" id="document_no" name = "document_no" value="${document.DOCUMENT_NO }">
 						<input type="hidden" id="member_id" value="${loginId }" >
 						<input type="text" id="replyInput">
 						<p id="replyP">댓글을 작성하시려면 Enter를 눌러주세요</p>

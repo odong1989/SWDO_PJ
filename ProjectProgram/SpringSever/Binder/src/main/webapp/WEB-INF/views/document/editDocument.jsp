@@ -19,7 +19,7 @@
 				    </tr>
 				    <tr style="border-bottom: 1px solid #444444;">
 						<!-- <td>여행 일정</td>-->
-				        <td> <input type='date' id='start_day' name='document_regdate'  style="display:inline;" value="${document.document_regdate}"/> 부터  </td>
+				        <td> <input type='date' id='start_day' name='document_regdate'  style="display:inline;" value="${document.DOCUMENT_REGDATE}"/> 부터  </td>
 				   		<td> <input type='date' id='start_time' name='document_finalday'  style="display:inline;" /> 까지   </td>
 					</tr>
 				    <tr>
