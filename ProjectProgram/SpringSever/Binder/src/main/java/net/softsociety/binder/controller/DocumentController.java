@@ -83,8 +83,18 @@ public class DocumentController {
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
-		}		
-
+		}
+		
+        ArrayList<HashMap<String,Object>> targetRankNow = documentDao.targetRankNow();
+        ArrayList<HashMap<String,Object>> targetRankMonth = documentDao.targetRankMonth();
+        ArrayList<HashMap<String,Object>> hashRankNow = hashTagDao.hashRankNow();
+        ArrayList<HashMap<String,Object>> hashRankMonth = hashTagDao.hashRankMonth();
+        
+        model.addAttribute("tRankNow",targetRankNow);
+        model.addAttribute("tRankMonth",targetRankMonth);
+        model.addAttribute("hRankNow",hashRankNow);
+        model.addAttribute("hRankMonth",hashRankMonth);
+        
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
@@ -321,7 +331,7 @@ public class DocumentController {
 	}
 	
 	
-	//댓글기능
+	//댓글기능 //1개의 글에 대한 상세한 내용과 댓글을 담는 페이지입니다.
 	@RequestMapping(value="readContentDocument", method=RequestMethod.GET)
 	public String readContentDocument(HttpSession session, int no , Model model) {
 		logger.info("readContent {}", no);
@@ -366,28 +376,15 @@ public class DocumentController {
 	}
 	
 	
-	@RequestMapping(value="deleteDocument",method=RequestMethod.GET)
-	@ResponseBody
-	public void deleteDocument(HttpSession session, Document deletelDocument)
-	{
-		logger.info("deleteDocument-기존 글(Document) 삭제 작업시작합니다.");
-		logger.info("deleteDocument-현 로그인 계정 : {}",session.getAttribute("loginId"));
-
-		String member_id = (String) session.getAttribute("loginId");
-		deletelDocument.setMember_id(member_id);
-		logger.info("deleteDocument-삭제할 글의 정보 : {}",deletelDocument);
-		
-		documentDao.deleteDocumentOne(deletelDocument); //글 삭제 메소드 실시.
-	}
 	
-	
-	//글 내용 수정 메소드로 활용하기로 결정.(글 변경페이지는 readContentDocument메소드를 참고하십시오)
+	//글 내용 수정 메소드로 활용하기로 결정.(변경:editDocExe 삭제 )
 	@RequestMapping(value="editDocument", method=RequestMethod.GET)
 	public String editDocument(HttpSession session, int no, Model model)
 	{	
 		logger.info("editDocument 메소드 시작.");
 		logger.info("읽을 문서번호 : {}", no);
-		
+		model.addAttribute("nor", no);
+
 		//모든 페이지에 있어야 하는 출력데이터
 		String member_id = (String) session.getAttribute("loginId");
 		
@@ -397,7 +394,7 @@ public class DocumentController {
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
 		}		
-
+			
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
@@ -418,10 +415,49 @@ public class DocumentController {
 		logger.info("readContentDocument - 출력할 사진  cautionPhoto : {}", cautionPhoto);
 		//사용자가 작성한 위의 글과 도큐먼트 번호가 같은 사진의 정보를 받기 종료.----------------------------		
 		
-		
 		logger.info("editDocument 메소드 종료 & editDocument.jsp로 이동");
 		return "/document/editDocument";
 	}
+	
+	
+	//글 수정모드 전용 도큐먼트 삭제 메소드입니다.
+	@RequestMapping(value="deleteDocExe",method=RequestMethod.GET)
+	public String deleteDocExe(HttpSession session, int no)
+	{
+		logger.info("deleteDocExe-기존 글(Document) 삭제 작업시작합니다.");
+//		logger.info("deleteDocExe-현 로그인 계정 : {}",session.getAttribute("loginId"));
+//		logger.info("deleteDocExe-document_no : {}", document_no);
+		
+		String member_id = (String) session.getAttribute("loginId");
+		Document deletelDocument = new Document();
+			
+//		deletelDocument.setDocument_no(Integer.parseInt(document_no)); 
+//		deletelDocument.setMember_id(member_id);
+		
+		logger.info("deleteDocExe-삭제할 글의 정보 : {}",deletelDocument);
+		
+	//	documentDao.deleteDocumentOne(deletelDocument); //글 삭제 메소드 실시.
+		return "/document/mainDocument";
+	}
+	
+	
+	//풀캘린더 전용 도큐먼트 삭제 메소드입니다.
+	@RequestMapping(value="deleteDocument",method=RequestMethod.GET)
+	@ResponseBody
+	public void deleteDocument(HttpSession session, Document deletelDocument)
+	{
+		logger.info("deleteDocument-기존 글(Document) 삭제 작업시작합니다.");
+		logger.info("deleteDocument-현 로그인 계정 : {}",session.getAttribute("loginId"));
+
+		String member_id = (String) session.getAttribute("loginId");
+		deletelDocument.setMember_id(member_id);
+		logger.info("deleteDocument-삭제할 글의 정보 : {}",deletelDocument);
+		
+		documentDao.deleteDocumentOne(deletelDocument); //글 삭제 메소드 실시.
+	}
+	
+	
+	
 	
 	//그룹멤버확인 초대코드아이디로 보낼때
 	@RequestMapping(value="selectGJM", method=RequestMethod.GET)
@@ -787,21 +823,36 @@ public class DocumentController {
 		return list;
 	}
 	
-	//지우지마세요! 풀캘린더의 일정변경시 필요함!!
-			@RequestMapping(value="updateDocument", method=RequestMethod.GET)
-			@ResponseBody
-			public void updateDocument(HttpSession session, Document originalDocument)
-			{	
-				logger.info("updateDocument-기존 글(Document) 수정 작업시작");
-				String member_id = (String) session.getAttribute("loginId");
-				originalDocument.setMember_id(member_id);
-				
-				logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
-				
-				documentDao.updateDocumentOne(originalDocument);
-				logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
-			}
+		//지우지마세요! 풀캘린더의 일정변경시 필요함!!
+		@RequestMapping(value="updateDocument", method=RequestMethod.GET)
+		@ResponseBody
+		public void updateDocument(HttpSession session, Document originalDocument)
+		{	
+			logger.info("updateDocument-기존 글(Document) 수정 작업시작");
+			String member_id = (String) session.getAttribute("loginId");
+			originalDocument.setMember_id(member_id);
 			
+			logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
+			
+			documentDao.updateDocumentOne(originalDocument);
+			logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
+		}
+
+		@RequestMapping(value="updateDocumentByForm", method=RequestMethod.POST)
+		public void updateDocumentByForm(HttpSession session, Document originalDocument)
+		{	
+			logger.info("updateDocument-기존 글(Document) 수정 작업시작");
+			String member_id = (String) session.getAttribute("loginId");
+			originalDocument.setMember_id(member_id);
+			
+			logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
+			
+			documentDao.updateDocumentOne(originalDocument);
+			logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
+		}
+		
+		
+		
 		@RequestMapping(value="sightsSearch", method=RequestMethod.POST
 	            ,produces = "application/text; charset=utf8")
 	    @ResponseBody

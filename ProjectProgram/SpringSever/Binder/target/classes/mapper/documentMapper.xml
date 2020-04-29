@@ -203,4 +203,48 @@
         where
             rownum = 1
     </select>
+    
+    <select id="targetRankNow" resultType="hashmap">
+		<![CDATA[
+	select
+	    document_destination
+	    , rank count
+	from
+	    (select
+	        document_destination
+	        , count(*) rank
+	    from
+	        bnd_document
+	    where
+	        document_regdate + 2/24 > sysdate
+	    group by
+	        document_destination
+	    order by
+	        rank desc)
+	where
+	    rownum < 4
+	]]>
+	</select>
+	
+	<select id="targetRankMonth" resultType="hashmap">
+		<![CDATA[
+	select
+	    document_destination
+	    , rank count
+	from
+	    (select
+	        document_destination
+	        , count(*) rank
+	    from
+	        bnd_document
+	    where
+	        document_regdate + 30 > sysdate
+	    group by
+	        document_destination
+	    order by
+	        rank desc)
+	where
+	    rownum < 4
+	]]>
+	</select>
 </mapper>

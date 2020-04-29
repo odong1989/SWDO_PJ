@@ -45,5 +45,49 @@ and bnd_member.member_id ='jsh4646';
 			
 	</insert>
 
-
+	<select id="hashRankNow" resultType="hashmap">
+		<![CDATA[
+		select
+		    hash_tag hash_tag
+		    , rank count
+		from
+		    (select
+		        hash_tag
+		        , count(*) rank
+		    from
+		        bnd_hashtag
+		    where
+		        hash_date + 2/24 > sysdate
+		    group by
+		        hash_tag
+		    order by
+		        rank desc)
+		where
+    		rownum < 4
+    	]]>
+	</select>
+	
+	<select id="hashRankMonth" resultType="hashmap">
+		<![CDATA[
+		select
+		    hash_tag hash_tag
+		    , rank count
+		from
+		    (select
+		        hash_tag
+		        , count(*) rank
+		    from
+		        bnd_hashtag
+		    where
+		        hash_date + 30 > sysdate
+		    group by
+		        hash_tag
+		    order by
+		        rank desc)
+		where
+    		rownum < 4
+    	]]>
+	</select>
+	
+	
 </mapper>

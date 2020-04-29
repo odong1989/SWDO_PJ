@@ -30,7 +30,7 @@ create table bnd_group(
     , group_name        varchar2(100)   not null
     , group_regdate     date            default sysdate
     , group_code        varchar2(5)
-    , group_codedate    date            default sysdate
+    , group_codedate    date            default sysdate-8
 );
 
 create sequence bnd_group_no_seq;

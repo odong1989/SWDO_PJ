@@ -30,4 +30,8 @@ public interface DocumentMapper {
 	public ArrayList<String> hashSearch(String hash);
 	//추천명소 검색기
     public String sightsSearch(String sights);
+    //핫플레이스
+    public ArrayList<HashMap<String,Object>> targetRankNow();
+    //핫플레이스30일
+    public ArrayList<HashMap<String,Object>> targetRankMonth();
 }
