@@ -83,8 +83,18 @@ public class DocumentController {
 			model.addAttribute("newNoteCheck", "nashi");
 		} else {
 			model.addAttribute("newNoteCheck", "ari");
-		}		
-
+		}
+		
+        ArrayList<HashMap<String,Object>> targetRankNow = documentDao.targetRankNow();
+        ArrayList<HashMap<String,Object>> targetRankMonth = documentDao.targetRankMonth();
+        ArrayList<HashMap<String,Object>> hashRankNow = hashTagDao.hashRankNow();
+        ArrayList<HashMap<String,Object>> hashRankMonth = hashTagDao.hashRankMonth();
+        
+        model.addAttribute("tRankNow",targetRankNow);
+        model.addAttribute("tRankMonth",targetRankMonth);
+        model.addAttribute("hRankNow",hashRankNow);
+        model.addAttribute("hRankMonth",hashRankMonth);
+        
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
