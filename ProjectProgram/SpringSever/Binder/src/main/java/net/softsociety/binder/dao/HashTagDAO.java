@@ -1,6 +1,7 @@
 package net.softsociety.binder.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -38,6 +39,30 @@ public class HashTagDAO {
 		try {
 			HashTagMapper mapper = session.getMapper(HashTagMapper.class);
 			result = mapper.insertHash(hashtag);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public ArrayList<HashMap<String,Object>> hashRankNow() {
+		ArrayList<HashMap<String,Object>> result = null;
+		try {
+			HashTagMapper mapper = session.getMapper(HashTagMapper.class);
+			result = mapper.hashRankNow();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public ArrayList<HashMap<String,Object>> hashRankMonth() {
+		ArrayList<HashMap<String,Object>> result = null;
+		try {
+			HashTagMapper mapper = session.getMapper(HashTagMapper.class);
+			result = mapper.hashRankNow();
 		}
 		catch(Exception e){
 			e.printStackTrace();

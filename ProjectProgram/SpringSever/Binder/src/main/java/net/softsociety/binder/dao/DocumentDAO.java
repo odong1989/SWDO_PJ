@@ -193,5 +193,28 @@ public class DocumentDAO {
         return result;
     }
 
+	public ArrayList<HashMap<String,Object>> targetRankNow() {
+		ArrayList<HashMap<String,Object>> result = null;
+        try {
+            DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+            result = mapper.targetRankNow();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+	
+	public ArrayList<HashMap<String,Object>> targetRankMonth() {
+		ArrayList<HashMap<String,Object>> result = null;
+        try {
+            DocumentMapper mapper = session.getMapper(DocumentMapper.class);
+            result = mapper.targetRankMonth();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
 

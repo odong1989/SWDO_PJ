@@ -6,16 +6,58 @@
 <%@ include file="../includes/header.jsp" %>
 
         <div id="right-body">
-            <center>
-            <br/><br/><br/><br/><br/><br/>
-            트렌드<br/>
-            #AAA<br/>
-            #BBB<br/>
-            #CCC
-            <img alt="로컬이미지 불러오기 확인용 이미지 (c:\uploadFile\2-2-01.jpg)" src="<c:url value='/profile/2-2-01.jpg' />" height="400px">
-            </center>
+        	<div class="introDiv">
+		        <table class="introTable">
+		        	<tr>
+		        		<th class="topTd" colspan="2" >실시간 트렌드</th>
+		        	</tr>
+		            <c:forEach var="item" items="${hRankNow }">
+		            <tr>
+		            	<td class="midTd">${item.HASH_TAG }</td>
+		            	<td class="midTd">${item.COUNT }</td>
+		            </tr>
+		            </c:forEach>
+		        </table>
+			</div>
+			<div class="introDiv">
+		        <table class="introTable">
+		        	<tr>
+		        		<th class="topTd" colspan="2">실시간 핫플레이스</th>
+		        	</tr>
+		            <c:forEach var="item" items="${tRankNow }">
+		            <tr>
+		            	<td class="midTd">${item.DOCUMENT_DESTINATION }</td>
+		            	<td class="midTd">${item.COUNT }</td>
+		            </tr>
+		            </c:forEach>
+		        </table>
+			</div>
+			<div style="both:clear;"></div>
         </div>
         
     </div>
+    <style>
+    	.topTd{
+    		background-color:pink;
+    	}
+    	.introTable {
+    		border: 1px solid;
+    	}
+    	.introTable th{
+    		height: 40px;
+		    vertical-align: middle;
+		    text-align: center;
+    	}
+    	.introTable td{
+    		height: 50px;
+    		width: 100px;
+    		vertical-align: middle;
+		    text-align: center;
+    	}
+    	.introDiv {
+    		float:left;
+    		margin: 100px;
+    	}
+    </style>
 </body>
 </html>
