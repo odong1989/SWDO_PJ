@@ -39,7 +39,7 @@ function invite(pk) {
 	location.href="<c:url value='/group/groupcode' />?no="+pk;
 }
 function noteList() {
-	window.open("<c:url value='/note/noteList' />", "_blank", "width=600, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=no" );  
+	window.open("<c:url value='/note/noteList' />", "note", "width=600, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=no" );  
 }    
 function edit(pk) {
 	location.href="<c:url value='/document/editDocument' />?no="+pk;
@@ -77,7 +77,7 @@ function Withdrawal(){
 				minusbtn = '<span id="removeHash">[-]</span>';
 				$('#hashman').append(minusbtn);
 			}
-			box = '<input type="text" name="hashtag" placeholder="#hash" style="width:100px;"> ';
+			box = '<input type="text" name="hashtag" placeholder="#hash" style="width:100px;" autocomplete="off"> ';
 			$('#hashbox2').append(box);
 		});
 		//해시태그 제거하기
@@ -157,7 +157,7 @@ function Withdrawal(){
 						<p>가입된 그룹이<br/>없습니다.</p>
 					</div>
 					<div class="menu-group-button-right">
-						<input type="button" value="그룹 생성" id="gCreateBtn" style="background-color:black; color:white;">
+						<input type="button" value="그룹 생성" id="gCreateBtn" style="background-color:black;color:white;border: none;margin:5px 0 5px 22px;padding: 4px 8px;border-radius: 5px;">
 					</div>
 					<div class="menu-group-button-clear"></div>
 				</div>

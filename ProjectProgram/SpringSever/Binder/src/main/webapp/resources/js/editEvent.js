@@ -63,7 +63,7 @@ var editEvent = function (event, element, view) {
         }
 
         if (editTitle.val() === '') {
-            alert('일정명은 필수입니다.')
+            console.log('일정명은 필수입니다.');
             return false;
         }
 
@@ -114,6 +114,7 @@ var editEvent = function (event, element, view) {
             data : eventSaveData,
             success: function (eventSaveData) {
                 alert('일정이 수정되었습니다.');
+        		location.reload();
             },
             error:function(request, error) {
             	alert("에러가 발생하였습니다.");
@@ -147,6 +148,7 @@ $(document).on('click','#deleteEvent',function(){ //ajax통해 로딩되기에 �
         data : eventDeleteData,
         success: function (eventDeleteData) {
             alert('삭제되었습니다.');
+    		location.reload();
         },
         error:function(request, error) {
         	alert("에러가 발생하였습니다.");

@@ -12,15 +12,10 @@
 				<tr><td><input type="hidden" id='groupNumber' value="${groupNumber}"></td></tr>
 				<tr height="40px">
 					<td width="21%">
-						<a href="javascript:invite(${group_no})">
-							<img src="<c:url value='/img/invite.png' />" title="초대코드생성">
-						</a>
-						<a href="javascript:write(${group_no})">
+						<a href="javascript:write(${groupNumber})">
 							<img src="<c:url value='/img/pencil.png' />" title="글쓰기"> 
 						</a>
-						<%@ include file="../includes/membermodal.jsp" %>
-						
-						<img src="<c:url value='/img/f5.png' />">
+						<%@ include file="../includes/membermodal.jsp" %>					
 						<a href="javascript:selectGroup(${groupNumber})">
 						<img src="<c:url value='/img/cal.png' />" title="목록으로전환">
 						</a>

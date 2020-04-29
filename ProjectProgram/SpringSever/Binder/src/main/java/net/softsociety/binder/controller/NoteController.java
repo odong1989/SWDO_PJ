@@ -63,7 +63,7 @@ public class NoteController {
 		String member_id = (String)session.getAttribute("loginId");
 		note.setMember_id(member_id);
 		noteDao.insertNote(note);
-		return "redirect:note/noteList";
+		return "redirect:/note/noteList";
 	}
 	
 	@RequestMapping(value="noteRead", method=RequestMethod.GET)

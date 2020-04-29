@@ -7,7 +7,8 @@
 
 
 	<div id="right-body">
-			<form id="joinform" action="<c:url value='/group/groupCreate' />" method="get">
+		<img src="<c:url value='/img/binding.png'/>" width="320" style="margin-left:200px;">
+		<form id="joinform" action="<c:url value='/group/groupCreate' />" method="get">
 		<table id="joinformtable">
 			<tr>
 				<td class="lefttd">그룹명</td>
@@ -37,9 +38,9 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td class="lefttd">세부 카테고리</td>
+				<td class="lefttd">세부<br/>카테고리</td>
 				<td class="righttd"><input type="text" id="subcat" name="group_subcategory"
-					placeholder="세부적인 분류를 입력해주십시오." maxlength="12"></td>
+					placeholder="세부적인 분류를 입력해주십시오." maxlength="12" autocomplete="off"></td>
 				<td class="chktd">
 					<div id="subcat_div"></div>
 				</td>
@@ -50,10 +51,13 @@
 					<div id="subcat_result" style="padding: 2px; width:220px;"></div>
 				</td>
 			</tr>
+			<tr>
+				<td align="left"><input type="button" value="취소" onclick="history.go(-1)"></td>
+				<td align="right"><input type="submit" value="가입" id="joinsubmit"></td>
+			</tr>
 		</table>
 		<div id="btntd">
-			<input type="button" value="취소" onclick="history.go(-1)"> 
-			<input type="submit" value="가입" id="joinsubmit">
+			
 		</div>
 			<input type="hidden" id="group_name_title" value="그룹 생성 - Binder">
 	<script>
@@ -65,6 +69,12 @@
 		
 		$(document).find("title").text($('#group_name_title').val());
 
+		var left = $("#subcat").offset().left;
+		var top = $("#subcat").offset().top;
+		$("#subcat_result").css("position","absolute");
+		$("#subcat_result").css("left",left);
+		$("#subcat_result").css("top",top+30);
+		
 		$(document).on('click','.exam',function() {
 			$('#subcat').val($(this).text());
 			$("#subcat_div").empty();
@@ -110,6 +120,7 @@
 									break;
 								}
 							}
+							
 							$("#subcat_result").css("border","1px solid gray");
 							$("#subcat_result").html(osusume);
 							},
@@ -143,5 +154,18 @@
 	});
 	</script>
 	<link href="<c:url value='/css/createForm.css' />" rel="stylesheet">
+	<style>
+		#joinformtable {
+			margin:0 0 0 200px;
+			
+		}
+		.lefttd, .righttd{
+			height:50px;
+		}
+		.lefttd {
+			text-align:left;
+			width: 100px;
+		}
+	</style>
 </body>
 </html>

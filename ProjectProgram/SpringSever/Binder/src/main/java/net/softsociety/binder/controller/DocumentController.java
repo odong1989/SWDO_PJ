@@ -155,12 +155,18 @@ public class DocumentController {
 			model.addAttribute("newNoteCheck", "ari");
 		}
 		
-		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
-		model.addAttribute("groupJoinList", groupJoinList);
-		//공통 데이터 종료
-		model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
-		
-		return "/document/writeDocument";
+		//그룹 sub카테고리 불러옴
+        Group group = null;
+        group = groupDao.selectGroupOne(no);
+        String subcat = group.getGroup_subcategory();
+        
+        ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
+        model.addAttribute("groupJoinList", groupJoinList);
+        //공통 데이터 종료
+        model.addAttribute("writeDocumentGroup_no", no); //글 작성을 위해서는 소속 그룹의 번호(PK) 필요하기에 넘기고 있습니다.
+        
+        model.addAttribute("subcat",subcat);
+        return "/document/writeDocument";
 	}	
 
 	//신규글을 DB에 추가하는 2개의 메소드 중 1개입니다.(writeDocument.jsp 전용입니다.)
@@ -261,7 +267,7 @@ public class DocumentController {
 		model.addAttribute("groupJoinList", groupJoinList);
 		//공통 데이터 종료
 		
-		return "/document/mainDocument";
+		return "redirect:/document/group?no="+writeDocument.getGroup_no();
 	}
 
 
@@ -297,8 +303,8 @@ public class DocumentController {
 		    	photo.setDocument_no(documentDao.selectDocumentNoOne(writeDocument));//도큐먼트번호 부여
 
 		    	String savedfile = FileService.saveFile(upload, uploadPath, "photo", photo.getGroup_no(), photo.getDocument_no());
-		        photo.setPhoto_savedfile("noImageforBinderBasicImage.png"); //DB가 사용한 파일의 별명
-		        photo.setPhoto_originfile("noImageforBinderBasicImage.png");//원본 파일명
+		        photo.setPhoto_savedfile("noImage.png"); //DB가 사용한 파일의 별명
+		        photo.setPhoto_originfile("noImage.png");//원본 파일명
 	        		        
 	        
 	        // 3.photoVO를 DB에 INSERT            
@@ -771,4 +777,39 @@ public class DocumentController {
 		logger.info("ReplyPage 값 {}",rpage);
 		return rpage;
 	}
+	
+	@RequestMapping(value="hashSearch", method=RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<String> hashSearch(String hash) {
+		logger.info("해시태그 : {}",hash);
+		ArrayList<String> list = null;
+		list = documentDao.hashSearch(hash);
+		return list;
+	}
+	
+	//지우지마세요! 풀캘린더의 일정변경시 필요함!!
+			@RequestMapping(value="updateDocument", method=RequestMethod.GET)
+			@ResponseBody
+			public void updateDocument(HttpSession session, Document originalDocument)
+			{	
+				logger.info("updateDocument-기존 글(Document) 수정 작업시작");
+				String member_id = (String) session.getAttribute("loginId");
+				originalDocument.setMember_id(member_id);
+				
+				logger.info("updateDocument-변경할 글의  정보 : {}", originalDocument);
+				
+				documentDao.updateDocumentOne(originalDocument);
+				logger.info("updateDocument-기존 글(Document) 수정 작업 종료");		
+			}
+			
+		@RequestMapping(value="sightsSearch", method=RequestMethod.POST
+	            ,produces = "application/text; charset=utf8")
+	    @ResponseBody
+	    public String sightsSearch(String subcat) {
+	        logger.info("명소추천 : {}",subcat);
+	        String result = null;
+	        result = documentDao.sightsSearch(subcat);
+	        logger.info(result);
+	        return result;
+	    }
 }

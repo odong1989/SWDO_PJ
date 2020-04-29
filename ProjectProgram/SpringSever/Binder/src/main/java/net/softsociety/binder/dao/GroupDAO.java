@@ -147,4 +147,16 @@ public class GroupDAO {
 		}
 		return result;
 	}
+	
+	public Group selectGroupOne(int no) {
+        Group result = null;
+        try {
+            GroupMapper mapper = session.getMapper(GroupMapper.class);
+            result = mapper.selectGroupOne(no);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
