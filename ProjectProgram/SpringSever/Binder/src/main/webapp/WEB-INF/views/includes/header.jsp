@@ -74,7 +74,7 @@ function Withdrawal(){
 		$(document).on('click','#addHash',function() {
 			//추가된 input이 없을 때만 실행
 			if ($('#hashbox2 input').size() == 0) {
-				minusbtn = '<span id="removeHash">[-]</span>';
+				minusbtn = '<span id="removeHash"><img src=\'<c:url value="/img/minus.png"/>\'></span>';
 				$('#hashman').append(minusbtn);
 			}
 			box = '<input type="text" name="hashtag" placeholder="#hash" style="width:100px;" autocomplete="off"> ';

@@ -42,7 +42,7 @@
 				   			<div id="hashbox2">
 				   			</div>
 				   			<div id="hashman">
-				   				<span id="addHash">[+]</span>
+				   				<span id="addHash"><img src="<c:url value='/img/plus.png'/>"></span>
 				   			</div>
 				   			<div id="hashclear">
 				   			</div>

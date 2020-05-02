@@ -159,4 +159,16 @@ public class GroupDAO {
         }
         return result;
     }
+	
+	public ArrayList<HashMap<String,Object>> groupRankMonth() {
+		ArrayList<HashMap<String,Object>> result = null;
+        try {
+            GroupMapper mapper = session.getMapper(GroupMapper.class);
+            result = mapper.groupRankMonth();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+	}
 }

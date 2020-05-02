@@ -32,6 +32,32 @@
 		            </c:forEach>
 		        </table>
 			</div>
+			<div class="introDiv">
+		        <table class="introTable">
+		        	<tr>
+		        		<th class="topTd" colspan="2">월간 생성 그룹</th>
+		        	</tr>
+		            <c:forEach var="item" items="${gRankMonth }">
+		            <tr>
+		            	<td class="midTd">${item.GROUP_SUBCATEGORY }</td>
+		            	<td class="midTd">${item.COUNT }</td>
+		            </tr>
+		            </c:forEach>
+		        </table>
+			</div>
+			<div class="introDiv">
+		        <table class="introTable">
+		        	<tr>
+		        		<th class="topTd" colspan="2">월간 윤종신</th>
+		        	</tr>
+		            <c:forEach var="item" items="${tRankMonth }">
+		            <tr>
+		            	<td class="midTd">${item.DOCUMENT_DESTINATION }</td>
+		            	<td class="midTd">${item.COUNT }</td>
+		            </tr>
+		            </c:forEach>
+		        </table>
+			</div>
 			<div style="both:clear;"></div>
         </div>
         
@@ -56,7 +82,7 @@
     	}
     	.introDiv {
     		float:left;
-    		margin: 100px;
+    		margin: 90px;
     	}
     </style>
 </body>

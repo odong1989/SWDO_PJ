@@ -89,11 +89,14 @@ public class DocumentController {
         ArrayList<HashMap<String,Object>> targetRankMonth = documentDao.targetRankMonth();
         ArrayList<HashMap<String,Object>> hashRankNow = hashTagDao.hashRankNow();
         ArrayList<HashMap<String,Object>> hashRankMonth = hashTagDao.hashRankMonth();
+        ArrayList<HashMap<String,Object>> groupRankMonth = groupDao.groupRankMonth();
+        
         
         model.addAttribute("tRankNow",targetRankNow);
         model.addAttribute("tRankMonth",targetRankMonth);
         model.addAttribute("hRankNow",hashRankNow);
         model.addAttribute("hRankMonth",hashRankMonth);
+        model.addAttribute("gRankMonth", groupRankMonth);
         
 		ArrayList<Group> groupJoinList = groupDao.selectGroupJoin(member_id);
 		model.addAttribute("groupJoinList", groupJoinList);

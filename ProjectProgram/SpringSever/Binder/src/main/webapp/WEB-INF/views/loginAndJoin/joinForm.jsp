@@ -309,11 +309,21 @@
 //이미지를 첨부할 경우 자동으로 html상에서 보여주는 기능의 자바스크립트 종료.----------------------------
 </script>
 <style>
+
 body{
-	padding : 30px;	
+	background-color:#D9E5FF; 
+	background-image: url("<c:url value='/img/couple-1822585_1920.jpg' />");
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 100%;
+	padding : 30px;
 }
 #btntd{
 	text-align: center;
+}
+#joinformtable {
+	background-color: rgba(255, 255, 255, 0.5);
+	margin-top:75px;
 }
 </style>
 </head>

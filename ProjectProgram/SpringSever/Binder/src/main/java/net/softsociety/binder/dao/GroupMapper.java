@@ -28,4 +28,7 @@ public interface GroupMapper {
 	public ArrayList<String> subcatSearch(String subcat);
 	
 	public Group selectGroupOne(int no);
+	
+	public ArrayList<HashMap<String,Object>> groupRankMonth();
+	
 }

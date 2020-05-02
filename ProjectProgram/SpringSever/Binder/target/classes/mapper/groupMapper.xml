@@ -131,4 +131,26 @@ and    BND_GROUPJOIN.GROUP_NO = BND_GROUP.GROUP_NO
 		where
 			group_subcategory like #{subcat} || '%'
 	</select>
+	<select id="groupRankMonth" resultType="hashmap">
+		<![CDATA[
+		select
+		    group_subcategory group_subcategory
+		    , rank count
+		from
+		    (select
+		        group_subcategory
+		        , count(*) rank
+		    from
+		        bnd_group
+		    where
+		        group_regdate between trunc(sysdate - (interval '1' month), 'mm') and last_day(sysdate - (interval '1' month))
+		    group by
+		        group_subcategory
+		    order by
+		        rank desc)
+		where
+		    rownum < 4
+		]]>
+	</select>
+    
 </mapper>
